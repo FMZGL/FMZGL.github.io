@@ -8,11 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="*{ 		margin:0; 		padding:0; 	} 	#textBox{ 		position: absolute; 		left: 0; 		top: 0; 		z-index: -999; 	} 	#bg{ 		background: url(sgws.jpg) -50px;  		width:500px; 		height: 314px; 		text-align:">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://example.com/assets/demo/mediator/demo.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="*{ 		margin:0; 		padding:0; 	} 	#textBox{ 		position: absolute; 		left: 0; 		top: 0; 		z-index: -999; 	} 	#bg{ 		background: url(sgws.jpg) -50px;  		width:500px; 		height: 314px; 		text-align:">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-09-07T07:40:29.972Z">
+<meta property="article:modified_time" content="2017-07-28T18:51:08.000Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -154,30 +158,85 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
   <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/09/07/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">我的第一篇博客</a>
-    </h1>
-  
-
-        
-        <a href="/2025/09/07/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2025-09-07T03:40:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-09-07</time>
-</a>
-        
-      </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这是我的第一篇博客，仅仅作为测试使用</p>
+        <!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/javascript" src="jquery.js"></script>
+<style type="text/css">
+	*{
+		margin:0;
+		padding:0;
+	}
+	#textBox{
+		position: absolute;
+		left: 0;
+		top: 0;
+		z-index: -999;
+	}
+	#bg{
+		background: url(sgws.jpg) -50px;
 
+		width:500px;
+		height: 314px;
+		text-align: center;
+		position: relative;
+		-webkit-animation:roll 3s infinite ease ;
+		   -moz-animation:roll 3s infinite ease ;
+		    -ms-animation:roll 3s infinite ease ;
+		     -o-animation:roll 3s infinite ease ;
+				animation:roll 3s infinite ease ;
+	}
+	#barHome{
+		width: 300px;
+		height: 10px;
+		background: #f00;
+		overflow: hidden;
+		position: absolute;
+		bottom: 45px;
+		left: 50%;
+		margin-left: -150px;
+	}
+	#barGuest{
+		width: 150px;
+		height: 10px;
+		background: #00f;
+	}
+	#results{
+		width: 300px;
+		position: absolute;
+		bottom: 65px;
+		left: 50%;
+		margin-left: -150px;
+		color: #fff;
+	}
+	#results span{
+		margin: 50px;
+	}
+	@-webkit-keyframes roll {0%{background-position: -90px;}50%{background-position: -10px;}100%{background-position: -90px;}}
+	@-moz-keyframes roll {0%{background-position: -90px;}50%{background-position: -10px;}100%{background-position: -90px;}}
+	@-ms-keyframes roll {0%{background-position: -90px;}50%{background-position: -10px;}100%{background-position: -90px;}}
+	@-o-keyframes roll {0%{background-position: -90px;}50%{background-position: -10px;}100%{background-position: -90px;}}
+	@keyframes roll {0%{background-position: -90px;}50%{background-position: -10px;}100%{background-position: -90px;}}
+</style>
+<title>mediator</title>
+</head>
+<body>
+	<div id="bg">
+		<input id="textBox" type="text" />
+		<div id="results">请按F键与J键</div>
+		<div id="barHome">
+			<div id="barGuest"></div>
+		</div>
+	</div>
+<script type="text/javascript" src="mediator.js"></script>
+</body>
+</html>
       
 
       
@@ -188,16 +247,65 @@ var _hmt = _hmt || [];
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/09/07/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/assets/demo/mediator/demo.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -217,74 +325,12 @@ var _hmt = _hmt || [];
 
 
 
-
   
-    <article id="post-开篇" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/09/07/%E5%BC%80%E7%AF%87/">开篇</a>
-    </h1>
   
 
-        
-        <a href="/2025/09/07/%E5%BC%80%E7%AF%87/" class="archive-article-date">
-  	<time datetime="2025-09-07T03:40:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-09-07</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>现在是2025年9月7号0：01分。其实很早之前就幻想着能够写一些文字，但是由于各种原因，主要是自己的原因，一直没能开始。但是我越来越发现，现在的我在这种高节奏的生活当中越来越没有耐心，也越来越浮躁。觉得不如试一试，其实我也有很多心里话无人诉说，说实话就算父母我也几乎没有提到过任何自己的心里话。</p>
-<p>坚持写博客对我来说是有难度的，我不知道自己能不能坚持下去。对我来说去做一件没有任何利益相关的事情已经是相当困难了，所以也当作是一次尝试吧。</p>
-<p>有几点想说明，第一，我的文章不属于任何文体，什么论文、议论文、散文，狗儿的上学的时候都被你们弄的够惨了。文章只是一个00后大学生在当今时代的一些个人经历和感悟。但我又不想写成流水账，天天扯那些没用的，今天吃了什么，天气怎么样，那是小学生的任务。所以我想的是每个文章都有一个大的主题。文章的所有内容并不一定完全与主题相关，但大致上至少是以它为中心的，这样看起来不那么乱。第二，不会说假话，废话，客套话。在现实里几乎每天都在重复做的事情，如果博客里还全是这些，那么我不是白忙活了吗，意义何在。第三，文章内容100%属于个人主观，必须承认我对这个世界的认识甚至不到1%，只是从我自己的视角去观察与思考。</p>
-<p>***<strong><strong><strong><strong><strong>手动分割</strong></strong></strong></strong></strong><br>昨天晚上我写完第一篇文章之后突然发现，Google的Blog在国内访问不了，我自己在手机上看不到自己的文章。因此我直接做了这个个人网站，挺有意思的是hexo+github。这是我第一次搞这种东西，网站的很多东西也都先这样，后面我再慢慢的学着去弄。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/09/07/%E5%BC%80%E7%AF%87/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
+
   
 
 
@@ -307,7 +353,7 @@ var _hmt = _hmt || [];
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
+		isHome: false,
 		isPost: false,
 		isArchive: false,
 		isTag: false,
