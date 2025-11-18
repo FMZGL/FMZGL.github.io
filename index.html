@@ -224,19 +224,19 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-常见包管理器即简单使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-常见包管理器及简单使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8D%B3%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">常见包管理器即简单使用</a>
+      <a class="article-title" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">常见包管理器及简单使用</a>
     </h1>
   
 
         
-        <a href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8D%B3%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+        <a href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="archive-article-date">
   	<time datetime="2025-11-18T06:43:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
 </a>
         
@@ -244,9 +244,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ol>
-<li><p><strong>apt-get</strong></p>
-<p><strong>核心定位</strong>：Debian、Ubuntu 等 Debian 系 Linux 发行版的系统级包管理器，基于.deb 格式包，主打系统软件的安装、升级与依赖管理，需 root 权限执行。</p>
+        <h2 id="1-apt-get"><a href="#1-apt-get" class="headerlink" title="1.apt-get"></a>1.apt-get</h2><p><strong>核心定位</strong>：Debian、Ubuntu 等 Debian 系 Linux 发行版的系统级包管理器，基于.deb 格式包，主打系统软件的安装、升级与依赖管理，需 root 权限执行。</p>
 <p><strong>基本操作</strong></p>
 <table>
 <thead>
@@ -280,9 +278,7 @@ var _hmt = _hmt || [];
 <td>sudo apt-get clean</td>
 </tr>
 </tbody></table>
-</li>
-<li><p><strong>winget</strong></p>
-<p><strong>核心定位</strong>：微软官方推出的 Windows 系统包管理器，适配 Windows 10 及以上版本，用于快速管理桌面软件与应用，无需复杂的图形化安装步骤。</p>
+<h2 id="2-winget"><a href="#2-winget" class="headerlink" title="2.winget"></a>2.winget</h2><p><strong>核心定位</strong>：微软官方推出的 Windows 系统包管理器，适配 Windows 10 及以上版本，用于快速管理桌面软件与应用，无需复杂的图形化安装步骤。</p>
 <p><strong>基本操作</strong></p>
 <table>
 <thead>
@@ -316,9 +312,7 @@ var _hmt = _hmt || [];
 <td>winget export -o 文件名.json</td>
 </tr>
 </tbody></table>
-</li>
-<li><p><strong>pip</strong></p>
-<p><strong>核心定位</strong>：Python 专属的包管理器，用于管理 Python 第三方库，支持 PyPI 等仓库，适配 Windows、Linux、macOS 多平台，常随 Python 默认安装。</p>
+<h2 id="3-pip"><a href="#3-pip" class="headerlink" title="3.pip"></a>3.pip</h2><p><strong>核心定位</strong>：Python 专属的包管理器，用于管理 Python 第三方库，支持 PyPI 等仓库，适配 Windows、Linux、macOS 多平台，常随 Python 默认安装。</p>
 <p><strong>基本操作</strong></p>
 <table>
 <thead>
@@ -356,9 +350,7 @@ var _hmt = _hmt || [];
 <td>pip install -r requirements.txt</td>
 </tr>
 </tbody></table>
-</li>
-<li><p><strong>maven</strong></p>
-<p><strong>核心定位</strong>：Java 项目的构建与依赖管理工具，不仅能管理 Jar 包依赖，还能规范化项目构建流程（编译、测试、打包等），核心依赖<code>pom.xml</code>文件管理配置。</p>
+<h2 id="4-maven"><a href="#4-maven" class="headerlink" title="4.maven"></a>4.maven</h2><p><strong>核心定位</strong>：Java 项目的构建与依赖管理工具，不仅能管理 Jar 包依赖，还能规范化项目构建流程（编译、测试、打包等），核心依赖<code>pom.xml</code>文件管理配置。</p>
 <p><strong>基本操作</strong></p>
 <table>
 <thead>
@@ -392,9 +384,7 @@ var _hmt = _hmt || [];
 <td>mvn deploy</td>
 </tr>
 </tbody></table>
-</li>
-<li><p><strong>npm</strong></p>
-<p><strong>核心定位</strong>：Node.js 自带的包管理器，用于管理前端或 Node.js 项目的依赖包，依托 npm 仓库，可定义项目脚本，是前端开发的核心工具之一。</p>
+<h2 id="5-npm"><a href="#5-npm" class="headerlink" title="5.npm"></a>5.npm</h2><p><strong>核心定位</strong>：Node.js 自带的包管理器，用于管理前端或 Node.js 项目的依赖包，依托 npm 仓库，可定义项目脚本，是前端开发的核心工具之一。</p>
 <p><strong>基本操作</strong></p>
 <table>
 <thead>
@@ -432,9 +422,7 @@ var _hmt = _hmt || [];
 <td>npm list</td>
 </tr>
 </tbody></table>
-</li>
-<li><p><strong>vcpkg</strong></p>
-<p><strong>核心定位</strong>：微软开发的跨平台 C&#x2F;C++ 包管理器，支持 Windows、Linux、macOS，通过源码编译安装库文件，适配 CMake 等构建系统，解决 C&#x2F;C++ 依赖配置复杂的问题。</p>
+<h2 id="6-vcpkg"><a href="#6-vcpkg" class="headerlink" title="6.vcpkg"></a>6.vcpkg</h2><p><strong>核心定位</strong>：微软开发的跨平台 C&#x2F;C++ 包管理器，支持 Windows、Linux、macOS，通过源码编译安装库文件，适配 CMake 等构建系统，解决 C&#x2F;C++ 依赖配置复杂的问题。</p>
 <p><strong>基本操作</strong></p>
 <table>
 <thead>
@@ -468,8 +456,6 @@ var _hmt = _hmt || [];
 <td>.&#x2F;vcpkg integrate install</td>
 </tr>
 </tbody></table>
-</li>
-</ol>
 <h3 id="六款包管理器核心对比"><a href="#六款包管理器核心对比" class="headerlink" title="六款包管理器核心对比"></a>六款包管理器核心对比</h3><table>
 <thead>
 <tr>
@@ -551,7 +537,7 @@ var _hmt = _hmt || [];
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8D%B3%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">展开全文 >></a>
+          <a class="article-more-a" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">展开全文 >></a>
         </p>
       
 
