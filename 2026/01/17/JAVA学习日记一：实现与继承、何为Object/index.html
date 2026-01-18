@@ -6,18 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>相册 | Sumsol</title>
+  <title>JAVA学习日记一：实现与继承、何为Object、基本类型与包装类 | Sumsol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Photos   	图片正在加载中…     (function() {     var loadScript &#x3D; function(path) {       var $script &#x3D; document.createElement(&#39;script&#39;)       document.getElementsByTagName(&#39;body&#39;)[0].appendChild($script)">
-<meta property="og:type" content="website">
-<meta property="og:title" content="相册">
-<meta property="og:url" content="http://example.com/photos/index.html">
+  <meta name="description" content="实现（implements）与继承（extends）——Java 核心概念解析一、核心定义1. 继承（extends） 语法关键字：extends 核心含义：子类（派生类）继承父类（基类）的属性和方法，是「类 → 类」的纵向关系，体现 “is-a”（是一种）的语义。 本质：“子承父业”—— 子类复用父类的已有实现，还能重写父类方法、扩展新功能。  2. 实现（implements） 语法关键字：i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JAVA学习日记一：实现与继承、何为Object、基本类型与包装类">
+<meta property="og:url" content="http://example.com/2026/01/17/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%80%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%8E%E7%BB%A7%E6%89%BF%E3%80%81%E4%BD%95%E4%B8%BAObject/index.html">
 <meta property="og:site_name" content="Sumsol">
-<meta property="og:description" content="Photos   	图片正在加载中…     (function() {     var loadScript &#x3D; function(path) {       var $script &#x3D; document.createElement(&#39;script&#39;)       document.getElementsByTagName(&#39;body&#39;)[0].appendChild($script)">
+<meta property="og:description" content="实现（implements）与继承（extends）——Java 核心概念解析一、核心定义1. 继承（extends） 语法关键字：extends 核心含义：子类（派生类）继承父类（基类）的属性和方法，是「类 → 类」的纵向关系，体现 “is-a”（是一种）的语义。 本质：“子承父业”—— 子类复用父类的已有实现，还能重写父类方法、扩展新功能。  2. 实现（implements） 语法关键字：i">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-09-18T14:54:17.444Z">
-<meta property="article:modified_time" content="2025-09-18T14:54:17.444Z">
+<meta property="article:published_time" content="2026-01-17T06:53:29.000Z">
+<meta property="article:modified_time" content="2026-01-17T07:10:54.333Z">
 <meta property="article:author" content="zhangtf">
+<meta property="article:tag" content="颂">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Sumsol" type="application/atom+xml">
@@ -160,41 +161,296 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-photos" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-JAVA学习日记一：实现与继承、何为Object" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      相册
+      JAVA学习日记一：实现与继承、何为Object、基本类型与包装类
     </h1>
   
 
+        
+        <a href="/2026/01/17/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%80%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%8E%E7%BB%A7%E6%89%BF%E3%80%81%E4%BD%95%E4%B8%BAObject/" class="archive-article-date">
+  	<time datetime="2026-01-17T06:53:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-17</time>
+</a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <link rel="stylesheet" href="./ins.css">
-<div class="photos-btn-wrap">
-	<a class="photos-btn active" href="javascript:void(0)">Photos</a>
-</div>
-<div class="instagram itemscope">
-	<a href="https://fmzgl.github.io/" target="_blank" class="open-ins">图片正在加载中…</a>
-</div>
-<script>
-  (function() {
-    var loadScript = function(path) {
-      var $script = document.createElement('script')
-      document.getElementsByTagName('body')[0].appendChild($script)
-      $script.setAttribute('src', path)
-    }
-    setTimeout(function() {
-      loadScript('./ins.js')
-    }, 0)
-  })()
-</script>
+        <h2 id="实现（implements）与继承（extends）——Java-核心概念解析"><a href="#实现（implements）与继承（extends）——Java-核心概念解析" class="headerlink" title="实现（implements）与继承（extends）——Java 核心概念解析"></a>实现（implements）与继承（extends）——Java 核心概念解析</h2><h2 id="一、核心定义"><a href="#一、核心定义" class="headerlink" title="一、核心定义"></a>一、核心定义</h2><h3 id="1-继承（extends）"><a href="#1-继承（extends）" class="headerlink" title="1. 继承（extends）"></a>1. 继承（extends）</h3><ul>
+<li><strong>语法关键字</strong>：<code>extends</code></li>
+<li><strong>核心含义</strong>：子类（派生类）继承父类（基类）的属性和方法，是「类 → 类」的纵向关系，体现 “is-a”（是一种）的语义。</li>
+<li><strong>本质</strong>：“子承父业”—— 子类复用父类的已有实现，还能重写父类方法、扩展新功能。</li>
+</ul>
+<h3 id="2-实现（implements）"><a href="#2-实现（implements）" class="headerlink" title="2. 实现（implements）"></a>2. 实现（implements）</h3><ul>
+<li><strong>语法关键字</strong>：<code>implements</code></li>
+<li><strong>核心含义</strong>：类实现接口的所有抽象方法，是「类 → 接口」的横向关系，体现 “can-do”（能做）的语义。</li>
+<li><strong>本质</strong>：“按合同办事”—— 接口只定义规则（抽象方法），实现类必须遵守规则，提供方法的具体实现。</li>
+</ul>
+<h2 id="二、核心区别对比表"><a href="#二、核心区别对比表" class="headerlink" title="二、核心区别对比表"></a>二、核心区别对比表</h2><table>
+<thead>
+<tr>
+<th align="center">维度</th>
+<th align="center">继承（extends）</th>
+<th align="center">实现（implements）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">适用关系</td>
+<td align="center">类 → 类（仅能继承一个类，Java 单继承）</td>
+<td align="center">类 → 接口（可实现多个接口，多实现）</td>
+</tr>
+<tr>
+<td align="center">关键字</td>
+<td align="center"><code>extends</code></td>
+<td align="center"><code>implements</code></td>
+</tr>
+<tr>
+<td align="center">语义</td>
+<td align="center">is-a（比如：Cat extends Animal → 猫是一种动物）</td>
+<td align="center">can-do（比如：LinkedList implements List → LinkedList 能做 List 规定的事）</td>
+</tr>
+<tr>
+<td align="center">方法处理</td>
+<td align="center">继承父类的已有方法实现，可重写 &#x2F; 新增方法</td>
+<td align="center">必须实现接口的所有抽象方法（或声明为抽象类）</td>
+</tr>
+<tr>
+<td align="center">示例</td>
+<td align="center"><code>class Cat extends Animal &#123;&#125;</code></td>
+<td align="center"><code>class LinkedList implements List &#123;&#125;</code></td>
+</tr>
+</tbody></table>
+<h2 id="三、代码示例"><a href="#三、代码示例" class="headerlink" title="三、代码示例"></a>三、代码示例</h2><h3 id="1-继承（extends）示例"><a href="#1-继承（extends）示例" class="headerlink" title="1. 继承（extends）示例"></a>1. 继承（extends）示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">// 父类：定义通用属性和方法</span><br><span class="line">class Animal &#123;</span><br><span class="line">    String name;</span><br><span class="line">    public void eat() &#123;</span><br><span class="line">        System.out.println(name + &quot;吃东西&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 子类：继承父类，复用eat()方法，扩展新方法</span><br><span class="line">class Cat extends Animal &#123;</span><br><span class="line">    // 重写父类方法</span><br><span class="line">    @Override</span><br><span class="line">    public void eat() &#123;</span><br><span class="line">        System.out.println(name + &quot;吃小鱼干&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 新增子类独有方法</span><br><span class="line">    public void catchMouse() &#123;</span><br><span class="line">        System.out.println(name + &quot;抓老鼠&quot;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 使用</span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Cat cat = new Cat();</span><br><span class="line">        cat.name = &quot;小白&quot;;</span><br><span class="line">        cat.eat(); // 输出：小白吃小鱼干（重写后的方法）</span><br><span class="line">        cat.catchMouse(); // 输出：小白抓老鼠（子类独有方法）</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-实现（implements）示例"><a href="#2-实现（implements）示例" class="headerlink" title="2. 实现（implements）示例"></a>2. 实现（implements）示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">// 接口：只定义规则（抽象方法），无具体实现</span><br><span class="line">interface List&lt;E&gt; &#123;</span><br><span class="line">    void add(E e); // 抽象方法，无方法体</span><br><span class="line">    E get(int index); // 抽象方法，无方法体</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 实现类：必须实现接口的所有抽象方法</span><br><span class="line">class LinkedList&lt;E&gt; implements List&lt;E&gt; &#123;</span><br><span class="line">    // 实现add方法</span><br><span class="line">    @Override</span><br><span class="line">    public void add(E e) &#123;</span><br><span class="line">        System.out.println(&quot;向链表中添加元素：&quot; + e);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    // 实现get方法</span><br><span class="line">    @Override</span><br><span class="line">    public E get(int index) &#123;</span><br><span class="line">        System.out.println(&quot;获取索引&quot; + index + &quot;的元素&quot;);</span><br><span class="line">        return null; // 简化示例，实际需返回对应元素</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 使用</span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        List&lt;String&gt; list = new LinkedList&lt;&gt;();</span><br><span class="line">        list.add(&quot;Java&quot;); // 输出：向链表中添加元素：Java</span><br><span class="line">        list.get(0); // 输出：获取索引0的元素</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、关键补充规则"><a href="#四、关键补充规则" class="headerlink" title="四、关键补充规则"></a>四、关键补充规则</h2><h3 id="关于继承"><a href="#关于继承" class="headerlink" title="关于继承"></a>关于继承</h3><ol>
+<li>Java 是<strong>单继承</strong>：一个类只能直接继承一个父类（比如<code>class A extends B</code>合法，<code>class A extends B, C</code>报错）；</li>
+<li>所有类最终都继承自<code>Object</code>类（默认继承，无需手动写<code>extends Object</code>）；</li>
+<li>子类可通过<code>super</code>关键字调用父类的构造方法、属性和方法。</li>
+</ol>
+<h3 id="关于实现"><a href="#关于实现" class="headerlink" title="关于实现"></a>关于实现</h3><ol>
+<li>Java 支持<strong>多实现</strong>：一个类可实现多个接口（比如<code>class A implements B, C</code>合法）；</li>
+<li>接口只能定义抽象方法（Java 8 + 支持默认方法<code>default</code>）、常量，不能定义实例变量；</li>
+<li>接口不能被实例化（<code>new List&lt;&gt;()</code>报错），只能由实现类实例化后通过接口引用（<code>List list = new LinkedList&lt;&gt;()</code>合法）。</li>
+</ol>
+<h2 id="Object-类-——Java-万物之根"><a href="#Object-类-——Java-万物之根" class="headerlink" title="Object 类 ——Java 万物之根"></a>Object 类 ——Java 万物之根</h2><h2 id="一、核心特性"><a href="#一、核心特性" class="headerlink" title="一、核心特性"></a>一、核心特性</h2><h3 id="1-所有类默认继承-Object"><a href="#1-所有类默认继承-Object" class="headerlink" title="1. 所有类默认继承 Object"></a>1. 所有类默认继承 Object</h3><p>Java 语法规定：任何类如果没有显式声明 <code>extends</code> 父类，编译器会自动为其添加 <code>extends Object</code>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 你写的代码</span><br><span class="line">class Person &#123;</span><br><span class="line">    String name;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Java 实际编译后的等效代码</span><br><span class="line">class Person extends Object &#123;</span><br><span class="line">    String name;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>因此，所有 Java 对象（引用类型）都可以向上转型为 <code>Object</code> 类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Object obj1 = new Person(); // 自定义类对象</span><br><span class="line">Object obj2 = new LinkedList&lt;&gt;(); // 内置类对象</span><br><span class="line">Object obj3 = &quot;Java&quot;; // 字符串对象（String 继承 Object）</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Object-是-“顶级父类”，无父类"><a href="#2-Object-是-“顶级父类”，无父类" class="headerlink" title="2. Object 是 “顶级父类”，无父类"></a>2. Object 是 “顶级父类”，无父类</h3><p><code>Object</code> 类本身没有继承任何类，是 Java 继承体系的 “顶端”，其类定义简化如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public class Object &#123;</span><br><span class="line">    // 构造方法</span><br><span class="line">    public Object() &#123;&#125;</span><br><span class="line">    </span><br><span class="line">    // 核心方法（共8个）</span><br><span class="line">    public boolean equals(Object obj) &#123;&#125;</span><br><span class="line">    public int hashCode() &#123;&#125;</span><br><span class="line">    public String toString() &#123;&#125;</span><br><span class="line">    public Class&lt;?&gt; getClass() &#123;&#125;</span><br><span class="line">    protected Object clone() throws CloneNotSupportedException &#123;&#125;</span><br><span class="line">    protected void finalize() throws Throwable &#123;&#125; // 已废弃</span><br><span class="line">    public void notify() &#123;&#125;</span><br><span class="line">    public void wait() throws InterruptedException &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、Object-的核心方法（必懂）"><a href="#二、Object-的核心方法（必懂）" class="headerlink" title="二、Object 的核心方法（必懂）"></a>二、Object 的核心方法（必懂）</h2><p>Object 类定义了 8 个核心方法，所有 Java 对象都继承这些方法，且可通过 <code>@Override</code> 重写以定制行为：</p>
+<table>
+<thead>
+<tr>
+<th align="center">方法名</th>
+<th align="center">核心作用（通俗版）</th>
+<th align="center">常用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>toString()</code></td>
+<td align="center">返回对象的字符串描述</td>
+<td align="center">打印对象时自动调用（<code>System.out.println(obj)</code>）</td>
+</tr>
+<tr>
+<td align="center"><code>equals(Object obj)</code></td>
+<td align="center">判断两个对象是否 “逻辑相等”</td>
+<td align="center">比较自定义对象（如 <code>Person</code>）是否相等</td>
+</tr>
+<tr>
+<td align="center"><code>hashCode()</code></td>
+<td align="center">返回对象的哈希值（整数）</td>
+<td align="center">配合 <code>HashMap</code>&#x2F;<code>HashSet</code> 使用</td>
+</tr>
+<tr>
+<td align="center"><code>getClass()</code></td>
+<td align="center">获取对象的实际类型（运行时类型）</td>
+<td align="center">反射、判断对象类型（如 <code>obj.getClass() == LinkedList.class</code>）</td>
+</tr>
+<tr>
+<td align="center"><code>wait()</code>&#x2F;<code>notify()</code></td>
+<td align="center">线程等待 &#x2F; 唤醒</td>
+<td align="center">多线程通信</td>
+</tr>
+</tbody></table>
+<h3 id="关键方法示例"><a href="#关键方法示例" class="headerlink" title="关键方法示例"></a>关键方法示例</h3><h4 id="1-toString-重写"><a href="#1-toString-重写" class="headerlink" title="1. toString() 重写"></a>1. <code>toString()</code> 重写</h4><p>默认的 <code>toString()</code> 返回 <code>类名@哈希值</code>（无意义），通常重写为返回对象的核心属性：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">class Person &#123;</span><br><span class="line">    String name;</span><br><span class="line">    int age;</span><br><span class="line">    </span><br><span class="line">    // 重写 toString()</span><br><span class="line">    @Override</span><br><span class="line">    public String toString() &#123;</span><br><span class="line">        return &quot;Person&#123;name=&#x27;&quot; + name + &quot;&#x27;, age=&quot; + age + &quot;&#125;&quot;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Person p = new Person();</span><br><span class="line">        p.name = &quot;张三&quot;;</span><br><span class="line">        p.age = 20;</span><br><span class="line">        System.out.println(p); // 自动调用 toString()，输出：Person&#123;name=&#x27;张三&#x27;, age=20&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-equals-重写"><a href="#2-equals-重写" class="headerlink" title="2. equals() 重写"></a>2. <code>equals()</code> 重写</h4><p>默认的 <code>equals()</code> 等价于 <code>==</code>（比较对象内存地址），通常重写为比较 “逻辑内容”：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">class Person &#123;</span><br><span class="line">    String name;</span><br><span class="line">    int age;</span><br><span class="line">    </span><br><span class="line">    // 重写 equals()</span><br><span class="line">    @Override</span><br><span class="line">    public boolean equals(Object obj) &#123;</span><br><span class="line">        if (this == obj) return true; // 地址相同，直接相等</span><br><span class="line">        if (obj == null || getClass() != obj.getClass()) return false; // 空/类型不同，不相等</span><br><span class="line">        Person person = (Person) obj;</span><br><span class="line">        return age == person.age &amp;&amp; name.equals(person.name); // 比较属性</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">public class Test &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        Person p1 = new Person();</span><br><span class="line">        p1.name = &quot;张三&quot;;</span><br><span class="line">        p1.age = 20;</span><br><span class="line">        </span><br><span class="line">        Person p2 = new Person();</span><br><span class="line">        p2.name = &quot;张三&quot;;</span><br><span class="line">        p2.age = 20;</span><br><span class="line">        </span><br><span class="line">        System.out.println(p1.equals(p2)); // 输出：true（逻辑相等）</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、Object-的适用范围"><a href="#三、Object-的适用范围" class="headerlink" title="三、Object 的适用范围"></a>三、Object 的适用范围</h2><ul>
+<li>✅ <strong>引用类型</strong>：所有引用类型（类、接口、数组）都继承 Object 的方法；</li>
+<li>❌ <strong>基本类型</strong>：<code>int</code>、<code>char</code>、<code>boolean</code> 等基本类型不继承 Object，但它们的包装类（<code>Integer</code>、<code>Character</code>、<code>Boolean</code>）继承 Object。</li>
+</ul>
+<p>示例：数组（引用类型）也能调用 Object 方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int[] arr = &#123;1,2,3&#125;;</span><br><span class="line">System.out.println(arr.toString()); // 调用 Object 的 toString()</span><br><span class="line">System.out.println(arr.equals(new int[]&#123;1,2,3&#125;)); // 调用 Object 的 equals()（比较地址）</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<h2 id="基本类型与包装类-——Java-数据类型的两大核心"><a href="#基本类型与包装类-——Java-数据类型的两大核心" class="headerlink" title="基本类型与包装类 ——Java 数据类型的两大核心"></a>基本类型与包装类 ——Java 数据类型的两大核心</h2><p>在 Java 中，数据类型分为<strong>基本类型（Primitive Type）</strong> 和<strong>引用类型（Reference Type）</strong>，包装类（Wrapper Class）是为了解决 “基本类型无法直接参与面向对象编程” 的问题，给每个基本类型封装的引用类型，是连接基本类型和面向对象体系的桥梁。</p>
+<h2 id="一、基本类型（Primitive-Type）"><a href="#一、基本类型（Primitive-Type）" class="headerlink" title="一、基本类型（Primitive Type）"></a>一、基本类型（Primitive Type）</h2><h3 id="1-核心定义"><a href="#1-核心定义" class="headerlink" title="1. 核心定义"></a>1. 核心定义</h3><p>基本类型是 Java 内置的 “值类型”，直接存储数据值，不继承<code>Object</code>类，也没有方法 &#x2F; 属性，占用固定大小的内存空间，是最基础的数据存储单元。</p>
+<h3 id="2-所有基本类型（8-种）"><a href="#2-所有基本类型（8-种）" class="headerlink" title="2. 所有基本类型（8 种）"></a>2. 所有基本类型（8 种）</h3><table>
+<thead>
+<tr>
+<th align="center">基本类型</th>
+<th align="center">关键字</th>
+<th align="center">占用空间</th>
+<th align="center">默认值</th>
+<th align="center">取值范围</th>
+<th align="center">包装类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">布尔型</td>
+<td align="center">boolean</td>
+<td align="center">1 字节</td>
+<td align="center">false</td>
+<td align="center">true &#x2F; false</td>
+<td align="center">Boolean</td>
+</tr>
+<tr>
+<td align="center">字节型</td>
+<td align="center">byte</td>
+<td align="center">1 字节</td>
+<td align="center">0</td>
+<td align="center">-128 ~ 127</td>
+<td align="center">Byte</td>
+</tr>
+<tr>
+<td align="center">短整型</td>
+<td align="center">short</td>
+<td align="center">2 字节</td>
+<td align="center">0</td>
+<td align="center">-32768 ~ 32767</td>
+<td align="center">Short</td>
+</tr>
+<tr>
+<td align="center">整型</td>
+<td align="center">int</td>
+<td align="center">4 字节</td>
+<td align="center">0</td>
+<td align="center">-2³¹ ~ 2³¹-1（约 ±21 亿）</td>
+<td align="center">Integer</td>
+</tr>
+<tr>
+<td align="center">长整型</td>
+<td align="center">long</td>
+<td align="center">8 字节</td>
+<td align="center">0L</td>
+<td align="center">-2⁶³ ~ 2⁶³-1</td>
+<td align="center">Long</td>
+</tr>
+<tr>
+<td align="center">浮点型</td>
+<td align="center">float</td>
+<td align="center">4 字节</td>
+<td align="center">0.0f</td>
+<td align="center">±3.4×10³⁸（单精度）</td>
+<td align="center">Float</td>
+</tr>
+<tr>
+<td align="center">双精度型</td>
+<td align="center">double</td>
+<td align="center">8 字节</td>
+<td align="center">0.0d</td>
+<td align="center">±1.8×10³⁰⁸（双精度）</td>
+<td align="center">Double</td>
+</tr>
+<tr>
+<td align="center">字符型</td>
+<td align="center">char</td>
+<td align="center">2 字节</td>
+<td align="center">‘\u0000’</td>
+<td align="center">‘\u0000’ ~ ‘\uffff’（Unicode）</td>
+<td align="center">Character</td>
+</tr>
+</tbody></table>
+<h3 id="3-基本类型的特点"><a href="#3-基本类型的特点" class="headerlink" title="3. 基本类型的特点"></a>3. 基本类型的特点</h3><ul>
+<li>直接存储值，比如<code>int a = 10;</code>，变量<code>a</code>直接存 “10” 这个数值；</li>
+<li>不能调用方法，比如<code>10.toString()</code>会报错（基本类型没有方法）；</li>
+<li>存储在栈内存（栈帧的局部变量表），访问速度快；</li>
+<li>不能为<code>null</code>，必须有具体值（未赋值的成员变量会取默认值）。</li>
+</ul>
+<p>示例：基本类型的使用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 基本类型变量</span><br><span class="line">int num = 10; </span><br><span class="line">boolean flag = true;</span><br><span class="line">char c = &#x27;A&#x27;;</span><br><span class="line"></span><br><span class="line">// 错误：基本类型没有方法</span><br><span class="line">// System.out.println(num.toString()); </span><br></pre></td></tr></table></figure>
+
+<h2 id="二、包装类（Wrapper-Class）"><a href="#二、包装类（Wrapper-Class）" class="headerlink" title="二、包装类（Wrapper Class）"></a>二、包装类（Wrapper Class）</h2><h3 id="1-核心定义-1"><a href="#1-核心定义-1" class="headerlink" title="1. 核心定义"></a>1. 核心定义</h3><p>包装类是 Java 为每个基本类型提供的 “引用类型封装类”，继承自<code>Object</code>类，具备面向对象的所有特性（可调用方法、可作为集合元素、可赋值为<code>null</code>）。</p>
+<h3 id="2-包装类的核心作用"><a href="#2-包装类的核心作用" class="headerlink" title="2. 包装类的核心作用"></a>2. 包装类的核心作用</h3><ul>
+<li>让基本类型能参与面向对象编程（比如放入<code>List</code>&#x2F;<code>Map</code>等集合，集合只接受引用类型）；</li>
+<li>提供丰富的工具方法（比如类型转换、进制转换、最值获取）；</li>
+<li>支持<code>null</code>值（基本类型不能为<code>null</code>，包装类可以，适配数据库 &#x2F; JSON 的空值场景）。</li>
+</ul>
+<h3 id="3-包装类的使用示例"><a href="#3-包装类的使用示例" class="headerlink" title="3. 包装类的使用示例"></a>3. 包装类的使用示例</h3><h4 id="（1）基本类型-↔-包装类转换（自动装箱-拆箱）"><a href="#（1）基本类型-↔-包装类转换（自动装箱-拆箱）" class="headerlink" title="（1）基本类型 ↔ 包装类转换（自动装箱 &#x2F; 拆箱）"></a>（1）基本类型 ↔ 包装类转换（自动装箱 &#x2F; 拆箱）</h4><p>Java 5 + 支持<strong>自动装箱（Autoboxing）</strong> 和<strong>自动拆箱（Unboxing）</strong>，无需手动转换：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 自动装箱：基本类型 → 包装类</span><br><span class="line">Integer num1 = 10; // 等价于 Integer num1 = Integer.valueOf(10);</span><br><span class="line">Boolean flag1 = true; // 等价于 Boolean flag1 = Boolean.valueOf(true);</span><br><span class="line"></span><br><span class="line">// 自动拆箱：包装类 → 基本类型</span><br><span class="line">int num2 = num1; // 等价于 int num2 = num1.intValue();</span><br><span class="line">boolean flag2 = flag1; // 等价于 boolean flag2 = flag1.booleanValue();</span><br><span class="line"></span><br><span class="line">// 手动转换（了解即可，日常用自动装箱/拆箱）</span><br><span class="line">Integer num3 = Integer.valueOf(20); // 手动装箱</span><br><span class="line">int num4 = num3.intValue(); // 手动拆箱</span><br></pre></td></tr></table></figure>
+
+<h4 id="（2）包装类的工具方法"><a href="#（2）包装类的工具方法" class="headerlink" title="（2）包装类的工具方法"></a>（2）包装类的工具方法</h4><p>包装类提供了大量实用方法，基本类型无法直接调用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 1. 字符串转基本类型</span><br><span class="line">int num = Integer.parseInt(&quot;123&quot;); // 字符串&quot;123&quot; → int 123</span><br><span class="line">double d = Double.parseDouble(&quot;3.14&quot;); // 字符串&quot;3.14&quot; → double 3.14</span><br><span class="line"></span><br><span class="line">// 2. 获取最值</span><br><span class="line">int maxInt = Integer.MAX_VALUE; // 获取int的最大值（2147483647）</span><br><span class="line">long minLong = Long.MIN_VALUE; // 获取long的最小值</span><br><span class="line"></span><br><span class="line">// 3. 进制转换</span><br><span class="line">String binary = Integer.toBinaryString(10); // 10 → 二进制字符串&quot;1010&quot;</span><br><span class="line">String hex = Integer.toHexString(255); // 255 → 十六进制字符串&quot;ff&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="（3）包装类作为集合元素"><a href="#（3）包装类作为集合元素" class="headerlink" title="（3）包装类作为集合元素"></a>（3）包装类作为集合元素</h4><p>集合（如<code>List</code>&#x2F;<code>Set</code>）只接受引用类型，必须用包装类存储基本类型：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 正确：List接受包装类Integer</span><br><span class="line">List&lt;Integer&gt; list = new ArrayList&lt;&gt;();</span><br><span class="line">list.add(10); // 自动装箱为Integer，加入集合</span><br><span class="line">list.add(20);</span><br><span class="line"></span><br><span class="line">// 错误：List不能直接存储基本类型int</span><br><span class="line">// List&lt;int&gt; list2 = new ArrayList&lt;&gt;(); </span><br></pre></td></tr></table></figure>
+
+<h2 id="三、基本类型-vs-包装类-核心区别"><a href="#三、基本类型-vs-包装类-核心区别" class="headerlink" title="三、基本类型 vs 包装类 核心区别"></a>三、基本类型 vs 包装类 核心区别</h2><table>
+<thead>
+<tr>
+<th align="center">维度</th>
+<th align="center">基本类型</th>
+<th align="center">包装类</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">类型归属</td>
+<td align="center">值类型（非 Object 子类）</td>
+<td align="center">引用类型（继承 Object）</td>
+</tr>
+<tr>
+<td align="center">存储方式</td>
+<td align="center">栈内存直接存值</td>
+<td align="center">堆内存存对象，栈存地址</td>
+</tr>
+<tr>
+<td align="center">可赋值为 null</td>
+<td align="center">否（必须有值）</td>
+<td align="center">是（如 Integer a &#x3D; null;）</td>
+</tr>
+<tr>
+<td align="center">能否调用方法</td>
+<td align="center">否</td>
+<td align="center">是（如 Integer.parseInt ()）</td>
+</tr>
+<tr>
+<td align="center">集合支持</td>
+<td align="center">不支持（集合只收引用类型）</td>
+<td align="center">支持</td>
+</tr>
+<tr>
+<td align="center">默认值</td>
+<td align="center">如 int 默认 0、boolean 默认 false</td>
+<td align="center">默认 null</td>
+</tr>
+</tbody></table>
+<h2 id="四、常见坑点提醒"><a href="#四、常见坑点提醒" class="headerlink" title="四、常见坑点提醒"></a>四、常见坑点提醒</h2><h3 id="1-包装类的相等比较"><a href="#1-包装类的相等比较" class="headerlink" title="1. 包装类的相等比较"></a>1. 包装类的相等比较</h3><ul>
+<li>基本类型用<code>==</code>比较<strong>值</strong>，包装类用<code>==</code>比较<strong>地址</strong>（除非是 - 128~127 的 Integer 缓存值）；</li>
+<li>包装类比较值必须用<code>equals()</code>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Integer a = 128;</span><br><span class="line">Integer b = 128;</span><br><span class="line">System.out.println(a == b); // false（地址不同）</span><br><span class="line">System.out.println(a.equals(b)); // true（值相同）</span><br><span class="line"></span><br><span class="line">Integer c = 100;</span><br><span class="line">Integer d = 100;</span><br><span class="line">System.out.println(c == d); // true（-128~127的Integer被缓存，地址相同）</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-包装类拆箱时的空指针异常"><a href="#2-包装类拆箱时的空指针异常" class="headerlink" title="2. 包装类拆箱时的空指针异常"></a>2. 包装类拆箱时的空指针异常</h3><p>如果包装类为<code>null</code>，自动拆箱会抛<code>NullPointerException</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Integer num = null;</span><br><span class="line">int n = num; // 报错：NullPointerException（null不能拆箱为int）</span><br></pre></td></tr></table></figure>
 
       
 
@@ -203,6 +459,17 @@ var _hmt = _hmt || [];
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
@@ -253,7 +520,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/photos/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2026/01/17/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%80%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%8E%E7%BB%A7%E6%89%BF%E3%80%81%E4%BD%95%E4%B8%BAObject/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -265,6 +532,25 @@ var _hmt = _hmt || [];
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2049/10/01/%E6%A0%87%E7%AD%BE%E8%AF%B4%E6%98%8E/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          标签说明
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2025/12/06/%E9%9D%99%E4%BB%A5%E4%BF%AE%E8%BA%AB/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">静以修身</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -284,6 +570,14 @@ var _hmt = _hmt || [];
 
 
 
+  
+  
+  
+
+  
+
+  
+
 
           </div>
         </div>
@@ -292,7 +586,7 @@ var _hmt = _hmt || [];
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2025 zhangtf
+    		&copy; 2026 zhangtf
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -305,7 +599,7 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
@@ -375,15 +669,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">雅</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">颂</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">风</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">雅</a>
               </li>
             
             <div class="clearfix"></div>
@@ -466,7 +760,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     
     	<section class="tools-section tools-section-me" q-show="aboutme">
   	  	
-  	  		<div class="aboutme-wrap" id="js-aboutme">“在你成功之前没人想听你的故事”</div>
+  	  		<div class="aboutme-wrap" id="js-aboutme">“永远保持学习，接触新事物，永远积极”</div>
   	  	
     	</section>
     
