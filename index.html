@@ -225,6 +225,448 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-JAVA学习日记三：JAVA常用数据结构（集合）" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/19/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%89%EF%BC%9AJAVA%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E9%9B%86%E5%90%88%EF%BC%89/">JAVA学习日记三：JAVA常用数据结构（集合）</a>
+    </h1>
+  
+
+        
+        <a href="/2026/01/19/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%89%EF%BC%9AJAVA%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E9%9B%86%E5%90%88%EF%BC%89/" class="archive-article-date">
+  	<time datetime="2026-01-19T06:11:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一、ArrayList（动态数组）"><a href="#一、ArrayList（动态数组）" class="headerlink" title="一、ArrayList（动态数组）"></a>一、ArrayList（动态数组）</h3><h4 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>基于<strong>定长数组扩容实现</strong>的动态序列，支持随机访问，尾部增删高效，是竞赛中 “动态长度序列” 的首选（替代手动扩容的数组）。</p>
+<ul>
+<li>核心优势：随机访问 O (1)、尾部增删 O (1)（均摊）；</li>
+<li>核心劣势：中间增删 O (n)（竞赛中避免使用）。</li>
+</ul>
+<h4 id="2-竞赛常用函数"><a href="#2-竞赛常用函数" class="headerlink" title="2. 竞赛常用函数"></a>2. 竞赛常用函数</h4><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">作用</th>
+<th align="center">时间复杂度</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>add(e)</code></td>
+<td align="center">尾部添加元素</td>
+<td align="center">O(1)</td>
+<td align="center">竞赛最常用</td>
+</tr>
+<tr>
+<td align="center"><code>add(index, e)</code></td>
+<td align="center">指定位置添加元素</td>
+<td align="center">O(n)</td>
+<td align="center">慎用！</td>
+</tr>
+<tr>
+<td align="center"><code>get(index)</code></td>
+<td align="center">获取指定位置元素</td>
+<td align="center">O(1)</td>
+<td align="center">随机访问核心函数</td>
+</tr>
+<tr>
+<td align="center"><code>set(index, e)</code></td>
+<td align="center">修改指定位置元素</td>
+<td align="center">O(1)</td>
+<td align="center">替代数组赋值</td>
+</tr>
+<tr>
+<td align="center"><code>size()</code></td>
+<td align="center">获取元素个数</td>
+<td align="center">O(1)</td>
+<td align="center">遍历 &#x2F; 判断空的基础</td>
+</tr>
+<tr>
+<td align="center"><code>isEmpty()</code></td>
+<td align="center">判断是否为空</td>
+<td align="center">O(1)</td>
+<td align="center">避免索引越界</td>
+</tr>
+<tr>
+<td align="center"><code>remove(size()-1)</code></td>
+<td align="center">删除最后一个元素</td>
+<td align="center">O(1)</td>
+<td align="center">仅推荐删除尾部元素</td>
+</tr>
+<tr>
+<td align="center"><code>clear()</code></td>
+<td align="center">清空集合</td>
+<td align="center">O(1)</td>
+<td align="center">复用集合时使用</td>
+</tr>
+<tr>
+<td align="center"><code>Collections.sort(list)</code></td>
+<td align="center">升序排序</td>
+<td align="center">O(n logn)</td>
+<td align="center">竞赛核心排序方式</td>
+</tr>
+<tr>
+<td align="center"><code>Collections.sort(list, Collections.reverseOrder())</code></td>
+<td align="center">降序排序</td>
+<td align="center">O(n logn)</td>
+<td align="center">替代手写比较器</td>
+</tr>
+</tbody></table>
+<h4 id="3-竞赛代码实例"><a href="#3-竞赛代码实例" class="headerlink" title="3. 竞赛代码实例"></a>3. 竞赛代码实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.Collections;</span><br><span class="line"></span><br><span class="line">public class ArrayListDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 初始化：指定初始容量（避免扩容，竞赛必做）</span><br><span class="line">        ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;(100000);</span><br><span class="line">        </span><br><span class="line">        // 1. 尾部添加元素（O(1)）</span><br><span class="line">        list.add(5);</span><br><span class="line">        list.add(2);</span><br><span class="line">        list.add(8);</span><br><span class="line">        list.add(1);</span><br><span class="line">        </span><br><span class="line">        // 2. 随机访问（O(1)）</span><br><span class="line">        int first = list.get(0); // 5</span><br><span class="line">        list.set(1, 3); // 将索引1的元素改为3 → [5,3,8,1]</span><br><span class="line">        </span><br><span class="line">        // 3. 排序（升序/降序）</span><br><span class="line">        Collections.sort(list); // 升序 → [1,3,5,8]</span><br><span class="line">        Collections.sort(list, Collections.reverseOrder()); // 降序 → [8,5,3,1]</span><br><span class="line">        </span><br><span class="line">        // 4. 遍历（竞赛优先普通for循环，更快）</span><br><span class="line">        for (int i = 0; i &lt; list.size(); i++) &#123;</span><br><span class="line">            System.out.print(list.get(i) + &quot; &quot;); // 8 5 3 1</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 5. 转数组（竞赛常用，适配数组操作）</span><br><span class="line">        Integer[] arr = list.toArray(new Integer[0]);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="二、HashSet-HashMap（哈希集合-哈希映射）"><a href="#二、HashSet-HashMap（哈希集合-哈希映射）" class="headerlink" title="二、HashSet&#x2F;HashMap（哈希集合 &#x2F; 哈希映射）"></a>二、HashSet&#x2F;HashMap（哈希集合 &#x2F; 哈希映射）</h3><h4 id="1-定义-1"><a href="#1-定义-1" class="headerlink" title="1. 定义"></a>1. 定义</h4><ul>
+<li><code>HashSet</code>：基于哈希表实现的无序集合，核心作用是<strong>快速判重 &#x2F; 去重</strong>（无重复元素）；</li>
+<li><code>HashMap</code>：基于哈希表实现的键值对映射，核心作用是<strong>键值关联 &#x2F; 频率统计</strong>（键唯一，值可重复）；</li>
+<li>核心优势：增删查均为 O (1)（均摊）；核心劣势：无序、需处理哈希冲突（竞赛中无需关注）。</li>
+</ul>
+<h4 id="2-竞赛常用函数-1"><a href="#2-竞赛常用函数-1" class="headerlink" title="2. 竞赛常用函数"></a>2. 竞赛常用函数</h4><h5 id="（1）HashSet-常用函数"><a href="#（1）HashSet-常用函数" class="headerlink" title="（1）HashSet 常用函数"></a>（1）HashSet 常用函数</h5><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">作用</th>
+<th align="center">时间复杂度</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>add(e)</code></td>
+<td align="center">添加元素（重复则忽略）</td>
+<td align="center">O(1)</td>
+<td align="center">判重核心操作</td>
+</tr>
+<tr>
+<td align="center"><code>contains(e)</code></td>
+<td align="center">判断元素是否存在</td>
+<td align="center">O(1)</td>
+<td align="center">竞赛最常用</td>
+</tr>
+<tr>
+<td align="center"><code>remove(e)</code></td>
+<td align="center">删除元素</td>
+<td align="center">O(1)</td>
+<td align="center">按需使用</td>
+</tr>
+<tr>
+<td align="center"><code>size()</code>&#x2F;<code>isEmpty()</code></td>
+<td align="center">获取大小 &#x2F; 判空</td>
+<td align="center">O(1)</td>
+<td align="center">基础操作</td>
+</tr>
+</tbody></table>
+<h5 id="（2）HashMap-常用函数"><a href="#（2）HashMap-常用函数" class="headerlink" title="（2）HashMap 常用函数"></a>（2）HashMap 常用函数</h5><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">作用</th>
+<th align="center">时间复杂度</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>put(key, value)</code></td>
+<td align="center">添加键值对（覆盖已有键的值）</td>
+<td align="center">O(1)</td>
+<td align="center">核心赋值操作</td>
+</tr>
+<tr>
+<td align="center"><code>get(key)</code></td>
+<td align="center">获取键对应的值（无则返回 null）</td>
+<td align="center">O(1)</td>
+<td align="center">需配合 getOrDefault 使用</td>
+</tr>
+<tr>
+<td align="center"><code>getOrDefault(key, defaultValue)</code></td>
+<td align="center">获取值（无则返回默认值）</td>
+<td align="center">O(1)</td>
+<td align="center">避免空指针，竞赛必用</td>
+</tr>
+<tr>
+<td align="center"><code>containsKey(key)</code></td>
+<td align="center">判断键是否存在</td>
+<td align="center">O(1)</td>
+<td align="center">判重 &#x2F; 防覆盖</td>
+</tr>
+<tr>
+<td align="center"><code>entrySet()</code></td>
+<td align="center">获取所有键值对</td>
+<td align="center">O(n)</td>
+<td align="center">遍历核心</td>
+</tr>
+</tbody></table>
+<h4 id="3-竞赛代码实例-1"><a href="#3-竞赛代码实例-1" class="headerlink" title="3. 竞赛代码实例"></a>3. 竞赛代码实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">import java.util.HashSet;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class HashDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // ===== HashSet：快速判重 =====</span><br><span class="line">        HashSet&lt;Integer&gt; set = new HashSet&lt;&gt;();</span><br><span class="line">        int[] nums = &#123;1,2,3,2,4,1&#125;;</span><br><span class="line">        // 去重+判重</span><br><span class="line">        for (int num : nums) &#123;</span><br><span class="line">            if (!set.contains(num)) &#123; // 判重</span><br><span class="line">                set.add(num); // 仅添加不重复元素</span><br><span class="line">                System.out.print(num + &quot; &quot;); // 1 2 3 4</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // ===== HashMap：频率统计 =====</span><br><span class="line">        HashMap&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">        // 统计每个数出现的次数</span><br><span class="line">        for (int num : nums) &#123;</span><br><span class="line">            // 核心写法：无则默认0，+1后存入</span><br><span class="line">            map.put(num, map.getOrDefault(num, 0) + 1);</span><br><span class="line">        &#125;</span><br><span class="line">        // 遍历键值对</span><br><span class="line">        for (Map.Entry&lt;Integer, Integer&gt; entry : map.entrySet()) &#123;</span><br><span class="line">            int key = entry.getKey();</span><br><span class="line">            int cnt = entry.getValue();</span><br><span class="line">            System.out.println(key + &quot;出现&quot; + cnt + &quot;次&quot;); </span><br><span class="line">            // 1:2次，2:2次，3:1次，4:1次</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、ArrayDeque（双端队列）"><a href="#三、ArrayDeque（双端队列）" class="headerlink" title="三、ArrayDeque（双端队列）"></a>三、ArrayDeque（双端队列）</h3><h4 id="1-定义-2"><a href="#1-定义-2" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>基于<strong>循环数组实现</strong>的双端队列，是竞赛中 “队列 &#x2F; 栈 &#x2F; 双端队列” 的唯一推荐实现（吊打 Stack&#x2F;LinkedList）。</p>
+<ul>
+<li>核心优势：两端增删 O (1)，比 LinkedList 快 3~5 倍；</li>
+<li>核心劣势：中间增删 O (n)（竞赛中不用）。</li>
+</ul>
+<h4 id="2-竞赛常用函数-2"><a href="#2-竞赛常用函数-2" class="headerlink" title="2. 竞赛常用函数"></a>2. 竞赛常用函数</h4><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">作用（队列 &#x2F; 栈场景）</th>
+<th align="center">时间复杂度</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>offer(e)</code></td>
+<td align="center">队列：队尾入队</td>
+<td align="center">O(1)</td>
+<td align="center">BFS 核心操作</td>
+</tr>
+<tr>
+<td align="center"><code>poll()</code></td>
+<td align="center">队列：队首出队（空则返回 null）</td>
+<td align="center">O(1)</td>
+<td align="center">配合 isEmpty () 使用</td>
+</tr>
+<tr>
+<td align="center"><code>peek()</code></td>
+<td align="center">队列：查看队首（不删除）</td>
+<td align="center">O(1)</td>
+<td align="center">查看最值</td>
+</tr>
+<tr>
+<td align="center"><code>push(e)</code></td>
+<td align="center">栈：栈顶入栈</td>
+<td align="center">O(1)</td>
+<td align="center">DFS 核心操作</td>
+</tr>
+<tr>
+<td align="center"><code>pop()</code></td>
+<td align="center">栈：栈顶出栈（空则抛异常）</td>
+<td align="center">O(1)</td>
+<td align="center">先判 isEmpty ()</td>
+</tr>
+<tr>
+<td align="center"><code>addFirst(e)</code></td>
+<td align="center">双端队列：队首添加</td>
+<td align="center">O(1)</td>
+<td align="center">单调队列核心</td>
+</tr>
+<tr>
+<td align="center"><code>pollLast()</code></td>
+<td align="center">双端队列：队尾删除</td>
+<td align="center">O(1)</td>
+<td align="center">单调队列核心</td>
+</tr>
+<tr>
+<td align="center"><code>peekLast()</code></td>
+<td align="center">双端队列：查看队尾（不删除）</td>
+<td align="center">O(1)</td>
+<td align="center">单调队列核心</td>
+</tr>
+<tr>
+<td align="center"><code>isEmpty()</code></td>
+<td align="center">判断是否为空</td>
+<td align="center">O(1)</td>
+<td align="center">防空指针 &#x2F; 异常</td>
+</tr>
+</tbody></table>
+<h4 id="3-竞赛代码实例-2"><a href="#3-竞赛代码实例-2" class="headerlink" title="3. 竞赛代码实例"></a>3. 竞赛代码实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">import java.util.ArrayDeque;</span><br><span class="line"></span><br><span class="line">public class ArrayDequeDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 1. 作为队列（BFS场景）</span><br><span class="line">        ArrayDeque&lt;Integer&gt; queue = new ArrayDeque&lt;&gt;();</span><br><span class="line">        queue.offer(1); // 入队：1</span><br><span class="line">        queue.offer(2); // 入队：1→2</span><br><span class="line">        int qHead = queue.poll(); // 出队1 → 队列剩余2</span><br><span class="line">        int qPeek = queue.peek(); // 查看队首2（不删除）</span><br><span class="line">        </span><br><span class="line">        // 2. 作为栈（DFS场景）</span><br><span class="line">        ArrayDeque&lt;Integer&gt; stack = new ArrayDeque&lt;&gt;();</span><br><span class="line">        stack.push(1); // 入栈：1</span><br><span class="line">        stack.push(2); // 入栈：2→1</span><br><span class="line">        if (!stack.isEmpty()) &#123; // 先判空</span><br><span class="line">            int sTop = stack.pop(); // 出栈2 → 栈剩余1</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 3. 作为单调队列（滑动窗口最大值）</span><br><span class="line">        ArrayDeque&lt;Integer&gt; deque = new ArrayDeque&lt;&gt;();</span><br><span class="line">        int[] nums = &#123;1,3,-1,-3,5,3,6,7&#125;;</span><br><span class="line">        int k = 3;</span><br><span class="line">        for (int i = 0; i &lt; nums.length; i++) &#123;</span><br><span class="line">            // 移除队尾比当前元素小的数（维护单调递减）</span><br><span class="line">            while (!deque.isEmpty() &amp;&amp; nums[i] &gt;= nums[deque.peekLast()]) &#123;</span><br><span class="line">                deque.pollLast();</span><br><span class="line">            &#125;</span><br><span class="line">            deque.offerLast(i); // 加入当前索引</span><br><span class="line">            // 移除超出窗口的队首</span><br><span class="line">            if (deque.peekFirst() &lt;= i - k) &#123;</span><br><span class="line">                deque.pollFirst();</span><br><span class="line">            &#125;</span><br><span class="line">            // 窗口形成后，队首就是最大值</span><br><span class="line">            if (i &gt;= k - 1) &#123;</span><br><span class="line">                System.out.print(nums[deque.peekFirst()] + &quot; &quot;); // 3 3 5 5 6 7</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、TreeSet-TreeMap（有序集合-有序映射）"><a href="#四、TreeSet-TreeMap（有序集合-有序映射）" class="headerlink" title="四、TreeSet&#x2F;TreeMap（有序集合 &#x2F; 有序映射）"></a>四、TreeSet&#x2F;TreeMap（有序集合 &#x2F; 有序映射）</h3><h4 id="1-定义-3"><a href="#1-定义-3" class="headerlink" title="1. 定义"></a>1. 定义</h4><ul>
+<li><code>TreeSet</code>：基于红黑树实现的<strong>有序无重复集合</strong>（默认升序），支持快速找最值 &#x2F; 前驱 &#x2F; 后继；</li>
+<li><code>TreeMap</code>：基于红黑树实现的<strong>键有序的键值对映射</strong>（默认按键升序）；</li>
+<li>核心优势：有序、找最值 &#x2F; 前驱 &#x2F; 后继 O (logn)；核心劣势：比哈希集合慢（O (logn) vs O (1)）。</li>
+</ul>
+<h4 id="2-竞赛常用函数-3"><a href="#2-竞赛常用函数-3" class="headerlink" title="2. 竞赛常用函数"></a>2. 竞赛常用函数</h4><h5 id="（1）TreeSet-常用函数"><a href="#（1）TreeSet-常用函数" class="headerlink" title="（1）TreeSet 常用函数"></a>（1）TreeSet 常用函数</h5><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">作用</th>
+<th align="center">时间复杂度</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>add(e)</code></td>
+<td align="center">添加元素（自动排序）</td>
+<td align="center">O(logn)</td>
+<td align="center">有序去重</td>
+</tr>
+<tr>
+<td align="center"><code>first()</code></td>
+<td align="center">获取最小值（首元素）</td>
+<td align="center">O(logn)</td>
+<td align="center">竞赛常用</td>
+</tr>
+<tr>
+<td align="center"><code>last()</code></td>
+<td align="center">获取最大值（尾元素）</td>
+<td align="center">O(logn)</td>
+<td align="center">竞赛常用</td>
+</tr>
+<tr>
+<td align="center"><code>ceiling(e)</code></td>
+<td align="center">找≥e 的最小元素（天花板）</td>
+<td align="center">O(logn)</td>
+<td align="center">前驱后继核心</td>
+</tr>
+<tr>
+<td align="center"><code>floor(e)</code></td>
+<td align="center">找≤e 的最大元素（地板）</td>
+<td align="center">O(logn)</td>
+<td align="center">前驱后继核心</td>
+</tr>
+<tr>
+<td align="center"><code>higher(e)</code></td>
+<td align="center">找 &gt; e 的最小元素</td>
+<td align="center">O(logn)</td>
+<td align="center">比 ceiling 更严格</td>
+</tr>
+<tr>
+<td align="center"><code>lower(e)</code></td>
+<td align="center">找 &lt; e 的最大元素</td>
+<td align="center">O(logn)</td>
+<td align="center">比 floor 更严格</td>
+</tr>
+</tbody></table>
+<h5 id="（2）TreeMap-常用函数"><a href="#（2）TreeMap-常用函数" class="headerlink" title="（2）TreeMap 常用函数"></a>（2）TreeMap 常用函数</h5><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">作用</th>
+<th align="center">时间复杂度</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>put(key, value)</code></td>
+<td align="center">添加键值对（按键排序）</td>
+<td align="center">O(logn)</td>
+<td align="center">核心赋值</td>
+</tr>
+<tr>
+<td align="center"><code>firstKey()</code></td>
+<td align="center">获取最小键</td>
+<td align="center">O(logn)</td>
+<td align="center">找最值</td>
+</tr>
+<tr>
+<td align="center"><code>lastKey()</code></td>
+<td align="center">获取最大键</td>
+<td align="center">O(logn)</td>
+<td align="center">找最值</td>
+</tr>
+<tr>
+<td align="center"><code>entrySet()</code></td>
+<td align="center">获取所有键值对（有序遍历）</td>
+<td align="center">O(n)</td>
+<td align="center">遍历核心</td>
+</tr>
+</tbody></table>
+<h4 id="3-竞赛代码实例-3"><a href="#3-竞赛代码实例-3" class="headerlink" title="3. 竞赛代码实例"></a>3. 竞赛代码实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">import java.util.TreeSet;</span><br><span class="line">import java.util.TreeMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">public class TreeDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // ===== TreeSet：有序集合 + 找前驱后继 =====</span><br><span class="line">        TreeSet&lt;Integer&gt; ts = new TreeSet&lt;&gt;();</span><br><span class="line">        ts.add(5);</span><br><span class="line">        ts.add(2);</span><br><span class="line">        ts.add(8);</span><br><span class="line">        ts.add(1); // 自动排序：1,2,5,8</span><br><span class="line">        </span><br><span class="line">        int min = ts.first(); // 1</span><br><span class="line">        int max = ts.last(); // 8</span><br><span class="line">        Integer ceil = ts.ceiling(3); // 5（≥3的最小元素）</span><br><span class="line">        Integer floor = ts.floor(3); // 2（≤3的最大元素）</span><br><span class="line">        Integer higher = ts.higher(5); // 8（&gt;5的最小元素）</span><br><span class="line">        </span><br><span class="line">        // ===== TreeMap：有序键值对 =====</span><br><span class="line">        TreeMap&lt;Integer, String&gt; tm = new TreeMap&lt;&gt;();</span><br><span class="line">        tm.put(5, &quot;a&quot;);</span><br><span class="line">        tm.put(2, &quot;b&quot;);</span><br><span class="line">        tm.put(8, &quot;c&quot;);</span><br><span class="line">        // 遍历：按键升序（2→b，5→a，8→c）</span><br><span class="line">        for (Map.Entry&lt;Integer, String&gt; entry : tm.entrySet()) &#123;</span><br><span class="line">            System.out.println(entry.getKey() + &quot; → &quot; + entry.getValue());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、PriorityQueue（优先队列-堆）"><a href="#五、PriorityQueue（优先队列-堆）" class="headerlink" title="五、PriorityQueue（优先队列 &#x2F; 堆）"></a>五、PriorityQueue（优先队列 &#x2F; 堆）</h3><h4 id="1-定义-4"><a href="#1-定义-4" class="headerlink" title="1. 定义"></a>1. 定义</h4><p>基于<strong>堆结构实现</strong>的优先队列，核心作用是 “动态找最值”（默认小根堆，可改为大根堆）。</p>
+<ul>
+<li>核心优势：插入 &#x2F; 取最值 O (logn)；</li>
+<li>竞赛场景：TopK 问题、堆排序、Dijkstra 算法、哈夫曼编码。</li>
+</ul>
+<h4 id="2-竞赛常用函数-4"><a href="#2-竞赛常用函数-4" class="headerlink" title="2. 竞赛常用函数"></a>2. 竞赛常用函数</h4><table>
+<thead>
+<tr>
+<th align="center">函数名</th>
+<th align="center">作用</th>
+<th align="center">时间复杂度</th>
+<th align="center">备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>offer(e)</code></td>
+<td align="center">添加元素（堆化调整）</td>
+<td align="center">O(logn)</td>
+<td align="center">核心插入操作</td>
+</tr>
+<tr>
+<td align="center"><code>poll()</code></td>
+<td align="center">取出堆顶元素（最值，空则 null）</td>
+<td align="center">O(logn)</td>
+<td align="center">核心取最值操作</td>
+</tr>
+<tr>
+<td align="center"><code>peek()</code></td>
+<td align="center">查看堆顶元素（不删除）</td>
+<td align="center">O(1)</td>
+<td align="center">查看最值</td>
+</tr>
+<tr>
+<td align="center"><code>size()</code>&#x2F;<code>isEmpty()</code></td>
+<td align="center">获取大小 &#x2F; 判空</td>
+<td align="center">O(1)</td>
+<td align="center">基础操作</td>
+</tr>
+</tbody></table>
+<h4 id="3-竞赛代码实例-4"><a href="#3-竞赛代码实例-4" class="headerlink" title="3. 竞赛代码实例"></a>3. 竞赛代码实例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import java.util.PriorityQueue;</span><br><span class="line">import java.util.Collections;</span><br><span class="line"></span><br><span class="line">public class PriorityQueueDemo &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 1. 小根堆（默认）：找最小的K个数</span><br><span class="line">        PriorityQueue&lt;Integer&gt; minHeap = new PriorityQueue&lt;&gt;();</span><br><span class="line">        int[] nums = &#123;3,1,4,1,5,9,2,6&#125;;</span><br><span class="line">        for (int num : nums) &#123;</span><br><span class="line">            minHeap.offer(num);</span><br><span class="line">        &#125;</span><br><span class="line">        int minTop = minHeap.poll(); // 1（堆顶，最小值）</span><br><span class="line">        </span><br><span class="line">        // 2. 大根堆（竞赛常用，找最大的K个数）</span><br><span class="line">        PriorityQueue&lt;Integer&gt; maxHeap = new PriorityQueue&lt;&gt;(Collections.reverseOrder());</span><br><span class="line">        for (int num : nums) &#123;</span><br><span class="line">            maxHeap.offer(num);</span><br><span class="line">        &#125;</span><br><span class="line">        int maxTop = maxHeap.poll(); // 9（堆顶，最大值）</span><br><span class="line">        </span><br><span class="line">        // 3. TopK问题：找前3大的数</span><br><span class="line">        int k = 3;</span><br><span class="line">        PriorityQueue&lt;Integer&gt; topKHeap = new PriorityQueue&lt;&gt;(k); // 小根堆，容量k</span><br><span class="line">        for (int num : nums) &#123;</span><br><span class="line">            if (topKHeap.size() &lt; k) &#123;</span><br><span class="line">                topKHeap.offer(num);</span><br><span class="line">            &#125; else if (num &gt; topKHeap.peek()) &#123;</span><br><span class="line">                topKHeap.poll(); // 移除堆顶（最小的）</span><br><span class="line">                topKHeap.offer(num); // 加入更大的数</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        // 堆中剩余的就是前3大的数：5,6,9</span><br><span class="line">        while (!topKHeap.isEmpty()) &#123;</span><br><span class="line">            System.out.print(topKHeap.poll() + &quot; &quot;); // 5 6 9</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2026/01/19/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%89%EF%BC%9AJAVA%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E9%9B%86%E5%90%88%EF%BC%89/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JAVA学习日记二：访问权限与非公有顶级类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1555,83 +1997,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2025/11/12/%E4%B8%8D%E4%BB%A5%E7%89%A9%E5%96%9C%EF%BC%8C%E4%B8%8D%E4%BB%A5%E5%B7%B1%E6%82%B2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-担当与恶性循环" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/10/25/%E6%8B%85%E5%BD%93%E4%B8%8E%E6%81%B6%E6%80%A7%E5%BE%AA%E7%8E%AF/">担当与恶性循环</a>
-    </h1>
-  
-
-        
-        <a href="/2025/10/25/%E6%8B%85%E5%BD%93%E4%B8%8E%E6%81%B6%E6%80%A7%E5%BE%AA%E7%8E%AF/" class="archive-article-date">
-  	<time datetime="2025-10-25T03:30:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-10-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>光阴总像被抽了一鞭的马，撒开蹄子就往前跑，岁月则是檐角滴下的水，顺着青石板缝儿流走，连个声响都留不分明。转眼就到十一月，前两周的日子裹在忙里，也是我接下班长活儿的头半个月。这半月里，国励评选、助学金申报、先进班集体材料，桩桩件件摞在眼前。其实按钟点算，这些事占去的时间并没多少，说忙，倒更像心里头揣了点没捋顺的东西。 我原先看班级群里的消息，总跟扫过窗台上的灰似的，一眼就过去，现在偶尔还改不了这毛病。人嘛，大抵都不怎么关心和自己不相干的事，那些捞不着半点好处的活儿，谁会往心里去？这话我琢磨过好多次。就说“优秀学生”那头衔，有人嘴上说不在乎，内里无非两种情况：要么是装给别人看，要么是自己够不着，连争的资格都没有。这道理明摆着，就像窗纸一捅就破。 </p>
-<p>可我现在的心思不一样了。导员发的每一条通知，都得经我手转给班里人，我要是没看明白，底下人更得乱。说到底就一句话：只要是班长该干的事，我就得接着，不用求多好，但绝不能糊弄。这是该担的责任，没处推，也没法躲。至于多干了一点还是少干了一点，实在值不得计较，那些零碎活儿，就像掉在地上的米粒，捡不捡都碍不着大局。 当然也不是没琢磨出别的理儿。该我管的事，我肯定不会往后缩；可不该我沾的，也犯不着硬揽。比如我只负责收表，至于同学们填得怎么样，那是他们自己的事。成年人了，总得对自己的行为负责，这是最基本的本分。我就一双眼睛，看不住那么多细节，再说，我眼下最要紧的还是念书，总不能把主次弄反了。 </p>
-<p>还有“恶性循环”这回事，我自己栽过好几次跟头。就像你看着一样东西不顺眼，越想越觉得它碍眼，心里头的火气越烧越旺，到最后那股子厌烦劲儿攒够了，干脆就撒手不管了。昨天我差点又掉进去——一开始觉得整理先进班集体的材料太费劲，越想越觉得这些事占了我看书的时间，越琢磨越委屈。好在我现在不是从前那个毛躁的性子了，遇事能沉住气，也能掰扯明白利弊，心里头的劲儿也比以前足。说到底，还是那句话：按实际时间算，这些事真没占去多少工夫。 我想起徐嘉，他以前最容易掉进这种循环里。徐嘉这人不坏，就是心眼儿太实，又太看重得失，身上少了点男孩子该有的爽快劲儿，一点小事就能让他钻牛角尖，心里头的不痛快能缠上好几天。不过这都是我记着的他中学时的样子，现在他变成什么样了，我也说不准，毕竟这么多年没怎么联系，各人有各人的路要走。 </p>
-<p>日子还得往前过，这些琢磨出来的理儿，就像揣在兜里的糖，偶尔拿出来尝一尝，倒也能品出点不一样的滋味。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">风</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/10/25/%E6%8B%85%E5%BD%93%E4%B8%8E%E6%81%B6%E6%80%A7%E5%BE%AA%E7%8E%AF/">展开全文 >></a>
         </p>
       
 
