@@ -225,6 +225,123 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/">JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误</a>
+    </h1>
+  
+
+        
+        <a href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" class="archive-article-date">
+  	<time datetime="2026-01-24T06:58:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在 Java 中，<code>long</code>（64 位）和 <code>int</code>（32 位）的转换分为<strong>自动转换</strong>和<strong>强制转换</strong>两种情况，核心是处理数据范围的差异。</p>
+<hr>
+<h3 id="1-自动转换：int-→-long（安全）"><a href="#1-自动转换：int-→-long（安全）" class="headerlink" title="1. 自动转换：int → long（安全）"></a>1. 自动转换：int → long（安全）</h3><ul>
+<li><strong>规则</strong>：当 <code>int</code> 类型的值赋值给 <code>long</code> 变量时，Java 会自动完成转换，因为 <code>long</code> 能容纳 <code>int</code> 的所有值（<code>long</code> 范围是 <code>-9e18 ~ 9e18</code>，<code>int</code> 范围是 <code>-2e9 ~ 2e9</code>），不会丢失数据。</li>
+<li><strong>示例</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 100;</span><br><span class="line">long b = a; // 自动转换，无风险</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-强制转换：long-→-int（有风险）"><a href="#2-强制转换：long-→-int（有风险）" class="headerlink" title="2. 强制转换：long → int（有风险）"></a>2. 强制转换：long → int（有风险）</h3><ul>
+<li><strong>规则</strong>：当 <code>long</code> 类型的值赋值给 <code>int</code> 变量时，必须显式强制转换，因为 <code>long</code> 的值可能超出 <code>int</code> 的范围，导致数据溢出或精度丢失。</li>
+<li><strong>语法</strong>：<code>(int) 要转换的long值</code></li>
+<li><strong>示例</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">long a = 100L;</span><br><span class="line">int b = (int) a; // 安全：100在int范围内</span><br><span class="line">long c = 3000000000L; // 超出int最大值（2147483647）</span><br><span class="line">int d = (int) c; // 溢出！结果会变成错误的负数（实际值为-1294967296）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-常见场景与避坑"><a href="#3-常见场景与避坑" class="headerlink" title="3. 常见场景与避坑"></a>3. 常见场景与避坑</h3><h4 id="场景-1：计算时的自动提升"><a href="#场景-1：计算时的自动提升" class="headerlink" title="场景 1：计算时的自动提升"></a>场景 1：计算时的自动提升</h4><p>在混合运算中，<code>int</code> 会自动提升为 <code>long</code>，避免溢出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 1000000;</span><br><span class="line">int b = 2000000;</span><br><span class="line">long c = (long) a * b; // 先把a转为long，再计算，避免int相乘溢出</span><br></pre></td></tr></table></figure>
+
+<h4 id="场景-2：避免溢出的强制转换"><a href="#场景-2：避免溢出的强制转换" class="headerlink" title="场景 2：避免溢出的强制转换"></a>场景 2：避免溢出的强制转换</h4><p>如果需要把一个可能超出 <code>int</code> 范围的 <code>long</code> 转成 <code>int</code>，建议先做范围检查：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">long num = 1234567890L;</span><br><span class="line">int result;</span><br><span class="line">if (num &gt;= Integer.MIN_VALUE &amp;&amp; num &lt;= Integer.MAX_VALUE) &#123;</span><br><span class="line">    result = (int) num; // 安全转换</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    throw new IllegalArgumentException(&quot;数值超出int范围&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-转换规则总结"><a href="#4-转换规则总结" class="headerlink" title="4. 转换规则总结"></a>4. 转换规则总结</h3><table>
+<thead>
+<tr>
+<th align="center">转换方向</th>
+<th align="center">方式</th>
+<th align="center">风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>int → long</code></td>
+<td align="center">自动转换</td>
+<td align="center">无风险，不会丢失数据</td>
+</tr>
+<tr>
+<td align="center"><code>long → int</code></td>
+<td align="center">强制转换 <code>(int)</code></td>
+<td align="center">有风险，可能溢出或丢失精度</td>
+</tr>
+</tbody></table>
+<h2 id="如何处理不开long导致的低级错误"><a href="#如何处理不开long导致的低级错误" class="headerlink" title="如何处理不开long导致的低级错误"></a>如何处理不开long导致的低级错误</h2><p><strong>竞赛最优选择</strong>：直接全量用<code>long</code>，记住 “数组长度转 int、字面量加 L” 两个细节，既能避免溢出，又不用额外封装，是最高效的方式。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JAVA学习日记四：继承Compareable接口自定义比较方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -247,6 +364,11 @@ var _hmt = _hmt || [];
       
         <p>在c++中自定义比较方式可以另外写一个bool类型的cmp函数放到sort函数中当参数，JAVA中自定义比较方式可以继承Compareable接口，重写其中的compareTo函数。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class edge implements Comparable&lt;edge&gt;&#123;</span><br><span class="line"></span><br><span class="line">  public int u;</span><br><span class="line">  public int v;</span><br><span class="line">  public double w;</span><br><span class="line">  edge(int u,int v,double w)&#123;</span><br><span class="line">​    this.u=u;</span><br><span class="line">​    this.v=v;</span><br><span class="line">​    this.w=w;</span><br><span class="line">  &#125;</span><br><span class="line">  @Override</span><br><span class="line">  public int compareTo(edge e)&#123;</span><br><span class="line">​    return Double.compare(this.w, e.w);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return Double.compare(this.w, e.w);</span><br></pre></td></tr></table></figure>
+
+<p>这里默认的是从小到大排序，如果要从大到小就把两个变量的顺序交换一下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return Double.compare(e.w, this.w);</span><br></pre></td></tr></table></figure>
 
 <p>Arraylist集合添加 一个edge类型元素时可以：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.add(new edge(i,j,dis));</span><br></pre></td></tr></table></figure>
@@ -1791,208 +1913,6 @@ var _hmt = _hmt || [];
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-powershell常用命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">PowerShell常用命令</a>
-    </h1>
-  
-
-        
-        <a href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-  	<time datetime="2025-11-18T04:40:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-文件与目录操作"><a href="#1-文件与目录操作" class="headerlink" title="1. 文件与目录操作"></a><strong>1. 文件与目录操作</strong></h3><ul>
-<li><p><code>Get-ChildItem</code>（别名 <code>ls</code>、<code>dir</code>）：列出目录内容</p>
-<p>例：<code>ls C:\Users</code>（列出用户目录下的文件 &#x2F; 文件夹）</p>
-</li>
-<li><p><code>cd</code>（<code>Set-Location</code>）：切换目录</p>
-<p>例：<code>cd Documents</code>（进入当前目录的 Documents 文件夹）</p>
-</li>
-<li><p><code>mkdir</code>（<code>New-Item -ItemType Directory</code>）：创建目录</p>
-<p>例：<code>mkdir TestFolder</code>（创建名为 TestFolder 的文件夹）</p>
-</li>
-<li><p><code>rm</code>（<code>Remove-Item</code>）：删除文件 &#x2F; 目录</p>
-<p>例：<code>rm old.txt</code>（删除文件，加 <code>-Recurse</code> 删除目录）</p>
-</li>
-<li><p><code>cp</code>（<code>Copy-Item</code>）：复制文件 &#x2F; 目录</p>
-<p>例：<code>cp file.txt D:\Backup</code>（复制文件到目标路径）</p>
-</li>
-<li><p><code>mv</code>（<code>Move-Item</code>）：移动 &#x2F; 重命名文件 &#x2F; 目录</p>
-<p>例：<code>mv file.txt newname.txt</code>（重命名文件）</p>
-</li>
-<li><p><code>cat</code>（<code>Get-Content</code>）：查看文件内容</p>
-<p>例：<code>cat readme.txt</code>（显示文件内容）</p>
-</li>
-<li><p><code>echo</code>（<code>Write-Output</code>）：输出文本或创建文件</p>
-<p>例：<code>echo &quot;Hello&quot; &gt; test.txt</code>（将文本写入文件）</p>
-</li>
-</ul>
-<h3 id="2-系统信息查询"><a href="#2-系统信息查询" class="headerlink" title="2. 系统信息查询"></a><strong>2. 系统信息查询</strong></h3><ul>
-<li><p><code>Get-ComputerInfo</code>：查看计算机详细信息（系统版本、内存、CPU 等）</p>
-</li>
-<li><p><code>Get-Service</code>：查看系统服务状态</p>
-<p>例：<code>Get-Service | Where-Object Status -eq &quot;Running&quot;</code>（查看运行中的服务）</p>
-</li>
-<li><p><code>Get-Process</code>（别名 <code>ps</code>）：查看进程</p>
-<p>例：<code>ps chrome</code>（查看 Chrome 相关进程）</p>
-</li>
-<li><p><code>Get-EventLog</code>：查看系统日志</p>
-<p>例：<code>Get-EventLog -LogName System -Newest 10</code>（查看系统日志最新 10 条）</p>
-</li>
-<li><p><code>systeminfo</code>：查看系统摘要信息（兼容 CMD 命令）</p>
-</li>
-</ul>
-<h3 id="3-进程与服务管理"><a href="#3-进程与服务管理" class="headerlink" title="3. 进程与服务管理"></a><strong>3. 进程与服务管理</strong></h3><ul>
-<li><p><code>Start-Process</code>：启动进程</p>
-<p>例：<code>Start-Process notepad.exe</code>（打开记事本）</p>
-</li>
-<li><p><code>Stop-Process</code>：终止进程</p>
-<p>例：<code>Stop-Process -Name chrome</code>（关闭所有 Chrome 进程）</p>
-</li>
-<li><p><code>Start-Service</code> &#x2F; <code>Stop-Service</code>：启动 &#x2F; 停止服务</p>
-<p>例：<code>Start-Service -Name wuauserv</code>（启动 Windows 更新服务）</p>
-</li>
-</ul>
-<h3 id="4-网络相关"><a href="#4-网络相关" class="headerlink" title="4. 网络相关"></a><strong>4. 网络相关</strong></h3><ul>
-<li><p><code>Test-Connection</code>（别名 <code>ping</code>）：测试网络连通性</p>
-<p>例：<code>Test-Connection baidu.com</code>（ping 百度）</p>
-</li>
-<li><p><code>Get-NetIPAddress</code>：查看本机 IP 地址</p>
-<p>例：<code>Get-NetIPAddress -AddressFamily IPv4</code>（只显示 IPv4 地址）</p>
-</li>
-<li><p><code>Get-NetAdapter</code>：查看网络适配器信息</p>
-</li>
-<li><p><code>Invoke-WebRequest</code>（别名 <code>curl</code>、<code>wget</code>）：发送 HTTP 请求</p>
-<p>例：<code>Invoke-WebRequest https://example.com</code>（获取网页内容）</p>
-</li>
-</ul>
-<h3 id="5-用户与权限管理"><a href="#5-用户与权限管理" class="headerlink" title="5. 用户与权限管理"></a><strong>5. 用户与权限管理</strong></h3><ul>
-<li><p><code>Get-LocalUser</code>：查看本地用户账户</p>
-</li>
-<li><p><code>New-LocalUser</code>：创建本地用户</p>
-<p>例：<code>New-LocalUser -Name &quot;NewUser&quot; -Password (ConvertTo-SecureString &quot;P@ssw0rd&quot; -AsPlainText -Force)</code></p>
-</li>
-<li><p><code>Get-ChildItem -Force</code>：查看隐藏文件 &#x2F; 目录</p>
-</li>
-</ul>
-<h3 id="6-其他实用命令"><a href="#6-其他实用命令" class="headerlink" title="6. 其他实用命令"></a><strong>6. 其他实用命令</strong></h3><ul>
-<li><p><code>Get-Help</code>（别名 <code>help</code>）：查看命令帮助</p>
-<p>例：<code>Get-Help Get-ChildItem -Detailed</code>（查看详细帮助）</p>
-</li>
-<li><p><code>Clear-Host</code>（别名 <code>cls</code>）：清空控制台</p>
-</li>
-<li><p><code>$env:PATH</code>：查看系统环境变量 PATH</p>
-</li>
-<li><p><code>Get-Command</code>：搜索命令</p>
-</li>
-</ul>
-<h3 id="7-路径命令"><a href="#7-路径命令" class="headerlink" title="7.路径命令"></a><strong>7.路径命令</strong></h3><table>
-<thead>
-<tr>
-<th>符号</th>
-<th>含义</th>
-<th>适用系统</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>/</code></td>
-<td>路径分隔符（根目录符号）</td>
-<td>Linux&#x2F;macOS（必用）</td>
-</tr>
-<tr>
-<td><code>\</code></td>
-<td>路径分隔符</td>
-<td>Windows（常用，<code>/</code>也兼容）</td>
-</tr>
-<tr>
-<td><code>.</code></td>
-<td>代表 “当前目录”</td>
-<td>所有系统</td>
-</tr>
-<tr>
-<td><code>..</code></td>
-<td>代表 “上一级目录”（父目录）</td>
-<td>所有系统</td>
-</tr>
-<tr>
-<td><code>~</code></td>
-<td>代表 “当前用户的主目录”</td>
-<td>所有系统（类 Unix 更常用）</td>
-</tr>
-<tr>
-<td><code>*</code></td>
-<td>通配符，匹配任意多个字符（0 个或多个）</td>
-<td>所有系统（命令行中）</td>
-</tr>
-<tr>
-<td><code>?</code></td>
-<td>通配符，匹配单个字符</td>
-<td>所有系统（命令行中）</td>
-</tr>
-</tbody></table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">展开全文 >></a>
         </p>
       
 

@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>JAVA学习日记四：继承Compareable接口自定义比较方式 | Sumsol</title>
+  <title>JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误 | Sumsol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在c++中自定义比较方式可以另外写一个bool类型的cmp函数放到sort函数中当参数，JAVA中自定义比较方式可以继承Compareable接口，重写其中的compareTo函数。 123456789101112131415class edge implements Comparable&lt;edge&gt;&#123;  public int u;  public int v;  publi">
+  <meta name="description" content="在 Java 中，long（64 位）和 int（32 位）的转换分为自动转换和强制转换两种情况，核心是处理数据范围的差异。  1. 自动转换：int → long（安全） 规则：当 int 类型的值赋值给 long 变量时，Java 会自动完成转换，因为 long 能容纳 int 的所有值（long 范围是 -9e18 ~ 9e18，int 范围是 -2e9 ~ 2e9），不会丢失数据。 示例：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JAVA学习日记四：继承Compareable接口自定义比较方式">
-<meta property="og:url" content="http://example.com/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/index.html">
+<meta property="og:title" content="JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误">
+<meta property="og:url" content="http://example.com/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/index.html">
 <meta property="og:site_name" content="Sumsol">
-<meta property="og:description" content="在c++中自定义比较方式可以另外写一个bool类型的cmp函数放到sort函数中当参数，JAVA中自定义比较方式可以继承Compareable接口，重写其中的compareTo函数。 123456789101112131415class edge implements Comparable&lt;edge&gt;&#123;  public int u;  public int v;  publi">
+<meta property="og:description" content="在 Java 中，long（64 位）和 int（32 位）的转换分为自动转换和强制转换两种情况，核心是处理数据范围的差异。  1. 自动转换：int → long（安全） 规则：当 int 类型的值赋值给 long 变量时，Java 会自动完成转换，因为 long 能容纳 int 的所有值（long 范围是 -9e18 ~ 9e18，int 范围是 -2e9 ~ 2e9），不会丢失数据。 示例：">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-01-22T07:14:28.000Z">
-<meta property="article:modified_time" content="2026-01-24T06:57:07.589Z">
+<meta property="article:published_time" content="2026-01-24T06:58:52.000Z">
+<meta property="article:modified_time" content="2026-01-24T07:12:08.594Z">
 <meta property="article:author" content="zhangtf">
 <meta property="article:tag" content="颂">
 <meta name="twitter:card" content="summary">
@@ -161,37 +161,70 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JAVA学习日记四：继承Compareable接口自定义比较方式" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      JAVA学习日记四：继承Compareable接口自定义比较方式
+      JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误
     </h1>
   
 
         
-        <a href="/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2026-01-22T07:14:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-22</time>
+        <a href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" class="archive-article-date">
+  	<time datetime="2026-01-24T06:58:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-24</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在c++中自定义比较方式可以另外写一个bool类型的cmp函数放到sort函数中当参数，JAVA中自定义比较方式可以继承Compareable接口，重写其中的compareTo函数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class edge implements Comparable&lt;edge&gt;&#123;</span><br><span class="line"></span><br><span class="line">  public int u;</span><br><span class="line">  public int v;</span><br><span class="line">  public double w;</span><br><span class="line">  edge(int u,int v,double w)&#123;</span><br><span class="line">​    this.u=u;</span><br><span class="line">​    this.v=v;</span><br><span class="line">​    this.w=w;</span><br><span class="line">  &#125;</span><br><span class="line">  @Override</span><br><span class="line">  public int compareTo(edge e)&#123;</span><br><span class="line">​    return Double.compare(this.w, e.w);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <p>在 Java 中，<code>long</code>（64 位）和 <code>int</code>（32 位）的转换分为<strong>自动转换</strong>和<strong>强制转换</strong>两种情况，核心是处理数据范围的差异。</p>
+<hr>
+<h3 id="1-自动转换：int-→-long（安全）"><a href="#1-自动转换：int-→-long（安全）" class="headerlink" title="1. 自动转换：int → long（安全）"></a>1. 自动转换：int → long（安全）</h3><ul>
+<li><strong>规则</strong>：当 <code>int</code> 类型的值赋值给 <code>long</code> 变量时，Java 会自动完成转换，因为 <code>long</code> 能容纳 <code>int</code> 的所有值（<code>long</code> 范围是 <code>-9e18 ~ 9e18</code>，<code>int</code> 范围是 <code>-2e9 ~ 2e9</code>），不会丢失数据。</li>
+<li><strong>示例</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 100;</span><br><span class="line">long b = a; // 自动转换，无风险</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return Double.compare(this.w, e.w);</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-强制转换：long-→-int（有风险）"><a href="#2-强制转换：long-→-int（有风险）" class="headerlink" title="2. 强制转换：long → int（有风险）"></a>2. 强制转换：long → int（有风险）</h3><ul>
+<li><strong>规则</strong>：当 <code>long</code> 类型的值赋值给 <code>int</code> 变量时，必须显式强制转换，因为 <code>long</code> 的值可能超出 <code>int</code> 的范围，导致数据溢出或精度丢失。</li>
+<li><strong>语法</strong>：<code>(int) 要转换的long值</code></li>
+<li><strong>示例</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">long a = 100L;</span><br><span class="line">int b = (int) a; // 安全：100在int范围内</span><br><span class="line">long c = 3000000000L; // 超出int最大值（2147483647）</span><br><span class="line">int d = (int) c; // 溢出！结果会变成错误的负数（实际值为-1294967296）</span><br></pre></td></tr></table></figure>
 
-<p>这里默认的是从小到大排序，如果要从大到小就把两个变量的顺序交换一下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return Double.compare(e.w, this.w);</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="3-常见场景与避坑"><a href="#3-常见场景与避坑" class="headerlink" title="3. 常见场景与避坑"></a>3. 常见场景与避坑</h3><h4 id="场景-1：计算时的自动提升"><a href="#场景-1：计算时的自动提升" class="headerlink" title="场景 1：计算时的自动提升"></a>场景 1：计算时的自动提升</h4><p>在混合运算中，<code>int</code> 会自动提升为 <code>long</code>，避免溢出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 1000000;</span><br><span class="line">int b = 2000000;</span><br><span class="line">long c = (long) a * b; // 先把a转为long，再计算，避免int相乘溢出</span><br></pre></td></tr></table></figure>
 
-<p>Arraylist集合添加 一个edge类型元素时可以：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.add(new edge(i,j,dis));</span><br></pre></td></tr></table></figure>
+<h4 id="场景-2：避免溢出的强制转换"><a href="#场景-2：避免溢出的强制转换" class="headerlink" title="场景 2：避免溢出的强制转换"></a>场景 2：避免溢出的强制转换</h4><p>如果需要把一个可能超出 <code>int</code> 范围的 <code>long</code> 转成 <code>int</code>，建议先做范围检查：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">long num = 1234567890L;</span><br><span class="line">int result;</span><br><span class="line">if (num &gt;= Integer.MIN_VALUE &amp;&amp; num &lt;= Integer.MAX_VALUE) &#123;</span><br><span class="line">    result = (int) num; // 安全转换</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    throw new IllegalArgumentException(&quot;数值超出int范围&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<hr>
+<h3 id="4-转换规则总结"><a href="#4-转换规则总结" class="headerlink" title="4. 转换规则总结"></a>4. 转换规则总结</h3><table>
+<thead>
+<tr>
+<th align="center">转换方向</th>
+<th align="center">方式</th>
+<th align="center">风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>int → long</code></td>
+<td align="center">自动转换</td>
+<td align="center">无风险，不会丢失数据</td>
+</tr>
+<tr>
+<td align="center"><code>long → int</code></td>
+<td align="center">强制转换 <code>(int)</code></td>
+<td align="center">有风险，可能溢出或丢失精度</td>
+</tr>
+</tbody></table>
+<h2 id="如何处理不开long导致的低级错误"><a href="#如何处理不开long导致的低级错误" class="headerlink" title="如何处理不开long导致的低级错误"></a>如何处理不开long导致的低级错误</h2><p><strong>竞赛最优选择</strong>：直接全量用<code>long</code>，记住 “数组长度转 int、字面量加 L” 两个细节，既能避免溢出，又不用额外封装，是最高效的方式。</p>
 
       
 
@@ -261,7 +294,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -275,18 +308,18 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2049/10/01/%E6%A0%87%E7%AD%BE%E8%AF%B4%E6%98%8E/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误
+          标签说明
         
       </div>
     </a>
   
   
-    <a href="/2026/01/19/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%89%EF%BC%9AJAVA%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E9%9B%86%E5%90%88%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JAVA学习日记三：JAVA常用数据结构（集合）</div>
+    <a href="/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JAVA学习日记四：继承Compareable接口自定义比较方式</div>
       <i class="icon-circle-right"></i>
     </a>
   

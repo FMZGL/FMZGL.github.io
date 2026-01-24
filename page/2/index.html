@@ -158,6 +158,208 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-powershell常用命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">PowerShell常用命令</a>
+    </h1>
+  
+
+        
+        <a href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
+  	<time datetime="2025-11-18T04:40:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="1-文件与目录操作"><a href="#1-文件与目录操作" class="headerlink" title="1. 文件与目录操作"></a><strong>1. 文件与目录操作</strong></h3><ul>
+<li><p><code>Get-ChildItem</code>（别名 <code>ls</code>、<code>dir</code>）：列出目录内容</p>
+<p>例：<code>ls C:\Users</code>（列出用户目录下的文件 &#x2F; 文件夹）</p>
+</li>
+<li><p><code>cd</code>（<code>Set-Location</code>）：切换目录</p>
+<p>例：<code>cd Documents</code>（进入当前目录的 Documents 文件夹）</p>
+</li>
+<li><p><code>mkdir</code>（<code>New-Item -ItemType Directory</code>）：创建目录</p>
+<p>例：<code>mkdir TestFolder</code>（创建名为 TestFolder 的文件夹）</p>
+</li>
+<li><p><code>rm</code>（<code>Remove-Item</code>）：删除文件 &#x2F; 目录</p>
+<p>例：<code>rm old.txt</code>（删除文件，加 <code>-Recurse</code> 删除目录）</p>
+</li>
+<li><p><code>cp</code>（<code>Copy-Item</code>）：复制文件 &#x2F; 目录</p>
+<p>例：<code>cp file.txt D:\Backup</code>（复制文件到目标路径）</p>
+</li>
+<li><p><code>mv</code>（<code>Move-Item</code>）：移动 &#x2F; 重命名文件 &#x2F; 目录</p>
+<p>例：<code>mv file.txt newname.txt</code>（重命名文件）</p>
+</li>
+<li><p><code>cat</code>（<code>Get-Content</code>）：查看文件内容</p>
+<p>例：<code>cat readme.txt</code>（显示文件内容）</p>
+</li>
+<li><p><code>echo</code>（<code>Write-Output</code>）：输出文本或创建文件</p>
+<p>例：<code>echo &quot;Hello&quot; &gt; test.txt</code>（将文本写入文件）</p>
+</li>
+</ul>
+<h3 id="2-系统信息查询"><a href="#2-系统信息查询" class="headerlink" title="2. 系统信息查询"></a><strong>2. 系统信息查询</strong></h3><ul>
+<li><p><code>Get-ComputerInfo</code>：查看计算机详细信息（系统版本、内存、CPU 等）</p>
+</li>
+<li><p><code>Get-Service</code>：查看系统服务状态</p>
+<p>例：<code>Get-Service | Where-Object Status -eq &quot;Running&quot;</code>（查看运行中的服务）</p>
+</li>
+<li><p><code>Get-Process</code>（别名 <code>ps</code>）：查看进程</p>
+<p>例：<code>ps chrome</code>（查看 Chrome 相关进程）</p>
+</li>
+<li><p><code>Get-EventLog</code>：查看系统日志</p>
+<p>例：<code>Get-EventLog -LogName System -Newest 10</code>（查看系统日志最新 10 条）</p>
+</li>
+<li><p><code>systeminfo</code>：查看系统摘要信息（兼容 CMD 命令）</p>
+</li>
+</ul>
+<h3 id="3-进程与服务管理"><a href="#3-进程与服务管理" class="headerlink" title="3. 进程与服务管理"></a><strong>3. 进程与服务管理</strong></h3><ul>
+<li><p><code>Start-Process</code>：启动进程</p>
+<p>例：<code>Start-Process notepad.exe</code>（打开记事本）</p>
+</li>
+<li><p><code>Stop-Process</code>：终止进程</p>
+<p>例：<code>Stop-Process -Name chrome</code>（关闭所有 Chrome 进程）</p>
+</li>
+<li><p><code>Start-Service</code> &#x2F; <code>Stop-Service</code>：启动 &#x2F; 停止服务</p>
+<p>例：<code>Start-Service -Name wuauserv</code>（启动 Windows 更新服务）</p>
+</li>
+</ul>
+<h3 id="4-网络相关"><a href="#4-网络相关" class="headerlink" title="4. 网络相关"></a><strong>4. 网络相关</strong></h3><ul>
+<li><p><code>Test-Connection</code>（别名 <code>ping</code>）：测试网络连通性</p>
+<p>例：<code>Test-Connection baidu.com</code>（ping 百度）</p>
+</li>
+<li><p><code>Get-NetIPAddress</code>：查看本机 IP 地址</p>
+<p>例：<code>Get-NetIPAddress -AddressFamily IPv4</code>（只显示 IPv4 地址）</p>
+</li>
+<li><p><code>Get-NetAdapter</code>：查看网络适配器信息</p>
+</li>
+<li><p><code>Invoke-WebRequest</code>（别名 <code>curl</code>、<code>wget</code>）：发送 HTTP 请求</p>
+<p>例：<code>Invoke-WebRequest https://example.com</code>（获取网页内容）</p>
+</li>
+</ul>
+<h3 id="5-用户与权限管理"><a href="#5-用户与权限管理" class="headerlink" title="5. 用户与权限管理"></a><strong>5. 用户与权限管理</strong></h3><ul>
+<li><p><code>Get-LocalUser</code>：查看本地用户账户</p>
+</li>
+<li><p><code>New-LocalUser</code>：创建本地用户</p>
+<p>例：<code>New-LocalUser -Name &quot;NewUser&quot; -Password (ConvertTo-SecureString &quot;P@ssw0rd&quot; -AsPlainText -Force)</code></p>
+</li>
+<li><p><code>Get-ChildItem -Force</code>：查看隐藏文件 &#x2F; 目录</p>
+</li>
+</ul>
+<h3 id="6-其他实用命令"><a href="#6-其他实用命令" class="headerlink" title="6. 其他实用命令"></a><strong>6. 其他实用命令</strong></h3><ul>
+<li><p><code>Get-Help</code>（别名 <code>help</code>）：查看命令帮助</p>
+<p>例：<code>Get-Help Get-ChildItem -Detailed</code>（查看详细帮助）</p>
+</li>
+<li><p><code>Clear-Host</code>（别名 <code>cls</code>）：清空控制台</p>
+</li>
+<li><p><code>$env:PATH</code>：查看系统环境变量 PATH</p>
+</li>
+<li><p><code>Get-Command</code>：搜索命令</p>
+</li>
+</ul>
+<h3 id="7-路径命令"><a href="#7-路径命令" class="headerlink" title="7.路径命令"></a><strong>7.路径命令</strong></h3><table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>适用系统</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>/</code></td>
+<td>路径分隔符（根目录符号）</td>
+<td>Linux&#x2F;macOS（必用）</td>
+</tr>
+<tr>
+<td><code>\</code></td>
+<td>路径分隔符</td>
+<td>Windows（常用，<code>/</code>也兼容）</td>
+</tr>
+<tr>
+<td><code>.</code></td>
+<td>代表 “当前目录”</td>
+<td>所有系统</td>
+</tr>
+<tr>
+<td><code>..</code></td>
+<td>代表 “上一级目录”（父目录）</td>
+<td>所有系统</td>
+</tr>
+<tr>
+<td><code>~</code></td>
+<td>代表 “当前用户的主目录”</td>
+<td>所有系统（类 Unix 更常用）</td>
+</tr>
+<tr>
+<td><code>*</code></td>
+<td>通配符，匹配任意多个字符（0 个或多个）</td>
+<td>所有系统（命令行中）</td>
+</tr>
+<tr>
+<td><code>?</code></td>
+<td>通配符，匹配单个字符</td>
+<td>所有系统（命令行中）</td>
+</tr>
+</tbody></table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-不以物喜，不以己悲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
