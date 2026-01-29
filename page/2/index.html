@@ -158,6 +158,349 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-常见包管理器及简单使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">常见包管理器及简单使用</a>
+    </h1>
+  
+
+        
+        <a href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+  	<time datetime="2025-11-18T06:43:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="1-apt-get"><a href="#1-apt-get" class="headerlink" title="1.apt-get"></a>1.apt-get</h2><p><strong>核心定位</strong>：Debian、Ubuntu 等 Debian 系 Linux 发行版的系统级包管理器，基于.deb 格式包，主打系统软件的安装、升级与依赖管理，需 root 权限执行。</p>
+<p><strong>基本操作</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作目的</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>更新软件包列表</td>
+<td>sudo apt-get update</td>
+</tr>
+<tr>
+<td>安装软件包</td>
+<td>sudo apt-get install 包名</td>
+</tr>
+<tr>
+<td>卸载软件（保留配置）</td>
+<td>sudo apt-get remove 包名</td>
+</tr>
+<tr>
+<td>彻底卸载软件（含配置）</td>
+<td>sudo apt-get purge 包名</td>
+</tr>
+<tr>
+<td>升级所有软件</td>
+<td>sudo apt-get upgrade</td>
+</tr>
+<tr>
+<td>清理下载的包缓存</td>
+<td>sudo apt-get clean</td>
+</tr>
+</tbody></table>
+<h2 id="2-winget"><a href="#2-winget" class="headerlink" title="2.winget"></a>2.winget</h2><p><strong>核心定位</strong>：微软官方推出的 Windows 系统包管理器，适配 Windows 10 及以上版本，用于快速管理桌面软件与应用，无需复杂的图形化安装步骤。</p>
+<p><strong>基本操作</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作目的</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>搜索软件</td>
+<td>winget search 软件关键词</td>
+</tr>
+<tr>
+<td>安装指定软件</td>
+<td>winget install 软件 ID</td>
+</tr>
+<tr>
+<td>更新所有已装软件</td>
+<td>winget upgrade –all</td>
+</tr>
+<tr>
+<td>卸载软件</td>
+<td>winget uninstall 软件 ID</td>
+</tr>
+<tr>
+<td>查看已安装软件</td>
+<td>winget list</td>
+</tr>
+<tr>
+<td>导出软件列表到文件</td>
+<td>winget export -o 文件名.json</td>
+</tr>
+</tbody></table>
+<h2 id="3-pip"><a href="#3-pip" class="headerlink" title="3.pip"></a>3.pip</h2><p><strong>核心定位</strong>：Python 专属的包管理器，用于管理 Python 第三方库，支持 PyPI 等仓库，适配 Windows、Linux、macOS 多平台，常随 Python 默认安装。</p>
+<p><strong>基本操作</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作目的</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>安装指定包</td>
+<td>pip install 包名</td>
+</tr>
+<tr>
+<td>安装指定版本包</td>
+<td>pip install 包名 &#x3D;&#x3D; 版本号</td>
+</tr>
+<tr>
+<td>卸载包</td>
+<td>pip uninstall 包名</td>
+</tr>
+<tr>
+<td>升级指定包</td>
+<td>pip install –upgrade 包名</td>
+</tr>
+<tr>
+<td>列出已安装包</td>
+<td>pip list</td>
+</tr>
+<tr>
+<td>导出依赖列表</td>
+<td>pip freeze &gt; requirements.txt</td>
+</tr>
+<tr>
+<td>批量安装依赖</td>
+<td>pip install -r requirements.txt</td>
+</tr>
+</tbody></table>
+<h2 id="4-maven"><a href="#4-maven" class="headerlink" title="4.maven"></a>4.maven</h2><p><strong>核心定位</strong>：Java 项目的构建与依赖管理工具，不仅能管理 Jar 包依赖，还能规范化项目构建流程（编译、测试、打包等），核心依赖<code>pom.xml</code>文件管理配置。</p>
+<p><strong>基本操作</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作目的</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>清理构建产物</td>
+<td>mvn clean</td>
+</tr>
+<tr>
+<td>编译源代码</td>
+<td>mvn compile</td>
+</tr>
+<tr>
+<td>运行单元测试</td>
+<td>mvn test</td>
+</tr>
+<tr>
+<td>打包项目（生成 Jar&#x2F;WAR）</td>
+<td>mvn package</td>
+</tr>
+<tr>
+<td>打包并安装到本地仓库</td>
+<td>mvn install</td>
+</tr>
+<tr>
+<td>将包部署到远程仓库</td>
+<td>mvn deploy</td>
+</tr>
+</tbody></table>
+<h2 id="5-npm"><a href="#5-npm" class="headerlink" title="5.npm"></a>5.npm</h2><p><strong>核心定位</strong>：Node.js 自带的包管理器，用于管理前端或 Node.js 项目的依赖包，依托 npm 仓库，可定义项目脚本，是前端开发的核心工具之一。</p>
+<p><strong>基本操作</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作目的</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>初始化项目生成配置文件</td>
+<td>npm init -y</td>
+</tr>
+<tr>
+<td>安装生产依赖</td>
+<td>npm install 包名</td>
+</tr>
+<tr>
+<td>安装开发依赖</td>
+<td>npm install 包名 –save-dev</td>
+</tr>
+<tr>
+<td>卸载依赖包</td>
+<td>npm uninstall 包名</td>
+</tr>
+<tr>
+<td>更新指定依赖</td>
+<td>npm update 包名</td>
+</tr>
+<tr>
+<td>执行自定义项目脚本</td>
+<td>npm run 脚本名</td>
+</tr>
+<tr>
+<td>查看项目依赖列表</td>
+<td>npm list</td>
+</tr>
+</tbody></table>
+<h2 id="6-vcpkg"><a href="#6-vcpkg" class="headerlink" title="6.vcpkg"></a>6.vcpkg</h2><p><strong>核心定位</strong>：微软开发的跨平台 C&#x2F;C++ 包管理器，支持 Windows、Linux、macOS，通过源码编译安装库文件，适配 CMake 等构建系统，解决 C&#x2F;C++ 依赖配置复杂的问题。</p>
+<p><strong>基本操作</strong></p>
+<table>
+<thead>
+<tr>
+<th>操作目的</th>
+<th>命令</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>搜索 C&#x2F;C++ 库</td>
+<td>.&#x2F;vcpkg search 库关键词</td>
+</tr>
+<tr>
+<td>安装指定库</td>
+<td>.&#x2F;vcpkg install 库名</td>
+</tr>
+<tr>
+<td>安装指定平台的库</td>
+<td>.&#x2F;vcpkg install 库名：目标平台（如 x64-windows）</td>
+</tr>
+<tr>
+<td>卸载库</td>
+<td>.&#x2F;vcpkg remove 库名</td>
+</tr>
+<tr>
+<td>列出已安装库</td>
+<td>.&#x2F;vcpkg list</td>
+</tr>
+<tr>
+<td>全局集成到开发环境</td>
+<td>.&#x2F;vcpkg integrate install</td>
+</tr>
+</tbody></table>
+<h3 id="六款包管理器核心对比"><a href="#六款包管理器核心对比" class="headerlink" title="六款包管理器核心对比"></a>六款包管理器核心对比</h3><table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>apt-get</th>
+<th>winget</th>
+<th>pip</th>
+<th>maven</th>
+<th>npm</th>
+<th>vcpkg</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>适用领域</td>
+<td>Debian 系 Linux 系统软件</td>
+<td>Windows 系统桌面应用</td>
+<td>Python 第三方库</td>
+<td>Java 项目构建与依赖</td>
+<td>Node.js&#x2F; 前端项目依赖</td>
+<td>C&#x2F;C++ 跨平台库</td>
+</tr>
+<tr>
+<td>支持平台</td>
+<td>Debian&#x2F;Ubuntu 等 Linux 发行版</td>
+<td>Windows 10+</td>
+<td>Windows、Linux、macOS</td>
+<td>全平台</td>
+<td>全平台</td>
+<td>Windows、Linux、macOS</td>
+</tr>
+<tr>
+<td>依赖配置文件</td>
+<td>&#x2F;etc&#x2F;apt&#x2F;sources.list</td>
+<td>无，依赖系统源</td>
+<td>requirements.txt</td>
+<td>pom.xml</td>
+<td>package.json</td>
+<td>vcpkg.json（清单模式）</td>
+</tr>
+<tr>
+<td>核心优势</td>
+<td>系统级依赖自动处理，稳定可靠</td>
+<td>Windows 官方适配，软件管理便捷</td>
+<td>轻量，Python 生态适配性强</td>
+<td>规范 Java 项目构建流程，依赖传递清晰</td>
+<td>前端生态丰富，脚本功能灵活</td>
+<td>解决 C&#x2F;C++ 库编译与跨平台依赖问题</td>
+</tr>
+<tr>
+<td>典型使用场景</td>
+<td>Linux 系统运维、软件部署</td>
+<td>Windows 环境快速装机、软件批量管理</td>
+<td>Python 脚本开发、数据分析项目</td>
+<td>Java 后端开发、多模块项目</td>
+<td>前端框架开发、Node.js 服务开发</td>
+<td>C&#x2F;C++ 跨平台项目开发</td>
+</tr>
+</tbody></table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-powershell常用命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1042,104 +1385,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-算法问题理解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/09/08/%E7%AE%97%E6%B3%95%E9%97%AE%E9%A2%98%E7%90%86%E8%A7%A3/">求解算法问题的过程理解</a>
-    </h1>
-  
-
-        
-        <a href="/2025/09/08/%E7%AE%97%E6%B3%95%E9%97%AE%E9%A2%98%E7%90%86%E8%A7%A3/" class="archive-article-date">
-  	<time datetime="2025-09-08T01:07:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-09-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>现在是2025年9月8，我写这篇文章的时候我正在上早八大数据，我丢我还坐在第一排。今天早上头特别疼，到现在我还在一直揉我的太阳穴，可能是昨天睡得太晚了。哎，人还是不要焦虑太多，还是那句话很多东西都是自己控制不了的，明天和意外你永远不知道哪一个先来。</p>
-<p>言归正传，为什么要写这篇文章？本人作为算法小菜鸡，昨天晚上打完cf突然对算法问题的求解过程总结了一下，因此就想它写下来，还有一个关键的我新学了一些markdown语法，也想用一下。</p>
-<blockquote>
-<p>算法就是问题的解法  </p>
-</blockquote>
-<p><strong>这句话是我编的，为了验证一下引用语法</strong></p>
-<p>在我看来，一个完整的算法解决过程应该包含三个方面：条件、中间过程、结果。他们三个之间的关系我昨天网上想到了一个非常相似的比喻，假如条件是河的一岸，结果是对岸，我们的目标很明确就是从河的这端走到对岸，但是我们怎么走呢。不可能直接趟过去，所以我们就需要在他们之间搭一座<strong>桥</strong>，这个桥就是中间过程。更专业一点来说就是，一般正常的算法问题是不可能直接从条件直接跳到结果的。需要从条件中想到一些隐藏的东西，一般来说这个隐藏的东西往往是关键</p>
-<h4 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h4><p>条件这里我把它分为三个部分：题目描述，数据范围，样例。这三个部分都是最表面的我们可以一眼看出并理解的，因此一定要看准</p>
-<p>题目描述不必多少很好理解，题目的最主要的东西，比如说是字符串啊还是数组啊，数组之间有什么关系啊这种的。</p>
-<p>数据范围是非常重要的一个部分，我们需要通过数据范围来确定我们使用的算法类型，TLE真的是最痛的。</p>
-<p>样例的重要性完全取决于它给的好不好，但是一般来说样例的最主要功能还是让我们了解题目是怎么工作的，一般的题想从样例中发现一般规律感觉有点困难。</p>
-<h4 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h4><p>这里先说结果，结果没什么好说的，也是直接能从题目中提取。但是它还有一个重要的功能，有时候根据题目的描述我们也能判断出需要使用的算法类型。就比如二分，一般题目的问法就有最多几次操作，最大的最小，最小的最大…..</p>
-<h4 id="中间过程"><a href="#中间过程" class="headerlink" title="中间过程"></a>中间过程</h4><p>中间过程绝对是最重要的，也是绝大部分人被卡在的地方。也就是大家常说的没思路。</p>
-<p>中间过程我想分为两个，一个就是这个算法的类型，这个类型可以依靠数据范围和结果的问法和自己的经验判断。</p>
-<p>第二个就是比较难的也比较抽象的我把它称作<strong>内在规律</strong>，这个可以说是算法问题的核心了，非常考验我们的算法基础与发现规律的能力，而且比较难的问题内在规律往往不止一个，想解决这道问题需要把这几个点都想透想明白，这个还是很有难度的。</p>
-<p>昨天晚上大致就想了这么多，说实话已经不少了，我是很反对把一个简单的东西复杂化，就一个简单的东西都要写3000字的论文，来来回回，没完没了。真的要点名批评某些老师。</p>
-<blockquote>
-<p>真理无一例外都是简洁而优美的</p>
-</blockquote>
-<hr>
-<p>现在是2025年9月9，我突然又有了小感悟，简单的一个想法而已，就不开新的post了。</p>
-<p>我对我自己的认识，我这个人很喜欢求稳。不喜欢干感觉是自己能力之外的事情，会给自己设立一个上限。这样就很容易导致我的进步速度非常慢，<strong>有时候真的是自己把自己限制住了</strong>，厉害的人都喜欢有挑战的任务。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/09/08/%E7%AE%97%E6%B3%95%E9%97%AE%E9%A2%98%E7%90%86%E8%A7%A3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
     </nav>
   
 

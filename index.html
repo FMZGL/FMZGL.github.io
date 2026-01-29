@@ -225,6 +225,210 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-JAVA学习日记六：Scanner以及数值混合类型转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">JAVA学习日记六：Scanner以及数值混合类型转换</a>
+    </h1>
+  
+
+        
+        <a href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
+  	<time datetime="2026-01-29T13:27:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Java-Scanner-方法区别-数值混合运算类型提升规律总结"><a href="#Java-Scanner-方法区别-数值混合运算类型提升规律总结" class="headerlink" title="Java Scanner 方法区别 + 数值混合运算类型提升规律总结"></a>Java Scanner 方法区别 + 数值混合运算类型提升规律总结</h1><h2 id="一、Scanner-核心方法区别（next-nextLine-hasNext-hasNextLine）"><a href="#一、Scanner-核心方法区别（next-nextLine-hasNext-hasNextLine）" class="headerlink" title="一、Scanner 核心方法区别（next&#x2F;nextLine + hasNext&#x2F;hasNextLine）"></a>一、Scanner 核心方法区别（next&#x2F;nextLine + hasNext&#x2F;hasNextLine）</h2><h3 id="1-sc-next-与-sc-nextLine-区别"><a href="#1-sc-next-与-sc-nextLine-区别" class="headerlink" title="1. sc.next () 与 sc.nextLine () 区别"></a>1. sc.next () 与 sc.nextLine () 区别</h3><table>
+<thead>
+<tr>
+<th align="center">对比维度</th>
+<th align="center">sc.next()</th>
+<th align="center">sc.nextLine()</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">读取终止标志</td>
+<td align="center">任意空白符（空格、Tab、\n、\r）</td>
+<td align="center">仅换行符 \n（按回车触发）</td>
+</tr>
+<tr>
+<td align="center">空白符处理</td>
+<td align="center">自动忽略开头所有空白符，仅取有效内容</td>
+<td align="center">不忽略任何字符，保留行内所有空白符（开头 &#x2F; 中间）</td>
+</tr>
+<tr>
+<td align="center">返回内容</td>
+<td align="center">两个空白符间的有效标记（Token），无空白符</td>
+<td align="center">从光标到换行符的整行内容，不含末尾 \n</td>
+</tr>
+<tr>
+<td align="center">配套判断方法</td>
+<td align="center">必须搭配 sc.hasNext ()</td>
+<td align="center">必须搭配 sc.hasNextLine ()</td>
+</tr>
+<tr>
+<td align="center">核心特点</td>
+<td align="center">按「标记」读取，拆分连续数据</td>
+<td align="center">按「整行」读取，保留完整内容</td>
+</tr>
+<tr>
+<td align="center">适用场景</td>
+<td align="center">读取分隔的单个数据（整数、单词、独立指令）</td>
+<td align="center">读取整行内容（带空格文本、整行指令、一句话）</td>
+</tr>
+<tr>
+<td align="center">经典坑点</td>
+<td align="center">读取后不消耗末尾 \n，后续接 nextLine () 会读空行</td>
+<td align="center">无此坑，整行读取自然消耗 \n</td>
+</tr>
+</tbody></table>
+<p><strong>坑点解决</strong>：next ()&#x2F;nextInt () 后接 nextLine ()，需额外调用 <code>sc.nextLine()</code> 消耗换行符，或全程用 nextLine () 读取后手动转类型。</p>
+<h3 id="2-sc-hasNext-与-sc-hasNextLine-区别"><a href="#2-sc-hasNext-与-sc-hasNextLine-区别" class="headerlink" title="2. sc.hasNext () 与 sc.hasNextLine () 区别"></a>2. sc.hasNext () 与 sc.hasNextLine () 区别</h3><table>
+<thead>
+<tr>
+<th align="center">对比维度</th>
+<th align="center">sc.hasNext()</th>
+<th align="center">sc.hasNextLine()</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">判断依据</td>
+<td align="center">是否有下一个<strong>有效标记</strong>（非空白字符）</td>
+<td align="center">是否有下一个<strong>整行内容</strong>（可空行）</td>
+</tr>
+<tr>
+<td align="center">空白符处理</td>
+<td align="center">忽略开头空白符，仅判断有效内容是否存在</td>
+<td align="center">不忽略任何字符，包含空行、空白符行</td>
+</tr>
+<tr>
+<td align="center">核心目标</td>
+<td align="center">判断是否有可提取的单个数据单元</td>
+<td align="center">判断是否有可提取的完整行</td>
+</tr>
+<tr>
+<td align="center">配套读取方法</td>
+<td align="center">sc.next()&#x2F;sc.nextXxx()（nextInt&#x2F;nextLong）</td>
+<td align="center">sc.nextLine()</td>
+</tr>
+<tr>
+<td align="center">空行处理</td>
+<td align="center">空行返回 false（无有效标记）</td>
+<td align="center">空行返回 true（仍为一行内容）</td>
+</tr>
+</tbody></table>
+<p><strong>核心结论</strong>：判断「是否有单个数据」用 hasNext ()，判断「是否有整行内容」用 hasNextLine ()，<strong>严禁混用判断与读取方法</strong>。</p>
+<h2 id="二、Java-数值混合运算的类型提升核心规律"><a href="#二、Java-数值混合运算的类型提升核心规律" class="headerlink" title="二、Java 数值混合运算的类型提升核心规律"></a>二、Java 数值混合运算的类型提升核心规律</h2><h3 id="1-基础依据：数值类型精度层级（从低到高，核心排序）"><a href="#1-基础依据：数值类型精度层级（从低到高，核心排序）" class="headerlink" title="1. 基础依据：数值类型精度层级（从低到高，核心排序）"></a>1. 基础依据：数值类型精度层级（从低到高，核心排序）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">byte &lt; short &lt; int &lt; long &lt; float &lt; double</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>补充：<code>char</code> 参与数值运算时，<strong>先自动转为 int</strong>，再遵循此层级提升；</li>
+<li>原则：精度越高，可表示的数值范围 &#x2F; 小数精度越强，提升不可逆（低精度不降级）。</li>
+</ul>
+<h3 id="2-3-条通用提升规则（覆盖所有数值运算场景）"><a href="#2-3-条通用提升规则（覆盖所有数值运算场景）" class="headerlink" title="2. 3 条通用提升规则（覆盖所有数值运算场景）"></a>2. 3 条通用提升规则（覆盖所有数值运算场景）</h3><h4 id="规则-1：单类型运算-——-无提升，结果类型与操作数一致"><a href="#规则-1：单类型运算-——-无提升，结果类型与操作数一致" class="headerlink" title="规则 1：单类型运算 —— 无提升，结果类型与操作数一致"></a>规则 1：单类型运算 —— 无提升，结果类型与操作数一致</h4><p>所有操作数为同一种数值类型，直接运算，结果类型不变，无隐式转换：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a=10, b=20; int res = a+b; // 全int运算，结果仍为int</span><br><span class="line">long c=100L, d=200L; long res2 = c-d; // 全long运算，结果仍为long</span><br></pre></td></tr></table></figure>
+
+<h4 id="规则-2：多类型混合运算-——-全提升至「精度最高类型」，结果同此类型"><a href="#规则-2：多类型混合运算-——-全提升至「精度最高类型」，结果同此类型" class="headerlink" title="规则 2：多类型混合运算 —— 全提升至「精度最高类型」，结果同此类型"></a>规则 2：多类型混合运算 —— 全提升至「精度最高类型」，结果同此类型</h4><p>存在不同精度操作数时，<strong>所有低精度操作数依次自动转为运算中精度最高的类型</strong>，同类型运算后，结果为该最高类型（只能用该类型接收，否则编译报错）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a=10; long b=20L; long res = a+b; // int→long，结果long</span><br><span class="line">long c=100L; double d=20.5; double res2 = c+d; // long→double，结果double</span><br><span class="line">int e=5; float f=3.5f; double g=1.2; double res3 = e+f+g; // int→float→double，结果double</span><br></pre></td></tr></table></figure>
+
+<h4 id="规则-3：byte-short-char-运算-——-先统一转-int，再按规则-2-提升"><a href="#规则-3：byte-short-char-运算-——-先统一转-int，再按规则-2-提升" class="headerlink" title="规则 3：byte&#x2F;short&#x2F;char 运算 —— 先统一转 int，再按规则 2 提升"></a>规则 3：byte&#x2F;short&#x2F;char 运算 —— 先统一转 int，再按规则 2 提升</h4><p>这三种低精度类型，<strong>无论互相运算还是与其他类型运算</strong>，第一步必自动转为 int，后续再按「精度从低到高」继续提升：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte a=10; short b=20; int res = a+b; // byte/short→int，结果int</span><br><span class="line">char c=&#x27;a&#x27;; // ASCII码97，运算时→int(97)</span><br><span class="line">long res2 = c+a; // char→int→long，byte→int→long，结果long</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="三、浮点数在计算机中的存储规则（以255-5为例0"><a href="#三、浮点数在计算机中的存储规则（以255-5为例0" class="headerlink" title="三、浮点数在计算机中的存储规则（以255.5为例0)"></a>三、浮点数在计算机中的存储规则（以255.5为例0)</h1><h2 id="一、第一步：将-255-5-转为十进制整数-小数的二进制"><a href="#一、第一步：将-255-5-转为十进制整数-小数的二进制" class="headerlink" title="一、第一步：将 255.5 转为十进制整数 + 小数的二进制"></a>一、第一步：将 255.5 转为十进制整数 + 小数的二进制</h2><h3 id="1-整数部分（255）转二进制（除-2-取余，逆序排列）"><a href="#1-整数部分（255）转二进制（除-2-取余，逆序排列）" class="headerlink" title="1. 整数部分（255）转二进制（除 2 取余，逆序排列）"></a>1. 整数部分（255）转二进制（除 2 取余，逆序排列）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">255 ÷ 2 = 127 余 1</span><br><span class="line">127 ÷ 2 = 63  余 1</span><br><span class="line">63 ÷ 2 = 31   余 1</span><br><span class="line">31 ÷ 2 = 15   余 1</span><br><span class="line">15 ÷ 2 = 7    余 1</span><br><span class="line">7 ÷ 2 = 3     余 1</span><br><span class="line">3 ÷ 2 = 1     余 1</span><br><span class="line">1 ÷ 2 = 0     余 1</span><br></pre></td></tr></table></figure>
+
+<p>逆序取余得：<strong>255 的二进制 &#x3D; 11111111</strong>（8 个 1）。</p>
+<h3 id="2-小数部分（0-5）转二进制（乘-2-取整，顺序排列）"><a href="#2-小数部分（0-5）转二进制（乘-2-取整，顺序排列）" class="headerlink" title="2. 小数部分（0.5）转二进制（乘 2 取整，顺序排列）"></a>2. 小数部分（0.5）转二进制（乘 2 取整，顺序排列）</h3><p>十进制小数转二进制<strong>核心方法</strong>：乘 2 取整法，反复乘 2 取整数部分，按顺序排列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.5 × 2 = 1.0  取整 1，小数部分为0，结束转换</span><br></pre></td></tr></table></figure>
+
+<p>顺序取整得：<strong>0.5 的二进制 &#x3D; 1</strong>。</p>
+<h3 id="3-合并整数-小数二进制"><a href="#3-合并整数-小数二进制" class="headerlink" title="3. 合并整数 + 小数二进制"></a>3. 合并整数 + 小数二进制</h3><p>255.5 的二进制 &#x3D; 整数部分 + 小数部分 &#x3D; <strong>11111111.1</strong>。</p>
+<h2 id="二、第二步：转为-IEEE-754-规格化二进制（1-M-×-2-e-形式）"><a href="#二、第二步：转为-IEEE-754-规格化二进制（1-M-×-2-e-形式）" class="headerlink" title="二、第二步：转为 IEEE 754 规格化二进制（1.M × 2^e 形式）"></a>二、第二步：转为 IEEE 754 规格化二进制（1.M × 2^e 形式）</h2><p>IEEE 754 要求浮点数以<strong>规格化形式</strong>表示，即<strong>小数点前必须只有 1 个有效数字 1</strong>，通过移动小数点实现：</p>
+<ul>
+<li>原始二进制：<code>11111111.1</code></li>
+<li>小数点左移 7 位：<code>1.11111111 × 2^7</code>（左移 n 位，指数为 + n；右移为 - n）</li>
+</ul>
+<p>由此得到规格化的核心参数：</p>
+<ul>
+<li>符号位基础：255.5 是正数 → 符号位 S &#x3D; 0</li>
+<li>尾数小数部分 M：<code>1.11111111</code> 中小数点后的部分 → <code>11111111</code></li>
+<li>实际指数 e：7</li>
+</ul>
+<h2 id="三、第三步：计算-double-专属的指数位（偏移量修正）"><a href="#三、第三步：计算-double-专属的指数位（偏移量修正）" class="headerlink" title="三、第三步：计算 double 专属的指数位（偏移量修正）"></a>三、第三步：计算 double 专属的指数位（偏移量修正）</h2><p>double 类型的指数位采用<strong>偏移表示法</strong>，<strong>偏移量固定为 1023</strong>，存储的指数值 E 计算公式为：</p>
+<p><strong>E &#x3D; 实际指数 e + 1023</strong></p>
+<p>代入计算：</p>
+<p>E &#x3D; 7 + 1023 &#x3D; <strong>1030</strong></p>
+<p>将 1030 转为 11 位二进制（double 指数位固定 11 位，不足补前导 0）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1030 ÷ 2 = 515 余 0</span><br><span class="line">515 ÷ 2 = 257 余 1</span><br><span class="line">257 ÷ 2 = 128 余 1</span><br><span class="line">128 ÷ 2 = 64  余 0</span><br><span class="line">64 ÷ 2 = 32   余 0</span><br><span class="line">32 ÷ 2 = 16   余 0</span><br><span class="line">16 ÷ 2 = 8    余 0</span><br><span class="line">8 ÷ 2 = 4     余 0</span><br><span class="line">4 ÷ 2 = 2     余 0</span><br><span class="line">2 ÷ 2 = 1     余 0</span><br><span class="line">1 ÷ 2 = 0     余 1</span><br></pre></td></tr></table></figure>
+
+<p>逆序取余并补为 11 位：<strong>10000000110</strong>（验证：2^10 + 2^3 + 2^2 &#x3D; 1024+8+4&#x3D;1030，正确）。</p>
+<h2 id="四、第四步：补全-52-位尾数位（double-尾数固定-52-位）"><a href="#四、第四步：补全-52-位尾数位（double-尾数固定-52-位）" class="headerlink" title="四、第四步：补全 52 位尾数位（double 尾数固定 52 位）"></a>四、第四步：补全 52 位尾数位（double 尾数固定 52 位）</h2><p>double 尾数位为 52 位，存储的是规格化形式<code>1.M</code>中<strong>小数点后的 M 部分</strong>，<strong>隐含最高位的 1</strong>（不占用存储位，节省精度），规则：</p>
+<ul>
+<li>若 M 长度 &lt; 52 位，<strong>末尾补 0</strong>至 52 位；</li>
+<li>若 M 长度 &gt; 52 位，按舍入规则截断。</li>
+</ul>
+<p>本题中 M &#x3D; <code>11111111</code>（8 位），需补 52-8&#x3D;44 个 0，最终尾数位为：</p>
+<p><strong>11111111 + 44 个 0</strong>（共 52 位）。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1599,352 +1803,9 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-常见包管理器及简单使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">常见包管理器及简单使用</a>
-    </h1>
-  
-
-        
-        <a href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-  	<time datetime="2025-11-18T06:43:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="1-apt-get"><a href="#1-apt-get" class="headerlink" title="1.apt-get"></a>1.apt-get</h2><p><strong>核心定位</strong>：Debian、Ubuntu 等 Debian 系 Linux 发行版的系统级包管理器，基于.deb 格式包，主打系统软件的安装、升级与依赖管理，需 root 权限执行。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>更新软件包列表</td>
-<td>sudo apt-get update</td>
-</tr>
-<tr>
-<td>安装软件包</td>
-<td>sudo apt-get install 包名</td>
-</tr>
-<tr>
-<td>卸载软件（保留配置）</td>
-<td>sudo apt-get remove 包名</td>
-</tr>
-<tr>
-<td>彻底卸载软件（含配置）</td>
-<td>sudo apt-get purge 包名</td>
-</tr>
-<tr>
-<td>升级所有软件</td>
-<td>sudo apt-get upgrade</td>
-</tr>
-<tr>
-<td>清理下载的包缓存</td>
-<td>sudo apt-get clean</td>
-</tr>
-</tbody></table>
-<h2 id="2-winget"><a href="#2-winget" class="headerlink" title="2.winget"></a>2.winget</h2><p><strong>核心定位</strong>：微软官方推出的 Windows 系统包管理器，适配 Windows 10 及以上版本，用于快速管理桌面软件与应用，无需复杂的图形化安装步骤。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>搜索软件</td>
-<td>winget search 软件关键词</td>
-</tr>
-<tr>
-<td>安装指定软件</td>
-<td>winget install 软件 ID</td>
-</tr>
-<tr>
-<td>更新所有已装软件</td>
-<td>winget upgrade –all</td>
-</tr>
-<tr>
-<td>卸载软件</td>
-<td>winget uninstall 软件 ID</td>
-</tr>
-<tr>
-<td>查看已安装软件</td>
-<td>winget list</td>
-</tr>
-<tr>
-<td>导出软件列表到文件</td>
-<td>winget export -o 文件名.json</td>
-</tr>
-</tbody></table>
-<h2 id="3-pip"><a href="#3-pip" class="headerlink" title="3.pip"></a>3.pip</h2><p><strong>核心定位</strong>：Python 专属的包管理器，用于管理 Python 第三方库，支持 PyPI 等仓库，适配 Windows、Linux、macOS 多平台，常随 Python 默认安装。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>安装指定包</td>
-<td>pip install 包名</td>
-</tr>
-<tr>
-<td>安装指定版本包</td>
-<td>pip install 包名 &#x3D;&#x3D; 版本号</td>
-</tr>
-<tr>
-<td>卸载包</td>
-<td>pip uninstall 包名</td>
-</tr>
-<tr>
-<td>升级指定包</td>
-<td>pip install –upgrade 包名</td>
-</tr>
-<tr>
-<td>列出已安装包</td>
-<td>pip list</td>
-</tr>
-<tr>
-<td>导出依赖列表</td>
-<td>pip freeze &gt; requirements.txt</td>
-</tr>
-<tr>
-<td>批量安装依赖</td>
-<td>pip install -r requirements.txt</td>
-</tr>
-</tbody></table>
-<h2 id="4-maven"><a href="#4-maven" class="headerlink" title="4.maven"></a>4.maven</h2><p><strong>核心定位</strong>：Java 项目的构建与依赖管理工具，不仅能管理 Jar 包依赖，还能规范化项目构建流程（编译、测试、打包等），核心依赖<code>pom.xml</code>文件管理配置。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>清理构建产物</td>
-<td>mvn clean</td>
-</tr>
-<tr>
-<td>编译源代码</td>
-<td>mvn compile</td>
-</tr>
-<tr>
-<td>运行单元测试</td>
-<td>mvn test</td>
-</tr>
-<tr>
-<td>打包项目（生成 Jar&#x2F;WAR）</td>
-<td>mvn package</td>
-</tr>
-<tr>
-<td>打包并安装到本地仓库</td>
-<td>mvn install</td>
-</tr>
-<tr>
-<td>将包部署到远程仓库</td>
-<td>mvn deploy</td>
-</tr>
-</tbody></table>
-<h2 id="5-npm"><a href="#5-npm" class="headerlink" title="5.npm"></a>5.npm</h2><p><strong>核心定位</strong>：Node.js 自带的包管理器，用于管理前端或 Node.js 项目的依赖包，依托 npm 仓库，可定义项目脚本，是前端开发的核心工具之一。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>初始化项目生成配置文件</td>
-<td>npm init -y</td>
-</tr>
-<tr>
-<td>安装生产依赖</td>
-<td>npm install 包名</td>
-</tr>
-<tr>
-<td>安装开发依赖</td>
-<td>npm install 包名 –save-dev</td>
-</tr>
-<tr>
-<td>卸载依赖包</td>
-<td>npm uninstall 包名</td>
-</tr>
-<tr>
-<td>更新指定依赖</td>
-<td>npm update 包名</td>
-</tr>
-<tr>
-<td>执行自定义项目脚本</td>
-<td>npm run 脚本名</td>
-</tr>
-<tr>
-<td>查看项目依赖列表</td>
-<td>npm list</td>
-</tr>
-</tbody></table>
-<h2 id="6-vcpkg"><a href="#6-vcpkg" class="headerlink" title="6.vcpkg"></a>6.vcpkg</h2><p><strong>核心定位</strong>：微软开发的跨平台 C&#x2F;C++ 包管理器，支持 Windows、Linux、macOS，通过源码编译安装库文件，适配 CMake 等构建系统，解决 C&#x2F;C++ 依赖配置复杂的问题。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>搜索 C&#x2F;C++ 库</td>
-<td>.&#x2F;vcpkg search 库关键词</td>
-</tr>
-<tr>
-<td>安装指定库</td>
-<td>.&#x2F;vcpkg install 库名</td>
-</tr>
-<tr>
-<td>安装指定平台的库</td>
-<td>.&#x2F;vcpkg install 库名：目标平台（如 x64-windows）</td>
-</tr>
-<tr>
-<td>卸载库</td>
-<td>.&#x2F;vcpkg remove 库名</td>
-</tr>
-<tr>
-<td>列出已安装库</td>
-<td>.&#x2F;vcpkg list</td>
-</tr>
-<tr>
-<td>全局集成到开发环境</td>
-<td>.&#x2F;vcpkg integrate install</td>
-</tr>
-</tbody></table>
-<h3 id="六款包管理器核心对比"><a href="#六款包管理器核心对比" class="headerlink" title="六款包管理器核心对比"></a>六款包管理器核心对比</h3><table>
-<thead>
-<tr>
-<th>对比维度</th>
-<th>apt-get</th>
-<th>winget</th>
-<th>pip</th>
-<th>maven</th>
-<th>npm</th>
-<th>vcpkg</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>适用领域</td>
-<td>Debian 系 Linux 系统软件</td>
-<td>Windows 系统桌面应用</td>
-<td>Python 第三方库</td>
-<td>Java 项目构建与依赖</td>
-<td>Node.js&#x2F; 前端项目依赖</td>
-<td>C&#x2F;C++ 跨平台库</td>
-</tr>
-<tr>
-<td>支持平台</td>
-<td>Debian&#x2F;Ubuntu 等 Linux 发行版</td>
-<td>Windows 10+</td>
-<td>Windows、Linux、macOS</td>
-<td>全平台</td>
-<td>全平台</td>
-<td>Windows、Linux、macOS</td>
-</tr>
-<tr>
-<td>依赖配置文件</td>
-<td>&#x2F;etc&#x2F;apt&#x2F;sources.list</td>
-<td>无，依赖系统源</td>
-<td>requirements.txt</td>
-<td>pom.xml</td>
-<td>package.json</td>
-<td>vcpkg.json（清单模式）</td>
-</tr>
-<tr>
-<td>核心优势</td>
-<td>系统级依赖自动处理，稳定可靠</td>
-<td>Windows 官方适配，软件管理便捷</td>
-<td>轻量，Python 生态适配性强</td>
-<td>规范 Java 项目构建流程，依赖传递清晰</td>
-<td>前端生态丰富，脚本功能灵活</td>
-<td>解决 C&#x2F;C++ 库编译与跨平台依赖问题</td>
-</tr>
-<tr>
-<td>典型使用场景</td>
-<td>Linux 系统运维、软件部署</td>
-<td>Windows 环境快速装机、软件批量管理</td>
-<td>Python 脚本开发、数据分析项目</td>
-<td>Java 后端开发、多模块项目</td>
-<td>前端框架开发、Node.js 服务开发</td>
-<td>C&#x2F;C++ 跨平台项目开发</td>
-</tr>
-</tbody></table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
     </nav>
   
 
