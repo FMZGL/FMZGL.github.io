@@ -1,0 +1,267 @@
+:root {
+  --brand-bg-1: #f4f8ff;
+  --brand-bg-2: #fff6ec;
+  --brand-bg-3: #f5fffb;
+  --brand-panel: rgba(24, 36, 66, 0.84);
+  --brand-panel-border: rgba(255, 255, 255, 0.2);
+  --brand-card: rgba(255, 255, 255, 0.88);
+  --brand-card-border: rgba(72, 101, 154, 0.16);
+  --brand-shadow: 0 16px 38px rgba(37, 56, 92, 0.14);
+  --brand-shadow-hover: 0 24px 46px rgba(31, 49, 86, 0.2);
+  --brand-text: #2c3650;
+  --brand-title: #1d2942;
+  --brand-muted: #687693;
+  --brand-link: #3b64f1;
+  --brand-link-hover: #ff7f52;
+  --brand-accent-a: #4b79ff;
+  --brand-accent-b: #67a2ff;
+  --brand-accent-c: #ff8e5f;
+}
+
+body {
+  background: linear-gradient(135deg, var(--brand-bg-1), var(--brand-bg-2) 52%, var(--brand-bg-3)) !important;
+  color: var(--brand-text);
+  font-family: "Avenir Next", "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::before {
+  width: 460px;
+  height: 460px;
+  top: -160px;
+  right: 5%;
+  background: radial-gradient(circle at center, rgba(75, 121, 255, 0.2), rgba(75, 121, 255, 0));
+}
+
+body::after {
+  width: 520px;
+  height: 520px;
+  left: 10%;
+  bottom: -230px;
+  background: radial-gradient(circle at center, rgba(255, 142, 95, 0.18), rgba(255, 142, 95, 0));
+}
+
+#container {
+  position: relative;
+  z-index: 1;
+}
+
+.mid-col {
+  background: transparent !important;
+}
+
+/* Left glass panel */
+.left-col {
+  background: linear-gradient(165deg, rgba(24, 36, 66, 0.92), rgba(34, 50, 88, 0.88)) !important;
+  border-right: 1px solid var(--brand-panel-border);
+  box-shadow: 8px 0 30px rgba(17, 25, 46, 0.24);
+}
+
+.left-col #header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+.left-col #header a,
+.left-col #header .header-subtitle,
+.left-col #header .header-smart-menu,
+.left-col #header .header-author {
+  color: rgba(244, 248, 255, 0.96);
+}
+
+.left-col #header .header-menu li a {
+  color: rgba(220, 234, 255, 0.9);
+  letter-spacing: 0.05em;
+}
+
+.left-col #header .header-menu li a:hover {
+  color: #fff;
+  text-shadow: 0 0 12px rgba(120, 170, 255, 0.65);
+}
+
+.left-col #header .profilepic {
+  border-radius: 50%;
+  overflow: hidden;
+  border-color: rgba(255, 255, 255, 0.58);
+  background: linear-gradient(145deg, rgba(75, 121, 255, 0.72), rgba(255, 142, 95, 0.74));
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+}
+
+.left-col #header .profilepic img,
+#mobile-nav #header .profilepic img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.left-col #header .header-nav .social a {
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  opacity: 0.9;
+}
+
+.left-col #header .header-nav .social a:hover {
+  opacity: 1;
+  transform: translateY(-2px) scale(1.05);
+  background: rgba(255, 255, 255, 0.16);
+}
+
+/* Card system */
+.article {
+  background: var(--brand-card) !important;
+  border: 1px solid var(--brand-card-border) !important;
+  border-radius: 18px !important;
+  box-shadow: var(--brand-shadow) !important;
+  backdrop-filter: blur(3px);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+
+.article:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--brand-shadow-hover) !important;
+}
+
+.article-header {
+  border-left-color: var(--brand-accent-a);
+}
+
+.article-inner h1.article-title,
+.article-title {
+  color: var(--brand-title);
+}
+
+.article-entry {
+  color: var(--brand-text);
+}
+
+.article-entry h2,
+.article-entry h3,
+.article-entry h4 {
+  color: #344364;
+  border-bottom-color: rgba(82, 111, 164, 0.25);
+}
+
+.article-entry a {
+  color: var(--brand-link);
+  border-bottom: 1px dashed rgba(59, 100, 241, 0.35);
+}
+
+.article-entry a:hover {
+  color: var(--brand-link-hover);
+  border-bottom-color: rgba(255, 127, 82, 0.55);
+}
+
+.article-entry blockquote {
+  background: linear-gradient(90deg, rgba(75, 121, 255, 0.1), rgba(75, 121, 255, 0.03));
+  border-left-color: #5c89ff;
+  border-radius: 0 12px 12px 0;
+}
+
+.article-entry p code,
+.article-entry li code {
+  background: rgba(77, 106, 166, 0.13);
+  border: 1px solid rgba(77, 106, 166, 0.26);
+  border-radius: 7px;
+  color: #2f4472;
+}
+
+.article-entry .highlight,
+.article-entry pre {
+  border-radius: 12px;
+  border: 1px solid rgba(86, 118, 176, 0.22);
+}
+
+.article-meta time,
+.archive-article-date,
+.article-tag .icon,
+.article-category .icon {
+  color: var(--brand-muted);
+}
+
+.article-tag-list-link,
+.article-category-link {
+  border-radius: 999px;
+  background: rgba(75, 121, 255, 0.1);
+  color: #4a67ad;
+}
+
+.article-more-link a {
+  background: linear-gradient(90deg, var(--brand-accent-a), var(--brand-accent-b));
+  border-radius: 999px;
+  color: #fff !important;
+  box-shadow: 0 8px 18px rgba(75, 121, 255, 0.25);
+}
+
+.article-more-link a:hover {
+  background: linear-gradient(90deg, var(--brand-accent-c), #ffad72);
+}
+
+#page-nav .page-number,
+#page-nav .extend {
+  border-radius: 999px;
+  border: 1px solid rgba(79, 109, 164, 0.28);
+  color: #5f7296;
+}
+
+#page-nav .current,
+#page-nav .page-number:hover,
+#page-nav .extend:hover {
+  background: linear-gradient(90deg, var(--brand-accent-a), var(--brand-accent-b));
+  color: #fff;
+  border-color: transparent;
+}
+
+.archives-wrap {
+  background: var(--brand-card);
+  border: 1px solid var(--brand-card-border);
+  border-radius: 18px;
+  box-shadow: var(--brand-shadow);
+}
+
+#footer {
+  color: #6f7d99;
+  text-shadow: none;
+}
+
+/* Mobile sync */
+@media screen and (max-width: 800px) {
+  body {
+    background: linear-gradient(180deg, #f5f8ff, #fff5eb) !important;
+  }
+
+  .article {
+    border-radius: 14px !important;
+    margin: 12px 10px !important;
+  }
+
+  .article:hover {
+    transform: none;
+  }
+
+  #mobile-nav .overlay {
+    background: linear-gradient(150deg, rgba(28, 42, 75, 0.96), rgba(44, 63, 108, 0.92));
+  }
+
+  .header-menu ul {
+    border-color: rgba(255, 255, 255, 0.42);
+    background: rgba(23, 34, 60, 0.35);
+  }
+
+  .header-menu li,
+  .header-menu li:first-child {
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .header-menu li a {
+    color: rgba(238, 245, 255, 0.92);
+  }
+}
