@@ -6,15 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>PyTorch深度学习实践 | Sumsol</title>
+  <title>相册 | Sumsol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="PyTorch深度学习实践">
-<meta property="og:url" content="http://example.com/2026/03/07/PyTorch%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5/index.html">
+  <meta name="description" content="Photo Journal     我的相册     上传图片到 source&#x2F;assets&#x2F;album&#x2F;uploads&#x2F;，再在 photos.js 增加一条记录即可展示。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="相册">
+<meta property="og:url" content="http://example.com/photos/index.html">
 <meta property="og:site_name" content="Sumsol">
+<meta property="og:description" content="Photo Journal     我的相册     上传图片到 source&#x2F;assets&#x2F;album&#x2F;uploads&#x2F;，再在 photos.js 增加一条记录即可展示。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-03-07T09:57:00.000Z">
-<meta property="article:modified_time" content="2026-03-07T09:57:00.477Z">
+<meta property="article:published_time" content="2026-03-08T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-03-08T10:37:22.709Z">
 <meta property="article:author" content="zhangtf">
 <meta name="twitter:card" content="summary">
   
@@ -159,27 +161,73 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-PyTorch深度学习实践" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      PyTorch深度学习实践
+      相册
     </h1>
   
 
         
-        <a href="/2026/03/07/PyTorch%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5/" class="archive-article-date">
-  	<time datetime="2026-03-07T09:57:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-07</time>
+        <a href="/photos/index.html" class="archive-article-date">
+  	<time datetime="2026-03-08T04:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <link rel="stylesheet" href="/assets/album/photos.css">
+
+<div class="album-page" id="albumPage">
+  <header class="album-hero">
+    <p class="album-kicker">Photo Journal</p>
+    <h1>我的相册</h1>
+    <p class="album-subtitle">上传图片到 <code>source/assets/album/uploads/</code>，再在 <code>photos.js</code> 增加一条记录即可展示。</p>
+  </header>
+
+  <section class="album-toolbar" aria-label="相册工具栏">
+    <div class="album-search-wrap">
+      <input id="albumSearch" class="album-search" type="search" placeholder="搜索标题、描述、标签" aria-label="搜索照片">
+    </div>
+    <div id="albumFilters" class="album-filters" role="tablist" aria-label="分类筛选"></div>
+  </section>
+
+  <section class="album-meta" id="albumMeta" aria-live="polite"></section>
+
+  <section class="album-grid" id="albumGrid" aria-label="照片列表"></section>
+
+  <template id="albumCardTpl">
+    <article class="album-card">
+      <button class="album-thumb-btn" type="button">
+        <img class="album-thumb" alt="" loading="lazy" decoding="async">
+      </button>
+      <div class="album-card-body">
+        <h3 class="album-title"></h3>
+        <p class="album-desc"></p>
+        <div class="album-tags"></div>
+      </div>
+    </article>
+  </template>
+</div>
+
+<div class="album-lightbox" id="albumLightbox" hidden>
+  <button class="album-lightbox-close" type="button" aria-label="关闭">×</button>
+  <button class="album-lightbox-prev" type="button" aria-label="上一张">‹</button>
+  <figure class="album-lightbox-figure">
+    <img id="albumLightboxImg" alt="">
+    <figcaption id="albumLightboxCaption"></figcaption>
+  </figure>
+  <button class="album-lightbox-next" type="button" aria-label="下一张">›</button>
+</div>
+
+<script src="/assets/album/photos.js"></script>
+<script src="/assets/album/photos-app.js" defer></script>
+
       
 
       
@@ -237,7 +285,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2026/03/07/PyTorch%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%AE%9E%E8%B7%B5/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/photos/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -249,25 +297,6 @@ var _hmt = _hmt || [];
 </article>
 
   
-<nav id="article-nav">
-  
-    <a href="/2049/10/01/%E6%A0%87%E7%AD%BE%E8%AF%B4%E6%98%8E/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          标签说明
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JAVA学习日记七：常用函数及比赛所需的一些小技巧</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -286,14 +315,6 @@ var _hmt = _hmt || [];
 </aside>
 
 
-
-  
-  
-  
-
-  
-
-  
 
 
           </div>
@@ -316,7 +337,7 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
