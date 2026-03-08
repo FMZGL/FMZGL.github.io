@@ -21,42 +21,42 @@ window.ALBUM_PHOTOS = [
     tags: ['南昌', '旅行']
   },
   {
-    src: 'assets/album/uploads/4a30ad2b7da6af986c6f8fa39f147372.jpg',
+    src: '/assets/album/uploads/4a30ad2b7da6af986c6f8fa39f147372.jpg',
     title: '果果 01',
     description: '可爱小孩',
     category: '人物',
     tags: ['果果', '萌娃']
   },
   {
-    src: 'assets/album/uploads/5f29600c59965f230cdcdf80d521b2c4.jpg',
+    src: '/assets/album/uploads/5f29600c59965f230cdcdf80d521b2c4.jpg',
     title: '果果 02',
     description: '可爱小孩',
     category: '人物',
     tags: ['果果', '萌娃']
   },
   {
-    src: 'assets/album/uploads/6e3d3d4879231aa4dce146e67409e134.jpg',
+    src: '/assets/album/uploads/6e3d3d4879231aa4dce146e67409e134.jpg',
     title: '果果 03',
     description: '可爱小孩',
     category: '人物',
     tags: ['果果', '萌娃']
   },
   {
-    src: 'assets/album/uploads/25050d8ad550a380c9d3bb87d3c7a37e.jpg',
+    src: '/assets/album/uploads/25050d8ad550a380c9d3bb87d3c7a37e.jpg',
     title: '果果 04',
     description: '可爱小孩',
     category: '人物',
     tags: ['果果', '萌娃']
   },
   {
-    src: 'assets/album/uploads/863042e1f2978da004fabd24323827e5.jpg',
+    src: '/assets/album/uploads/863042e1f2978da004fabd24323827e5.jpg',
     title: '果果 05',
     description: '可爱小孩',
     category: '人物',
     tags: ['果果', '萌娃']
   },
   {
-    src: 'assets/album/uploads/a1a95561d1eaf1f9028ab85e987a2341.jpg',
+    src: '/assets/album/uploads/a1a95561d1eaf1f9028ab85e987a2341.jpg',
     title: '果果 06',
     description: '可爱小孩',
     category: '人物',
