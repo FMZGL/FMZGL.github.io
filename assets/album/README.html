@@ -8,15 +8,15 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>Sumsol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="*{ 		margin:0; 		padding:0; 	} 	#textBox{ 		position: absolute; 		left: 0; 		top: 0; 		z-index: -999; 	} 	#bg{ 		background: url(sgws.jpg) -50px;  		width:500px; 		height: 314px; 		text-align:">
+  <meta name="description" content="相册维护说明 把新照片放到 source&#x2F;assets&#x2F;album&#x2F;uploads&#x2F;。 打开 source&#x2F;assets&#x2F;album&#x2F;photos.js，按下面格式新增一项：  {src: ‘&#x2F;assets&#x2F;album&#x2F;uploads&#x2F;你的图片名.jpg’,title: ‘标题’,description: ‘描述’,category: ‘分类’,tags:">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Sumsol">
-<meta property="og:url" content="http://example.com/assets/demo/mediator/demo.html">
+<meta property="og:url" content="http://example.com/assets/album/README.html">
 <meta property="og:site_name" content="Sumsol">
-<meta property="og:description" content="*{ 		margin:0; 		padding:0; 	} 	#textBox{ 		position: absolute; 		left: 0; 		top: 0; 		z-index: -999; 	} 	#bg{ 		background: url(sgws.jpg) -50px;  		width:500px; 		height: 314px; 		text-align:">
+<meta property="og:description" content="相册维护说明 把新照片放到 source&#x2F;assets&#x2F;album&#x2F;uploads&#x2F;。 打开 source&#x2F;assets&#x2F;album&#x2F;photos.js，按下面格式新增一项：  {src: ‘&#x2F;assets&#x2F;album&#x2F;uploads&#x2F;你的图片名.jpg’,title: ‘标题’,description: ‘描述’,category: ‘分类’,tags:">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-03-07T09:23:31.100Z">
-<meta property="article:modified_time" content="2017-07-28T18:51:08.000Z">
+<meta property="article:published_time" content="2026-03-08T13:43:10.093Z">
+<meta property="article:modified_time" content="2026-03-08T13:43:10.093Z">
 <meta property="article:author" content="zhangtf">
 <meta name="twitter:card" content="summary">
   
@@ -166,80 +166,15 @@ var _hmt = _hmt || [];
     
     <div class="article-entry" itemprop="articleBody">
       
-        <!DOCTYPE HTML>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<script type="text/javascript" src="jquery.js"></script>
-<style type="text/css">
-	*{
-		margin:0;
-		padding:0;
-	}
-	#textBox{
-		position: absolute;
-		left: 0;
-		top: 0;
-		z-index: -999;
-	}
-	#bg{
-		background: url(sgws.jpg) -50px;
+        <h1 id="相册维护说明"><a href="#相册维护说明" class="headerlink" title="相册维护说明"></a>相册维护说明</h1><ol>
+<li>把新照片放到 <code>source/assets/album/uploads/</code>。</li>
+<li>打开 <code>source/assets/album/photos.js</code>，按下面格式新增一项：</li>
+</ol>
+<p>{<br>src: ‘&#x2F;assets&#x2F;album&#x2F;uploads&#x2F;你的图片名.jpg’,<br>title: ‘标题’,<br>description: ‘描述’,<br>category: ‘分类’,<br>tags: [‘标签1’, ‘标签2’]<br>}</p>
+<ol start="3">
+<li>运行 <code>npm run build</code>，确认生成成功后再部署。</li>
+</ol>
 
-		width:500px;
-		height: 314px;
-		text-align: center;
-		position: relative;
-		-webkit-animation:roll 3s infinite ease ;
-		   -moz-animation:roll 3s infinite ease ;
-		    -ms-animation:roll 3s infinite ease ;
-		     -o-animation:roll 3s infinite ease ;
-				animation:roll 3s infinite ease ;
-	}
-	#barHome{
-		width: 300px;
-		height: 10px;
-		background: #f00;
-		overflow: hidden;
-		position: absolute;
-		bottom: 45px;
-		left: 50%;
-		margin-left: -150px;
-	}
-	#barGuest{
-		width: 150px;
-		height: 10px;
-		background: #00f;
-	}
-	#results{
-		width: 300px;
-		position: absolute;
-		bottom: 65px;
-		left: 50%;
-		margin-left: -150px;
-		color: #fff;
-	}
-	#results span{
-		margin: 50px;
-	}
-	@-webkit-keyframes roll {0%{background-position: -90px;}50%{background-position: -10px;}100%{background-position: -90px;}}
-	@-moz-keyframes roll {0%{background-position: -90px;}50%{background-position: -10px;}100%{background-position: -90px;}}
-	@-ms-keyframes roll {0%{background-position: -90px;}50%{background-position: -10px;}100%{background-position: -90px;}}
-	@-o-keyframes roll {0%{background-position: -90px;}50%{background-position: -10px;}100%{background-position: -90px;}}
-	@keyframes roll {0%{background-position: -90px;}50%{background-position: -10px;}100%{background-position: -90px;}}
-</style>
-<title>mediator</title>
-</head>
-<body>
-	<div id="bg">
-		<input id="textBox" type="text" />
-		<div id="results">请按F键与J键</div>
-		<div id="barHome">
-			<div id="barGuest"></div>
-		</div>
-	</div>
-<script type="text/javascript" src="mediator.js"></script>
-</body>
-</html>
       
 
       
@@ -297,7 +232,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/assets/demo/mediator/demo.html" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/assets/album/README.html" alt="微信分享二维码">
     </div>
 </div>
 
