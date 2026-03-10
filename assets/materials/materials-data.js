@@ -1,0 +1,21 @@
+window.MATERIALS_DATA = [
+  {
+    id: 'pytorch-practice',
+    title: 'pytorch深度学习实践',
+    files: [
+      '/assets/materials/files/pytorch深度学习实践/Lecture_01_Overview.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_02_Linear_Model.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_03_Gradient_Descent.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_04_Back_Propagation.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_05_Linear_Regression_with_PyTorch.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_06_Logistic_Regression.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_07_Multiple_Dimension_Input.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_08_Dataset_and_Dataloader.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_09_Softmax_Classifier.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_10_Basic_CNN.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_11_Advanced_CNN.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_12_Basic_RNN.pdf',
+      '/assets/materials/files/pytorch深度学习实践/Lecture_13_RNN_Classifier.pdf'
+    ]
+  }
+]
