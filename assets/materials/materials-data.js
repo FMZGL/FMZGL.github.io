@@ -17,5 +17,14 @@ window.MATERIALS_DATA = [
       '/assets/materials/files/pytorch深度学习实践/Lecture_12_Basic_RNN.pdf',
       '/assets/materials/files/pytorch深度学习实践/Lecture_13_RNN_Classifier.pdf'
     ]
+  },
+  {
+    id: '其他',
+    title: '其他实用文件',
+    files: [
+      '/assets/materials/files/其他实用文件/模板.doc',
+      '/assets/materials/files/其他实用文件/如何优雅的在word中插入代码.txt',
+      '/assets/materials/files/其他实用文件/实验报告模板.doc',
+    ]
   }
 ]
