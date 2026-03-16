@@ -19,6 +19,18 @@ window.MATERIALS_DATA = [
     ]
   },
   {
+    id: '数据分析',
+    title: '数据分析',
+    files: [
+      '/assets/materials/files/数据分析/numpy1.pdf',
+      '/assets/materials/files/数据分析/numpy2.pdf',
+      '/assets/materials/files/数据分析/Matplotlib1.pdf',
+      '/assets/materials/files/数据分析/Matplotlib2.pdf',
+      '/assets/materials/files/数据分析/Pandas1.pdf',
+      '/assets/materials/files/数据分析/Pandas2.pdf'
+    ]
+  },
+  {
     id: '其他',
     title: '其他实用文件',
     files: [

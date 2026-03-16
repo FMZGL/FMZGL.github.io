@@ -115,6 +115,56 @@ body::after {
   background: rgba(255, 255, 255, 0.16);
 }
 
+.left-col .plan-board {
+  margin: 120px auto 0;
+  padding: 16px 16px 14px;
+  width: 100%;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  box-shadow: 0 12px 26px rgba(8, 16, 36, 0.28);
+}
+
+.left-col .plan-title {
+  margin: 0 0 10px;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(235, 244, 255, 0.9);
+}
+
+.left-col .plan-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.left-col .plan-list li {
+  padding: 8px 10px;
+  border-radius: 10px;
+  background: rgba(9, 17, 34, 0.35);
+  color: rgba(235, 244, 255, 0.92);
+  font-size: 13px;
+  line-height: 1.5;
+  position: relative;
+  padding-left: 28px;
+}
+
+.left-col .plan-list li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand-accent-a), var(--brand-accent-c));
+  position: absolute;
+  left: 12px;
+  top: 13px;
+  box-shadow: 0 0 8px rgba(120, 170, 255, 0.7);
+}
+
 /* Card system */
 .article {
   background: var(--brand-card) !important;
