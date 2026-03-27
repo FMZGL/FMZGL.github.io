@@ -37,6 +37,7 @@ window.MATERIALS_DATA = [
       '/assets/materials/files/其他实用文件/模板.doc',
       '/assets/materials/files/其他实用文件/如何优雅的在word中插入代码.txt',
       '/assets/materials/files/其他实用文件/实验报告模板.doc',
+      '/assets/materials/files/其他实用文件/人工智能相关名词.pdf'
     ]
   }
 ]
