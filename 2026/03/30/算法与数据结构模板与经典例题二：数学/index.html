@@ -6,19 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>PowerShell常用命令 | Sumsol</title>
+  <title>算法与数据结构模板与经典例题二：数学 | Sumsol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. 文件与目录操作 Get-ChildItem（别名 ls、dir）：列出目录内容 例：ls C:\Users（列出用户目录下的文件 &#x2F; 文件夹）  cd（Set-Location）：切换目录 例：cd Documents（进入当前目录的 Documents 文件夹）  mkdir（New-Item -ItemType Directory）：创建目录 例：mkdir TestFolde">
+  <meta name="description" content="一、费马小定理加快速幂12345678910111213141516费马小定理加快速幂&#x2F;&#x2F; int fact[200005];&#x2F;&#x2F; 这里的初始化不要漏掉fact[0]&#x3D;fact[1]&#x3D;1;&#x2F;&#x2F; int pw(int a, int b) &#123;&#x2F;&#x2F;     int r &#x3D; 1;&#x2F;&#x2F;     while (b &gt; 0) &#123;&#x2F;&#x2F;         if (b &amp; 1) r &#x3D;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PowerShell常用命令">
-<meta property="og:url" content="http://example.com/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:title" content="算法与数据结构模板与经典例题二：数学">
+<meta property="og:url" content="http://example.com/2026/03/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%8C%EF%BC%9A%E6%95%B0%E5%AD%A6/index.html">
 <meta property="og:site_name" content="Sumsol">
-<meta property="og:description" content="1. 文件与目录操作 Get-ChildItem（别名 ls、dir）：列出目录内容 例：ls C:\Users（列出用户目录下的文件 &#x2F; 文件夹）  cd（Set-Location）：切换目录 例：cd Documents（进入当前目录的 Documents 文件夹）  mkdir（New-Item -ItemType Directory）：创建目录 例：mkdir TestFolde">
+<meta property="og:description" content="一、费马小定理加快速幂12345678910111213141516费马小定理加快速幂&#x2F;&#x2F; int fact[200005];&#x2F;&#x2F; 这里的初始化不要漏掉fact[0]&#x3D;fact[1]&#x3D;1;&#x2F;&#x2F; int pw(int a, int b) &#123;&#x2F;&#x2F;     int r &#x3D; 1;&#x2F;&#x2F;     while (b &gt; 0) &#123;&#x2F;&#x2F;         if (b &amp; 1) r &#x3D;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2025-11-18T04:40:58.000Z">
-<meta property="article:modified_time" content="2026-03-13T03:13:59.854Z">
+<meta property="article:published_time" content="2026-03-30T15:21:00.000Z">
+<meta property="article:modified_time" content="2026-03-30T15:39:22.278Z">
 <meta property="article:author" content="zhangtf">
-<meta property="article:tag" content="颂">
+<meta property="article:tag" content="算法与数据结构">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Sumsol" type="application/atom+xml">
@@ -188,155 +188,36 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-powershell常用命令" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-算法与数据结构模板与经典例题二：数学" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      PowerShell常用命令
+      算法与数据结构模板与经典例题二：数学
     </h1>
   
 
         
-        <a href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-  	<time datetime="2025-11-18T04:40:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
+        <a href="/2026/03/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%8C%EF%BC%9A%E6%95%B0%E5%AD%A6/" class="archive-article-date">
+  	<time datetime="2026-03-30T15:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-30</time>
 </a>
         
       </header>
     
     <div class="article-entry " itemprop="articleBody" >
       
-        <h3 id="1-文件与目录操作"><a href="#1-文件与目录操作" class="headerlink" title="1. 文件与目录操作"></a><strong>1. 文件与目录操作</strong></h3><ul>
-<li><p><code>Get-ChildItem</code>（别名 <code>ls</code>、<code>dir</code>）：列出目录内容</p>
-<p>例：<code>ls C:\Users</code>（列出用户目录下的文件 &#x2F; 文件夹）</p>
-</li>
-<li><p><code>cd</code>（<code>Set-Location</code>）：切换目录</p>
-<p>例：<code>cd Documents</code>（进入当前目录的 Documents 文件夹）</p>
-</li>
-<li><p><code>mkdir</code>（<code>New-Item -ItemType Directory</code>）：创建目录</p>
-<p>例：<code>mkdir TestFolder</code>（创建名为 TestFolder 的文件夹）</p>
-</li>
-<li><p><code>rm</code>（<code>Remove-Item</code>）：删除文件 &#x2F; 目录</p>
-<p>例：<code>rm old.txt</code>（删除文件，加 <code>-Recurse</code> 删除目录）</p>
-</li>
-<li><p><code>cp</code>（<code>Copy-Item</code>）：复制文件 &#x2F; 目录</p>
-<p>例：<code>cp file.txt D:\Backup</code>（复制文件到目标路径）</p>
-</li>
-<li><p><code>mv</code>（<code>Move-Item</code>）：移动 &#x2F; 重命名文件 &#x2F; 目录</p>
-<p>例：<code>mv file.txt newname.txt</code>（重命名文件）</p>
-</li>
-<li><p><code>cat</code>（<code>Get-Content</code>）：查看文件内容</p>
-<p>例：<code>cat readme.txt</code>（显示文件内容）</p>
-</li>
-<li><p><code>echo</code>（<code>Write-Output</code>）：输出文本或创建文件</p>
-<p>例：<code>echo &quot;Hello&quot; &gt; test.txt</code>（将文本写入文件）</p>
-</li>
-</ul>
-<h3 id="2-系统信息查询"><a href="#2-系统信息查询" class="headerlink" title="2. 系统信息查询"></a><strong>2. 系统信息查询</strong></h3><ul>
-<li><p><code>Get-ComputerInfo</code>：查看计算机详细信息（系统版本、内存、CPU 等）</p>
-</li>
-<li><p><code>Get-Service</code>：查看系统服务状态</p>
-<p>例：<code>Get-Service | Where-Object Status -eq &quot;Running&quot;</code>（查看运行中的服务）</p>
-</li>
-<li><p><code>Get-Process</code>（别名 <code>ps</code>）：查看进程</p>
-<p>例：<code>ps chrome</code>（查看 Chrome 相关进程）</p>
-</li>
-<li><p><code>Get-EventLog</code>：查看系统日志</p>
-<p>例：<code>Get-EventLog -LogName System -Newest 10</code>（查看系统日志最新 10 条）</p>
-</li>
-<li><p><code>systeminfo</code>：查看系统摘要信息（兼容 CMD 命令）</p>
-</li>
-</ul>
-<h3 id="3-进程与服务管理"><a href="#3-进程与服务管理" class="headerlink" title="3. 进程与服务管理"></a><strong>3. 进程与服务管理</strong></h3><ul>
-<li><p><code>Start-Process</code>：启动进程</p>
-<p>例：<code>Start-Process notepad.exe</code>（打开记事本）</p>
-</li>
-<li><p><code>Stop-Process</code>：终止进程</p>
-<p>例：<code>Stop-Process -Name chrome</code>（关闭所有 Chrome 进程）</p>
-</li>
-<li><p><code>Start-Service</code> &#x2F; <code>Stop-Service</code>：启动 &#x2F; 停止服务</p>
-<p>例：<code>Start-Service -Name wuauserv</code>（启动 Windows 更新服务）</p>
-</li>
-</ul>
-<h3 id="4-网络相关"><a href="#4-网络相关" class="headerlink" title="4. 网络相关"></a><strong>4. 网络相关</strong></h3><ul>
-<li><p><code>Test-Connection</code>（别名 <code>ping</code>）：测试网络连通性</p>
-<p>例：<code>Test-Connection baidu.com</code>（ping 百度）</p>
-</li>
-<li><p><code>Get-NetIPAddress</code>：查看本机 IP 地址</p>
-<p>例：<code>Get-NetIPAddress -AddressFamily IPv4</code>（只显示 IPv4 地址）</p>
-</li>
-<li><p><code>Get-NetAdapter</code>：查看网络适配器信息</p>
-</li>
-<li><p><code>Invoke-WebRequest</code>（别名 <code>curl</code>、<code>wget</code>）：发送 HTTP 请求</p>
-<p>例：<code>Invoke-WebRequest https://example.com</code>（获取网页内容）</p>
-</li>
-</ul>
-<h3 id="5-用户与权限管理"><a href="#5-用户与权限管理" class="headerlink" title="5. 用户与权限管理"></a><strong>5. 用户与权限管理</strong></h3><ul>
-<li><p><code>Get-LocalUser</code>：查看本地用户账户</p>
-</li>
-<li><p><code>New-LocalUser</code>：创建本地用户</p>
-<p>例：<code>New-LocalUser -Name &quot;NewUser&quot; -Password (ConvertTo-SecureString &quot;P@ssw0rd&quot; -AsPlainText -Force)</code></p>
-</li>
-<li><p><code>Get-ChildItem -Force</code>：查看隐藏文件 &#x2F; 目录</p>
-</li>
-</ul>
-<h3 id="6-其他实用命令"><a href="#6-其他实用命令" class="headerlink" title="6. 其他实用命令"></a><strong>6. 其他实用命令</strong></h3><ul>
-<li><p><code>Get-Help</code>（别名 <code>help</code>）：查看命令帮助</p>
-<p>例：<code>Get-Help Get-ChildItem -Detailed</code>（查看详细帮助）</p>
-</li>
-<li><p><code>Clear-Host</code>（别名 <code>cls</code>）：清空控制台</p>
-</li>
-<li><p><code>$env:PATH</code>：查看系统环境变量 PATH</p>
-</li>
-<li><p><code>Get-Command</code>：搜索命令</p>
-</li>
-</ul>
-<h3 id="7-路径命令"><a href="#7-路径命令" class="headerlink" title="7.路径命令"></a><strong>7.路径命令</strong></h3><table>
-<thead>
-<tr>
-<th>符号</th>
-<th>含义</th>
-<th>适用系统</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>/</code></td>
-<td>路径分隔符（根目录符号）</td>
-<td>Linux&#x2F;macOS（必用）</td>
-</tr>
-<tr>
-<td><code>\</code></td>
-<td>路径分隔符</td>
-<td>Windows（常用，<code>/</code>也兼容）</td>
-</tr>
-<tr>
-<td><code>.</code></td>
-<td>代表 “当前目录”</td>
-<td>所有系统</td>
-</tr>
-<tr>
-<td><code>..</code></td>
-<td>代表 “上一级目录”（父目录）</td>
-<td>所有系统</td>
-</tr>
-<tr>
-<td><code>~</code></td>
-<td>代表 “当前用户的主目录”</td>
-<td>所有系统（类 Unix 更常用）</td>
-</tr>
-<tr>
-<td><code>*</code></td>
-<td>通配符，匹配任意多个字符（0 个或多个）</td>
-<td>所有系统（命令行中）</td>
-</tr>
-<tr>
-<td><code>?</code></td>
-<td>通配符，匹配单个字符</td>
-<td>所有系统（命令行中）</td>
-</tr>
-</tbody></table>
+        <h3 id="一、费马小定理加快速幂"><a href="#一、费马小定理加快速幂" class="headerlink" title="一、费马小定理加快速幂"></a>一、费马小定理加快速幂</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">费马小定理加快速幂</span><br><span class="line">// int fact[200005];</span><br><span class="line">// 这里的初始化不要漏掉fact[0]=fact[1]=1;</span><br><span class="line">// int pw(int a, int b) &#123;</span><br><span class="line">//     int r = 1;</span><br><span class="line">//     while (b &gt; 0) &#123;</span><br><span class="line">//         if (b &amp; 1) r = (r * a) % MOD;</span><br><span class="line">//         b /= 2;</span><br><span class="line">//         a = (a * a) % MOD;</span><br><span class="line">//     &#125;</span><br><span class="line">//     return r;</span><br><span class="line">// &#125;</span><br><span class="line">// int C(int n, int k) &#123;</span><br><span class="line">//     if (n &lt; k) return 0LL;</span><br><span class="line">//     return (fact[n] * pw((fact[n - k] * fact[k]) % MOD, MOD - 2)) % MOD;</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、求组合数"><a href="#二、求组合数" class="headerlink" title="二、求组合数"></a>二、求组合数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//求组合数//速度更快</span><br><span class="line">    int m = 5; // 元素总数</span><br><span class="line">    int k = 2; // 要选择的元素数</span><br><span class="line"></span><br><span class="line">    // 枚举所有可能的组合</span><br><span class="line">    for (int mask = 0; mask &lt; (1 &lt;&lt; m); ++mask) &#123;</span><br><span class="line">        // 只处理恰好有k个元素被选中的情况</span><br><span class="line">        if (__builtin_popcount(mask) != k) continue;</span><br><span class="line">        </span><br><span class="line">        // 输出当前组合中被选中的元素索引</span><br><span class="line">        cout &lt;&lt; &quot;选中的元素: &quot;;</span><br><span class="line">        for (int i = 0; i &lt; m; ++i) &#123;</span><br><span class="line">            // 判断第i个元素是否被选中</span><br><span class="line">            if (mask &amp; (1 &lt;&lt; i)) &#123;</span><br><span class="line">                cout &lt;&lt; i &lt;&lt; &quot; &quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、找出n中的质因数-sqrt-n"><a href="#三、找出n中的质因数-sqrt-n" class="headerlink" title="三、找出n中的质因数 sqrt(n)"></a>三、找出n中的质因数 sqrt(n)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 分解质因数算法,作用是找出n中的所有质因数</span><br><span class="line">//  void primefactor(int n)&#123;</span><br><span class="line">//      vector&lt;int&gt;vc;</span><br><span class="line">//      for(int i=2;i*i&lt;=n;i++)&#123;</span><br><span class="line">//          if(n%i==0)vc.push_back(i);</span><br><span class="line">//          while(n%i==0)n/=i;</span><br><span class="line">//      &#125;</span><br><span class="line">//      if(n&gt;1)vc.push_back(n);</span><br><span class="line">//  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、埃氏筛"><a href="#四、埃氏筛" class="headerlink" title="四、埃氏筛"></a>四、埃氏筛</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// 筛法，第一步想明白这个MAXN是多少，这个函数的作用是，判断1到MAXN中谁是素数，求出每个数的最小质因数是多少，时间复杂度是O(n)</span><br><span class="line">//  bool isprime[150005];</span><br><span class="line">//  int prime[150005];</span><br><span class="line">//  void getprime(int MAXN)&#123;</span><br><span class="line">//      memset(isprime, 1, sizeof(isprime));</span><br><span class="line">//      isprime[0] = isprime[1] = 0;</span><br><span class="line">//      for(int i=1;i&lt;=MAXN;i++)&#123;</span><br><span class="line">//           prime[i]=i;</span><br><span class="line">//      &#125;</span><br><span class="line">//      for (int i = 2; i * i &lt;= MAXN; i++) &#123;</span><br><span class="line">//          if (isprime[i]) &#123;</span><br><span class="line">//              for (int j = i * i; j &lt;= MAXN; j+=i) &#123;</span><br><span class="line">//                  if(isprime[j]==1)&#123;</span><br><span class="line">//                    isprime[j]=0;</span><br><span class="line">//                    prime[j]=i;</span><br><span class="line">//                  &#125;</span><br><span class="line">//              &#125;</span><br><span class="line">//          &#125;</span><br><span class="line">//      &#125;</span><br><span class="line">//  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、筛法"><a href="#五、筛法" class="headerlink" title="五、筛法"></a>五、筛法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 函数的作用有两条，一是判断1到MAX中谁是素数，二是将素数依次放到数组prime中。</span><br><span class="line">// int isprime[200007],prime[200007];</span><br><span class="line">// int num=0;</span><br><span class="line">// void getprime()&#123;</span><br><span class="line">//     //cout&lt;&lt;num&lt;&lt;endl;</span><br><span class="line">//     for(int i=0;i&lt;=200005;i++)&#123;</span><br><span class="line">//         isprime[i]=1;</span><br><span class="line">//     &#125;</span><br><span class="line">//     isprime[0]=isprime[1]=0;</span><br><span class="line">//     for(int i=2;i&lt;=200005;i++)&#123;</span><br><span class="line">//         if(isprime[i]==1)prime[num++]=i;</span><br><span class="line">//         for(int j=0;j&lt;num&amp;&amp;i*prime[j]&lt;=200005;j++)&#123;</span><br><span class="line">//             isprime[i*prime[j]]=0;</span><br><span class="line">//             if(i%prime[j]==0)break;</span><br><span class="line">//         &#125;</span><br><span class="line">//     &#125;</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
+
 
       
 
@@ -351,7 +232,7 @@ var _hmt = _hmt || [];
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
         		</li>
       		
 		</ul>
@@ -407,7 +288,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2026/03/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%8C%EF%BC%9A%E6%95%B0%E5%AD%A6/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -421,18 +302,9 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          常见包管理器及简单使用
-        
-      </div>
-    </a>
   
-  
-    <a href="/2025/11/12/%E4%B8%8D%E4%BB%A5%E7%89%A9%E5%96%9C%EF%BC%8C%E4%B8%8D%E4%BB%A5%E5%B7%B1%E6%82%B2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">不以物喜，不以己悲</div>
+    <a href="/2026/03/29/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%80%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">算法与数据结构模板与经典例题一：并查集</div>
       <i class="icon-circle-right"></i>
     </a>
   

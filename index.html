@@ -185,6 +185,91 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-算法与数据结构模板与经典例题二：数学" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/03/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%8C%EF%BC%9A%E6%95%B0%E5%AD%A6/">算法与数据结构模板与经典例题二：数学</a>
+    </h1>
+  
+
+        
+        <a href="/2026/03/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%8C%EF%BC%9A%E6%95%B0%E5%AD%A6/" class="archive-article-date">
+  	<time datetime="2026-03-30T15:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h3 id="一、费马小定理加快速幂"><a href="#一、费马小定理加快速幂" class="headerlink" title="一、费马小定理加快速幂"></a>一、费马小定理加快速幂</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">费马小定理加快速幂</span><br><span class="line">// int fact[200005];</span><br><span class="line">// 这里的初始化不要漏掉fact[0]=fact[1]=1;</span><br><span class="line">// int pw(int a, int b) &#123;</span><br><span class="line">//     int r = 1;</span><br><span class="line">//     while (b &gt; 0) &#123;</span><br><span class="line">//         if (b &amp; 1) r = (r * a) % MOD;</span><br><span class="line">//         b /= 2;</span><br><span class="line">//         a = (a * a) % MOD;</span><br><span class="line">//     &#125;</span><br><span class="line">//     return r;</span><br><span class="line">// &#125;</span><br><span class="line">// int C(int n, int k) &#123;</span><br><span class="line">//     if (n &lt; k) return 0LL;</span><br><span class="line">//     return (fact[n] * pw((fact[n - k] * fact[k]) % MOD, MOD - 2)) % MOD;</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="二、求组合数"><a href="#二、求组合数" class="headerlink" title="二、求组合数"></a>二、求组合数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//求组合数//速度更快</span><br><span class="line">    int m = 5; // 元素总数</span><br><span class="line">    int k = 2; // 要选择的元素数</span><br><span class="line"></span><br><span class="line">    // 枚举所有可能的组合</span><br><span class="line">    for (int mask = 0; mask &lt; (1 &lt;&lt; m); ++mask) &#123;</span><br><span class="line">        // 只处理恰好有k个元素被选中的情况</span><br><span class="line">        if (__builtin_popcount(mask) != k) continue;</span><br><span class="line">        </span><br><span class="line">        // 输出当前组合中被选中的元素索引</span><br><span class="line">        cout &lt;&lt; &quot;选中的元素: &quot;;</span><br><span class="line">        for (int i = 0; i &lt; m; ++i) &#123;</span><br><span class="line">            // 判断第i个元素是否被选中</span><br><span class="line">            if (mask &amp; (1 &lt;&lt; i)) &#123;</span><br><span class="line">                cout &lt;&lt; i &lt;&lt; &quot; &quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="三、找出n中的质因数-sqrt-n"><a href="#三、找出n中的质因数-sqrt-n" class="headerlink" title="三、找出n中的质因数 sqrt(n)"></a>三、找出n中的质因数 sqrt(n)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 分解质因数算法,作用是找出n中的所有质因数</span><br><span class="line">//  void primefactor(int n)&#123;</span><br><span class="line">//      vector&lt;int&gt;vc;</span><br><span class="line">//      for(int i=2;i*i&lt;=n;i++)&#123;</span><br><span class="line">//          if(n%i==0)vc.push_back(i);</span><br><span class="line">//          while(n%i==0)n/=i;</span><br><span class="line">//      &#125;</span><br><span class="line">//      if(n&gt;1)vc.push_back(n);</span><br><span class="line">//  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="四、埃氏筛"><a href="#四、埃氏筛" class="headerlink" title="四、埃氏筛"></a>四、埃氏筛</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// 筛法，第一步想明白这个MAXN是多少，这个函数的作用是，判断1到MAXN中谁是素数，求出每个数的最小质因数是多少，时间复杂度是O(n)</span><br><span class="line">//  bool isprime[150005];</span><br><span class="line">//  int prime[150005];</span><br><span class="line">//  void getprime(int MAXN)&#123;</span><br><span class="line">//      memset(isprime, 1, sizeof(isprime));</span><br><span class="line">//      isprime[0] = isprime[1] = 0;</span><br><span class="line">//      for(int i=1;i&lt;=MAXN;i++)&#123;</span><br><span class="line">//           prime[i]=i;</span><br><span class="line">//      &#125;</span><br><span class="line">//      for (int i = 2; i * i &lt;= MAXN; i++) &#123;</span><br><span class="line">//          if (isprime[i]) &#123;</span><br><span class="line">//              for (int j = i * i; j &lt;= MAXN; j+=i) &#123;</span><br><span class="line">//                  if(isprime[j]==1)&#123;</span><br><span class="line">//                    isprime[j]=0;</span><br><span class="line">//                    prime[j]=i;</span><br><span class="line">//                  &#125;</span><br><span class="line">//              &#125;</span><br><span class="line">//          &#125;</span><br><span class="line">//      &#125;</span><br><span class="line">//  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="五、筛法"><a href="#五、筛法" class="headerlink" title="五、筛法"></a>五、筛法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 函数的作用有两条，一是判断1到MAX中谁是素数，二是将素数依次放到数组prime中。</span><br><span class="line">// int isprime[200007],prime[200007];</span><br><span class="line">// int num=0;</span><br><span class="line">// void getprime()&#123;</span><br><span class="line">//     //cout&lt;&lt;num&lt;&lt;endl;</span><br><span class="line">//     for(int i=0;i&lt;=200005;i++)&#123;</span><br><span class="line">//         isprime[i]=1;</span><br><span class="line">//     &#125;</span><br><span class="line">//     isprime[0]=isprime[1]=0;</span><br><span class="line">//     for(int i=2;i&lt;=200005;i++)&#123;</span><br><span class="line">//         if(isprime[i]==1)prime[num++]=i;</span><br><span class="line">//         for(int j=0;j&lt;num&amp;&amp;i*prime[j]&lt;=200005;j++)&#123;</span><br><span class="line">//             isprime[i*prime[j]]=0;</span><br><span class="line">//             if(i%prime[j]==0)break;</span><br><span class="line">//         &#125;</span><br><span class="line">//     &#125;</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-算法与数据结构模板与经典例题一：并查集" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1895,90 +1980,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-静以修身" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/12/06/%E9%9D%99%E4%BB%A5%E4%BF%AE%E8%BA%AB/">静以修身</a>
-    </h1>
-  
-
-        
-        <a href="/2025/12/06/%E9%9D%99%E4%BB%A5%E4%BF%AE%E8%BA%AB/" class="archive-article-date">
-  	<time datetime="2025-12-06T08:58:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-12-06</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <p>平生很羡慕两种人，一种是在紧张的氛围或者紧急的事情中还能保持清醒的头脑，做出冷静的应对的人。一种是把每件小事都能认真对待，即使这件小事可能并没有想象中的那么大用途，不骄不躁，朝着既定目标稳步前行。再大的挫折也不可夺其志，拥有常人难以想象的毅力，接受孤独甚至享受孤独。外界的纷扰对他来说就像是耳畔吹过的一阵风一样。</p>
-<p>说来惭愧，我自诩也是一个情绪稳定的人，但是如果与上述的两种人相比的话，我简直就是蜉蝣比苍天，燕雀比鸿鹄。甚至在写这篇blog的时候也没有完全静下心来。</p>
-<p>刚才把电脑合上了，想了想还是写完吧。按照我浅显的经验，越害怕出错的时候越容易出错，其实好理解。我紧张的时候，大脑几乎就处于停转状态了，我想很多人应该也有这个经历，刚拿在手上的东西都能忘记放在哪，这种情况下恰恰更容易出错。但是说起来容易做起来难，我甚至都怀疑有没有人能做到，我目前能想到的方法简单总结一下有这几条，可能比较浅显：</p>
-<ol>
-<li>要认识到这一点，明白越紧张越容易出错。</li>
-<li>深呼吸是一个很有用的办法。</li>
-<li>放平心态，这件事可能并不是你想象中的那样重要，即使出错大概率也有回旋的余地。</li>
-<li>自信一点。在座的人里边你已经很优秀了。</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">正西风落叶下长安</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   <script>
     (function() {
       document.addEventListener('click', function(event) {
@@ -2129,11 +2130,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">颂</a>
+                <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
+                <a href="javascript:void(0)" class="js-tag color2">颂</a>
               </li>
              
               <li class="article-tag-list-item">
