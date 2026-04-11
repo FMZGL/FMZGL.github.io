@@ -185,6 +185,95 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-算法与数据结构模板与经典例题三：最短路" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/04/11/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%89%EF%BC%9A%E6%9C%80%E7%9F%AD%E8%B7%AF/">算法与数据结构模板与经典例题三：最短路</a>
+    </h1>
+  
+
+        
+        <a href="/2026/04/11/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%89%EF%BC%9A%E6%9C%80%E7%9F%AD%E8%B7%AF/" class="archive-article-date">
+  	<time datetime="2026-04-11T09:26:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-04-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h2 id="1-Floyd算法"><a href="#1-Floyd算法" class="headerlink" title="1.Floyd算法"></a>1.Floyd算法</h2><p>用来求任意两个点之间的最短路，时间复杂度是O^3</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">for (k = 1; k &lt;= n; k++) &#123;</span><br><span class="line">  for (x = 1; x &lt;= n; x++) &#123;</span><br><span class="line">    for (y = 1; y &lt;= n; y++) &#123;</span><br><span class="line">      f[x][y] = min(f[x][y], f[x][k] + f[k][y]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Bellman–Ford-算法"><a href="#2-Bellman–Ford-算法" class="headerlink" title="2.Bellman–Ford 算法"></a>2.Bellman–Ford 算法</h2><p>Bellman–Ford 算法是一种基于松弛（relax）操作的最短路算法，可以求出有负权的图的最短路，并可以对最短路不存在的情况进行判断．时间复杂度是O^2</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">struct Edge &#123;</span><br><span class="line">  int u, v, w;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;Edge&gt; edge;</span><br><span class="line"></span><br><span class="line">int dis[MAXN], u, v, w;</span><br><span class="line">constexpr int INF = 0x3f3f3f3f;</span><br><span class="line"></span><br><span class="line">bool bellmanford(int n, int s) &#123;</span><br><span class="line">  memset(dis, 0x3f, (n + 1) * sizeof(int));</span><br><span class="line">  dis[s] = 0;</span><br><span class="line">  bool flag = false;  // 判断一轮循环过程中是否发生松弛操作</span><br><span class="line">  for (int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">    flag = false;</span><br><span class="line">    for (int j = 0; j &lt; edge.size(); j++) &#123;</span><br><span class="line">      u = edge[j].u, v = edge[j].v, w = edge[j].w;</span><br><span class="line">      if (dis[u] == INF) continue;</span><br><span class="line">      // 无穷大与常数加减仍然为无穷大</span><br><span class="line">      // 因此最短路长度为 INF 的点引出的边不可能发生松弛操作</span><br><span class="line">      if (dis[v] &gt; dis[u] + w) &#123;</span><br><span class="line">        dis[v] = dis[u] + w;</span><br><span class="line">        flag = true;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // 没有可以松弛的边时就停止算法</span><br><span class="line">    if (!flag) &#123;</span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  // 第 n 轮循环仍然可以松弛时说明 s 点可以抵达一个负环</span><br><span class="line">  return flag;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>SPFA实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">struct edge &#123;</span><br><span class="line">  int v, w;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;edge&gt; e[MAXN];</span><br><span class="line">int dis[MAXN], cnt[MAXN], vis[MAXN];</span><br><span class="line">queue&lt;int&gt; q;</span><br><span class="line"></span><br><span class="line">bool spfa(int n, int s) &#123;</span><br><span class="line">  memset(dis, 0x3f, (n + 1) * sizeof(int));</span><br><span class="line">  dis[s] = 0, vis[s] = 1;</span><br><span class="line">  q.push(s);</span><br><span class="line">  while (!q.empty()) &#123;</span><br><span class="line">    int u = q.front();</span><br><span class="line">    q.pop(), vis[u] = 0;</span><br><span class="line">    for (auto ed : e[u]) &#123;</span><br><span class="line">      int v = ed.v, w = ed.w;</span><br><span class="line">      if (dis[v] &gt; dis[u] + w) &#123;</span><br><span class="line">        dis[v] = dis[u] + w;</span><br><span class="line">        cnt[v] = cnt[u] + 1;  // 记录最短路经过的边数</span><br><span class="line">        if (cnt[v] &gt;= n) return false;</span><br><span class="line">        // 在不经过负环的情况下，最短路至多经过 n - 1 条边</span><br><span class="line">        // 因此如果经过了多于 n 条边，一定说明经过了负环</span><br><span class="line">        if (!vis[v]) q.push(v), vis[v] = 1;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Dijkstra-算法"><a href="#3-Dijkstra-算法" class="headerlink" title="3.Dijkstra 算法"></a>3.Dijkstra 算法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">struct edge &#123;</span><br><span class="line">  int v, w;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;edge&gt; e[MAXN];</span><br><span class="line">int dis[MAXN], vis[MAXN];</span><br><span class="line"></span><br><span class="line">void dijkstra(int n, int s) &#123;</span><br><span class="line">  memset(dis, 0x3f, (n + 1) * sizeof(int));</span><br><span class="line">  dis[s] = 0;</span><br><span class="line">  for (int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">    int u = 0, mind = 0x3f3f3f3f;</span><br><span class="line">    for (int j = 1; j &lt;= n; j++)</span><br><span class="line">      if (!vis[j] &amp;&amp; dis[j] &lt; mind) u = j, mind = dis[j];</span><br><span class="line">    vis[u] = true;</span><br><span class="line">    for (auto ed : e[u]) &#123;</span><br><span class="line">      int v = ed.v, w = ed.w;</span><br><span class="line">      if (dis[v] &gt; dis[u] + w) dis[v] = dis[u] + w;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>优先队列实现才是最常用的，时间复杂度mlogm</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">struct edge &#123;</span><br><span class="line">  int v, w;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct node &#123;</span><br><span class="line">  int dis, u;</span><br><span class="line"></span><br><span class="line">  bool operator&gt;(const node&amp; a) const &#123; return dis &gt; a.dis; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;edge&gt; e[MAXN];</span><br><span class="line">int dis[MAXN], vis[MAXN];</span><br><span class="line">priority_queue&lt;node, vector&lt;node&gt;, greater&lt;node&gt;&gt; q;</span><br><span class="line"></span><br><span class="line">void dijkstra(int n, int s) &#123;</span><br><span class="line">  memset(dis, 0x3f, (n + 1) * sizeof(int));</span><br><span class="line">  memset(vis, 0, (n + 1) * sizeof(int));</span><br><span class="line">  dis[s] = 0;</span><br><span class="line">  q.push(&#123;0, s&#125;);</span><br><span class="line">  while (!q.empty()) &#123;</span><br><span class="line">    int u = q.top().u;</span><br><span class="line">    q.pop();</span><br><span class="line">    if (vis[u]) continue;</span><br><span class="line">    vis[u] = 1;</span><br><span class="line">    for (auto ed : e[u]) &#123;</span><br><span class="line">      int v = ed.v, w = ed.w;</span><br><span class="line">      if (dis[v] &gt; dis[u] + w) &#123;</span><br><span class="line">        dis[v] = dis[u] + w;</span><br><span class="line">        q.push(&#123;dis[v], v&#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Python学习日记一：print核心使用规则" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -700,6 +789,16 @@ var _hmt = _hmt || [];
 <p>这个比较重要，可以把其他类型的数据如int、long换成String</p>
 <p><strong>14.String 创建之后不能修改，比较方便的方法是 char[] ch &#x3D;str.toCharArray()</strong></p>
 <h2 id="二、一些比较重要的技巧"><a href="#二、一些比较重要的技巧" class="headerlink" title="二、一些比较重要的技巧"></a>二、一些比较重要的技巧</h2><p><strong>1.翻转字符串：String reversed &#x3D; new StringBuilder(原字符串).reverse().toString();</strong></p>
+<p><strong>2.快速初始化一个数组</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Arrays;</span><br><span class="line"></span><br><span class="line">int[] a = new int[100];</span><br><span class="line">Arrays.fill(a, 666);   // 全部变成 666</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三、最经典的一些错误"><a href="#三、最经典的一些错误" class="headerlink" title="三、最经典的一些错误"></a>三、最经典的一些错误</h2><p>1.忘开long。这个真没话说</p>
+<p>2.序列处理完，忘了把最后一种情况也加上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int pre=arr[0];</span><br><span class="line">		int num=1;</span><br><span class="line">		for(int i=1;i&lt;n;i++) &#123;</span><br><span class="line">			if(arr[i]!=pre) &#123;</span><br><span class="line">				lst[pre].add(num);</span><br><span class="line">				pre=arr[i];</span><br><span class="line">				num=1;</span><br><span class="line">			&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				num++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		lst[pre].add(num);</span><br></pre></td></tr></table></figure>
+
+<p>3.完了考虑数组为空的情况。这种情况包re的</p>
 
       
 
@@ -1557,153 +1656,6 @@ var _hmt = _hmt || [];
 
 
 
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JAVA学习日记二：访问权限与非公有顶级类" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/01/18/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9A%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%B8%8E%E9%9D%9E%E5%85%AC%E6%9C%89%E9%A1%B6%E7%BA%A7%E7%B1%BB/">JAVA学习日记二：访问权限与非公有顶级类</a>
-    </h1>
-  
-
-        
-        <a href="/2026/01/18/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9A%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%B8%8E%E9%9D%9E%E5%85%AC%E6%9C%89%E9%A1%B6%E7%BA%A7%E7%B1%BB/" class="archive-article-date">
-  	<time datetime="2026-01-18T06:57:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h2 id="访问权限核心对比"><a href="#访问权限核心对比" class="headerlink" title="访问权限核心对比"></a>访问权限核心对比</h2><table>
-<thead>
-<tr>
-<th align="center">访问场景</th>
-<th align="center"><code>public</code></th>
-<th align="center"><code>private</code></th>
-<th align="center">默认权限（无修饰符）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">同一类内部</td>
-<td align="center">✅ 能访问</td>
-<td align="center">✅ 能访问</td>
-<td align="center">✅ 能访问</td>
-</tr>
-<tr>
-<td align="center">同一个包的其他类</td>
-<td align="center">✅ 能访问</td>
-<td align="center">❌ 不能</td>
-<td align="center">✅ 能访问</td>
-</tr>
-<tr>
-<td align="center">不同包的子类</td>
-<td align="center">✅ 能访问</td>
-<td align="center">❌ 不能</td>
-<td align="center">❌ 不能</td>
-</tr>
-<tr>
-<td align="center">不同包的非子类</td>
-<td align="center">✅ 能访问</td>
-<td align="center">❌ 不能</td>
-<td align="center">❌ 不能</td>
-</tr>
-</tbody></table>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
-<li>**<code>public</code>**：无访问限制，所有地方都能访问（对外暴露的接口 &#x2F; 变量）；</li>
-<li>**<code>private</code>**：仅当前类内部能访问（隐藏内部实现，封装核心）；</li>
-<li><strong>默认权限</strong>：仅同包内能访问（刷题场景简化写法，开发中慎用）；</li>
-<li>记忆口诀：<code>private</code>锁内门，默认锁包门，<code>public</code>全开门。</li>
-</ol>
-<h2 id="同文件下的顶级类（可以理解为C-中的结构体struct）"><a href="#同文件下的顶级类（可以理解为C-中的结构体struct）" class="headerlink" title="同文件下的顶级类（可以理解为C++中的结构体struct）"></a>同文件下的顶级类（可以理解为C++中的结构体struct）</h2><h3 id="一、核心定义：同文件下的顶级类规则"><a href="#一、核心定义：同文件下的顶级类规则" class="headerlink" title="一、核心定义：同文件下的顶级类规则"></a>一、核心定义：同文件下的顶级类规则</h3><p>Java 中一个<code>.java</code>文件的核心规则：</p>
-<ol>
-<li>一个文件<strong>只能有一个<code>public</code>修饰的顶级类</strong>，且这个类的名字必须和文件名完全一致（比如<code>Main.java</code>中，<code>public class Main</code>是主类）；</li>
-<li>同一个文件中可以有<strong>多个非公有（无<code>public</code>修饰）的顶级类</strong>，<code>UnionFind</code>就是这种类 —— 它没有<code>public</code>修饰，属于 “包私有”（default 访问权限）。</li>
-</ol>
-<h3 id="二、UnionFind的类类型定位"><a href="#二、UnionFind的类类型定位" class="headerlink" title="二、UnionFind的类类型定位"></a>二、<code>UnionFind</code>的类类型定位</h3><table>
-<thead>
-<tr>
-<th align="center">类的特征</th>
-<th align="center">类型名称</th>
-<th align="center">核心属性</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">无<code>public</code>修饰 + 同文件</td>
-<td align="center">包私有顶级类（默认类）</td>
-<td align="center">1. 只能被同一个包下的类访问；2. 不属于主类的 “内部类”，是独立的顶级类；3. 可直接实例化（<code>new UnionFind(n)</code>）。</td>
-</tr>
-</tbody></table>
-<h3 id="三、和主类同文件的具体表现"><a href="#三、和主类同文件的具体表现" class="headerlink" title="三、和主类同文件的具体表现"></a>三、和主类同文件的具体表现</h3><p>假设你的文件名为<code>Main.java</code>，内容如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 主类：public修饰，名字和文件名一致</span><br><span class="line">public class Main &#123;</span><br><span class="line">    public static void main(String[] args) &#123;</span><br><span class="line">        // 直接实例化同文件的UnionFind类（无需import，直接用）</span><br><span class="line">        UnionFind uf = new UnionFind(10);</span><br><span class="line">        uf.union(1,2);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 同文件的非公有顶级类：UnionFind</span><br><span class="line">class UnionFind &#123;</span><br><span class="line">    // ... 你的并查集代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个<code>UnionFind</code>类的关键特性：</p>
-<ol>
-<li>访问权限<ul>
-<li>同一包下的其他类（比如<code>com.test.Other.java</code>）可以直接使用<code>UnionFind</code>；</li>
-<li>不同包的类无法访问（因为没有<code>public</code>修饰）；</li>
-</ul>
-</li>
-<li><strong>实例化方式</strong>：和普通类完全一致，主类中可直接<code>new UnionFind(10)</code>，无需任何额外操作；</li>
-<li><strong>编译结果</strong>：编译后会生成两个<code>.class</code>文件 ——<code>Main.class</code>和<code>UnionFind.class</code>（每个顶级类都会生成独立的字节码文件）。</li>
-</ol>
 
       
 
