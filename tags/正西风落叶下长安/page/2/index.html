@@ -6,19 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>JAVA学习日记四：继承Compareable接口自定义比较方式 | Sumsol</title>
+  <title>Tag: 正西风落叶下长安 | Sumsol</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在c++中自定义比较方式可以另外写一个bool类型的cmp函数放到sort函数中当参数，JAVA中自定义比较方式可以继承Compareable接口，重写其中的compareTo函数。 123456789101112131415class edge implements Comparable&lt;edge&gt;&#123;  public int u;  public int v;  publi">
-<meta property="og:type" content="article">
-<meta property="og:title" content="JAVA学习日记四：继承Compareable接口自定义比较方式">
-<meta property="og:url" content="http://example.com/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Sumsol">
+<meta property="og:url" content="http://example.com/tags/%E6%AD%A3%E8%A5%BF%E9%A3%8E%E8%90%BD%E5%8F%B6%E4%B8%8B%E9%95%BF%E5%AE%89/page/2/index.html">
 <meta property="og:site_name" content="Sumsol">
-<meta property="og:description" content="在c++中自定义比较方式可以另外写一个bool类型的cmp函数放到sort函数中当参数，JAVA中自定义比较方式可以继承Compareable接口，重写其中的compareTo函数。 123456789101112131415class edge implements Comparable&lt;edge&gt;&#123;  public int u;  public int v;  publi">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-01-22T07:14:28.000Z">
-<meta property="article:modified_time" content="2026-03-13T03:13:33.159Z">
 <meta property="article:author" content="zhangtf">
-<meta property="article:tag" content="JAVA">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Sumsol" type="application/atom+xml">
@@ -188,164 +183,65 @@ var _hmt = _hmt || [];
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JAVA学习日记四：继承Compareable接口自定义比较方式" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      JAVA学习日记四：继承Compareable接口自定义比较方式
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2025" class="archive-year">2025</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2025/09/08/%E7%AE%97%E6%B3%95%E9%97%AE%E9%A2%98%E7%90%86%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2025-09-08T01:07:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-09-08</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2025/09/08/%E7%AE%97%E6%B3%95%E9%97%AE%E9%A2%98%E7%90%86%E8%A7%A3/">求解算法问题的过程理解</a>
     </h1>
   
 
-        
-        <a href="/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2026-01-22T07:14:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody" >
-      
-        <p>在c++中自定义比较方式可以另外写一个bool类型的cmp函数放到sort函数中当参数，JAVA中自定义比较方式可以继承Compareable接口，重写其中的compareTo函数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class edge implements Comparable&lt;edge&gt;&#123;</span><br><span class="line"></span><br><span class="line">  public int u;</span><br><span class="line">  public int v;</span><br><span class="line">  public double w;</span><br><span class="line">  edge(int u,int v,double w)&#123;</span><br><span class="line">​    this.u=u;</span><br><span class="line">​    this.v=v;</span><br><span class="line">​    this.w=w;</span><br><span class="line">  &#125;</span><br><span class="line">  @Override</span><br><span class="line">  public int compareTo(edge e)&#123;</span><br><span class="line">​    return Double.compare(this.w, e.w);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return Double.compare(this.w, e.w);</span><br></pre></td></tr></table></figure>
-
-<p>这里默认的是从小到大排序，如果要从大到小就把两个变量的顺序交换一下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return Double.compare(e.w, this.w);</span><br></pre></td></tr></table></figure>
-
-<p>Arraylist集合添加 一个edge类型元素时可以：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.add(new edge(i,j,dis));</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-        
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">正西风落叶下长安</a>
         		</li>
       		
 		</ul>
 	</div>
 
-        
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误
-        
-      </div>
-    </a>
   
   
-    <a href="/2026/01/19/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%89%EF%BC%9AJAVA%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E9%9B%86%E5%90%88%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JAVA学习日记三：JAVA常用数据结构（集合）</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
+    
+    <nav id="page-nav">
+      <a class="extend prev" rel="prev" href="/tags/%E6%AD%A3%E8%A5%BF%E9%A3%8E%E8%90%BD%E5%8F%B6%E4%B8%8B%E9%95%BF%E5%AE%89/">&laquo; Prev</a><a class="page-number" href="/tags/%E6%AD%A3%E8%A5%BF%E9%A3%8E%E8%90%BD%E5%8F%B6%E4%B8%8B%E9%95%BF%E5%AE%89/">1</a><span class="page-number current">2</span>
+    </nav>
   
 
-  
 
 
           </div>
@@ -368,9 +264,9 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
