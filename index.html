@@ -185,6 +185,225 @@ var _hmt = _hmt || [];
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-C-STL与algorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/04/17/C-STL%E4%B8%8Ealgorithm/">C++ STL与algorithm</a>
+    </h1>
+  
+
+        
+        <a href="/2026/04/17/C-STL%E4%B8%8Ealgorithm/" class="archive-article-date">
+  	<time datetime="2026-04-17T08:25:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-04-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h1 id="C-STL-竞赛常用函数超详细总结（含-equal-完整版）"><a href="#C-STL-竞赛常用函数超详细总结（含-equal-完整版）" class="headerlink" title="C++ STL &lt;algorithm&gt; 竞赛常用函数超详细总结（含 equal 完整版）"></a>C++ STL <code>&lt;algorithm&gt;</code> 竞赛常用函数超详细总结（含 <code>equal</code> 完整版）</h1><p>专为<strong>算法竞赛、蓝桥杯、NOIP&#x2F;CSP&#x2F;ACM</strong>整理，<strong>语法 + 示例 + 场景</strong>全覆盖，Dev-C++ 直接用。</p>
+<hr>
+<h2 id="一、排序-打乱-翻转"><a href="#一、排序-打乱-翻转" class="headerlink" title="一、排序 &#x2F; 打乱 &#x2F; 翻转"></a>一、排序 &#x2F; 打乱 &#x2F; 翻转</h2><h3 id="1-sort-快速排序（最常用）"><a href="#1-sort-快速排序（最常用）" class="headerlink" title="1. sort 快速排序（最常用）"></a>1. <code>sort</code> 快速排序（最常用）</h3><p><strong>功能</strong>：对区间<strong>升序排序</strong>，复杂度 O(nlogn)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sort(起始迭代器, 结束迭代器);</span><br><span class="line">sort(起始, 结束, 比较规则);</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; v = &#123;3,1,2&#125;;</span><br><span class="line">sort(v.begin(), v.end());          // 升序：1 2 3</span><br><span class="line">sort(v.begin(), v.end(), greater&lt;int&gt;()); // 降序</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-reverse-区间翻转"><a href="#2-reverse-区间翻转" class="headerlink" title="2. reverse 区间翻转"></a>2. <code>reverse</code> 区间翻转</h3><p><strong>功能</strong>：把一段内容<strong>前后颠倒</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reverse(v.begin(), v.end());</span><br></pre></td></tr></table></figure>
+
+<p><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">string s = &quot;abcd&quot;;</span><br><span class="line">reverse(s.begin(), s.end()); // dcba</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-random-shuffle-随机打乱"><a href="#3-random-shuffle-随机打乱" class="headerlink" title="3. random_shuffle 随机打乱"></a>3. <code>random_shuffle</code> 随机打乱</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">random_shuffle(v.begin(), v.end());</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="二、查找类"><a href="#二、查找类" class="headerlink" title="二、查找类"></a>二、查找类</h2><h3 id="4-find-顺序查找"><a href="#4-find-顺序查找" class="headerlink" title="4. find 顺序查找"></a>4. <code>find</code> 顺序查找</h3><p><strong>功能</strong>：查找值，返回迭代器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto it = find(v.begin(), v.end(), x);</span><br><span class="line">if(it!= v.end()) // 找到</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-binary-search-二分查找（存在性）"><a href="#5-binary-search-二分查找（存在性）" class="headerlink" title="5. binary_search 二分查找（存在性）"></a>5. <code>binary_search</code> 二分查找（存在性）</h3><p><strong>必须有序</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bool ok = binary_search(v.begin(), v.end(), x);</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-lower-bound-第一个-x"><a href="#6-lower-bound-第一个-x" class="headerlink" title="6. lower_bound 第一个 &gt;&#x3D; x"></a>6. <code>lower_bound</code> 第一个 &gt;&#x3D; x</h3><p><strong>竞赛二分核心</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto it = lower_bound(v.begin(), v.end(), x);</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-upper-bound-第一个-x"><a href="#7-upper-bound-第一个-x" class="headerlink" title="7. upper_bound 第一个 &gt; x"></a>7. <code>upper_bound</code> 第一个 &gt; x</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto it = upper_bound(v.begin(), v.end(), x);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、去重-删除"><a href="#三、去重-删除" class="headerlink" title="三、去重 &#x2F; 删除"></a>三、去重 &#x2F; 删除</h2><h3 id="8-unique-去重（必须先排序）"><a href="#8-unique-去重（必须先排序）" class="headerlink" title="8. unique 去重（必须先排序）"></a>8. <code>unique</code> 去重（必须先排序）</h3><p><strong>竞赛标准去重模板</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sort(v.begin(), v.end());</span><br><span class="line">v.erase(unique(v.begin(), v.end()), v.end());</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、排列组合"><a href="#四、排列组合" class="headerlink" title="四、排列组合"></a>四、排列组合</h2><h3 id="9-next-permutation-下一个排列"><a href="#9-next-permutation-下一个排列" class="headerlink" title="9. next_permutation 下一个排列"></a>9. <code>next_permutation</code> 下一个排列</h3><p><strong>枚举全排列必备</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">do&#123;</span><br><span class="line"></span><br><span class="line">&#125;while(next_permutation(v.begin(), v.end()));</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-prev-permutation-上一个排列"><a href="#10-prev-permutation-上一个排列" class="headerlink" title="10. prev_permutation 上一个排列"></a>10. <code>prev_permutation</code> 上一个排列</h3><hr>
+<h2 id="五、最值-极值"><a href="#五、最值-极值" class="headerlink" title="五、最值 &#x2F; 极值"></a>五、最值 &#x2F; 极值</h2><h3 id="11-max-element-min-element"><a href="#11-max-element-min-element" class="headerlink" title="11. max_element &#x2F; min_element"></a>11. <code>max_element</code> &#x2F; <code>min_element</code></h3><p><strong>找最大值 &#x2F; 最小值的迭代器</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">auto max_it = max_element(v.begin(), v.end());</span><br><span class="line">int max_val = *max_it;</span><br></pre></td></tr></table></figure>
+
+<h3 id="12-swap-交换"><a href="#12-swap-交换" class="headerlink" title="12. swap 交换"></a>12. <code>swap</code> 交换</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swap(a, b);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、计数-统计"><a href="#六、计数-统计" class="headerlink" title="六、计数 &#x2F; 统计"></a>六、计数 &#x2F; 统计</h2><h3 id="13-count-统计值出现次数"><a href="#13-count-统计值出现次数" class="headerlink" title="13. count 统计值出现次数"></a>13. <code>count</code> 统计值出现次数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">int cnt = count(v.begin(), v.end(), x);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、替换-填充"><a href="#七、替换-填充" class="headerlink" title="七、替换 &#x2F; 填充"></a>七、替换 &#x2F; 填充</h2><h3 id="14-replace-批量替换值"><a href="#14-replace-批量替换值" class="headerlink" title="14. replace 批量替换值"></a>14. <code>replace</code> 批量替换值</h3><p><strong>把区间内所有旧值替换成新值</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">replace(v.begin(), v.end(), 旧值, 新值);</span><br></pre></td></tr></table></figure>
+
+<h3 id="15-fill-批量填充"><a href="#15-fill-批量填充" class="headerlink" title="15. fill 批量填充"></a>15. <code>fill</code> 批量填充</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fill(v.begin(), v.end(), 0);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="八、拷贝"><a href="#八、拷贝" class="headerlink" title="八、拷贝"></a>八、拷贝</h2><h3 id="16-copy-区间拷贝"><a href="#16-copy-区间拷贝" class="headerlink" title="16. copy 区间拷贝"></a>16. <code>copy</code> 区间拷贝</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">copy(a.begin(), a.end(), b.begin());</span><br></pre></td></tr></table></figure>
+
+<h2 id="九、【重点新增】equal-——-判断两个区间是否完全相等"><a href="#九、【重点新增】equal-——-判断两个区间是否完全相等" class="headerlink" title="九、【重点新增】equal —— 判断两个区间是否完全相等"></a>九、【重点新增】equal —— 判断两个区间是否完全相等</h2><h2 id="1-函数作用"><a href="#1-函数作用" class="headerlink" title="1. 函数作用"></a>1. 函数作用</h2><p><strong>判断两个区间的元素是否</strong>完全一样、顺序相同、长度相同。</p>
+<h2 id="2-函数原型"><a href="#2-函数原型" class="headerlink" title="2. 函数原型"></a>2. 函数原型</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">equal(区间1起始, 区间1结束, 区间2起始);</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-代码示例"><a href="#3-代码示例" class="headerlink" title="3. 代码示例"></a>3. 代码示例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; a = &#123;1,2,3&#125;;</span><br><span class="line">vector&lt;int&gt; b = &#123;1,2,3&#125;;</span><br><span class="line">vector&lt;int&gt; c = &#123;1,3,2&#125;;</span><br><span class="line"></span><br><span class="line">if(equal(a.begin(), a.end(), b.begin())) &#123;</span><br><span class="line">    cout &lt;&lt; &quot;a和b相同&quot; &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line">if(!equal(a.begin(), a.end(), c.begin())) &#123;</span><br><span class="line">    cout &lt;&lt; &quot;a和c不同&quot; &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-进阶用法（自定义比较规则）"><a href="#4-进阶用法（自定义比较规则）" class="headerlink" title="4. 进阶用法（自定义比较规则）"></a>4. 进阶用法（自定义比较规则）</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">equal(a.begin(),a.end(),b.begin(),cmp);</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="C-算法竞赛常用数据结构（vector-string-stack-queue-priority-queue-map-set）常用方法全集"><a href="#C-算法竞赛常用数据结构（vector-string-stack-queue-priority-queue-map-set）常用方法全集" class="headerlink" title="C++ 算法竞赛常用数据结构（vector &#x2F;string&#x2F;stack &#x2F;queue&#x2F;priority_queue &#x2F;map&#x2F;set）常用方法全集"></a>C++ 算法竞赛常用数据结构（vector &#x2F;string&#x2F;stack &#x2F;queue&#x2F;priority_queue &#x2F;map&#x2F;set）<strong>常用方法全集</strong></h1><p>完全是<strong>比赛真正会写的用法</strong>，不废话、不冗余，你直接背就能用。</p>
+<h1 id="一、vector（动态数组，竞赛最常用）"><a href="#一、vector（动态数组，竞赛最常用）" class="headerlink" title="一、vector（动态数组，竞赛最常用）"></a>一、vector（动态数组，竞赛最常用）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;vector&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1. 定义"></a>1. 定义</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vector&lt;int&gt; v;           // 空</span><br><span class="line">vector&lt;int&gt; v(n);        // 大小 n</span><br><span class="line">vector&lt;int&gt; v(n, val);   // n 个 val</span><br><span class="line">vector&lt;int&gt; v = &#123;1,2,3&#125;; // 初始化</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-访问元素"><a href="#2-访问元素" class="headerlink" title="2. 访问元素"></a>2. 访问元素</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v[i];         // 下标访问（最快）</span><br><span class="line">v.at(i);      // 安全访问（会越界检查）</span><br><span class="line">v.front();    // 第一个元素</span><br><span class="line">v.back();     // 最后一个元素</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-增加元素"><a href="#3-增加元素" class="headerlink" title="3. 增加元素"></a>3. 增加元素</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">v.push_back(x);   // 末尾添加（O(1)）</span><br><span class="line">v.insert(it, x);  // 迭代器 it 处插入（O(n)）</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-删除元素"><a href="#4-删除元素" class="headerlink" title="4. 删除元素"></a>4. 删除元素</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v.pop_back();            // 删除末尾</span><br><span class="line">v.erase(it);             // 删除迭代器位置</span><br><span class="line">v.erase(l, r);           // 删除 [l,r)</span><br><span class="line">v.clear();               // 清空（size=0）</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-容量与大小"><a href="#5-容量与大小" class="headerlink" title="5. 容量与大小"></a>5. 容量与大小</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">v.size();      // 元素个数</span><br><span class="line">v.empty();     // 是否为空（true/false）</span><br><span class="line">v.resize(n);   // 调整大小</span><br><span class="line">v.reserve(n);  // 预分配空间（竞赛优化常用）</span><br></pre></td></tr></table></figure>
+
+<h2 id="6-遍历"><a href="#6-遍历" class="headerlink" title="6. 遍历"></a>6. 遍历</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for(int i=0; i&lt;v.size(); i++) cout &lt;&lt; v[i];</span><br><span class="line"></span><br><span class="line">for(auto x : v) cout &lt;&lt; x;</span><br><span class="line"></span><br><span class="line">for(vector&lt;int&gt;::iterator it=v.begin();it!=v.end();it++)</span><br><span class="line">cout &lt;&lt; *it;</span><br></pre></td></tr></table></figure>
+
+<h2 id="7-竞赛经典组合"><a href="#7-竞赛经典组合" class="headerlink" title="7. 竞赛经典组合"></a>7. 竞赛经典组合</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sort(v.begin(), v.end());               // 排序</span><br><span class="line">reverse(v.begin(), v.end());            // 翻转</span><br><span class="line">unique(v.begin(), v.end());             // 去重</span><br><span class="line">lower_bound(v.begin(), v.end(), x);     // 二分 &gt;=x</span><br></pre></td></tr></table></figure>
+
+<h1 id="二、string（字符串，等同于字符-vector）"><a href="#二、string（字符串，等同于字符-vector）" class="headerlink" title="二、string（字符串，等同于字符 vector）"></a>二、string（字符串，等同于字符 vector）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;string&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用方法"><a href="#常用方法" class="headerlink" title="常用方法"></a>常用方法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">s[i];                  // 访问</span><br><span class="line">s.size(); s.length();  // 长度</span><br><span class="line">s.empty();</span><br><span class="line">s.clear();</span><br><span class="line"></span><br><span class="line">----比较特殊但有迹可循----</span><br><span class="line">s.substr(pos, len);    // 子串</span><br><span class="line">s.insert(pos, str);    // 插入</span><br><span class="line">s.erase(pos, len);     // 删除</span><br><span class="line">s.find(str);           // 查找，返回下标，无则 npos</span><br><span class="line">------------------------</span><br><span class="line">to_string(val);        // 数字转字符串</span><br><span class="line">stoi(s); stol(s);      // 字符串转数字</span><br><span class="line"></span><br><span class="line">reverse(s.begin(), s.end()); // 翻转</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="三、stack（栈，先进后出）"><a href="#三、stack（栈，先进后出）" class="headerlink" title="三、stack（栈，先进后出）"></a>三、stack（栈，先进后出）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stack&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">stack&lt;int&gt; st;</span><br><span class="line"></span><br><span class="line">st.push(x);    // 入栈</span><br><span class="line">st.top();      // 取栈顶</span><br><span class="line">st.pop();      // 删除栈顶</span><br><span class="line">st.size();</span><br><span class="line">st.empty();</span><br></pre></td></tr></table></figure>
+
+<p><strong>不能遍历、不能随机访问！</strong></p>
+<hr>
+<h1 id="四、queue（队列，先进先出）"><a href="#四、queue（队列，先进先出）" class="headerlink" title="四、queue（队列，先进先出）"></a>四、queue（队列，先进先出）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;queue&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">queue&lt;int&gt; q;</span><br><span class="line"></span><br><span class="line">q.push(x);     // 入队</span><br><span class="line">q.front();     // 队头</span><br><span class="line">q.back();      // 队尾</span><br><span class="line">q.pop();       // 出队</span><br><span class="line">q.size();</span><br><span class="line">q.empty();</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="五、priority-queue（优先队列-堆）"><a href="#五、priority-queue（优先队列-堆）" class="headerlink" title="五、priority_queue（优先队列 &#x2F; 堆）"></a>五、priority_queue（优先队列 &#x2F; 堆）</h1><p>竞赛<strong>最常用数据结构之一</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;queue&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="大根堆（默认，大的优先）"><a href="#大根堆（默认，大的优先）" class="headerlink" title="大根堆（默认，大的优先）"></a>大根堆（默认，大的优先）</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;int&gt; pq;</span><br></pre></td></tr></table></figure>
+
+<h2 id="小根堆（竞赛最常用！）"><a href="#小根堆（竞赛最常用！）" class="headerlink" title="小根堆（竞赛最常用！）"></a>小根堆（竞赛最常用！）</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; pq;</span><br></pre></td></tr></table></figure>
+
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pq.push(x);</span><br><span class="line">pq.top();    // 堆顶（最大/最小）</span><br><span class="line">pq.pop();</span><br><span class="line">pq.size();</span><br><span class="line">pq.empty();</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="六、set（有序集合，自动去重-排序）"><a href="#六、set（有序集合，自动去重-排序）" class="headerlink" title="六、set（有序集合，自动去重 + 排序）"></a>六、set（有序集合，自动去重 + 排序）</h1><p>红黑树，<strong>O(log n)</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;set&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">set&lt;int&gt; s;</span><br><span class="line"></span><br><span class="line">s.insert(x);    // 插入（自动去重）</span><br><span class="line">s.erase(x);     // 删除值 x</span><br><span class="line">s.count(x);     // 是否存在（0/1）</span><br><span class="line">s.find(x);      // 查找迭代器</span><br><span class="line">s.size(); s.empty();</span><br></pre></td></tr></table></figure>
+
+<p><strong>遍历只能用迭代器 &#x2F; 范围 for</strong></p>
+<hr>
+<h1 id="七、map（键值对，有序）"><a href="#七、map（键值对，有序）" class="headerlink" title="七、map（键值对，有序）"></a>七、map（键值对，有序）</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;map&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">map&lt;int, int&gt; mp;</span><br><span class="line"></span><br><span class="line">mp[key] = val;        // 最常用</span><br><span class="line">mp.count(key);        // 判断存在</span><br><span class="line">mp.erase(key);</span><br><span class="line">mp.find(key);</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="八、unordered-set-unordered-map（哈希表）"><a href="#八、unordered-set-unordered-map（哈希表）" class="headerlink" title="八、unordered_set &#x2F;unordered_map（哈希表）"></a>八、unordered_set &#x2F;unordered_map（哈希表）</h1><p>平均 **O(1)**，无序，更快</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;unordered_set&gt;</span><br><span class="line">#include &lt;unordered_map&gt;</span><br></pre></td></tr></table></figure>
+
+<p>用法和 set&#x2F;map 完全一样。</p>
+<hr>
+<h1 id="九、竞赛超级总结（最重要）"><a href="#九、竞赛超级总结（最重要）" class="headerlink" title="九、竞赛超级总结（最重要）"></a>九、竞赛超级总结（最重要）</h1><h2 id="vector"><a href="#vector" class="headerlink" title="vector"></a>vector</h2><ul>
+<li>动态数组，支持<strong>随机访问、遍历、增删尾</strong></li>
+<li>配合 sort &#x2F;lower_bound&#x2F;unique 神器</li>
+</ul>
+<h2 id="string"><a href="#string" class="headerlink" title="string"></a>string</h2><ul>
+<li>字符 vector，支持子串、插入、删除、查找</li>
+</ul>
+<h2 id="stack-queue"><a href="#stack-queue" class="headerlink" title="stack &#x2F; queue"></a>stack &#x2F; queue</h2><ul>
+<li>仅头部操作，不能遍历、不能下标访问</li>
+</ul>
+<h2 id="priority-queue"><a href="#priority-queue" class="headerlink" title="priority_queue"></a>priority_queue</h2><ul>
+<li>堆，<strong>贪心、Dijkstra、哈夫曼</strong>必用</li>
+</ul>
+<h2 id="set-map"><a href="#set-map" class="headerlink" title="set &#x2F; map"></a>set &#x2F; map</h2><ul>
+<li>有序、去重、O (log n)，适合<strong>去重、查找、维护有序序列</strong></li>
+</ul>
+<h2 id="unordered-系列"><a href="#unordered-系列" class="headerlink" title="unordered 系列"></a>unordered 系列</h2><ul>
+<li>哈希，更快，但无序、不能二分</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">C/C++</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-【想当然】之危害" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1272,92 +1491,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-JAVA学习日记四：继承Compareable接口自定义比较方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/">JAVA学习日记四：继承Compareable接口自定义比较方式</a>
-    </h1>
-  
-
-        
-        <a href="/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2026-01-22T07:14:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-22</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <p>在c++中自定义比较方式可以另外写一个bool类型的cmp函数放到sort函数中当参数，JAVA中自定义比较方式可以继承Compareable接口，重写其中的compareTo函数。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">class edge implements Comparable&lt;edge&gt;&#123;</span><br><span class="line"></span><br><span class="line">  public int u;</span><br><span class="line">  public int v;</span><br><span class="line">  public double w;</span><br><span class="line">  edge(int u,int v,double w)&#123;</span><br><span class="line">​    this.u=u;</span><br><span class="line">​    this.v=v;</span><br><span class="line">​    this.w=w;</span><br><span class="line">  &#125;</span><br><span class="line">  @Override</span><br><span class="line">  public int compareTo(edge e)&#123;</span><br><span class="line">​    return Double.compare(this.w, e.w);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return Double.compare(this.w, e.w);</span><br></pre></td></tr></table></figure>
-
-<p>这里默认的是从小到大排序，如果要从大到小就把两个变量的顺序交换一下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return Double.compare(e.w, this.w);</span><br></pre></td></tr></table></figure>
-
-<p>Arraylist集合添加 一个edge类型元素时可以：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.add(new edge(i,j,dis));</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   <script>
     (function() {
       document.addEventListener('click', function(event) {
@@ -1502,6 +1635,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
