@@ -23,6 +23,15 @@
   
   <link rel="stylesheet" type="text/css" href="/./main.266c1c.css">
   <link rel="stylesheet" href="/./custom-beauty.css?v=20260307e">
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <style type="text/css">
   
     #container.show {
@@ -70,6 +79,8 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/materials/">资料</a></li>
 	        
+				<li><a href="/poems/">诗词</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -96,30 +107,37 @@ var _hmt = _hmt || [];
 		        
 					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lian-a-xiu-bei-er-39" title="zhihu"><i class="icon-zhihu"></i></a>
 		        
+				<a class="theme-toggle" id="themeToggle" href="javascript:void(0)" title="暗夜模式" style="font-style:normal;">🌙</a>
 			</div>
 		</nav>
 	</header>		
 	
-	<section class="plan-board">
-		<h2 class="plan-title">计划    2026/3/16更新</h2>
-		<ul class="plan-list">
-			
-				<li>大三下课程学习</li>
-			
-				<li>每日一题算法(多做模拟、经典算法一定要牢记)</li>
-			
-				<li>开始准备简历(要想办法加亮点)</li>
-			
-				<li>了解AI入门知识(Pytorch、tensorflow、transformer、开源大模型、数据处理)</li>
-			
-				<li>复习复习408</li>
-			
-				<li>英语(练翻译、单词)</li>
-			
-		</ul>
-	</section>
-	
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var toggleBtn = document.getElementById('themeToggle');
+  if (toggleBtn) {
+    // Update icon on load
+    if (document.documentElement.getAttribute('data-theme') === 'dark') {
+      toggleBtn.innerHTML = '☀️';
+    }
+    
+    toggleBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.innerHTML = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.innerHTML = '☀️';
+      }
+    });
+  }
+});
+</script>
 
     </div>
     <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
@@ -146,6 +164,8 @@ var _hmt = _hmt || [];
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -164,11 +184,13 @@ var _hmt = _hmt || [];
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/photos/">相册</a></li>
+					<li style="width: 25%"><a href="/photos/">相册</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/materials/">资料</a></li>
+					<li style="width: 25%"><a href="/materials/">资料</a></li>
+		        
+					<li style="width: 25%"><a href="/poems/">诗词</a></li>
 		        
 				</ul>
 			</nav>
@@ -195,6 +217,158 @@ var _hmt = _hmt || [];
           <a href="/archives/2026" class="archive-year">2026</a>
         </div>
         <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2026/03/13/%E5%BA%93%E3%80%81%E5%8C%85%E3%80%81%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2026-03-13T06:36:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-13</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2026/03/13/%E5%BA%93%E3%80%81%E5%8C%85%E3%80%81%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3/">库、包、框架核心概念详解</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="archive-article-date">
+  	<time datetime="2026-02-24T13:22:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-02-24</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/">JAVA学习日记七：常用函数及比赛所需的一些小技巧</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
+  	<time datetime="2026-01-29T13:27:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-29</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">JAVA学习日记六：Scanner以及数值混合类型转换</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" class="archive-article-date">
+  	<time datetime="2026-01-24T06:58:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-24</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/">JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
     
     <article class="archive-article archive-type-post">
   <div class="archive-article-inner">
@@ -469,11 +643,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
               </li>
              
               <li class="article-tag-list-item">

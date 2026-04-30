@@ -23,6 +23,15 @@
   
   <link rel="stylesheet" type="text/css" href="/./main.266c1c.css">
   <link rel="stylesheet" href="/./custom-beauty.css?v=20260307e">
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <style type="text/css">
   
     #container.show {
@@ -70,6 +79,8 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/materials/">资料</a></li>
 	        
+				<li><a href="/poems/">诗词</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -96,30 +107,37 @@ var _hmt = _hmt || [];
 		        
 					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lian-a-xiu-bei-er-39" title="zhihu"><i class="icon-zhihu"></i></a>
 		        
+				<a class="theme-toggle" id="themeToggle" href="javascript:void(0)" title="暗夜模式" style="font-style:normal;">🌙</a>
 			</div>
 		</nav>
 	</header>		
 	
-	<section class="plan-board">
-		<h2 class="plan-title">计划    2026/3/16更新</h2>
-		<ul class="plan-list">
-			
-				<li>大三下课程学习</li>
-			
-				<li>每日一题算法(多做模拟、经典算法一定要牢记)</li>
-			
-				<li>开始准备简历(要想办法加亮点)</li>
-			
-				<li>了解AI入门知识(Pytorch、tensorflow、transformer、开源大模型、数据处理)</li>
-			
-				<li>复习复习408</li>
-			
-				<li>英语(练翻译、单词)</li>
-			
-		</ul>
-	</section>
-	
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var toggleBtn = document.getElementById('themeToggle');
+  if (toggleBtn) {
+    // Update icon on load
+    if (document.documentElement.getAttribute('data-theme') === 'dark') {
+      toggleBtn.innerHTML = '☀️';
+    }
+    
+    toggleBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.innerHTML = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.innerHTML = '☀️';
+      }
+    });
+  }
+});
+</script>
 
     </div>
     <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
@@ -146,6 +164,8 @@ var _hmt = _hmt || [];
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -164,11 +184,13 @@ var _hmt = _hmt || [];
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/photos/">相册</a></li>
+					<li style="width: 25%"><a href="/photos/">相册</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/materials/">资料</a></li>
+					<li style="width: 25%"><a href="/materials/">资料</a></li>
+		        
+					<li style="width: 25%"><a href="/poems/">诗词</a></li>
 		        
 				</ul>
 			</nav>
@@ -195,6 +217,158 @@ var _hmt = _hmt || [];
           <a href="/archives/2025" class="archive-year">2025</a>
         </div>
         <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="archive-article-date">
+  	<time datetime="2025-11-18T06:43:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">常见包管理器及简单使用</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
+  	<time datetime="2025-11-18T04:40:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">PowerShell常用命令</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2025/11/12/%E4%B8%8D%E4%BB%A5%E7%89%A9%E5%96%9C%EF%BC%8C%E4%B8%8D%E4%BB%A5%E5%B7%B1%E6%82%B2/" class="archive-article-date">
+  	<time datetime="2025-11-12T00:38:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-12</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2025/11/12/%E4%B8%8D%E4%BB%A5%E7%89%A9%E5%96%9C%EF%BC%8C%E4%B8%8D%E4%BB%A5%E5%B7%B1%E6%82%B2/">不以物喜，不以己悲</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">正西风落叶下长安</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2025/10/12/%E7%94%B7%E5%AD%90%E7%9A%84%E9%98%B3%E5%88%9A%E4%B9%8B%E7%BE%8E/" class="archive-article-date">
+  	<time datetime="2025-10-12T14:02:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-10-12</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2025/10/12/%E7%94%B7%E5%AD%90%E7%9A%84%E9%98%B3%E5%88%9A%E4%B9%8B%E7%BE%8E/">男子的阳刚之美</a>
+    </h1>
+  
+
+        <div class="article-info info-on-right">
+          
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">正西风落叶下长安</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+          
+
+        </div>
+        <div class="clearfix"></div>
+    </header>
+  </div>
+</article>
+  
+    
     
     <article class="archive-article archive-type-post">
   <div class="archive-article-inner">
@@ -545,11 +719,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
               </li>
              
               <li class="article-tag-list-item">

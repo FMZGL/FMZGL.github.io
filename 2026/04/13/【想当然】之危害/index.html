@@ -28,6 +28,15 @@
   
   <link rel="stylesheet" type="text/css" href="/./main.266c1c.css">
   <link rel="stylesheet" href="/./custom-beauty.css?v=20260307e">
+  <script>
+    (function() {
+      var savedTheme = localStorage.getItem('theme');
+      var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
   <style type="text/css">
   
     #container.show {
@@ -75,6 +84,8 @@ var _hmt = _hmt || [];
 	        
 				<li><a href="/materials/">资料</a></li>
 	        
+				<li><a href="/poems/">诗词</a></li>
+	        
 			</ul>
 		</nav>
 		<nav class="header-smart-menu">
@@ -101,30 +112,37 @@ var _hmt = _hmt || [];
 		        
 					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/lian-a-xiu-bei-er-39" title="zhihu"><i class="icon-zhihu"></i></a>
 		        
+				<a class="theme-toggle" id="themeToggle" href="javascript:void(0)" title="暗夜模式" style="font-style:normal;">🌙</a>
 			</div>
 		</nav>
 	</header>		
 	
-	<section class="plan-board">
-		<h2 class="plan-title">计划    2026/3/16更新</h2>
-		<ul class="plan-list">
-			
-				<li>大三下课程学习</li>
-			
-				<li>每日一题算法(多做模拟、经典算法一定要牢记)</li>
-			
-				<li>开始准备简历(要想办法加亮点)</li>
-			
-				<li>了解AI入门知识(Pytorch、tensorflow、transformer、开源大模型、数据处理)</li>
-			
-				<li>复习复习408</li>
-			
-				<li>英语(练翻译、单词)</li>
-			
-		</ul>
-	</section>
-	
 </div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var toggleBtn = document.getElementById('themeToggle');
+  if (toggleBtn) {
+    // Update icon on load
+    if (document.documentElement.getAttribute('data-theme') === 'dark') {
+      toggleBtn.innerHTML = '☀️';
+    }
+    
+    toggleBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var currentTheme = document.documentElement.getAttribute('data-theme');
+      if (currentTheme === 'dark') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+        toggleBtn.innerHTML = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+        toggleBtn.innerHTML = '☀️';
+      }
+    });
+  }
+});
+</script>
 
     </div>
     <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
@@ -151,6 +169,8 @@ var _hmt = _hmt || [];
 			
 				
 			
+				
+			
 			
 			
 			<nav class="header-nav">
@@ -169,11 +189,13 @@ var _hmt = _hmt || [];
 				<ul style="width: 70%">
 				
 				
-					<li style="width: 33.333333333333336%"><a href="/">主页</a></li>
+					<li style="width: 25%"><a href="/">主页</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/photos/">相册</a></li>
+					<li style="width: 25%"><a href="/photos/">相册</a></li>
 		        
-					<li style="width: 33.333333333333336%"><a href="/materials/">资料</a></li>
+					<li style="width: 25%"><a href="/materials/">资料</a></li>
+		        
+					<li style="width: 25%"><a href="/poems/">诗词</a></li>
 		        
 				</ul>
 			</nav>
@@ -466,11 +488,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
               </li>
              
               <li class="article-tag-list-item">
