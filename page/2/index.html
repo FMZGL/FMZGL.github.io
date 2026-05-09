@@ -207,6 +207,125 @@ document.addEventListener('DOMContentLoaded', function() {
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/">JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误</a>
+    </h1>
+  
+
+        
+        <a href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" class="archive-article-date">
+  	<time datetime="2026-01-24T06:58:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <p>在 Java 中，<code>long</code>（64 位）和 <code>int</code>（32 位）的转换分为<strong>自动转换</strong>和<strong>强制转换</strong>两种情况，核心是处理数据范围的差异。</p>
+<hr>
+<h3 id="1-自动转换：int-→-long（安全）"><a href="#1-自动转换：int-→-long（安全）" class="headerlink" title="1. 自动转换：int → long（安全）"></a>1. 自动转换：int → long（安全）</h3><ul>
+<li><strong>规则</strong>：当 <code>int</code> 类型的值赋值给 <code>long</code> 变量时，Java 会自动完成转换，因为 <code>long</code> 能容纳 <code>int</code> 的所有值（<code>long</code> 范围是 <code>-9e18 ~ 9e18</code>，<code>int</code> 范围是 <code>-2e9 ~ 2e9</code>），不会丢失数据。</li>
+<li><strong>示例</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 100;</span><br><span class="line">long b = a; // 自动转换，无风险</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-强制转换：long-→-int（有风险）"><a href="#2-强制转换：long-→-int（有风险）" class="headerlink" title="2. 强制转换：long → int（有风险）"></a>2. 强制转换：long → int（有风险）</h3><ul>
+<li><strong>规则</strong>：当 <code>long</code> 类型的值赋值给 <code>int</code> 变量时，必须显式强制转换，因为 <code>long</code> 的值可能超出 <code>int</code> 的范围，导致数据溢出或精度丢失。</li>
+<li><strong>语法</strong>：<code>(int) 要转换的long值</code></li>
+<li><strong>示例</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">long a = 100L;</span><br><span class="line">int b = (int) a; // 安全：100在int范围内</span><br><span class="line">long c = 3000000000L; // 超出int最大值（2147483647）</span><br><span class="line">int d = (int) c; // 溢出！结果会变成错误的负数（实际值为-1294967296）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-常见场景与避坑"><a href="#3-常见场景与避坑" class="headerlink" title="3. 常见场景与避坑"></a>3. 常见场景与避坑</h3><h4 id="场景-1：计算时的自动提升"><a href="#场景-1：计算时的自动提升" class="headerlink" title="场景 1：计算时的自动提升"></a>场景 1：计算时的自动提升</h4><p>在混合运算中，<code>int</code> 会自动提升为 <code>long</code>，避免溢出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 1000000;</span><br><span class="line">int b = 2000000;</span><br><span class="line">long c = (long) a * b; // 先把a转为long，再计算，避免int相乘溢出</span><br></pre></td></tr></table></figure>
+
+<h4 id="场景-2：避免溢出的强制转换"><a href="#场景-2：避免溢出的强制转换" class="headerlink" title="场景 2：避免溢出的强制转换"></a>场景 2：避免溢出的强制转换</h4><p>如果需要把一个可能超出 <code>int</code> 范围的 <code>long</code> 转成 <code>int</code>，建议先做范围检查：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">long num = 1234567890L;</span><br><span class="line">int result;</span><br><span class="line">if (num &gt;= Integer.MIN_VALUE &amp;&amp; num &lt;= Integer.MAX_VALUE) &#123;</span><br><span class="line">    result = (int) num; // 安全转换</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    throw new IllegalArgumentException(&quot;数值超出int范围&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-转换规则总结"><a href="#4-转换规则总结" class="headerlink" title="4. 转换规则总结"></a>4. 转换规则总结</h3><table>
+<thead>
+<tr>
+<th align="center">转换方向</th>
+<th align="center">方式</th>
+<th align="center">风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>int → long</code></td>
+<td align="center">自动转换</td>
+<td align="center">无风险，不会丢失数据</td>
+</tr>
+<tr>
+<td align="center"><code>long → int</code></td>
+<td align="center">强制转换 <code>(int)</code></td>
+<td align="center">有风险，可能溢出或丢失精度</td>
+</tr>
+</tbody></table>
+<h2 id="如何处理不开long导致的低级错误"><a href="#如何处理不开long导致的低级错误" class="headerlink" title="如何处理不开long导致的低级错误"></a>如何处理不开long导致的低级错误</h2><p><strong>竞赛最优选择</strong>：直接全量用<code>long</code>，记住 “数组长度转 int、字面量加 L” 两个细节，既能避免溢出，又不用额外封装，是最高效的方式。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JAVA学习日记四：继承Compareable接口自定义比较方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -2029,104 +2148,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   
-    <article id="post-男子的阳刚之美" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/10/12/%E7%94%B7%E5%AD%90%E7%9A%84%E9%98%B3%E5%88%9A%E4%B9%8B%E7%BE%8E/">男子的阳刚之美</a>
-    </h1>
-  
-
-        
-        <a href="/2025/10/12/%E7%94%B7%E5%AD%90%E7%9A%84%E9%98%B3%E5%88%9A%E4%B9%8B%E7%BE%8E/" class="archive-article-date">
-  	<time datetime="2025-10-12T14:02:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-10-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <p>一、男子的阳刚之美（壮美感）</p>
-<p>1、刚劲强壮、英勇、威武之貌。</p>
-<p>2、在任何场合，表情自然大方、从容不迫，谈笑自若。不装腔作势。</p>
-<p>3、喜庆场合，春风化雨，笑逐颜开。</p>
-<p>男人洒脱：乐观，积极，不去计较鸡毛蒜皮的小事，把你的心放在美好的感觉方面。</p>
-<p>二、阳刚之气无关性别，是坚韧担当的精神风貌，需通过体育与教育共同培养，倡导多元包容的成长环境。</p>
-<p>1.阳刚之气并不只是男性化，应当看到阳刚之气被延伸出来更多的内涵:有责任，有担当，自强不息，合作共嬴，顶天立地，锐意进取的创新精神等等。</p>
-<p>2.阳刚之气应当指向一种心理状态，精神面貌，而不是一种单纯的性别特征。</p>
-<p>3.阳刚之气的培养是通过强健的体魄，培养学生敢于担当，勇敢无畏的精神。</p>
-<p>4.强调养成良好锻炼习惯和健康生活方式，锤炼坚强意志，培养合作精神。是文化学习，体育锻炼，心理健康的协调发展，最终落在身心健康，体魄强健，健全人格。</p>
-<p>5.男性在风度，气概，体魄等方面表现出刚强之气是一种阳刚之美。一方面有比较强的独立性，意志独立，有勇气，另一方面拥有健康的体魄，能够做自己想做的事情，正如毛泽东所说，文明其精神，野蛮其体魄，身体和心灵的阳刚之气兼修，但阳刚之气并不等于男子汉气概，应该是一种充满活力，积极向上，坚韧顽强的蓬勃生命力。</p>
-<p>6.建立多元化，更加包容的教育评价体系，引导学生养成良好锻炼习惯和健康生活方式，锤炼坚强意志，培养合作精神。</p>
-<p>附：男士健康标准</p>
-<p>一、身体健康：没有生病。（身体上）</p>
-<p>1、日本学者提出四快：吃得快（食欲好）、便得快（消化能力好）、睡得快（神经系统功能好）、说得快（思维敏捷，反应能力强）。</p>
-<p>2、按世界卫生组织规定的准则：眼睛明亮、头发有光泽，无头屑。牙齿清洁，无龋齿，不疼痛；牙龈颜色正常，无出血现象。能够抵抗一般性感冒和传染病。</p>
-<p>二、心理健康：没有心理问题。（精神上）</p>
-<p>1、有充沛的精力，能从容不迫地担负日常生活和繁重工作，而且不感到过分紧张与疲劳。</p>
-<p>2、处事乐观，态度积极，乐于承担责任，事无大小，不挑剔。</p>
-<p>3、应变能力强，能适应外界环境的各种变化。</p>
-<p>三、社会交往方面的健康：没有躲避与自我封闭。（社会交往上）</p>
-<hr>
-<p>本篇内容非原创，转载至微信公众号<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9FWG5LHGmP_nNVw400meIg">男子的阳刚之美</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">正西风落叶下长安</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   <script>
     (function() {
       document.addEventListener('click', function(event) {
@@ -2285,11 +2306,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">颂</a>
+                <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
+                <a href="javascript:void(0)" class="js-tag color2">颂</a>
               </li>
              
               <li class="article-tag-list-item">
