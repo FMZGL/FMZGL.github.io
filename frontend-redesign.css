@@ -133,6 +133,13 @@ body {
   flex-direction: column;
 }
 
+.academic-main.full-width {
+  padding-left: 0;
+  max-width: 1100px; /* Increased width for better display */
+  margin: 0 auto;
+  width: 90%; /* Ensure some space on smaller screens */
+}
+
 /* 5. ACADEMIC TOP NAVIGATION (FULL WIDTH & SLIM) */
 .academic-top-nav {
   position: fixed;
