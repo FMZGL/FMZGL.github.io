@@ -1,0 +1,402 @@
+/* 
+  ACADEMIC MINIMALIST REDESIGN
+  Inspired by classic professor/researcher homepages
+*/
+
+/* 1. RESET YILIA'S GLOBAL DEFAULTS */
+body {
+  background: #ffffff !important;
+  color: #333333 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif !important;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+#container.show {
+  background: #ffffff !important;
+}
+
+#anm-canvas {
+  display: none !important; /* Hide animation canvas */
+}
+
+/* Hide Yilia's mobile nav and tools if they pop up */
+.left-col, .mid-col, #mobile-nav, .tools-col {
+  display: none !important;
+}
+
+/* 2. ACADEMIC LAYOUT GRID */
+#academic-container {
+  display: flex;
+  max-width: none; /* Fill the whole screen */
+  width: 100%;
+  margin: 0;
+  min-height: 100vh;
+  padding: 90px 40px 40px 20px; /* Very close to left boundary, right goes all the way */
+  background: #fff;
+  box-sizing: border-box;
+}
+
+/* 3. ACADEMIC SIDEBAR (LEFT) */
+.academic-sidebar {
+  width: 430px; /* Large sidebar as requested */
+  flex-shrink: 0;
+  padding-right: 30px;
+  border-right: 1px solid #eaeaea;
+  position: sticky; /* Make the sidebar fixed when scrolling */
+  top: 90px; /* Distance from top, aligned with container padding */
+  height: fit-content; /* Ensure sticky works correctly */
+}
+
+.academic-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  text-align: center; /* Center text */
+}
+
+.academic-profile .profilepic {
+  width: 180px; /* Make profile picture a bit larger to match wider sidebar */
+  height: 180px;
+  border-radius: 50%; /* Fully circular */
+  overflow: hidden;
+  margin-bottom: 20px;
+  border: 1px solid #eee;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.academic-profile .profilepic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.academic-profile .header-author {
+  margin: 0 0 5px 0;
+}
+
+.academic-profile .header-author a {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #222;
+  text-decoration: none;
+  font-family: "Arial", sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.academic-profile .header-major {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #333;
+  margin: 0 0 25px 0;
+  line-height: 1.4;
+  font-family: "Arial", sans-serif;
+}
+
+/* Vertical Social Links */
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: fit-content; /* Make block as wide as its widest item */
+  margin: 0 auto; /* Center the block within the sidebar */
+}
+
+.social-links a, .university-link {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Left-align the contents */
+  gap: 15px; /* Increase gap between icon and text slightly */
+  color: #555;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+  text-transform: capitalize;
+}
+
+.social-links a i, .university-link i {
+  font-size: 1.2rem;
+  width: 20px;
+  text-align: center;
+}
+
+.social-links a:hover {
+  color: #0056b3; /* Academic Blue */
+}
+
+/* 4. ACADEMIC MAIN CONTENT (RIGHT) */
+.academic-main {
+  flex-grow: 1;
+  padding-left: 50px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 5. ACADEMIC TOP NAVIGATION (FULL WIDTH & SLIM) */
+.academic-top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 50px; /* Slimmer height */
+  background: #ffffff;
+  border-bottom: 1px solid #eaeaea;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.academic-top-nav .nav-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px; /* Match wider academic-container width */
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.academic-top-nav .nav-brand a {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #222;
+  text-decoration: none;
+  font-family: "Arial", sans-serif;
+  letter-spacing: 0.5px;
+}
+
+.academic-top-nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 25px;
+}
+
+.academic-top-nav a {
+  font-size: 0.9rem; /* Slightly smaller for slim bar */
+  font-weight: 500;
+  color: #555;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: color 0.2s ease;
+}
+
+.academic-top-nav a:hover {
+  color: #0056b3;
+}
+
+.academic-top-nav a:hover {
+  color: #0056b3;
+}
+
+/* 6. CONTENT STYLING */
+.academic-content {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #333;
+}
+
+.academic-content h1, 
+.academic-content h2, 
+.academic-content h3 {
+  color: #222;
+  margin-top: 1.5em;
+  margin-bottom: 0.8em;
+  font-weight: 600;
+}
+
+.academic-content h1 {
+  font-size: 2rem;
+  border-bottom: 1px solid #eaeaea;
+  padding-bottom: 10px;
+}
+
+.academic-content h2 {
+  font-size: 1.5rem;
+}
+
+.academic-content a {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+.academic-content a:hover {
+  text-decoration: underline;
+}
+
+.academic-content ul {
+  padding-left: 20px;
+}
+
+.academic-content li {
+  margin-bottom: 10px;
+}
+
+/* Override existing post/article styles ONLY for the home page (resume) */
+.home-resume-page .article {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.home-resume-page .article:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.home-resume-page .article-inner {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.home-resume-page .article-entry {
+  padding: 0 !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.home-resume-page .article-header {
+  border-bottom: none !important;
+  padding: 0 !important;
+  margin-bottom: 20px !important;
+}
+
+/* 7. RESUME CONTENT (PURE UNBOXED ACADEMIC) */
+.resume-content {
+  width: 100%;
+  padding-right: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+}
+
+.resume-content h1 {
+  font-size: 2.4rem;
+  font-weight: 800;
+  color: #111;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #222;
+  padding-bottom: 10px;
+}
+
+.resume-content h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222;
+  margin-top: 40px;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.resume-content h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #333;
+  margin-top: 25px;
+  margin-bottom: 10px;
+}
+
+.resume-content ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.resume-content li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.resume-content li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #333;
+  font-size: 1rem;
+}
+
+.resume-content strong {
+  color: #222;
+}
+
+.resume-content a {
+  color: #0056b3;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color 0.2s ease;
+}
+
+.resume-content a:hover {
+  border-bottom-color: #0056b3;
+}
+
+.blog-search-container {
+  margin-bottom: 30px;
+}
+
+.blog-search-btn {
+  background: transparent;
+  border: 1px solid #ccc;
+  padding: 8px 20px;
+  font-size: 0.95rem;
+  color: #555;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.blog-search-btn:hover {
+  background: #f5f5f5;
+  color: #000;
+}
+
+/* Responsive */
+@media (max-width: 800px) {
+  #academic-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+  
+  .academic-sidebar {
+    width: 100%;
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .academic-profile {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .academic-main {
+    padding-left: 0;
+  }
+  
+  .academic-top-nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+}
