@@ -89,6 +89,152 @@ var _hmt = _hmt || [];
 </div>
 
   
+    <article id="post-JAVA与C-C-的内存分配机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/05/18/JAVA%E4%B8%8EC-C-%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6/">JAVA与C/C++的内存分配机制</a>
+    </h1>
+  
+
+        
+        <a href="/2026/05/18/JAVA%E4%B8%8EC-C-%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6/" class="archive-article-date">
+  	<time datetime="2026-05-18T13:38:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-05-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <p>这次我们抛开所有难懂的专业术语，不用“深拷贝”、“解引用”或者“生命周期管理”这些高大上的词。我们用最接地气的两样东西来打比方：**“口袋（栈）”**和**“大仓库（堆）”**。</p>
+<p>我们可以把 Java 和 C++ 的设计思路，简化为两个完全不同的“生活习惯”。</p>
+<hr>
+<h2 id="1-Java-的设计思路：严格、死板，但绝不出错"><a href="#1-Java-的设计思路：严格、死板，但绝不出错" class="headerlink" title="1. Java 的设计思路：严格、死板，但绝不出错"></a>1. Java 的设计思路：严格、死板，但绝不出错</h2><p>Java 的核心思想是：<strong>“程序员容易粗心，所以必须立死规矩。”</strong></p>
+<p>为了不让程序崩溃，Java 把所有的数据分成了两个绝对的阵营，谁也不能越界：</p>
+<h3 id="规矩一：小东西放“口袋”，大东西放“仓库”"><a href="#规矩一：小东西放“口袋”，大东西放“仓库”" class="headerlink" title="规矩一：小东西放“口袋”，大东西放“仓库”"></a>规矩一：小东西放“口袋”，大东西放“仓库”</h3><ul>
+<li><strong>口袋（栈）</strong>：只用来放最简单的数字和布尔值（比如 <code>int a = 10;</code>），或者是<strong>各种遥控器</strong>。</li>
+<li><strong>大仓库（堆）</strong>：只要是稍微复杂一点的东西（比如一段文字 <code>String</code>、一个链表节点 <code>Node</code>、甚至是一个最普通的整数数组 <code>int[]</code>），<strong>统统必须塞进大仓库里</strong>。</li>
+</ul>
+<h3 id="规矩二：看管大仓库，全靠“遥控器（引用）”"><a href="#规矩二：看管大仓库，全靠“遥控器（引用）”" class="headerlink" title="规矩二：看管大仓库，全靠“遥控器（引用）”"></a>规矩二：看管大仓库，全靠“遥控器（引用）”</h3><p>在 Java 里，你根本没办法直接用手摸到仓库里的东西。你手里拿到的，永远是一个“遥控器”。</p>
+<ul>
+<li>你写 <code>Node el = new Node();</code>，实际上是在大仓库里建了一个节点，然后把控制这个节点的遥控器 <code>el</code> 揣在了口袋里。</li>
+<li>你写 <code>el.val = 5;</code>，实际上是按了一下遥控器上的按钮，隔空把大仓库里的那个节点的数值改成了 5。</li>
+</ul>
+<h3 id="这样做的好处："><a href="#这样做的好处：" class="headerlink" title="这样做的好处："></a>这样做的好处：</h3><p>因为全靠遥控器隔空操作，Java 在后台雇了一个“清洁工（垃圾回收器）”。一旦发现大仓库里的某个东西没有遥控器连着它了，清洁工就会自动把它收走。你永远不用担心仓库被塞满，也永远不会摸错地方。</p>
+<hr>
+<h2 id="2-C-的设计思路：绝对自由，怎么爽怎么来"><a href="#2-C-的设计思路：绝对自由，怎么爽怎么来" class="headerlink" title="2. C++ 的设计思路：绝对自由，怎么爽怎么来"></a>2. C++ 的设计思路：绝对自由，怎么爽怎么来</h2><p>C++ 的核心思想是：<strong>“你是老板，你说了算。你想把东西放哪，就放哪。”</strong></p>
+<p>C++ 根本不搞“类型决定位置”那一套。不管是一个数字，还是一个巨大的链表，你都可以自由选择存放的方式。在 C++ 的世界里，有三种玩法：</p>
+<h3 id="玩法一：直接揣口袋里（值类型）"><a href="#玩法一：直接揣口袋里（值类型）" class="headerlink" title="玩法一：直接揣口袋里（值类型）"></a>玩法一：直接揣口袋里（值类型）</h3><p>你写 <code>Node el;</code>。这时候，C++ <strong>直接在你的口袋（栈）里塞进了一个货真价实的节点实体</strong>。</p>
+<ul>
+<li>它不是遥控器，它就是那个东西本身。</li>
+<li>你想改它，直接伸手在口袋里摸到它就能改（<code>el.val = 5</code>）。</li>
+<li>当你的函数结束时，你的口袋会被整体翻过来倒干净，这个节点也就跟着一起消失了。不需要任何人来打扫。</li>
+</ul>
+<h3 id="玩法二：用“纸条”记录仓库地址（指针）"><a href="#玩法二：用“纸条”记录仓库地址（指针）" class="headerlink" title="玩法二：用“纸条”记录仓库地址（指针）"></a>玩法二：用“纸条”记录仓库地址（指针）</h3><p>如果你觉得口袋太小放不下，或者希望这个东西在函数结束后还能留着，你也可以用 <code>new</code> 把它放进大仓库（堆）里。</p>
+<ul>
+<li>你写 <code>Node* p = new Node();</code>。这时候，你在仓库里建了一个节点，同时在口袋里放了一张“写着仓库货架号的纸条（指针）”。</li>
+<li>你想改它，必须先看一眼纸条上的地址，然后顺着地址找到仓库里的货架（<code>p-&gt;val = 5</code>）。</li>
+</ul>
+<h3 id="玩法三：给东西起个“外号”（引用）"><a href="#玩法三：给东西起个“外号”（引用）" class="headerlink" title="玩法三：给东西起个“外号”（引用）"></a>玩法三：给东西起个“外号”（引用）</h3><p>你嫌天天看纸条找地址太麻烦，C++ 还允许你给已有的东西起个外号：<code>Node&amp; ref = el;</code>。</p>
+<ul>
+<li><code>ref</code> 不是新东西，也不是纸条，它就是 <code>el</code> 的另一个名字。打它就等于打 <code>el</code>。</li>
+</ul>
+<h3 id="这样做的好处：-1"><a href="#这样做的好处：-1" class="headerlink" title="这样做的好处："></a>这样做的好处：</h3><p>速度极快！因为直接把实体放口袋里（栈），省去了去大仓库里来回找货架的时间。但代价是，如果你用纸条（指针）在仓库里建了东西，最后忘了把货架清空（<code>delete</code>），那个东西就会永远占用仓库空间，直到电脑死机。</p>
+<hr>
+<h2 id="3-一目了然的对比表"><a href="#3-一目了然的对比表" class="headerlink" title="3. 一目了然的对比表"></a>3. 一目了然的对比表</h2><p>我们用最直观的代码和行为来做个总结：</p>
+<table>
+<thead>
+<tr>
+<th>实际场景</th>
+<th>Java 的做法 (唯一的路)</th>
+<th>C++ 的做法 (多条路可选)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>创建一个链表节点</strong></td>
+<td>必须用 <code>new</code> 建在仓库里，口袋里拿个<strong>遥控器</strong>。</td>
+<td>可以直接塞在口袋里（<code>Node el</code>），也可以写地址放仓库里（<code>Node* p</code>）。</td>
+</tr>
+<tr>
+<td><strong>创建一个整数数组</strong></td>
+<td>哪怕是 <code>int[]</code>，也必须建在仓库里，拿<strong>遥控器</strong>控制。</td>
+<td>可以直接把整条数组拍在口袋里（<code>int arr[10]</code>）。</td>
+</tr>
+<tr>
+<td><strong>把东西传给另一个函数</strong></td>
+<td>把口袋里的<strong>遥控器（地址）复制一把</strong>给对方。两个人控制同一个东西。</td>
+<td>默认把口袋里的<strong>实体完完整整复制一份</strong>给对方（开销大）；除非你主动决定只传纸条（指针）或外号（引用）。</td>
+</tr>
+<tr>
+<td><strong>不用的东西怎么处理</strong></td>
+<td>遥控器扔了就行，后台<strong>清洁工自动打扫</strong>。</td>
+<td>放在口袋里的会自动消失；放在仓库里的<strong>必须自己亲手扔掉</strong>，否则仓库会满。</td>
+</tr>
+</tbody></table>
+<p>导出到 Google 表格</p>
+<h2 id="总结总结"><a href="#总结总结" class="headerlink" title="总结总结"></a>总结总结</h2><ul>
+<li><strong>Java</strong> 就像开全自动挡的普通轿车，所有的机械细节（大仓库、内存地址）都用外壳包起来，不让你碰，只给你一个方向盘和几个遥控按钮。虽然不刺激，但很安全。</li>
+<li><strong>C++</strong> 就像开手动挡的赛车，引擎、齿轮、轮胎（口袋、仓库、每一个字节的地址）全部赤裸裸地暴露在你面前。你可以玩出最极限的速度，但方向盘要是多打了一点点，车就会当场散架。</li>
+</ul>
+<p>用“口袋”和“大仓库”这样去想，再去看前面那些链表反转或者指针移动的代码，是不是感觉顺畅多了？</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">编程语言</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-算法与数据结构模板与经典例题四：分治" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1201,212 +1347,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-JAVA学习日记六：Scanner以及数值混合类型转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">JAVA学习日记六：Scanner以及数值混合类型转换</a>
-    </h1>
-  
-
-        
-        <a href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2026-01-29T13:27:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h1 id="Java-Scanner-方法区别-数值混合运算类型提升规律总结"><a href="#Java-Scanner-方法区别-数值混合运算类型提升规律总结" class="headerlink" title="Java Scanner 方法区别 + 数值混合运算类型提升规律总结"></a>Java Scanner 方法区别 + 数值混合运算类型提升规律总结</h1><h2 id="一、Scanner-核心方法区别（next-nextLine-hasNext-hasNextLine）"><a href="#一、Scanner-核心方法区别（next-nextLine-hasNext-hasNextLine）" class="headerlink" title="一、Scanner 核心方法区别（next&#x2F;nextLine + hasNext&#x2F;hasNextLine）"></a>一、Scanner 核心方法区别（next&#x2F;nextLine + hasNext&#x2F;hasNextLine）</h2><h3 id="1-sc-next-与-sc-nextLine-区别"><a href="#1-sc-next-与-sc-nextLine-区别" class="headerlink" title="1. sc.next () 与 sc.nextLine () 区别"></a>1. sc.next () 与 sc.nextLine () 区别</h3><table>
-<thead>
-<tr>
-<th align="center">对比维度</th>
-<th align="center">sc.next()</th>
-<th align="center">sc.nextLine()</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">读取终止标志</td>
-<td align="center">任意空白符（空格、Tab、\n、\r）</td>
-<td align="center">仅换行符 \n（按回车触发）</td>
-</tr>
-<tr>
-<td align="center">空白符处理</td>
-<td align="center">自动忽略开头所有空白符，仅取有效内容</td>
-<td align="center">不忽略任何字符，保留行内所有空白符（开头 &#x2F; 中间）</td>
-</tr>
-<tr>
-<td align="center">返回内容</td>
-<td align="center">两个空白符间的有效标记（Token），无空白符</td>
-<td align="center">从光标到换行符的整行内容，不含末尾 \n</td>
-</tr>
-<tr>
-<td align="center">配套判断方法</td>
-<td align="center">必须搭配 sc.hasNext ()</td>
-<td align="center">必须搭配 sc.hasNextLine ()</td>
-</tr>
-<tr>
-<td align="center">核心特点</td>
-<td align="center">按「标记」读取，拆分连续数据</td>
-<td align="center">按「整行」读取，保留完整内容</td>
-</tr>
-<tr>
-<td align="center">适用场景</td>
-<td align="center">读取分隔的单个数据（整数、单词、独立指令）</td>
-<td align="center">读取整行内容（带空格文本、整行指令、一句话）</td>
-</tr>
-<tr>
-<td align="center">经典坑点</td>
-<td align="center">读取后不消耗末尾 \n，后续接 nextLine () 会读空行</td>
-<td align="center">无此坑，整行读取自然消耗 \n</td>
-</tr>
-</tbody></table>
-<p><strong>坑点解决</strong>：next ()&#x2F;nextInt () 后接 nextLine ()，需额外调用 <code>sc.nextLine()</code> 消耗换行符，或全程用 nextLine () 读取后手动转类型。</p>
-<h3 id="2-sc-hasNext-与-sc-hasNextLine-区别"><a href="#2-sc-hasNext-与-sc-hasNextLine-区别" class="headerlink" title="2. sc.hasNext () 与 sc.hasNextLine () 区别"></a>2. sc.hasNext () 与 sc.hasNextLine () 区别</h3><table>
-<thead>
-<tr>
-<th align="center">对比维度</th>
-<th align="center">sc.hasNext()</th>
-<th align="center">sc.hasNextLine()</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">判断依据</td>
-<td align="center">是否有下一个<strong>有效标记</strong>（非空白字符）</td>
-<td align="center">是否有下一个<strong>整行内容</strong>（可空行）</td>
-</tr>
-<tr>
-<td align="center">空白符处理</td>
-<td align="center">忽略开头空白符，仅判断有效内容是否存在</td>
-<td align="center">不忽略任何字符，包含空行、空白符行</td>
-</tr>
-<tr>
-<td align="center">核心目标</td>
-<td align="center">判断是否有可提取的单个数据单元</td>
-<td align="center">判断是否有可提取的完整行</td>
-</tr>
-<tr>
-<td align="center">配套读取方法</td>
-<td align="center">sc.next()&#x2F;sc.nextXxx()（nextInt&#x2F;nextLong）</td>
-<td align="center">sc.nextLine()</td>
-</tr>
-<tr>
-<td align="center">空行处理</td>
-<td align="center">空行返回 false（无有效标记）</td>
-<td align="center">空行返回 true（仍为一行内容）</td>
-</tr>
-</tbody></table>
-<p><strong>核心结论</strong>：判断「是否有单个数据」用 hasNext ()，判断「是否有整行内容」用 hasNextLine ()，<strong>严禁混用判断与读取方法</strong>。</p>
-<h2 id="二、Java-数值混合运算的类型提升核心规律"><a href="#二、Java-数值混合运算的类型提升核心规律" class="headerlink" title="二、Java 数值混合运算的类型提升核心规律"></a>二、Java 数值混合运算的类型提升核心规律</h2><h3 id="1-基础依据：数值类型精度层级（从低到高，核心排序）"><a href="#1-基础依据：数值类型精度层级（从低到高，核心排序）" class="headerlink" title="1. 基础依据：数值类型精度层级（从低到高，核心排序）"></a>1. 基础依据：数值类型精度层级（从低到高，核心排序）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">byte &lt; short &lt; int &lt; long &lt; float &lt; double</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>补充：<code>char</code> 参与数值运算时，<strong>先自动转为 int</strong>，再遵循此层级提升；</li>
-<li>原则：精度越高，可表示的数值范围 &#x2F; 小数精度越强，提升不可逆（低精度不降级）。</li>
-</ul>
-<h3 id="2-3-条通用提升规则（覆盖所有数值运算场景）"><a href="#2-3-条通用提升规则（覆盖所有数值运算场景）" class="headerlink" title="2. 3 条通用提升规则（覆盖所有数值运算场景）"></a>2. 3 条通用提升规则（覆盖所有数值运算场景）</h3><h4 id="规则-1：单类型运算-——-无提升，结果类型与操作数一致"><a href="#规则-1：单类型运算-——-无提升，结果类型与操作数一致" class="headerlink" title="规则 1：单类型运算 —— 无提升，结果类型与操作数一致"></a>规则 1：单类型运算 —— 无提升，结果类型与操作数一致</h4><p>所有操作数为同一种数值类型，直接运算，结果类型不变，无隐式转换：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a=10, b=20; int res = a+b; // 全int运算，结果仍为int</span><br><span class="line">long c=100L, d=200L; long res2 = c-d; // 全long运算，结果仍为long</span><br></pre></td></tr></table></figure>
-
-<h4 id="规则-2：多类型混合运算-——-全提升至「精度最高类型」，结果同此类型"><a href="#规则-2：多类型混合运算-——-全提升至「精度最高类型」，结果同此类型" class="headerlink" title="规则 2：多类型混合运算 —— 全提升至「精度最高类型」，结果同此类型"></a>规则 2：多类型混合运算 —— 全提升至「精度最高类型」，结果同此类型</h4><p>存在不同精度操作数时，<strong>所有低精度操作数依次自动转为运算中精度最高的类型</strong>，同类型运算后，结果为该最高类型（只能用该类型接收，否则编译报错）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a=10; long b=20L; long res = a+b; // int→long，结果long</span><br><span class="line">long c=100L; double d=20.5; double res2 = c+d; // long→double，结果double</span><br><span class="line">int e=5; float f=3.5f; double g=1.2; double res3 = e+f+g; // int→float→double，结果double</span><br></pre></td></tr></table></figure>
-
-<h4 id="规则-3：byte-short-char-运算-——-先统一转-int，再按规则-2-提升"><a href="#规则-3：byte-short-char-运算-——-先统一转-int，再按规则-2-提升" class="headerlink" title="规则 3：byte&#x2F;short&#x2F;char 运算 —— 先统一转 int，再按规则 2 提升"></a>规则 3：byte&#x2F;short&#x2F;char 运算 —— 先统一转 int，再按规则 2 提升</h4><p>这三种低精度类型，<strong>无论互相运算还是与其他类型运算</strong>，第一步必自动转为 int，后续再按「精度从低到高」继续提升：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte a=10; short b=20; int res = a+b; // byte/short→int，结果int</span><br><span class="line">char c=&#x27;a&#x27;; // ASCII码97，运算时→int(97)</span><br><span class="line">long res2 = c+a; // char→int→long，byte→int→long，结果long</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="三、浮点数在计算机中的存储规则（以255-5为例0"><a href="#三、浮点数在计算机中的存储规则（以255-5为例0" class="headerlink" title="三、浮点数在计算机中的存储规则（以255.5为例0)"></a>三、浮点数在计算机中的存储规则（以255.5为例0)</h1><h2 id="一、第一步：将-255-5-转为十进制整数-小数的二进制"><a href="#一、第一步：将-255-5-转为十进制整数-小数的二进制" class="headerlink" title="一、第一步：将 255.5 转为十进制整数 + 小数的二进制"></a>一、第一步：将 255.5 转为十进制整数 + 小数的二进制</h2><h3 id="1-整数部分（255）转二进制（除-2-取余，逆序排列）"><a href="#1-整数部分（255）转二进制（除-2-取余，逆序排列）" class="headerlink" title="1. 整数部分（255）转二进制（除 2 取余，逆序排列）"></a>1. 整数部分（255）转二进制（除 2 取余，逆序排列）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">255 ÷ 2 = 127 余 1</span><br><span class="line">127 ÷ 2 = 63  余 1</span><br><span class="line">63 ÷ 2 = 31   余 1</span><br><span class="line">31 ÷ 2 = 15   余 1</span><br><span class="line">15 ÷ 2 = 7    余 1</span><br><span class="line">7 ÷ 2 = 3     余 1</span><br><span class="line">3 ÷ 2 = 1     余 1</span><br><span class="line">1 ÷ 2 = 0     余 1</span><br></pre></td></tr></table></figure>
-
-<p>逆序取余得：<strong>255 的二进制 &#x3D; 11111111</strong>（8 个 1）。</p>
-<h3 id="2-小数部分（0-5）转二进制（乘-2-取整，顺序排列）"><a href="#2-小数部分（0-5）转二进制（乘-2-取整，顺序排列）" class="headerlink" title="2. 小数部分（0.5）转二进制（乘 2 取整，顺序排列）"></a>2. 小数部分（0.5）转二进制（乘 2 取整，顺序排列）</h3><p>十进制小数转二进制<strong>核心方法</strong>：乘 2 取整法，反复乘 2 取整数部分，按顺序排列</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.5 × 2 = 1.0  取整 1，小数部分为0，结束转换</span><br></pre></td></tr></table></figure>
-
-<p>顺序取整得：<strong>0.5 的二进制 &#x3D; 1</strong>。</p>
-<h3 id="3-合并整数-小数二进制"><a href="#3-合并整数-小数二进制" class="headerlink" title="3. 合并整数 + 小数二进制"></a>3. 合并整数 + 小数二进制</h3><p>255.5 的二进制 &#x3D; 整数部分 + 小数部分 &#x3D; <strong>11111111.1</strong>。</p>
-<h2 id="二、第二步：转为-IEEE-754-规格化二进制（1-M-×-2-e-形式）"><a href="#二、第二步：转为-IEEE-754-规格化二进制（1-M-×-2-e-形式）" class="headerlink" title="二、第二步：转为 IEEE 754 规格化二进制（1.M × 2^e 形式）"></a>二、第二步：转为 IEEE 754 规格化二进制（1.M × 2^e 形式）</h2><p>IEEE 754 要求浮点数以<strong>规格化形式</strong>表示，即<strong>小数点前必须只有 1 个有效数字 1</strong>，通过移动小数点实现：</p>
-<ul>
-<li>原始二进制：<code>11111111.1</code></li>
-<li>小数点左移 7 位：<code>1.11111111 × 2^7</code>（左移 n 位，指数为 + n；右移为 - n）</li>
-</ul>
-<p>由此得到规格化的核心参数：</p>
-<ul>
-<li>符号位基础：255.5 是正数 → 符号位 S &#x3D; 0</li>
-<li>尾数小数部分 M：<code>1.11111111</code> 中小数点后的部分 → <code>11111111</code></li>
-<li>实际指数 e：7</li>
-</ul>
-<h2 id="三、第三步：计算-double-专属的指数位（偏移量修正）"><a href="#三、第三步：计算-double-专属的指数位（偏移量修正）" class="headerlink" title="三、第三步：计算 double 专属的指数位（偏移量修正）"></a>三、第三步：计算 double 专属的指数位（偏移量修正）</h2><p>double 类型的指数位采用<strong>偏移表示法</strong>，<strong>偏移量固定为 1023</strong>，存储的指数值 E 计算公式为：</p>
-<p><strong>E &#x3D; 实际指数 e + 1023</strong></p>
-<p>代入计算：</p>
-<p>E &#x3D; 7 + 1023 &#x3D; <strong>1030</strong></p>
-<p>将 1030 转为 11 位二进制（double 指数位固定 11 位，不足补前导 0）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1030 ÷ 2 = 515 余 0</span><br><span class="line">515 ÷ 2 = 257 余 1</span><br><span class="line">257 ÷ 2 = 128 余 1</span><br><span class="line">128 ÷ 2 = 64  余 0</span><br><span class="line">64 ÷ 2 = 32   余 0</span><br><span class="line">32 ÷ 2 = 16   余 0</span><br><span class="line">16 ÷ 2 = 8    余 0</span><br><span class="line">8 ÷ 2 = 4     余 0</span><br><span class="line">4 ÷ 2 = 2     余 0</span><br><span class="line">2 ÷ 2 = 1     余 0</span><br><span class="line">1 ÷ 2 = 0     余 1</span><br></pre></td></tr></table></figure>
-
-<p>逆序取余并补为 11 位：<strong>10000000110</strong>（验证：2^10 + 2^3 + 2^2 &#x3D; 1024+8+4&#x3D;1030，正确）。</p>
-<h2 id="四、第四步：补全-52-位尾数位（double-尾数固定-52-位）"><a href="#四、第四步：补全-52-位尾数位（double-尾数固定-52-位）" class="headerlink" title="四、第四步：补全 52 位尾数位（double 尾数固定 52 位）"></a>四、第四步：补全 52 位尾数位（double 尾数固定 52 位）</h2><p>double 尾数位为 52 位，存储的是规格化形式<code>1.M</code>中<strong>小数点后的 M 部分</strong>，<strong>隐含最高位的 1</strong>（不占用存储位，节省精度），规则：</p>
-<ul>
-<li>若 M 长度 &lt; 52 位，<strong>末尾补 0</strong>至 52 位；</li>
-<li>若 M 长度 &gt; 52 位，按舍入规则截断。</li>
-</ul>
-<p>本题中 M &#x3D; <code>11111111</code>（8 位），需补 52-8&#x3D;44 个 0，最终尾数位为：</p>
-<p><strong>11111111 + 44 个 0</strong>（共 52 位）。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   <script>
     (function() {
       document.addEventListener('click', function(event) {
@@ -1547,15 +1487,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
