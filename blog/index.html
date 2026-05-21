@@ -89,6 +89,202 @@ var _hmt = _hmt || [];
 </div>
 
   
+    <article id="post-大语言模型（LLM）微调方法全景指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/05/21/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%88LLM%EF%BC%89%E5%BE%AE%E8%B0%83%E6%96%B9%E6%B3%95%E5%85%A8%E6%99%AF%E6%8C%87%E5%8D%97/">大语言模型（LLM）微调方法全景指南</a>
+    </h1>
+  
+
+        
+        <a href="/2026/05/21/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%88LLM%EF%BC%89%E5%BE%AE%E8%B0%83%E6%96%B9%E6%B3%95%E5%85%A8%E6%99%AF%E6%8C%87%E5%8D%97/" class="archive-article-date">
+  	<time datetime="2026-05-20T16:52:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-05-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <p>在实际应用中，大语言模型的微调（Fine-Tuning）是一个多维度的系统工程。我们通常从<strong>参数更新策略</strong>（怎么改权重）、<strong>任务与架构适配</strong>（解决什么任务）以及<strong>人类偏好对齐</strong>（如何符合人类预期）三个维度来理解和选择微调方法。</p>
+<hr>
+<h2 id="维度一：参数更新策略（How-to-update-parameters）"><a href="#维度一：参数更新策略（How-to-update-parameters）" class="headerlink" title="维度一：参数更新策略（How to update parameters）"></a>维度一：参数更新策略（How to update parameters）</h2><p>参数更新策略决定了在微调过程中，模型的哪些权重需要被训练，哪些需要被冻结。</p>
+<h3 id="1-全参数微调（Full-Fine-Tuning-FFT）"><a href="#1-全参数微调（Full-Fine-Tuning-FFT）" class="headerlink" title="1. 全参数微调（Full Fine-Tuning, FFT）"></a>1. 全参数微调（Full Fine-Tuning, FFT）</h3><ul>
+<li><strong>原理</strong>：更新模型内的所有权重参数。</li>
+<li>优缺点：<ul>
+<li><strong>优点</strong>：模型调整最彻底，理论性能上限最高，适合学习全新的领域知识或深刻改变模型的行为模式。</li>
+<li><strong>缺点</strong>：算力消耗极高（需要数倍于模型体量的高性能显存来存储梯度和优化器状态）；极易引发<strong>灾难性遗忘</strong>（Catastrophic Forgetting）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-参数高效微调（Parameter-Efficient-Fine-Tuning-PEFT）"><a href="#2-参数高效微调（Parameter-Efficient-Fine-Tuning-PEFT）" class="headerlink" title="2. 参数高效微调（Parameter-Efficient Fine-Tuning, PEFT）"></a>2. 参数高效微调（Parameter-Efficient Fine-Tuning, PEFT）</h3><p>通过冻结大模型的大部分参数，仅引入并训练极少量的额外参数（通常 &lt;1%），在极低资源下实现接近全参微调的效果。</p>
+<h4 id="A-旁路低秩矩阵类（目前最主流）"><a href="#A-旁路低秩矩阵类（目前最主流）" class="headerlink" title="A. 旁路低秩矩阵类（目前最主流）"></a>A. 旁路低秩矩阵类（目前最主流）</h4><ul>
+<li>LoRA (Low-Rank Adaptation - 低秩适应)<ul>
+<li><strong>原理</strong>：冻结原始权重 <em>W</em>，在矩阵乘法旁路并联两个低秩矩阵 <em>A</em>（降维）和 <em>B</em>（升维）。训练时只更新 <em>A</em> 和 <em>B</em> 的参数。</li>
+<li><strong>优点</strong>：训练完后可将旁路权重<strong>无缝合并</strong>回主权重，<strong>不增加推理延迟</strong>。</li>
+</ul>
+</li>
+<li>QLoRA (Quantized LoRA)<ul>
+<li><strong>原理</strong>：将基础模型量化为极低精度的 4-bit（NF4格式），在此基础上挂载 LoRA 进行微调。</li>
+<li><strong>优点</strong>：将显存开销压缩到极致，使得在单张消费级显卡（如 RTX 4090）上微调 33B&#x2F;70B 级别大模型成为可能。</li>
+</ul>
+</li>
+<li>DoRA (Weight-Decomposed Low-Rank Adaptation)<ul>
+<li><strong>原理</strong>：将权重分解为大小（Magnitude）和方向（Direction）两个通道，仅对方向通道应用 LoRA。</li>
+<li><strong>优点</strong>：拟合能力更逼近全参数微调。</li>
+</ul>
+</li>
+</ul>
+<h4 id="B-前缀与提示词微调类（修改输入端）"><a href="#B-前缀与提示词微调类（修改输入端）" class="headerlink" title="B. 前缀与提示词微调类（修改输入端）"></a>B. 前缀与提示词微调类（修改输入端）</h4><ul>
+<li><strong>Prompt Tuning</strong>：在输入的 Embedding 层前拼接一串可学习的连续向量（虚拟 Token），微调时只训练这几个虚拟 Token。</li>
+<li><strong>Prefix Tuning</strong>：在 Transformer 的所有隐藏层（Hidden States）前都插入可训练的前缀虚拟 Token。</li>
+</ul>
+<h4 id="C-插件与选择性微调类"><a href="#C-插件与选择性微调类" class="headerlink" title="C. 插件与选择性微调类"></a>C. 插件与选择性微调类</h4><ul>
+<li><strong>Adapter</strong>：在 Transformer 的 Self-Attention 和 MLP 层后插入小型瓶颈结构（Adapter 块），微调时仅训练 Adapter。</li>
+<li><strong>BitFit</strong>：仅微调模型中的 Bias（偏置）项，极其轻量但调节能力非常有限。</li>
+</ul>
+<hr>
+<h2 id="维度二：任务与架构适配（What-task-structure-to-tune-for）"><a href="#维度二：任务与架构适配（What-task-structure-to-tune-for）" class="headerlink" title="维度二：任务与架构适配（What task structure to tune for）"></a>维度二：任务与架构适配（What task structure to tune for）</h2><p>任务与架构适配决定了如何改造模型结构、设计输入输出格式，以解决具体的下游业务问题。</p>
+<p><img src="C:\Users\86132\AppData\Roaming\Typora\typora-user-images\image-20260521005559673.png" alt="image-20260521005559673"></p>
+<h3 id="1-序列分类任务（Sequence-Classification）"><a href="#1-序列分类任务（Sequence-Classification）" class="headerlink" title="1. 序列分类任务（Sequence Classification）"></a>1. 序列分类任务（Sequence Classification）</h3><ul>
+<li><strong>代表任务</strong>：情感分析、垃圾邮件分类、意图识别、文本匹配。</li>
+<li>架构改造：<ul>
+<li>在大模型的顶层拼接一个随机初始化的线性映射层（Classification Head）。</li>
+<li>提取整句话的向量表示（如 BERT 的 <code>[CLS]</code> 向量，或 LLaMA 最后一个 Token 的输出向量）送入分类头进行 <em>N</em> 分类。</li>
+</ul>
+</li>
+<li>具体微调形式：<ul>
+<li><strong>线性探测（Linear Probing）</strong>：完全冻结模型本体，<strong>只训练分类头</strong>。适合样本极少、基础模型极强的场景。</li>
+<li><strong>全参分类微调</strong>：同时训练模型本体和分类头。</li>
+<li><strong>PEFT分类微调</strong>：冻结模型本体，同时训练挂载的 <strong>LoRA 参数和分类头</strong>（工业界最常用）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-序列标记任务（Token-Classification）"><a href="#2-序列标记任务（Token-Classification）" class="headerlink" title="2. 序列标记任务（Token Classification）"></a>2. 序列标记任务（Token Classification）</h3><ul>
+<li><strong>代表任务</strong>：命名实体识别（NER）、词性标注。</li>
+<li><strong>架构改造</strong>：为每一个 Token 的输出向量都连接一个分类头，判断每个 Token 的具体标签（如人名、地名等）。</li>
+</ul>
+<h3 id="3-因果语言模型生成任务（Causal-LM-Generation）"><a href="#3-因果语言模型生成任务（Causal-LM-Generation）" class="headerlink" title="3. 因果语言模型生成任务（Causal LM Generation）"></a>3. 因果语言模型生成任务（Causal LM Generation）</h3><ul>
+<li><strong>代表任务</strong>：智能对话、代码生成、摘要生成。</li>
+<li><strong>架构改造</strong>：无需修改模型架构，直接使用自回归的方式，预测下一个 Token 的概率分布。</li>
+</ul>
+<hr>
+<h2 id="维度三：人类偏好对齐（Alignment）"><a href="#维度三：人类偏好对齐（Alignment）" class="headerlink" title="维度三：人类偏好对齐（Alignment）"></a>维度三：人类偏好对齐（Alignment）</h2><p>偏好对齐通常是微调的最后一步，目的是让模型的输出更符合人类的价值观、安全规范以及特定指令风格。</p>
+<ul>
+<li>RLHF (基于人类反馈的强化学习)：<ul>
+<li><strong>机制</strong>：通过“策略模型 + 奖励模型（Reward Model） + 价值模型 + PPO算法”协同训练。</li>
+<li><strong>评价</strong>：效果上限极高，但涉及多个模型交互，训练极其不稳定且调参难度极大。</li>
+</ul>
+</li>
+<li>DPO (直接偏好优化)：<ul>
+<li><strong>机制</strong>：省去显式的“奖励模型”，直接将损失函数与人类偏好配对数据（Chosen vs Rejected）挂钩，通过简单的二分类交叉熵直接优化大模型。</li>
+<li><strong>评价</strong>：目前最主流的对齐手段，训练稳定且高效。</li>
+</ul>
+</li>
+<li>ORPO (优势比偏好优化)：<ul>
+<li><strong>机制</strong>：将监督微调（SFT）与偏好对齐融为一步，通过优势比损失对负面样本进行惩罚。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="总结：选型决策矩阵"><a href="#总结：选型决策矩阵" class="headerlink" title="总结：选型决策矩阵"></a>总结：选型决策矩阵</h2><table>
+<thead>
+<tr>
+<th align="left">微调目标</th>
+<th align="left">硬件算力</th>
+<th align="left">推荐方案组合</th>
+<th align="left">理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>学习全新且庞大的垂直领域知识</strong></td>
+<td align="left">极其充沛</td>
+<td align="left"><strong>FFT (全参数微调) + Causal LM</strong></td>
+<td align="left">需要对底层权重进行深度塑造，注入行业壁垒知识。</td>
+</tr>
+<tr>
+<td align="left"><strong>日常垂直业务任务（如客服对话、写文案）</strong></td>
+<td align="left">中等 &#x2F; 单卡</td>
+<td align="left"><strong>LoRA + Causal LM</strong></td>
+<td align="left">性价比最高，不增加推理延迟，训练极快。</td>
+</tr>
+<tr>
+<td align="left"><strong>小样本下的文本分类&#x2F;情感分析</strong></td>
+<td align="left">极少</td>
+<td align="left"><strong>Linear Probing (仅微调分类头)</strong></td>
+<td align="left">防止过拟合，保留预训练模型的泛化特征。</td>
+</tr>
+<tr>
+<td align="left"><strong>大规模业务文本分类&#x2F;文本匹配</strong></td>
+<td align="left">中等 &#x2F; 单卡</td>
+<td align="left"><strong>LoRA + Sequence Classification Head</strong></td>
+<td align="left">兼顾语义空间的微调与分类头的优化，准确率高。</td>
+</tr>
+<tr>
+<td align="left"><strong>微调后模型对齐安全规范与人类偏好</strong></td>
+<td align="left">中等</td>
+<td align="left"><strong>DPO</strong></td>
+<td align="left">比 RLHF 稳定且省资源，对齐效果优秀。</td>
+</tr>
+</tbody></table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LLM</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JAVA与C-C-的内存分配机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1233,120 +1429,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-JAVA学习日记七：常用函数及比赛所需的一些小技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/">JAVA学习日记七：常用函数及比赛所需的一些小技巧</a>
-    </h1>
-  
-
-        
-        <a href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="archive-article-date">
-  	<time datetime="2026-02-24T13:22:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-02-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h3 id="一、String的一些常用的封装函数"><a href="#一、String的一些常用的封装函数" class="headerlink" title="一、String的一些常用的封装函数"></a>一、String的一些常用的封装函数</h3><p><strong>1.charAt(int index) : char</strong></p>
-<p>给出索引返回对应位置的字符</p>
-<p><strong>2.compareTo(String another string) : int</strong></p>
-<p>与另一个字符串按照字典序比较大小，a&lt;b返回-1，a&#x3D;b返回0，a&gt;b返回正数</p>
-<p><strong>3.compareToignoreCase</strong></p>
-<p>类似但是忽略大小写</p>
-<p><strong>4.concat(String str) : String</strong></p>
-<p>返回两个字符串拼接之后的字符串</p>
-<p><strong>5.contains(CharSequence char) ：boolen</strong></p>
-<p>判断字符串中是否含有序列char</p>
-<p><strong>6.equals(Object object) : boolen</strong></p>
-<p>判断两个字符串是否相等！！！</p>
-<p><strong>7.equalsIgnoreCase(String another string) : boolen</strong></p>
-<p>类似只是不考虑大小写</p>
-<p><strong>8.indexof(CharSequence char) ：int</strong></p>
-<p>给一个序列，返回它在字符串中的索引，不存在返回-1.</p>
-<p><strong>9.length() :int</strong></p>
-<p>返回长度</p>
-<p><strong>10.substring(int beginindex) : string      substring(int beginindex,int endindex) : string</strong></p>
-<p>返回对应区间内的子串</p>
-<p>** 注意右边是开区间，也就是说endindex这个位置取不到</p>
-<p><strong>11.replace(char oldchar,char newchar) : string</strong></p>
-<p>用newchar替换字符串中所有的oldchar</p>
-<p><strong>12.replace(charSequence target  charSequence replacement) : string</strong></p>
-<p>用replacement替换target</p>
-<p><strong>13.valueof() ：string</strong></p>
-<p>这个比较重要，可以把其他类型的数据如int、long换成String</p>
-<p><strong>14.String 创建之后不能修改，比较方便的方法是 char[] ch &#x3D;str.toCharArray()</strong></p>
-<h2 id="二、一些比较重要的技巧"><a href="#二、一些比较重要的技巧" class="headerlink" title="二、一些比较重要的技巧"></a>二、一些比较重要的技巧</h2><p><strong>1.翻转字符串：String reversed &#x3D; new StringBuilder(原字符串).reverse().toString();</strong></p>
-<p><strong>2.快速初始化一个数组</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Arrays;</span><br><span class="line"></span><br><span class="line">int[] a = new int[100];</span><br><span class="line">Arrays.fill(a, 666);   // 全部变成 666</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="三、最经典的一些错误"><a href="#三、最经典的一些错误" class="headerlink" title="三、最经典的一些错误"></a>三、最经典的一些错误</h2><p>1.忘开long。这个真没话说</p>
-<p>2.序列处理完，忘了把最后一种情况也加上</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int pre=arr[0];</span><br><span class="line">		int num=1;</span><br><span class="line">		for(int i=1;i&lt;n;i++) &#123;</span><br><span class="line">			if(arr[i]!=pre) &#123;</span><br><span class="line">				lst[pre].add(num);</span><br><span class="line">				pre=arr[i];</span><br><span class="line">				num=1;</span><br><span class="line">			&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				num++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		lst[pre].add(num);</span><br></pre></td></tr></table></figure>
-
-<p>3.完了考虑数组为空的情况。这种情况包re的</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   <script>
     (function() {
       document.addEventListener('click', function(event) {
@@ -1495,15 +1577,19 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">颂</a>
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">LLM</a>
               </li>
              
               <li class="article-tag-list-item">
