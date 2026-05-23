@@ -15,8 +15,8 @@
 <meta property="og:site_name" content="Tengfei Zhang - HomePage">
 <meta property="og:description" content="Welcome to my HomePage 🎓 EducationShandong University of Finance and Economics | Sept. 2023 – Present School of Computer Science and Artificial Intelligence B.E. in Computer Science and Technology  G">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-05-14T11:37:13.210Z">
-<meta property="article:modified_time" content="2026-05-14T11:37:13.210Z">
+<meta property="article:published_time" content="2026-05-23T13:13:51.844Z">
+<meta property="article:modified_time" content="2026-05-23T13:13:51.844Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Tengfei Zhang - HomePage" type="application/atom+xml">
@@ -123,7 +123,7 @@ var _hmt = _hmt || [];
   <p><strong>Welcome to my HomePage</strong></p>
 <h2 id="🎓-Education"><a href="#🎓-Education" class="headerlink" title="🎓 Education"></a>🎓 Education</h2><p><strong>Shandong University of Finance and Economics</strong> | Sept. 2023 – Present <em>School of Computer Science and Artificial Intelligence</em> <strong>B.E. in Computer Science and Technology</strong></p>
 <ul>
-<li><strong>GPA:</strong> 4.20 &#x2F; 5.0 |  <strong>Ranking:</strong> 7 &#x2F; 220 (Top 3.18%)</li>
+<li><strong>GPA:</strong> 4.20 &#x2F; 5.0 |  <strong>Ranking:</strong> 7 &#x2F; 221 (Top 3.16%)</li>
 <li><strong>English Proficiency:</strong> CET-4 (554), CET-6 (501)</li>
 <li><strong>Core Courses:</strong> Advanced Mathematics I (<strong>100</strong>), Operating Systems (<strong>97</strong>), Java Programming (<strong>95</strong>), C Programming (<strong>95</strong>), Probability &amp; Statistics (<strong>95</strong>), Data Structures (<strong>94</strong>), Algorithm Analysis &amp; Design (<strong>94</strong>), Computer Networks (<strong>94</strong>), Discrete Mathematics (<strong>92</strong>), Principles of Database Systems (<strong>90</strong>), Linear Algebra (<strong>90</strong>)</li>
 <li><strong>Honors:</strong> National Encouragement Scholarship (×2), University First-Class Scholarship (×2), Outstanding University Student, Outstanding Member of the Communist Youth League</li>
@@ -136,12 +136,12 @@ var _hmt = _hmt || [];
 <li><strong>Innovation &amp; Acceleration:</strong> Designed mirror sequence encoding with carry-over logic and achieved 100% accuracy on 3-digit addition tests within a 0.08M parameter model. Reconstructed the model with a <strong>KV Cache</strong> mechanism, achieving a <strong>30% speedup</strong> on local hardware.</li>
 <li><strong>NLP Practice:</strong> Built and trained a <strong>3.65M parameter lightweight GPT</strong> model for ancient Chinese text generation. Resolved semantic repetition issues through fine-tuning Temperature and Top-k sampling.</li>
 </ul>
-<h3 id="LLM-based-Student-Mathematics-Misconception-Identification-System-Apr-2026-–-Jun-2026"><a href="#LLM-based-Student-Mathematics-Misconception-Identification-System-Apr-2026-–-Jun-2026" class="headerlink" title="LLM-based Student Mathematics Misconception Identification System | Apr. 2026 – Jun. 2026"></a><strong>LLM-based Student Mathematics Misconception Identification System</strong> | Apr. 2026 – Jun. 2026</h3><p><em>Project Leader</em></p>
+<h3 id="LLM-based-Student-Mathematics-Misconception-Automatic-Identification-System-Apr-2026-–-Present"><a href="#LLM-based-Student-Mathematics-Misconception-Automatic-Identification-System-Apr-2026-–-Present" class="headerlink" title="LLM-based Student Mathematics Misconception Automatic Identification System | Apr. 2026 – Present"></a>LLM-based Student Mathematics Misconception Automatic Identification System | Apr. 2026 – Present</h3><p>Project Leader</p>
 <ul>
-<li><strong>Fine-tuning:</strong> Leveraged the SOTA <strong>Gemma 2 9B</strong> as a base model, utilizing <strong>LoRA</strong> (Low-Rank Adaptation) for parameter-efficient fine-tuning on Dual T4 GPUs.</li>
-<li><strong>Feature Engineering:</strong> Designed multi-dimensional input templates (Question + Answer + Correctness + Explanation) and utilized <code>LabelEncoder</code> for structured processing.</li>
-<li><strong>Performance Optimization:</strong> Optimized the inference pipeline using efficient DataLoaders and multi-process data handling, significantly increasing throughput for over 16,000 test samples.</li>
-<li><strong>Strategy:</strong> Implemented a Softmax-based ranking mechanism to output Top-3 suggestions for the MAP@3 metric.</li>
+<li><strong>Pipeline Architecture</strong>: Built a robust sequence classification diagnostic pipeline based on <code>Gemma-2-9B-IT</code> to automatically and precisely predict 65 categories of deep cognitive mathematics misconceptions from long, hybrid text inputs comprising math questions, chosen options, and student reasoning processes.</li>
+<li><strong>Model Fine-tuning</strong>: Customized a sequence classification fine-tuning architecture leveraging PyTorch and the PEFT framework; resolved a critical checkpointing parameter loss defect in LoRA bypass tuning by explicitly configuring <code>modules_to_save=[&quot;score&quot;]</code> to preserve the newly added classification head. Jointly applied Ampere-native BF16 mixed precision, SDPA (Scaled Dot-Product Attention), and Gradient Checkpointing to achieve stable convergence with an equivalent batch size of 16 without quantization or Out-of-Memory (OOM) errors.</li>
+<li><strong>Inference &amp; Deployment</strong>: Designed and deployed a high-throughput, single-GPU (RTX 5090) exclusive inference pipeline; fully loaded the model onto a single card using the <code>device_map=&quot;cuda:0&quot;</code> mechanism to eliminate PCIe communication latency between multiple GPUs. Dynamically detected and enabled native <code>bfloat16</code> inference leveraging Blackwell hardware architectures to prevent numerical overflow, scaling the concurrent batch size from 8 to 32 to achieve ultra-fast, high-concurrency inference.</li>
+<li><strong>Evaluation &amp; Analysis</strong>: Attained an outstanding performance of <strong>MAP@3: 0.93</strong> (Top-3 accuracy of 95.8%) on the test set; conducted Exponential Moving Average (EMA) statistical analysis on the Trainer State for convergence evaluation, confirming a stable late-stage training trend and establishing Checkpoint-5500 as the optimal checkpoint to balance multi-class generalization and loss function stability.</li>
 </ul>
 <hr>
 <h2 id="🏆-Awards-Copyrights"><a href="#🏆-Awards-Copyrights" class="headerlink" title="🏆 Awards &amp; Copyrights"></a>🏆 Awards &amp; Copyrights</h2><ul>
@@ -269,11 +269,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
+                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -281,11 +281,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">颂</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color2">颂</a>
               </li>
              
               <li class="article-tag-list-item">
