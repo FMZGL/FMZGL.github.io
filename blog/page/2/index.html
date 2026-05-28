@@ -89,6 +89,181 @@ var _hmt = _hmt || [];
 </div>
 
   
+    <article id="post-库、包、框架核心概念详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/03/13/%E5%BA%93%E3%80%81%E5%8C%85%E3%80%81%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3/">库、包、框架核心概念详解</a>
+    </h1>
+  
+
+        
+        <a href="/2026/03/13/%E5%BA%93%E3%80%81%E5%8C%85%E3%80%81%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2026-03-13T06:36:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h2 id="一、核心定义（一句话定调）"><a href="#一、核心定义（一句话定调）" class="headerlink" title="一、核心定义（一句话定调）"></a>一、核心定义（一句话定调）</h2><table>
+<thead>
+<tr>
+<th align="center">概念</th>
+<th align="center">核心定义</th>
+<th align="center">核心视角</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">库（Library）</td>
+<td align="center">一组实现特定功能的可复用代码集合（函数 &#x2F; 类 &#x2F; 模块），目的是避免重复造轮子</td>
+<td align="center">功能视角</td>
+</tr>
+<tr>
+<td align="center">包（Package）</td>
+<td align="center">库的 “分发 &#x2F; 安装单位”，是库的标准化交付形态（如<code>.whl</code>&#x2F;<code>.jar</code>&#x2F;<code>.tgz</code>文件）</td>
+<td align="center">交付 &#x2F; 使用视角</td>
+</tr>
+<tr>
+<td align="center">框架（Framework）</td>
+<td align="center">特殊的重量级库，提供 “整体开发骨架 + 规则”，开发者填充业务代码，框架主导执行流程</td>
+<td align="center">架构 &#x2F; 控制权视角</td>
+</tr>
+</tbody></table>
+<h2 id="二、详细解析"><a href="#二、详细解析" class="headerlink" title="二、详细解析"></a>二、详细解析</h2><h3 id="1-库（Library）"><a href="#1-库（Library）" class="headerlink" title="1. 库（Library）"></a>1. 库（Library）</h3><h4 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h4><p>开发者编写的、可直接调用的功能代码集合，是 “工具” 级别的代码复用。</p>
+<h4 id="核心特征"><a href="#核心特征" class="headerlink" title="核心特征"></a>核心特征</h4><ul>
+<li><strong>开发者主导</strong>：由开发者决定何时调用、如何调用，代码执行流程完全由开发者掌控；</li>
+<li><strong>功能单一 &#x2F; 聚焦</strong>：通常只解决某一类问题，边界清晰；</li>
+<li><strong>无强约束</strong>：无需遵循固定规则，按需导入、按需调用。</li>
+</ul>
+<h4 id="典型示例"><a href="#典型示例" class="headerlink" title="典型示例"></a>典型示例</h4><ul>
+<li>Python：<code>jieba</code>（中文分词）、<code>requests</code>（网络请求）、<code>numpy</code>（数值计算）；</li>
+<li>JavaScript：<code>lodash</code>（工具函数）、<code>axios</code>（异步请求）；</li>
+<li>Java：<code>apache-commons</code>（通用工具）。</li>
+</ul>
+<h4 id="使用示例（Python）"><a href="#使用示例（Python）" class="headerlink" title="使用示例（Python）"></a>使用示例（Python）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import jieba  # 导入库</span><br><span class="line">text = &quot;测试中文分词&quot;</span><br><span class="line">result = jieba.cut(text)  # 开发者主动调用库的功能</span><br><span class="line">print(list(result))</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-包（Package）"><a href="#2-包（Package）" class="headerlink" title="2. 包（Package）"></a>2. 包（Package）</h3><h4 id="本质-1"><a href="#本质-1" class="headerlink" title="本质"></a>本质</h4><p>库的 “可安装形态”，是包管理工具（<code>pip</code>&#x2F;<code>npm</code>&#x2F;<code>maven</code>）识别和分发的基本单位。</p>
+<h4 id="核心特征-1"><a href="#核心特征-1" class="headerlink" title="核心特征"></a>核心特征</h4><ul>
+<li><strong>标准化交付</strong>：包含库的代码、依赖说明、版本信息等，符合对应语言的打包规范；</li>
+<li><strong>安装即得库</strong>：通过包管理工具安装 “包” 后，本地环境中就会生成可调用的 “库”；</li>
+<li><strong>形态多样</strong>：不同语言的包格式不同（Python：<code>.whl</code>&#x2F;<code>.tar.gz</code>；JS：<code>.tgz</code>；Java：<code>.jar</code>）。</li>
+</ul>
+<h4 id="关键关联"><a href="#关键关联" class="headerlink" title="关键关联"></a>关键关联</h4><ul>
+<li>所有可通过包管理工具安装的库，在分发阶段都叫 “包”；</li>
+<li>少数库无需打包（如手动拷贝的代码片段），但无法通过包管理工具安装；</li>
+<li>一个包可包含多个子库（如 Python 的<code>scipy</code>包，包含数值计算、线性代数等子库）。</li>
+</ul>
+<h4 id="典型操作"><a href="#典型操作" class="headerlink" title="典型操作"></a>典型操作</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Python：安装jieba包 → 得到jieba库</span><br><span class="line">pip install jieba</span><br><span class="line"></span><br><span class="line"># JavaScript：安装axios包 → 得到axios库</span><br><span class="line">npm install axios</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-框架（Framework）"><a href="#3-框架（Framework）" class="headerlink" title="3. 框架（Framework）"></a>3. 框架（Framework）</h3><h4 id="本质-2"><a href="#本质-2" class="headerlink" title="本质"></a>本质</h4><p>“库的超集”，是提供完整开发体系的架构级工具，核心是 “控制权反转”（好莱坞原则：Don’t call us, we’ll call you）。</p>
+<h4 id="核心特征-2"><a href="#核心特征-2" class="headerlink" title="核心特征"></a>核心特征</h4><ul>
+<li><strong>框架主导</strong>：框架定义整体执行流程，开发者只需按规则编写 “业务逻辑片段”，由框架调用；</li>
+<li><strong>强约束性</strong>：必须遵循框架的开发规范（如目录结构、接口定义、生命周期）；</li>
+<li><strong>全流程覆盖</strong>：解决一类场景的全链路问题，而非单一功能。</li>
+</ul>
+<h4 id="典型示例-1"><a href="#典型示例-1" class="headerlink" title="典型示例"></a>典型示例</h4><ul>
+<li>Python：<code>Django</code>（Web 开发）、<code>Keras</code>（深度学习）；</li>
+<li>JavaScript：<code>Vue</code>&#x2F;<code>React</code>（前端）、<code>Express</code>（Node.js Web）；</li>
+<li>Java：<code>Spring</code>（后端）、<code>MyBatis</code>（数据库操作）。</li>
+</ul>
+<h4 id="使用示例（Python-Keras）"><a href="#使用示例（Python-Keras）" class="headerlink" title="使用示例（Python&#x2F;Keras）"></a>使用示例（Python&#x2F;Keras）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import keras</span><br><span class="line">from keras import layers</span><br><span class="line"></span><br><span class="line"># 开发者按框架规则填充代码（定义模型结构）</span><br><span class="line">model = keras.Sequential([layers.Dense(10, activation=&#x27;softmax&#x27;)])</span><br><span class="line">model.compile(optimizer=&#x27;adam&#x27;, loss=&#x27;categorical_crossentropy&#x27;)</span><br><span class="line"></span><br><span class="line"># 框架主导执行流程（训练过程由Keras接管）</span><br><span class="line">model.fit(x_train, y_train, epochs=10)</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、核心关系总结"><a href="#三、核心关系总结" class="headerlink" title="三、核心关系总结"></a>三、核心关系总结</h2><ol>
+<li><p><strong>包含关系</strong>：框架 ∈ 库 ∈ 包（框架是特殊的库，库的分发形态是包）；</p>
+</li>
+<li><p><strong>使用逻辑</strong>：通过包管理工具安装 “包” → 得到可调用的 “库” → 普通库直接调用，框架按规则嵌入代码并由框架执行；</p>
+</li>
+<li><p>控制权差异</p>
+<ul>
+<li>普通库：开发者调用库 → 开发者掌控流程；</li>
+<li>框架：框架调用开发者写的代码 → 框架掌控流程。</li>
+</ul>
+</li>
+</ol>
+<h2 id="四、易混淆场景补充"><a href="#四、易混淆场景补充" class="headerlink" title="四、易混淆场景补充"></a>四、易混淆场景补充</h2><table>
+<thead>
+<tr>
+<th align="center">场景</th>
+<th align="center">正确认知</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>pip install StanfordCoreNLP</code></td>
+<td align="center">安装的是 “Python 桥接包”，仅提供调用 Java 版 StanfordCoreNLP 的接口，核心 NLP 功能在 Java 包中</td>
+</tr>
+<tr>
+<td align="center"><code>npm install vue</code></td>
+<td align="center">安装的是 “vue 包”，得到的是 “vue 框架”（vue 兼具库和框架特性：调用 API 时是库，按生命周期开发时是框架）</td>
+</tr>
+<tr>
+<td align="center">Java 的<code>.jar</code>文件</td>
+<td align="center">是 Java 语言的 “包”，包含的是 Java 库（如<code>stanford-corenlp-4.5.10.jar</code>是 NLP 库的包形态）</td>
+</tr>
+</tbody></table>
+<h3 id="关键点回顾"><a href="#关键点回顾" class="headerlink" title="关键点回顾"></a>关键点回顾</h3><ol>
+<li>库是功能集合，包是库的安装 &#x2F; 分发单位，框架是主导执行流程的特殊库；</li>
+<li>普通库是 “开发者调用工具”，框架是 “工具调用开发者的代码”；</li>
+<li>包管理工具（pip&#x2F;npm）管理的是 “包”，开发者代码中使用的是 “库 &#x2F; 框架”。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JAVA学习日记七：常用函数及比赛所需的一些小技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1716,351 +1891,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-常见包管理器及简单使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">常见包管理器及简单使用</a>
-    </h1>
-  
-
-        
-        <a href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-  	<time datetime="2025-11-18T06:43:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h2 id="1-apt-get"><a href="#1-apt-get" class="headerlink" title="1.apt-get"></a>1.apt-get</h2><p><strong>核心定位</strong>：Debian、Ubuntu 等 Debian 系 Linux 发行版的系统级包管理器，基于.deb 格式包，主打系统软件的安装、升级与依赖管理，需 root 权限执行。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>更新软件包列表</td>
-<td>sudo apt-get update</td>
-</tr>
-<tr>
-<td>安装软件包</td>
-<td>sudo apt-get install 包名</td>
-</tr>
-<tr>
-<td>卸载软件（保留配置）</td>
-<td>sudo apt-get remove 包名</td>
-</tr>
-<tr>
-<td>彻底卸载软件（含配置）</td>
-<td>sudo apt-get purge 包名</td>
-</tr>
-<tr>
-<td>升级所有软件</td>
-<td>sudo apt-get upgrade</td>
-</tr>
-<tr>
-<td>清理下载的包缓存</td>
-<td>sudo apt-get clean</td>
-</tr>
-</tbody></table>
-<h2 id="2-winget"><a href="#2-winget" class="headerlink" title="2.winget"></a>2.winget</h2><p><strong>核心定位</strong>：微软官方推出的 Windows 系统包管理器，适配 Windows 10 及以上版本，用于快速管理桌面软件与应用，无需复杂的图形化安装步骤。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>搜索软件</td>
-<td>winget search 软件关键词</td>
-</tr>
-<tr>
-<td>安装指定软件</td>
-<td>winget install 软件 ID</td>
-</tr>
-<tr>
-<td>更新所有已装软件</td>
-<td>winget upgrade –all</td>
-</tr>
-<tr>
-<td>卸载软件</td>
-<td>winget uninstall 软件 ID</td>
-</tr>
-<tr>
-<td>查看已安装软件</td>
-<td>winget list</td>
-</tr>
-<tr>
-<td>导出软件列表到文件</td>
-<td>winget export -o 文件名.json</td>
-</tr>
-</tbody></table>
-<h2 id="3-pip"><a href="#3-pip" class="headerlink" title="3.pip"></a>3.pip</h2><p><strong>核心定位</strong>：Python 专属的包管理器，用于管理 Python 第三方库，支持 PyPI 等仓库，适配 Windows、Linux、macOS 多平台，常随 Python 默认安装。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>安装指定包</td>
-<td>pip install 包名</td>
-</tr>
-<tr>
-<td>安装指定版本包</td>
-<td>pip install 包名 &#x3D;&#x3D; 版本号</td>
-</tr>
-<tr>
-<td>卸载包</td>
-<td>pip uninstall 包名</td>
-</tr>
-<tr>
-<td>升级指定包</td>
-<td>pip install –upgrade 包名</td>
-</tr>
-<tr>
-<td>列出已安装包</td>
-<td>pip list</td>
-</tr>
-<tr>
-<td>导出依赖列表</td>
-<td>pip freeze &gt; requirements.txt</td>
-</tr>
-<tr>
-<td>批量安装依赖</td>
-<td>pip install -r requirements.txt</td>
-</tr>
-</tbody></table>
-<h2 id="4-maven"><a href="#4-maven" class="headerlink" title="4.maven"></a>4.maven</h2><p><strong>核心定位</strong>：Java 项目的构建与依赖管理工具，不仅能管理 Jar 包依赖，还能规范化项目构建流程（编译、测试、打包等），核心依赖<code>pom.xml</code>文件管理配置。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>清理构建产物</td>
-<td>mvn clean</td>
-</tr>
-<tr>
-<td>编译源代码</td>
-<td>mvn compile</td>
-</tr>
-<tr>
-<td>运行单元测试</td>
-<td>mvn test</td>
-</tr>
-<tr>
-<td>打包项目（生成 Jar&#x2F;WAR）</td>
-<td>mvn package</td>
-</tr>
-<tr>
-<td>打包并安装到本地仓库</td>
-<td>mvn install</td>
-</tr>
-<tr>
-<td>将包部署到远程仓库</td>
-<td>mvn deploy</td>
-</tr>
-</tbody></table>
-<h2 id="5-npm"><a href="#5-npm" class="headerlink" title="5.npm"></a>5.npm</h2><p><strong>核心定位</strong>：Node.js 自带的包管理器，用于管理前端或 Node.js 项目的依赖包，依托 npm 仓库，可定义项目脚本，是前端开发的核心工具之一。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>初始化项目生成配置文件</td>
-<td>npm init -y</td>
-</tr>
-<tr>
-<td>安装生产依赖</td>
-<td>npm install 包名</td>
-</tr>
-<tr>
-<td>安装开发依赖</td>
-<td>npm install 包名 –save-dev</td>
-</tr>
-<tr>
-<td>卸载依赖包</td>
-<td>npm uninstall 包名</td>
-</tr>
-<tr>
-<td>更新指定依赖</td>
-<td>npm update 包名</td>
-</tr>
-<tr>
-<td>执行自定义项目脚本</td>
-<td>npm run 脚本名</td>
-</tr>
-<tr>
-<td>查看项目依赖列表</td>
-<td>npm list</td>
-</tr>
-</tbody></table>
-<h2 id="6-vcpkg"><a href="#6-vcpkg" class="headerlink" title="6.vcpkg"></a>6.vcpkg</h2><p><strong>核心定位</strong>：微软开发的跨平台 C&#x2F;C++ 包管理器，支持 Windows、Linux、macOS，通过源码编译安装库文件，适配 CMake 等构建系统，解决 C&#x2F;C++ 依赖配置复杂的问题。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>搜索 C&#x2F;C++ 库</td>
-<td>.&#x2F;vcpkg search 库关键词</td>
-</tr>
-<tr>
-<td>安装指定库</td>
-<td>.&#x2F;vcpkg install 库名</td>
-</tr>
-<tr>
-<td>安装指定平台的库</td>
-<td>.&#x2F;vcpkg install 库名：目标平台（如 x64-windows）</td>
-</tr>
-<tr>
-<td>卸载库</td>
-<td>.&#x2F;vcpkg remove 库名</td>
-</tr>
-<tr>
-<td>列出已安装库</td>
-<td>.&#x2F;vcpkg list</td>
-</tr>
-<tr>
-<td>全局集成到开发环境</td>
-<td>.&#x2F;vcpkg integrate install</td>
-</tr>
-</tbody></table>
-<h3 id="六款包管理器核心对比"><a href="#六款包管理器核心对比" class="headerlink" title="六款包管理器核心对比"></a>六款包管理器核心对比</h3><table>
-<thead>
-<tr>
-<th>对比维度</th>
-<th>apt-get</th>
-<th>winget</th>
-<th>pip</th>
-<th>maven</th>
-<th>npm</th>
-<th>vcpkg</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>适用领域</td>
-<td>Debian 系 Linux 系统软件</td>
-<td>Windows 系统桌面应用</td>
-<td>Python 第三方库</td>
-<td>Java 项目构建与依赖</td>
-<td>Node.js&#x2F; 前端项目依赖</td>
-<td>C&#x2F;C++ 跨平台库</td>
-</tr>
-<tr>
-<td>支持平台</td>
-<td>Debian&#x2F;Ubuntu 等 Linux 发行版</td>
-<td>Windows 10+</td>
-<td>Windows、Linux、macOS</td>
-<td>全平台</td>
-<td>全平台</td>
-<td>Windows、Linux、macOS</td>
-</tr>
-<tr>
-<td>依赖配置文件</td>
-<td>&#x2F;etc&#x2F;apt&#x2F;sources.list</td>
-<td>无，依赖系统源</td>
-<td>requirements.txt</td>
-<td>pom.xml</td>
-<td>package.json</td>
-<td>vcpkg.json（清单模式）</td>
-</tr>
-<tr>
-<td>核心优势</td>
-<td>系统级依赖自动处理，稳定可靠</td>
-<td>Windows 官方适配，软件管理便捷</td>
-<td>轻量，Python 生态适配性强</td>
-<td>规范 Java 项目构建流程，依赖传递清晰</td>
-<td>前端生态丰富，脚本功能灵活</td>
-<td>解决 C&#x2F;C++ 库编译与跨平台依赖问题</td>
-</tr>
-<tr>
-<td>典型使用场景</td>
-<td>Linux 系统运维、软件部署</td>
-<td>Windows 环境快速装机、软件批量管理</td>
-<td>Python 脚本开发、数据分析项目</td>
-<td>Java 后端开发、多模块项目</td>
-<td>前端框架开发、Node.js 服务开发</td>
-<td>C&#x2F;C++ 跨平台项目开发</td>
-</tr>
-</tbody></table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   <script>
     (function() {
       document.addEventListener('click', function(event) {
@@ -2197,11 +2027,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
+                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2209,11 +2039,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Python</a>
+                <a href="javascript:void(0)" class="js-tag color2">颂</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">颂</a>
+                <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
