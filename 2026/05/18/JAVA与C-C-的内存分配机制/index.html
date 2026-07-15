@@ -16,7 +16,7 @@
 <meta property="og:description" content="这次我们抛开所有难懂的专业术语，不用“深拷贝”、“解引用”或者“生命周期管理”这些高大上的词。我们用最接地气的两样东西来打比方：**“口袋（栈）”**和**“大仓库（堆）”**。 我们可以把 Java 和 C++ 的设计思路，简化为两个完全不同的“生活习惯”。  1. Java 的设计思路：严格、死板，但绝不出错Java 的核心思想是：“程序员容易粗心，所以必须立死规矩。” 为了不让程序崩溃，Ja">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-05-18T13:38:09.000Z">
-<meta property="article:modified_time" content="2026-05-18T13:40:26.717Z">
+<meta property="article:modified_time" content="2026-07-14T16:03:54.997Z">
 <meta property="article:tag" content="编程语言">
 <meta name="twitter:card" content="summary">
   
@@ -142,6 +142,9 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="这样做的好处：-1"><a href="#这样做的好处：-1" class="headerlink" title="这样做的好处："></a>这样做的好处：</h3><p>速度极快！因为直接把实体放口袋里（栈），省去了去大仓库里来回找货架的时间。但代价是，如果你用纸条（指针）在仓库里建了东西，最后忘了把货架清空（<code>delete</code>），那个东西就会永远占用仓库空间，直到电脑死机。</p>
 <hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> \* Definition for singly-linked list.</span><br><span class="line"> \* struct ListNode &#123;</span><br><span class="line"> \*     int val;</span><br><span class="line"> \*     ListNode *next;</span><br><span class="line"> \*     ListNode() : val(0), next(nullptr) &#123;&#125;</span><br><span class="line"> \*     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span><br><span class="line"> \*     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span><br><span class="line"> \* &#125;;</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+
+<p>一种使用struct来定义类的方式，因为没有this指针，构造方式特殊一些，初始化的时候可以使用new但是要用一个指针去接。</p>
 <h2 id="3-一目了然的对比表"><a href="#3-一目了然的对比表" class="headerlink" title="3. 一目了然的对比表"></a>3. 一目了然的对比表</h2><p>我们用最直观的代码和行为来做个总结：</p>
 <table>
 <thead>
@@ -406,6 +409,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">C/C++</a>

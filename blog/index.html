@@ -89,6 +89,382 @@ var _hmt = _hmt || [];
 </div>
 
   
+    <article id="post-AI新名词、新热点" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/07/15/AI%E6%96%B0%E5%90%8D%E8%AF%8D%E3%80%81%E6%96%B0%E7%83%AD%E7%82%B9/">AI新名词、新热点</a>
+    </h1>
+  
+
+        
+        <a href="/2026/07/15/AI%E6%96%B0%E5%90%8D%E8%AF%8D%E3%80%81%E6%96%B0%E7%83%AD%E7%82%B9/" class="archive-article-date">
+  	<time datetime="2026-07-15T10:43:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-07-15</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h2 id="一、什么是Harness-Engineering？"><a href="#一、什么是Harness-Engineering？" class="headerlink" title="一、什么是Harness Engineering？"></a>一、什么是Harness Engineering？</h2><p>随着大模型能力趋于同质化，AI 工业界正在从“提示词工程 (Prompt Engineering)”全面迈向<strong>“智能体牵引工程 (Harness Engineering)”</strong>。</p>
+<p>业界最新公式：</p>
+<blockquote>
+<p><strong>Agent（智能体） &#x3D; Model（大模型） + Harness（控制脚手架）</strong></p>
+</blockquote>
+<p>如果把强大的大模型比作“马力强劲但易失控的 F1 发动机”，那么 Harness Engineering 就是在设计<strong>底盘、方向盘、刹车和防滚架</strong>，从而确保大模型能安全、精准地完成复杂任务。</p>
+<h3 id="1-多层级防护与防幻觉架构-Guardrails-Constraints"><a href="#1-多层级防护与防幻觉架构-Guardrails-Constraints" class="headerlink" title="1. 多层级防护与防幻觉架构 (Guardrails &amp; Constraints)"></a>1. 多层级防护与防幻觉架构 (Guardrails &amp; Constraints)</h3><p>不再依赖大模型的自我纠错，而是从外部构建硬性约束。</p>
+<ul>
+<li>**运行时拦截 (Runtime Hooks)**：在代码或指令执行前放入沙箱测试，报错则强制打回重写。</li>
+<li><strong>输出校验关卡</strong>：强制约束模型输出格式（如严格的 JSON schema），否则不予放行。</li>
+</ul>
+<h3 id="2-工具调用的标准化-Tool-Use-MCP"><a href="#2-工具调用的标准化-Tool-Use-MCP" class="headerlink" title="2. 工具调用的标准化 (Tool Use &amp; MCP)"></a>2. 工具调用的标准化 (Tool Use &amp; MCP)</h3><p>赋予模型稳定、标准化的“手和脚”。</p>
+<ul>
+<li>**MCP (模型上下文协议)**：通过统一的标准协议，将企业内部的数据库、API、Git 仓库等外部环境无缝接入。</li>
+<li><strong>动态工具路由</strong>：设计精密的调用逻辑，使智能体能自主决定工具的调用顺序与组合策略。</li>
+</ul>
+<h3 id="3-多智能体协作网络-Multi-Agent-Orchestration"><a href="#3-多智能体协作网络-Multi-Agent-Orchestration" class="headerlink" title="3. 多智能体协作网络 (Multi-Agent Orchestration)"></a>3. 多智能体协作网络 (Multi-Agent Orchestration)</h3><p>从“单兵作战”向“工厂流水线”升级。</p>
+<ul>
+<li><strong>流程式架构</strong>：将复杂任务拆解，分别分配给专门的代码编写 Agent、测试 Agent 和审核 Agent。</li>
+<li>Harness 工程师的职责是设计这些 Agent 之间的<strong>通信协议、反驳机制以及共识达成流程</strong>。</li>
+</ul>
+<h3 id="4-记忆与状态管理-Memory-State-Management"><a href="#4-记忆与状态管理-Memory-State-Management" class="headerlink" title="4. 记忆与状态管理 (Memory &amp; State Management)"></a>4. 记忆与状态管理 (Memory &amp; State Management)</h3><p>解决大模型的“无状态”痛点，构建持久化运行能力。</p>
+<ul>
+<li>结合向量数据库（如 FAISS、Milvus）和图数据库，为智能体搭建<strong>长期记忆库</strong>和<strong>短期工作区</strong>，确保在执行数周的长周期项目时保持上下文连贯。</li>
+</ul>
+<hr>
+<blockquote>
+<p>[!TIP]<br><strong>总结</strong><br>Harness Engineering 的核心意义在于：将大模型的<strong>不确定性（幻觉与随机性）</strong>转化为工业级应用所需的<strong>确定性（高可靠与可落地）</strong>。这已经是当前 AI 开发与落地过程中的最核心技能。</p>
+</blockquote>
+<p>Harness Engineering 本质是将 AI 的强能力融入传统软件工程的严谨性中。工程师不需要“炼丹（预训练）”，但必须是极强的<strong>“系统集成者”</strong>与<strong>“防御规则制定者”</strong>。</p>
+<p>以下是该岗位必备的五大核心基础：</p>
+<h2 id="1-软件工程与架构底座-Core-Engineering"><a href="#1-软件工程与架构底座-Core-Engineering" class="headerlink" title="1. 软件工程与架构底座 (Core Engineering)"></a>1. 软件工程与架构底座 (Core Engineering)</h2><p>大模型具有不可预测性，Harness 的首要任务就是用严密的架构将其“锁入安全域”。</p>
+<ul>
+<li><strong>主流语言</strong>：精通 <strong>Python</strong> 和 <strong>TypeScript</strong>。</li>
+<li><strong>系统集成</strong>：具备极强的后端开发能力，精通 RESTful API &#x2F; GraphQL 的设计与调用。</li>
+<li><strong>沙箱隔离</strong>：熟练掌握 <strong>Docker</strong> 与虚拟机环境配置，保障 Agent 生成或执行的外部代码不会危害宿主机。</li>
+</ul>
+<h2 id="2-智能体开发框架-Agentic-Frameworks"><a href="#2-智能体开发框架-Agentic-Frameworks" class="headerlink" title="2. 智能体开发框架 (Agentic Frameworks)"></a>2. 智能体开发框架 (Agentic Frameworks)</h2><p>避免重复造轮子，必须熟练驾驭业界前沿框架。</p>
+<ul>
+<li><strong>工作流编排</strong>：精通 <strong>LangGraph</strong>、<strong>AutoGen</strong> 或 <strong>CrewAI</strong>，能够设计复杂的多智能体协作图（DAG）、状态机及循环反馈链路。</li>
+<li><strong>生态集成</strong>：熟练使用 <strong>LangChain</strong>、<strong>LlamaIndex</strong>，能快速将企业私有数据库和外部工具封装为 Agent 可用的 Tool。</li>
+</ul>
+<h2 id="3-大模型运行机制理解-LLM-Mechanics"><a href="#3-大模型运行机制理解-LLM-Mechanics" class="headerlink" title="3. 大模型运行机制理解 (LLM Mechanics)"></a>3. 大模型运行机制理解 (LLM Mechanics)</h2><p>不需要精通底层算法，但必须懂模型的“脾气”与边界。</p>
+<ul>
+<li><strong>上下文与记忆</strong>：深刻理解 Context Window、Token 计算规则以及多轮对话中的记忆修剪策略。</li>
+<li><strong>结构化约束</strong>：熟练运用 System Prompt、Function Calling 和 Output Parsers，强制模型 100% 输出符合业务要求的 JSON 数据。</li>
+<li><strong>超参调优</strong>：精准理解 Temperature、Top-p 等参数对抑制“幻觉”的作用。</li>
+</ul>
+<h2 id="4-防护工程与自动化测试-Guardrails-Testing"><a href="#4-防护工程与自动化测试-Guardrails-Testing" class="headerlink" title="4. 防护工程与自动化测试 (Guardrails &amp; Testing)"></a>4. 防护工程与自动化测试 (Guardrails &amp; Testing)</h2><p>Harness Engineering 最具技术壁垒的环节——<strong>防御性系统设计</strong>。</p>
+<ul>
+<li><strong>防御性编程</strong>：习惯预判异常，熟练编写 Try-Catch 及带退避算法的重试机制（Retry Mechanism）。</li>
+<li><strong>护栏组件库</strong>：熟悉并应用 <code>NeMo Guardrails</code> 或 <code>Guardrails AI</code>，在输入端过滤恶意指令，在输出端拦截违规内容。</li>
+<li><strong>基于契约的测试</strong>：能够为大模型充满随机性的输出设计自动化验收脚本。</li>
+</ul>
+<h2 id="5-记忆引擎与向量检索-Memory-Storage"><a href="#5-记忆引擎与向量检索-Memory-Storage" class="headerlink" title="5. 记忆引擎与向量检索 (Memory &amp; Storage)"></a>5. 记忆引擎与向量检索 (Memory &amp; Storage)</h2><p>为智能体配备“长期记忆外挂”。</p>
+<ul>
+<li><strong>向量数据库</strong>：精通 <strong>FAISS</strong>、<strong>Milvus</strong> 或 <strong>Pinecone</strong> 的部署与调优，支撑复杂的 RAG 架构。</li>
+<li><strong>知识表示</strong>：了解图数据库（如 Neo4j），以处理对准确性和逻辑关联度要求极高的业务场景。</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>核心范式转变</strong>：<br>传统的后端开发是<strong>“面向确定性编程”</strong>；而 Harness Engineering 是<strong>“面向不确定性编程”</strong>。不仅要接收大模型给出的正确答案，更要有能力拦截并自动纠正它产生的荒谬输出。</p>
+</blockquote>
+<h2 id="二、什么是世界模型？"><a href="#二、什么是世界模型？" class="headerlink" title="二、什么是世界模型？"></a>二、什么是世界模型？</h2><p>在人工智能领域，<strong>世界模型（World Model）</strong>被公认为是通往通用人工智能（AGI）最核心的钥匙。</p>
+<p>传统的语言大模型（如 ChatGPT）本质上是“文字统计接龙”，它们不具备对物理世界的实际认知。而<strong>世界模型</strong>旨在打破这一限制，让 AI 真正理解并模拟我们所在的物理世界。</p>
+<h2 id="1-核心定义"><a href="#1-核心定义" class="headerlink" title="1.核心定义"></a>1.核心定义</h2><p><strong>世界模型是一个能够理解物理规则与常识，并能根据当前的动作预测未来状态的 AI 系统。</strong></p>
+<blockquote>
+<p><strong>通俗比喻</strong>：<br>当人类闭上眼睛想象把生鸡蛋砸向墙壁时，脑海中能浮现出鸡蛋碎裂、蛋液溅出的画面。这种在脑海中进行“未来演练”的能力，是因为我们的大脑中有一个懂重力、懂碰撞的“世界模型”。AI 的世界模型也是要赋予机器同样的“脑内沙盘推演”能力。</p>
+</blockquote>
+<h2 id="2-世界模型的三大核心能力"><a href="#2-世界模型的三大核心能力" class="headerlink" title="2.世界模型的三大核心能力"></a>2.世界模型的三大核心能力</h2><ol>
+<li><p><strong>物理规律直觉 (Intuitive Physics)</strong><br>不需要写入严谨的代码公式（如 $F&#x3D;ma$），模型通过观察就能直觉地理解重力、遮挡、透视、流体动力学等客观规律。</p>
+</li>
+<li><p><strong>因果与时序推理 (Causality &amp; Temporal Dynamics)</strong><br>不仅知道“画面里有什么”，更知道“接下来会发生什么”。例如，看到风吹能推测树叶会动，并能精准预测环境在一秒钟或一分钟后的状态演变。</p>
+</li>
+<li><p><strong>反事实推理 (Counterfactual Reasoning)</strong><br>最高级的认知能力。模型能在内部沙盘做假设推演：“如果刚才那辆车没有刹车，现在会发生什么？”</p>
+</li>
+</ol>
+<h2 id="3-现实中的代表性案例"><a href="#3-现实中的代表性案例" class="headerlink" title="3.现实中的代表性案例"></a>3.现实中的代表性案例</h2><p>虽然完美的完全体世界模型尚未诞生，但工业界已有几个极具震撼力的雏形：</p>
+<ul>
+<li><p><strong>Sora (OpenAI)</strong><br>表面上是视频生成工具，实际上被官方定义为“世界模拟器”。Sora 之所以能生成逼真的一镜到底视频，是因为它在海量训练中隐式地学会了 <strong>3D 空间结构和摄像机运镜的物理透视法则</strong>。</p>
+</li>
+<li><p><strong>自动驾驶 (如 Tesla FSD v12)</strong><br>汽车在高速行驶时，AI 大脑不仅在识别前方车辆，还在实时<strong>预测周围所有车辆和行人未来 3 秒内的运动轨迹</strong>。这种“脑内预演”系统即是自动驾驶的世界模型。</p>
+</li>
+<li><p><strong>具身智能机器人的“模拟大脑”</strong><br>当机器人跨越障碍物时，其世界模型会在 <code>0.01</code> 秒内在虚拟空间将动作试演一遍，确认不会摔倒后，才下发实际的物理执行指令。</p>
+</li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果说过去的大语言模型是<strong>“熟读唐诗三百首”的文科生</strong>，那么世界模型就是要培养一个<strong>“睁眼看世界、懂物理法则、能预知行动后果”的理科生兼实干家</strong>。谁能率先攻克世界模型，谁就能让人工智能在真实的物理世界（如自动驾驶、智能制造）中完美落地。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">AI</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-String与StringBuilder对比分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/06/04/String%E4%B8%8EStringBuilder%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/">String与StringBuilder对比分析</a>
+    </h1>
+  
+
+        
+        <a href="/2026/06/04/String%E4%B8%8EStringBuilder%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" class="archive-article-date">
+  	<time datetime="2026-06-04T08:08:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-06-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h1 id="Java-中-String-vs-StringBuilder-对比总结"><a href="#Java-中-String-vs-StringBuilder-对比总结" class="headerlink" title="Java 中 String vs StringBuilder 对比总结"></a>Java 中 String vs StringBuilder 对比总结</h1><h2 id="一、底层原理"><a href="#一、底层原理" class="headerlink" title="一、底层原理"></a>一、底层原理</h2><table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"><code>String</code></th>
+<th align="left"><code>StringBuilder</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>可变性</strong></td>
+<td align="left">❌ 不可变（immutable）</td>
+<td align="left">✅ 可变（mutable）</td>
+</tr>
+<tr>
+<td align="left"><strong>内部结构</strong></td>
+<td align="left"><code>final char[]</code>（Java 8）&#x2F; <code>final byte[]</code>（Java 9+）</td>
+<td align="left">可扩容的 <code>char[]</code> &#x2F; <code>byte[]</code></td>
+</tr>
+<tr>
+<td align="left"><strong>修改操作</strong></td>
+<td align="left">每次创建<strong>新对象</strong>，拷贝全部内容</td>
+<td align="left">在原数组上<strong>原地修改</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>线程安全</strong></td>
+<td align="left">天然安全（不可变）</td>
+<td align="left">不安全（但竞赛不需要）</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>[!CAUTION]<br><code>StringBuffer</code> 是线程安全版的 <code>StringBuilder</code>，但加了同步锁，<strong>竞赛中永远不要用</strong>，纯浪费性能。</p>
+</blockquote>
+<hr>
+<h2 id="二、性能对比——循环拼接的致命陷阱"><a href="#二、性能对比——循环拼接的致命陷阱" class="headerlink" title="二、性能对比——循环拼接的致命陷阱"></a>二、性能对比——循环拼接的致命陷阱</h2><h3 id="String-拼接：-O-n-2"><a href="#String-拼接：-O-n-2" class="headerlink" title="String 拼接：$O(n^2)$"></a>String 拼接：$O(n^2)$</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    s += <span class="string">&quot;a&quot;</span>;  <span class="comment">// 每次创建新 String，拷贝之前所有字符</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">第 1 次: 拷贝 1 个字符</span><br><span class="line">第 2 次: 拷贝 2 个字符</span><br><span class="line">第 3 次: 拷贝 3 个字符</span><br><span class="line">...</span><br><span class="line">第 n 次: 拷贝 n 个字符</span><br><span class="line">总计: 1 + 2 + ... + n = O(n²)</span><br></pre></td></tr></table></figure>
+
+<h3 id="StringBuilder-拼接：-O-n"><a href="#StringBuilder-拼接：-O-n" class="headerlink" title="StringBuilder 拼接：$O(n)$"></a>StringBuilder 拼接：$O(n)$</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    sb.append(<span class="string">&quot;a&quot;</span>);  <span class="comment">// 原地追加，偶尔扩容（均摊 O(1)）</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> sb.toString();</span><br></pre></td></tr></table></figure>
+
+<h3 id="实际耗时对比"><a href="#实际耗时对比" class="headerlink" title="实际耗时对比"></a>实际耗时对比</h3><table>
+<thead>
+<tr>
+<th align="center">$n$</th>
+<th align="center"><code>String +=</code></th>
+<th align="center"><code>StringBuilder.append</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">$10^4$</td>
+<td align="center">~50ms</td>
+<td align="center">&lt;1ms</td>
+</tr>
+<tr>
+<td align="center">$10^5$</td>
+<td align="center">~2s ❌ TLE</td>
+<td align="center">~2ms</td>
+</tr>
+<tr>
+<td align="center">$10^6$</td>
+<td align="center">~200s ❌❌</td>
+<td align="center">~10ms</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>[!WARNING]<br><strong>竞赛铁律：循环中永远不要用 <code>String +=</code>，一律用 <code>StringBuilder</code>。</strong></p>
+</blockquote>
+<hr>
+<h2 id="三、常用操作对照表"><a href="#三、常用操作对照表" class="headerlink" title="三、常用操作对照表"></a>三、常用操作对照表</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// String</span></span><br><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="string">&quot;hello&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(charArray);</span><br><span class="line"></span><br><span class="line"><span class="comment">// StringBuilder</span></span><br><span class="line"><span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();        <span class="comment">// 空，默认容量 16</span></span><br><span class="line"><span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="number">1000</span>);     <span class="comment">// 空，预分配容量 1000（避免频繁扩容）</span></span><br><span class="line"><span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(<span class="string">&quot;hello&quot;</span>);  <span class="comment">// 从已有字符串创建</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="读取"><a href="#读取" class="headerlink" title="读取"></a>读取</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 两者完全一致</span></span><br><span class="line"><span class="type">char</span> <span class="variable">c</span>  <span class="operator">=</span> s.charAt(i);      <span class="comment">// 取第 i 个字符</span></span><br><span class="line"><span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> s.length();        <span class="comment">// 长度</span></span><br><span class="line"><span class="type">char</span> <span class="variable">c</span>  <span class="operator">=</span> sb.charAt(i);</span><br><span class="line"><span class="type">int</span> <span class="variable">len</span> <span class="operator">=</span> sb.length();</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改"><a href="#修改" class="headerlink" title="修改"></a>修改</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// String —— 不支持直接修改，只能生成新串</span></span><br><span class="line"><span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> s.substring(<span class="number">1</span>, <span class="number">3</span>);                   <span class="comment">// 截取 [1,3)</span></span><br><span class="line"><span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> s.replace(<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>);                  <span class="comment">// 替换所有 &#x27;a&#x27; 为 &#x27;b&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// StringBuilder —— 原地修改</span></span><br><span class="line">sb.append(<span class="string">&quot;world&quot;</span>);                               <span class="comment">// 尾部追加</span></span><br><span class="line">sb.append(<span class="string">&#x27;c&#x27;</span>);                                    <span class="comment">// 追加单个字符</span></span><br><span class="line">sb.insert(<span class="number">2</span>, <span class="string">&quot;xx&quot;</span>);                               <span class="comment">// 在位置 2 插入</span></span><br><span class="line">sb.delete(<span class="number">1</span>, <span class="number">3</span>);                                  <span class="comment">// 删除 [1,3)</span></span><br><span class="line">sb.deleteCharAt(<span class="number">0</span>);                               <span class="comment">// 删除第 0 个字符</span></span><br><span class="line">sb.setCharAt(i, <span class="string">&#x27;x&#x27;</span>);                             <span class="comment">// 修改第 i 个字符</span></span><br><span class="line">sb.reverse();                                     <span class="comment">// 反转</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// StringBuilder → String</span></span><br><span class="line"><span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> sb.toString();</span><br><span class="line"></span><br><span class="line"><span class="comment">// String → StringBuilder</span></span><br><span class="line"><span class="type">StringBuilder</span> <span class="variable">sb</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(s);</span><br><span class="line"></span><br><span class="line"><span class="comment">// StringBuilder → char[]</span></span><br><span class="line"><span class="type">char</span>[] arr = sb.toString().toCharArray();</span><br><span class="line"><span class="comment">// 或直接操作：sb.getChars(0, sb.length(), arr, 0);</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// String 比较内容</span></span><br><span class="line">s1.equals(s2);           <span class="comment">// ✅ 正确</span></span><br><span class="line">s1 == s2;                <span class="comment">// ❌ 比较的是引用，不是内容！</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// StringBuilder 比较内容</span></span><br><span class="line">sb1.toString().equals(sb2.toString());  <span class="comment">// 需要先转 String</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!IMPORTANT]<br>Java 中 <code>==</code> 对 String 比较的是引用地址，不是内容！竞赛中用 <code>equals()</code> 或 <code>compareTo()</code>。</p>
+</blockquote>
+<hr>
+<h2 id="四、竞赛常见场景-最佳实践"><a href="#四、竞赛常见场景-最佳实践" class="headerlink" title="四、竞赛常见场景 &amp; 最佳实践"></a>四、竞赛常见场景 &amp; 最佳实践</h2><h3 id="场景-1：构建答案字符串"><a href="#场景-1：构建答案字符串" class="headerlink" title="场景 1：构建答案字符串"></a>场景 1：构建答案字符串</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 错误写法</span></span><br><span class="line"><span class="type">String</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    ans += arr[i] + <span class="string">&quot; &quot;</span>;     <span class="comment">// O(n²)</span></span><br><span class="line">&#125;</span><br><span class="line">System.out.println(ans);</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 正确写法</span></span><br><span class="line"><span class="type">StringBuilder</span> <span class="variable">ans</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i &gt; <span class="number">0</span>) ans.append(<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">    ans.append(arr[i]);      <span class="comment">// O(n)</span></span><br><span class="line">&#125;</span><br><span class="line">System.out.println(ans);</span><br></pre></td></tr></table></figure>
+
+<h3 id="场景-2：批量输出（多组测试用例）"><a href="#场景-2：批量输出（多组测试用例）" class="headerlink" title="场景 2：批量输出（多组测试用例）"></a>场景 2：批量输出（多组测试用例）</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ❌ 每组 println（I/O 次数太多）</span></span><br><span class="line"><span class="keyword">while</span> (T-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    System.out.println(solve());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ 攒到一起一次性输出</span></span><br><span class="line"><span class="type">StringBuilder</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line"><span class="keyword">while</span> (T-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    out.append(solve()).append(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">System.out.print(out);</span><br></pre></td></tr></table></figure>
+
+<h3 id="场景-3：反转字符串"><a href="#场景-3：反转字符串" class="headerlink" title="场景 3：反转字符串"></a>场景 3：反转字符串</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 一行搞定</span></span><br><span class="line"><span class="type">String</span> <span class="variable">reversed</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>(s).reverse().toString();</span><br></pre></td></tr></table></figure>
+
+<h3 id="场景-4：需要高频随机访问和修改-→-用-char"><a href="#场景-4：需要高频随机访问和修改-→-用-char" class="headerlink" title="场景 4：需要高频随机访问和修改 → 用 char[]"></a>场景 4：需要高频随机访问和修改 → 用 <code>char[]</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 当需要大量 charAt + setCharAt 时，直接用 char 数组更快</span></span><br><span class="line"><span class="type">char</span>[] arr = s.toCharArray();</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (arr[i] == <span class="string">&#x27;a&#x27;</span>) arr[i] = <span class="string">&#x27;b&#x27;</span>;  <span class="comment">// 直接改</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="type">String</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(arr);</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!TIP]<br><code>char[]</code> 是最快的字符操作方式，没有任何对象开销。当字符串长度固定、只需读写时，优先用 <code>char[]</code>。</p>
+</blockquote>
+<h3 id="场景-5：判断回文"><a href="#场景-5：判断回文" class="headerlink" title="场景 5：判断回文"></a>场景 5：判断回文</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 方法一：StringBuilder 反转比较</span></span><br><span class="line"><span class="type">boolean</span> <span class="variable">isPalin</span> <span class="operator">=</span> s.equals(<span class="keyword">new</span> <span class="title class_">StringBuilder</span>(s).reverse().toString());</span><br><span class="line"></span><br><span class="line"><span class="comment">// 方法二：双指针（更快，O(n) 且无额外空间）</span></span><br><span class="line"><span class="type">boolean</span> <span class="variable">isPalin</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>, j = s.length() - <span class="number">1</span>; i &lt; j; i++, j--) &#123;</span><br><span class="line">    <span class="keyword">if</span> (s.charAt(i) != s.charAt(j)) &#123; isPalin = <span class="literal">false</span>; <span class="keyword">break</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、竞赛-I-O-完整模板"><a href="#五、竞赛-I-O-完整模板" class="headerlink" title="五、竞赛 I&#x2F;O 完整模板"></a>五、竞赛 I&#x2F;O 完整模板</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="comment">// 快速输入</span></span><br><span class="line">        <span class="type">BufferedReader</span> <span class="variable">br</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BufferedReader</span>(<span class="keyword">new</span> <span class="title class_">InputStreamReader</span>(System.in));</span><br><span class="line">        <span class="type">int</span> <span class="variable">T</span> <span class="operator">=</span> Integer.parseInt(br.readLine().trim());</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 批量输出</span></span><br><span class="line">        <span class="type">StringBuilder</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringBuilder</span>();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (T-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="type">StringTokenizer</span> <span class="variable">st</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StringTokenizer</span>(br.readLine());</span><br><span class="line">            <span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> Integer.parseInt(st.nextToken());</span><br><span class="line">            <span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> Integer.parseInt(st.nextToken());</span><br><span class="line"></span><br><span class="line">            st = <span class="keyword">new</span> <span class="title class_">StringTokenizer</span>(br.readLine());</span><br><span class="line">            <span class="type">int</span>[] a = <span class="keyword">new</span> <span class="title class_">int</span>[n];</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">                a[i] = Integer.parseInt(st.nextToken());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// ... 处理逻辑 ...</span></span><br><span class="line"></span><br><span class="line">            out.append(ans).append(<span class="string">&#x27;\n&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.print(out);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、速查决策表"><a href="#六、速查决策表" class="headerlink" title="六、速查决策表"></a>六、速查决策表</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">需要拼接字符串？</span><br><span class="line">├── 只拼一两次 → String + 即可</span><br><span class="line">└── 在循环里拼接 → StringBuilder ✅</span><br><span class="line">        │</span><br><span class="line">        └── 需要频繁随机读写单个字符？</span><br><span class="line">              ├── 是 → char[] 更快 ✅✅</span><br><span class="line">              └── 否 → StringBuilder 够用 ✅</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">场景</th>
+<th align="center">推荐</th>
+<th align="left">原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">循环拼接</td>
+<td align="center"><code>StringBuilder</code></td>
+<td align="left">避免 $O(n^2)$</td>
+</tr>
+<tr>
+<td align="left">大量随机读写</td>
+<td align="center"><code>char[]</code></td>
+<td align="left">零对象开销，最快</td>
+</tr>
+<tr>
+<td align="left">简单拼接（非循环）</td>
+<td align="center"><code>String +</code></td>
+<td align="left">编译器会优化，可读性好</td>
+</tr>
+<tr>
+<td align="left">批量输出</td>
+<td align="center"><code>StringBuilder</code></td>
+<td align="left">减少 I&#x2F;O 次数</td>
+</tr>
+<tr>
+<td align="left">需要反转</td>
+<td align="center"><code>StringBuilder.reverse()</code></td>
+<td align="left">一行搞定</td>
+</tr>
+<tr>
+<td align="left">比较内容</td>
+<td align="center"><code>String.equals()</code></td>
+<td align="left">永远别用 <code>==</code></td>
+</tr>
+</tbody></table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-算法与数据结构模板与经典例题五：树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -590,6 +966,9 @@ var _hmt = _hmt || [];
 </ul>
 <h3 id="这样做的好处：-1"><a href="#这样做的好处：-1" class="headerlink" title="这样做的好处："></a>这样做的好处：</h3><p>速度极快！因为直接把实体放口袋里（栈），省去了去大仓库里来回找货架的时间。但代价是，如果你用纸条（指针）在仓库里建了东西，最后忘了把货架清空（<code>delete</code>），那个东西就会永远占用仓库空间，直到电脑死机。</p>
 <hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> \* Definition for singly-linked list.</span><br><span class="line"> \* struct ListNode &#123;</span><br><span class="line"> \*     int val;</span><br><span class="line"> \*     ListNode *next;</span><br><span class="line"> \*     ListNode() : val(0), next(nullptr) &#123;&#125;</span><br><span class="line"> \*     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span><br><span class="line"> \*     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span><br><span class="line"> \* &#125;;</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+
+<p>一种使用struct来定义类的方式，因为没有this指针，构造方式特殊一些，初始化的时候可以使用new但是要用一个指针去接。</p>
 <h2 id="3-一目了然的对比表"><a href="#3-一目了然的对比表" class="headerlink" title="3. 一目了然的对比表"></a>3. 一目了然的对比表</h2><p>我们用最直观的代码和行为来做个总结：</p>
 <table>
 <thead>
@@ -1336,174 +1715,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-算法与数据结构模板与经典例题二：数学" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/03/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%8C%EF%BC%9A%E6%95%B0%E5%AD%A6/">算法与数据结构模板与经典例题二：数学</a>
-    </h1>
-  
-
-        
-        <a href="/2026/03/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%8C%EF%BC%9A%E6%95%B0%E5%AD%A6/" class="archive-article-date">
-  	<time datetime="2026-03-30T15:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-30</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h3 id="一、费马小定理加快速幂"><a href="#一、费马小定理加快速幂" class="headerlink" title="一、费马小定理加快速幂"></a>一、费马小定理加快速幂</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">费马小定理加快速幂</span><br><span class="line">// int fact[200005];</span><br><span class="line">// 这里的初始化不要漏掉fact[0]=fact[1]=1;</span><br><span class="line">// int pw(int a, int b) &#123;</span><br><span class="line">//     int r = 1;</span><br><span class="line">//     while (b &gt; 0) &#123;</span><br><span class="line">//         if (b &amp; 1) r = (r * a) % MOD;</span><br><span class="line">//         b /= 2;</span><br><span class="line">//         a = (a * a) % MOD;</span><br><span class="line">//     &#125;</span><br><span class="line">//     return r;</span><br><span class="line">// &#125;</span><br><span class="line">// int C(int n, int k) &#123;</span><br><span class="line">//     if (n &lt; k) return 0LL;</span><br><span class="line">//     return (fact[n] * pw((fact[n - k] * fact[k]) % MOD, MOD - 2)) % MOD;</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="二、求组合数"><a href="#二、求组合数" class="headerlink" title="二、求组合数"></a>二、求组合数</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">//求组合数//速度更快</span><br><span class="line">    int m = 5; // 元素总数</span><br><span class="line">    int k = 2; // 要选择的元素数</span><br><span class="line"></span><br><span class="line">    // 枚举所有可能的组合</span><br><span class="line">    for (int mask = 0; mask &lt; (1 &lt;&lt; m); ++mask) &#123;</span><br><span class="line">        // 只处理恰好有k个元素被选中的情况</span><br><span class="line">        if (__builtin_popcount(mask) != k) continue;</span><br><span class="line">        </span><br><span class="line">        // 输出当前组合中被选中的元素索引</span><br><span class="line">        cout &lt;&lt; &quot;选中的元素: &quot;;</span><br><span class="line">        for (int i = 0; i &lt; m; ++i) &#123;</span><br><span class="line">            // 判断第i个元素是否被选中</span><br><span class="line">            if (mask &amp; (1 &lt;&lt; i)) &#123;</span><br><span class="line">                cout &lt;&lt; i &lt;&lt; &quot; &quot;;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="三、找出n中的质因数-sqrt-n"><a href="#三、找出n中的质因数-sqrt-n" class="headerlink" title="三、找出n中的质因数 sqrt(n)"></a>三、找出n中的质因数 sqrt(n)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 分解质因数算法,作用是找出n中的所有质因数</span><br><span class="line">//  void primefactor(int n)&#123;</span><br><span class="line">//      vector&lt;int&gt;vc;</span><br><span class="line">//      for(int i=2;i*i&lt;=n;i++)&#123;</span><br><span class="line">//          if(n%i==0)vc.push_back(i);</span><br><span class="line">//          while(n%i==0)n/=i;</span><br><span class="line">//      &#125;</span><br><span class="line">//      if(n&gt;1)vc.push_back(n);</span><br><span class="line">//  &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="四、埃氏筛"><a href="#四、埃氏筛" class="headerlink" title="四、埃氏筛"></a>四、埃氏筛</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">// 筛法，第一步想明白这个MAXN是多少，这个函数的作用是，判断1到MAXN中谁是素数，求出每个数的最小质因数是多少，时间复杂度是O(n)</span><br><span class="line">//  bool isprime[150005];</span><br><span class="line">//  int prime[150005];</span><br><span class="line">//  void getprime(int MAXN)&#123;</span><br><span class="line">//      memset(isprime, 1, sizeof(isprime));</span><br><span class="line">//      isprime[0] = isprime[1] = 0;</span><br><span class="line">//      for(int i=1;i&lt;=MAXN;i++)&#123;</span><br><span class="line">//           prime[i]=i;</span><br><span class="line">//      &#125;</span><br><span class="line">//      for (int i = 2; i * i &lt;= MAXN; i++) &#123;</span><br><span class="line">//          if (isprime[i]) &#123;</span><br><span class="line">//              for (int j = i * i; j &lt;= MAXN; j+=i) &#123;</span><br><span class="line">//                  if(isprime[j]==1)&#123;</span><br><span class="line">//                    isprime[j]=0;</span><br><span class="line">//                    prime[j]=i;</span><br><span class="line">//                  &#125;</span><br><span class="line">//              &#125;</span><br><span class="line">//          &#125;</span><br><span class="line">//      &#125;</span><br><span class="line">//  &#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="五、筛法"><a href="#五、筛法" class="headerlink" title="五、筛法"></a>五、筛法</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 函数的作用有两条，一是判断1到MAX中谁是素数，二是将素数依次放到数组prime中。</span><br><span class="line">// int isprime[200007],prime[200007];</span><br><span class="line">// int num=0;</span><br><span class="line">// void getprime()&#123;</span><br><span class="line">//     //cout&lt;&lt;num&lt;&lt;endl;</span><br><span class="line">//     for(int i=0;i&lt;=200005;i++)&#123;</span><br><span class="line">//         isprime[i]=1;</span><br><span class="line">//     &#125;</span><br><span class="line">//     isprime[0]=isprime[1]=0;</span><br><span class="line">//     for(int i=2;i&lt;=200005;i++)&#123;</span><br><span class="line">//         if(isprime[i]==1)prime[num++]=i;</span><br><span class="line">//         for(int j=0;j&lt;num&amp;&amp;i*prime[j]&lt;=200005;j++)&#123;</span><br><span class="line">//             isprime[i*prime[j]]=0;</span><br><span class="line">//             if(i%prime[j]==0)break;</span><br><span class="line">//         &#125;</span><br><span class="line">//     &#125;</span><br><span class="line">// &#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-算法与数据结构模板与经典例题一：并查集" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/03/29/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%80%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/">算法与数据结构模板与经典例题一：并查集</a>
-    </h1>
-  
-
-        
-        <a href="/2026/03/29/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%80%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="archive-article-date">
-  	<time datetime="2026-03-29T15:18:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <p>兜兜转转发现算法和数据结构还是非常重要的技能，之前也尝试过在知乎上写刷题文章，但并没有得到我想要的提升。我猜原因有两个，一是题目本身很难，我甚至看着我写的题解都不知道什么意思，另一方面不方便查看，分类做的不够好，总之到最后就是也没有经常回顾。这个博客系列我想尝试一种不同的方法，重点记录经典的题目与高级算法模板，尽量做到详细与基础。</p>
-<h2 id="一-并查集模板"><a href="#一-并查集模板" class="headerlink" title="一.并查集模板"></a>一.并查集模板</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// struct DSU &#123;</span><br><span class="line">//     vector&lt;int&gt;fa, sz;</span><br><span class="line">//     DSU(int n) &#123;</span><br><span class="line">//         fa.resize(n + 1);</span><br><span class="line">//         sz.resize(n + 1, 1);</span><br><span class="line">//         for (int i = 1; i &lt;= n; i++) &#123;</span><br><span class="line">//             fa[i] = i;</span><br><span class="line">//         &#125;</span><br><span class="line">//     &#125;</span><br><span class="line">//     int find(int x) &#123;</span><br><span class="line">//         return fa[x] == x ? x : fa[x]=find(fa[x]);</span><br><span class="line">//     &#125;</span><br><span class="line">//     void merge(int x, int y) &#123;</span><br><span class="line">//         int a = find(x), b = find(y);</span><br><span class="line">//         if (a == b)return;</span><br><span class="line">//         fa[b] = a;</span><br><span class="line">//         sz[a] += sz[b];</span><br><span class="line">//     &#125;</span><br><span class="line">//     bool same(int x, int y) &#123;</span><br><span class="line">//         return find(x) == find(y);</span><br><span class="line">//     &#125;</span><br><span class="line">// &#125;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、经典例题"><a href="#二、经典例题" class="headerlink" title="二、经典例题"></a>二、经典例题</h2><h3 id="1-力扣128-最长连续子序列"><a href="#1-力扣128-最长连续子序列" class="headerlink" title="1. 力扣128  最长连续子序列"></a>1. 力扣128  最长连续子序列</h3><p>题目大意：给定一个未排序的整数数组 <code>nums</code> ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。</p>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-consecutive-sequence/?envType=study-plan-v2&envId=top-100-liked">https://leetcode.cn/problems/longest-consecutive-sequence/?envType=study-plan-v2&amp;envId=top-100-liked</a></p>
-<p>关键：未来只有区间的两个端点会被新数碰到！</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">    public int longestConsecutive(int[] nums) &#123;</span><br><span class="line">        Map&lt;Integer, Integer&gt; map = new HashMap&lt;&gt;();</span><br><span class="line">        int max = 0;</span><br><span class="line">        for (int num : nums) &#123;</span><br><span class="line">            if (!map.containsKey(num)) &#123;</span><br><span class="line">                int left = map.getOrDefault(num - 1, 0);</span><br><span class="line">                int right = map.getOrDefault(num + 1, 0);</span><br><span class="line">                </span><br><span class="line">                int len = left + right + 1;</span><br><span class="line">                map.put(num, len);</span><br><span class="line">                </span><br><span class="line">                // 更新两端</span><br><span class="line">                map.put(num - left, len);</span><br><span class="line">                map.put(num + right, len);</span><br><span class="line">                </span><br><span class="line">                max = Math.max(max, len);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return max;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   <script>
     (function() {
       document.addEventListener('click', function(event) {
@@ -1533,7 +1744,7 @@ var _hmt = _hmt || [];
   </script>
   
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
+      <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/2/">Next &raquo;</a>
     </nav>
   
 
@@ -1638,6 +1849,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">AI</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
