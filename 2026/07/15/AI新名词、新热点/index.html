@@ -16,7 +16,7 @@
 <meta property="og:description" content="一、什么是Harness Engineering？随着大模型能力趋于同质化，AI 工业界正在从“提示词工程 (Prompt Engineering)”全面迈向“智能体牵引工程 (Harness Engineering)”。 业界最新公式：  Agent（智能体） &#x3D; Model（大模型） + Harness（控制脚手架）  如果把强大的大模型比作“马力强劲但易失控的 F1 发动机”，那么">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-07-15T10:43:59.000Z">
-<meta property="article:modified_time" content="2026-07-15T11:02:18.543Z">
+<meta property="article:modified_time" content="2026-07-15T11:33:18.857Z">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
   
@@ -176,23 +176,13 @@ var _hmt = _hmt || [];
 <blockquote>
 <p><strong>通俗比喻</strong>：<br>当人类闭上眼睛想象把生鸡蛋砸向墙壁时，脑海中能浮现出鸡蛋碎裂、蛋液溅出的画面。这种在脑海中进行“未来演练”的能力，是因为我们的大脑中有一个懂重力、懂碰撞的“世界模型”。AI 的世界模型也是要赋予机器同样的“脑内沙盘推演”能力。</p>
 </blockquote>
-<h2 id="2-世界模型的三大核心能力"><a href="#2-世界模型的三大核心能力" class="headerlink" title="2.世界模型的三大核心能力"></a>2.世界模型的三大核心能力</h2><ol>
-<li><p><strong>物理规律直觉 (Intuitive Physics)</strong><br>不需要写入严谨的代码公式（如 $F&#x3D;ma$），模型通过观察就能直觉地理解重力、遮挡、透视、流体动力学等客观规律。</p>
-</li>
-<li><p><strong>因果与时序推理 (Causality &amp; Temporal Dynamics)</strong><br>不仅知道“画面里有什么”，更知道“接下来会发生什么”。例如，看到风吹能推测树叶会动，并能精准预测环境在一秒钟或一分钟后的状态演变。</p>
-</li>
-<li><p><strong>反事实推理 (Counterfactual Reasoning)</strong><br>最高级的认知能力。模型能在内部沙盘做假设推演：“如果刚才那辆车没有刹车，现在会发生什么？”</p>
-</li>
-</ol>
+<h2 id="2-世界模型的三大核心能力"><a href="#2-世界模型的三大核心能力" class="headerlink" title="2.世界模型的三大核心能力"></a>2.世界模型的三大核心能力</h2><p><strong>物理规律直觉 (Intuitive Physics)</strong><br>不需要写入严谨的代码公式（如 $F&#x3D;ma$），模型通过观察就能直觉地理解重力、遮挡、透视、流体动力学等客观规律。</p>
+<p><strong>因果与时序推理 (Causality &amp; Temporal Dynamics)</strong><br>不仅知道“画面里有什么”，更知道“接下来会发生什么”。例如，看到风吹能推测树叶会动，并能精准预测环境在一秒钟或一分钟后的状态演变。</p>
+<p><strong>反事实推理 (Counterfactual Reasoning)</strong><br>最高级的认知能力。模型能在内部沙盘做假设推演：“如果刚才那辆车没有刹车，现在会发生什么？”</p>
 <h2 id="3-现实中的代表性案例"><a href="#3-现实中的代表性案例" class="headerlink" title="3.现实中的代表性案例"></a>3.现实中的代表性案例</h2><p>虽然完美的完全体世界模型尚未诞生，但工业界已有几个极具震撼力的雏形：</p>
-<ul>
-<li><p><strong>Sora (OpenAI)</strong><br>表面上是视频生成工具，实际上被官方定义为“世界模拟器”。Sora 之所以能生成逼真的一镜到底视频，是因为它在海量训练中隐式地学会了 <strong>3D 空间结构和摄像机运镜的物理透视法则</strong>。</p>
-</li>
-<li><p><strong>自动驾驶 (如 Tesla FSD v12)</strong><br>汽车在高速行驶时，AI 大脑不仅在识别前方车辆，还在实时<strong>预测周围所有车辆和行人未来 3 秒内的运动轨迹</strong>。这种“脑内预演”系统即是自动驾驶的世界模型。</p>
-</li>
-<li><p><strong>具身智能机器人的“模拟大脑”</strong><br>当机器人跨越障碍物时，其世界模型会在 <code>0.01</code> 秒内在虚拟空间将动作试演一遍，确认不会摔倒后，才下发实际的物理执行指令。</p>
-</li>
-</ul>
+<p><strong>Sora (OpenAI)</strong><br>表面上是视频生成工具，实际上被官方定义为“世界模拟器”。Sora 之所以能生成逼真的一镜到底视频，是因为它在海量训练中隐式地学会了 <strong>3D 空间结构和摄像机运镜的物理透视法则</strong>。</p>
+<p><strong>自动驾驶 (如 Tesla FSD v12)</strong><br>汽车在高速行驶时，AI 大脑不仅在识别前方车辆，还在实时<strong>预测周围所有车辆和行人未来 3 秒内的运动轨迹</strong>。这种“脑内预演”系统即是自动驾驶的世界模型。</p>
+<p><strong>具身智能机器人的“模拟大脑”</strong><br>当机器人跨越障碍物时，其世界模型会在 <code>0.01</code> 秒内在虚拟空间将动作试演一遍，确认不会摔倒后，才下发实际的物理执行指令。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果说过去的大语言模型是<strong>“熟读唐诗三百首”的文科生</strong>，那么世界模型就是要培养一个<strong>“睁眼看世界、懂物理法则、能预知行动后果”的理科生兼实干家</strong>。谁能率先攻克世界模型，谁就能让人工智能在真实的物理世界（如自动驾驶、智能制造）中完美落地。</p>
 
       
@@ -277,6 +267,15 @@ var _hmt = _hmt || [];
 
   
 <nav id="article-nav">
+  
+    <a href="/2026/07/19/Git-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          Git 简明教程
+        
+      </div>
+    </a>
   
   
     <a href="/2026/06/04/String%E4%B8%8EStringBuilder%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" id="article-nav-older" class="article-nav-link-wrap">
@@ -419,11 +418,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
               </li>
              
               <li class="article-tag-list-item">

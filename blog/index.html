@@ -89,6 +89,156 @@ var _hmt = _hmt || [];
 </div>
 
   
+    <article id="post-Git-简明教程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/07/19/Git-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/">Git 简明教程</a>
+    </h1>
+  
+
+        
+        <a href="/2026/07/19/Git-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2026-07-19T07:58:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-07-19</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <p>Git 是目前世界上最先进的分布式版本控制系统。无论你是个人开发者还是团队协作，掌握 Git 都是必不可少的技能。</p>
+<hr>
+<h2 id="一、-核心概念理解"><a href="#一、-核心概念理解" class="headerlink" title="一、 核心概念理解"></a>一、 核心概念理解</h2><p>在开始敲命令之前，必须理解 Git 的<strong>四个工作区域</strong>和<strong>三种状态</strong>：</p>
+<h3 id="1-四个工作区域"><a href="#1-四个工作区域" class="headerlink" title="1. 四个工作区域"></a>1. 四个工作区域</h3><ul>
+<li>**工作区 (Workspace)**：就是你在电脑里能看到的目录（写代码的地方）。</li>
+<li>**暂存区 (Index&#x2F;Stage)**：一般存放在 <code>.git</code> 目录下的 index 文件中，用于临时存放你的改动。</li>
+<li>**本地仓库 (Repository)**：工作区有一个隐藏目录 <code>.git</code>，这就是本地仓库。存放了所有的版本历史。</li>
+<li>**远程仓库 (Remote)**：托管在网络上的仓库，如 GitHub、GitLab、Gitee。</li>
+</ul>
+<h3 id="2-文件的三种状态"><a href="#2-文件的三种状态" class="headerlink" title="2. 文件的三种状态"></a>2. 文件的三种状态</h3><ul>
+<li>**已修改 (Modified)**：修改了文件，但还没保存到数据库中。</li>
+<li>**已暂存 (Staged)**：对一个已修改文件的当前版本做了标记，使之包含在下次提交的快照中。</li>
+<li>**已提交 (Committed)**：数据已经安全的保存在本地数据库中。</li>
+</ul>
+<hr>
+<h2 id="二、-初始配置"><a href="#二、-初始配置" class="headerlink" title="二、 初始配置"></a>二、 初始配置</h2><p>安装完 Git 后，第一步是设置你的名字和邮箱（这是提交记录的身份标识）。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置全局用户名和邮箱</span></span><br><span class="line">git config --global user.name <span class="string">&quot;你的名字&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;你的邮箱@example.com&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有配置项</span></span><br><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="三、-创建与克隆仓库"><a href="#三、-创建与克隆仓库" class="headerlink" title="三、 创建与克隆仓库"></a>三、 创建与克隆仓库</h2><p>你可以从头创建一个新仓库，也可以从云端克隆一个现有的。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方式一：在当前目录初始化一个全新的 Git 仓库</span></span><br><span class="line">git init</span><br><span class="line"></span><br><span class="line"><span class="comment"># 方式二：从远程服务器克隆一个仓库到本地</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/username/repository.git</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、-核心日常工作流（增删改查）"><a href="#四、-核心日常工作流（增删改查）" class="headerlink" title="四、 核心日常工作流（增删改查）"></a>四、 核心日常工作流（增删改查）</h2><p>这是每天写代码都要经历的经典三部曲：<code>add</code> -&gt; <code>commit</code> -&gt; <code>push</code>。</p>
+<h3 id="1-查看当前状态"><a href="#1-查看当前状态" class="headerlink" title="1. 查看当前状态"></a>1. 查看当前状态</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看工作区和暂存区的文件状态（哪些被修改了，哪些还没暂存）</span></span><br><span class="line">git status</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-将改动添加到暂存区"><a href="#2-将改动添加到暂存区" class="headerlink" title="2. 将改动添加到暂存区"></a>2. 将改动添加到暂存区</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 添加单个文件到暂存区</span></span><br><span class="line">git add filename.txt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加所有修改和新增加的文件到暂存区（最常用）</span></span><br><span class="line">git add .</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-提交到本地仓库"><a href="#3-提交到本地仓库" class="headerlink" title="3. 提交到本地仓库"></a>3. 提交到本地仓库</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将暂存区的改动提交到本地仓库，并附带说明信息</span></span><br><span class="line">git commit -m <span class="string">&quot;feat: 新增了用户登录功能&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果只想修改上一次提交的描述（或者漏提了文件想补进去）</span></span><br><span class="line">git commit --amend</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-查看提交历史"><a href="#4-查看提交历史" class="headerlink" title="4. 查看提交历史"></a>4. 查看提交历史</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看详细提交历史</span></span><br><span class="line">git <span class="built_in">log</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看精简版提交历史（一行一个提交，极为常用）</span></span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、-分支管理（团队协作核心）"><a href="#五、-分支管理（团队协作核心）" class="headerlink" title="五、 分支管理（团队协作核心）"></a>五、 分支管理（团队协作核心）</h2><p>分支让你可以脱离主线进行开发，不影响原本正在运行的代码。</p>
+<h3 id="1-查看分支"><a href="#1-查看分支" class="headerlink" title="1. 查看分支"></a>1. 查看分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看本地所有分支（当前所在分支前面会有 * 号）</span></span><br><span class="line">git branch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看本地和远程的所有分支</span></span><br><span class="line">git branch -a</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-创建与切换分支"><a href="#2-创建与切换分支" class="headerlink" title="2. 创建与切换分支"></a>2. 创建与切换分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建一个新分支</span></span><br><span class="line">git branch dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 切换到 dev 分支 (老版本命令)</span></span><br><span class="line">git checkout dev</span><br><span class="line"><span class="comment"># 切换到 dev 分支 (新版本推荐命令)</span></span><br><span class="line">git switch dev</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建并立刻切换到新分支（最常用）</span></span><br><span class="line">git checkout -b feature-login</span><br><span class="line"><span class="comment"># 或</span></span><br><span class="line">git switch -c feature-login</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-合并分支"><a href="#3-合并分支" class="headerlink" title="3. 合并分支"></a>3. 合并分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 假设你当前在 main 分支，想把 dev 分支的代码合并过来</span></span><br><span class="line">git merge dev</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-删除分支"><a href="#4-删除分支" class="headerlink" title="4. 删除分支"></a>4. 删除分支</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除本地已合并的分支</span></span><br><span class="line">git branch -d feature-login</span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制删除本地未合并的分支</span></span><br><span class="line">git branch -D feature-login</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、-远程仓库交互"><a href="#六、-远程仓库交互" class="headerlink" title="六、 远程仓库交互"></a>六、 远程仓库交互</h2><p>与 GitHub&#x2F;Gitee 等远程服务器进行数据交换。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看当前配置的远程仓库地址</span></span><br><span class="line">git remote -v</span><br><span class="line"></span><br><span class="line"><span class="comment"># 将本地的 commits 推送到远程仓库的同名分支</span></span><br><span class="line">git push origin main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从远程仓库拉取最新代码并自动与本地合并（相当于 fetch + merge）</span></span><br><span class="line">git pull origin main</span><br><span class="line"></span><br><span class="line"><span class="comment"># 仅从远程获取最新数据，不自动合并（更安全）</span></span><br><span class="line">git fetch origin</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、-撤销与回退（后悔药）"><a href="#七、-撤销与回退（后悔药）" class="headerlink" title="七、 撤销与回退（后悔药）"></a>七、 撤销与回退（后悔药）</h2><p>写错代码或者提错文件时的救命指令。</p>
+<h3 id="1-撤销工作区的修改（还没-git-add）"><a href="#1-撤销工作区的修改（还没-git-add）" class="headerlink" title="1. 撤销工作区的修改（还没 git add）"></a>1. 撤销工作区的修改（还没 git add）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 放弃工作区中某文件的修改，恢复到和版本库一样的状态</span></span><br><span class="line">git restore filename.txt</span><br><span class="line"><span class="comment"># (老版本命令为 git checkout -- filename.txt)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-撤销暂存区的修改（已经-git-add，但还没-git-commit）"><a href="#2-撤销暂存区的修改（已经-git-add，但还没-git-commit）" class="headerlink" title="2. 撤销暂存区的修改（已经 git add，但还没 git commit）"></a>2. 撤销暂存区的修改（已经 git add，但还没 git commit）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把文件从暂存区踢回工作区</span></span><br><span class="line">git restore --staged filename.txt</span><br><span class="line"><span class="comment"># (老版本命令为 git reset HEAD filename.txt)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-版本回退（已经-git-commit）"><a href="#3-版本回退（已经-git-commit）" class="headerlink" title="3. 版本回退（已经 git commit）"></a>3. 版本回退（已经 git commit）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 退回到上一个版本（保留工作区改动）</span></span><br><span class="line">git reset HEAD^</span><br><span class="line"></span><br><span class="line"><span class="comment"># 彻底退回到上一个版本（不保留工作区改动，慎用！）</span></span><br><span class="line">git reset --hard HEAD^</span><br><span class="line"></span><br><span class="line"><span class="comment"># 退回到指定的 commit ID（通过 git log 查看 ID）</span></span><br><span class="line">git reset --hard a1b2c3d</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[!WARNING]<br><strong>警告</strong>：<code>git reset --hard</code> 会抹除未提交的工作区代码，操作前请务必确认或者将当前代码 <code>git stash</code> 暂存。</p>
+</blockquote>
+<hr>
+<h2 id="八、-进阶实用技巧"><a href="#八、-进阶实用技巧" class="headerlink" title="八、 进阶实用技巧"></a>八、 进阶实用技巧</h2><h3 id="1-临时储藏-Stash"><a href="#1-临时储藏-Stash" class="headerlink" title="1. 临时储藏 (Stash)"></a>1. 临时储藏 (Stash)</h3><p>当你在开发一个功能时，突然被叫去修一个紧急 Bug，但当前代码还没写完不想 commit。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把当前所有未提交的修改“储藏”起来，让工作区变干净</span></span><br><span class="line">git stash</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修完 bug 后，恢复刚才储藏的代码，并从储藏列表中删除该记录</span></span><br><span class="line">git stash pop</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看储藏了哪些内容</span></span><br><span class="line">git stash list</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-忽略文件-gitignore"><a href="#2-忽略文件-gitignore" class="headerlink" title="2. 忽略文件 (.gitignore)"></a>2. 忽略文件 (.gitignore)</h3><p>在项目根目录下创建一个名为 <code>.gitignore</code> 的文件。在里面列出的文件和文件夹规则，Git 会自动忽略，不把它们纳入版本控制（常用于忽略依赖包、编译输出和私密配置文件）。</p>
+<p><strong>.gitignore 示例</strong>：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">node_modules/</span><br><span class="line">dist/</span><br><span class="line">*.log</span><br><span class="line">.env</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-规范化的-Commit-Message-建议"><a href="#3-规范化的-Commit-Message-建议" class="headerlink" title="3. 规范化的 Commit Message 建议"></a>3. 规范化的 Commit Message 建议</h3><p>优秀的提交信息能让团队和未来的自己快速看懂。推荐使用前缀：</p>
+<ul>
+<li><code>feat</code>: 新增功能 (feature)</li>
+<li><code>fix</code>: 修复 bug</li>
+<li><code>docs</code>: 文档变更</li>
+<li><code>style</code>: 代码格式调整（不影响逻辑）</li>
+<li><code>refactor</code>: 重构代码</li>
+<li><code>test</code>: 测试用例增删改</li>
+<li><code>chore</code>: 构建过程或辅助工具变动</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">git</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-AI新名词、新热点" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -178,23 +328,13 @@ var _hmt = _hmt || [];
 <blockquote>
 <p><strong>通俗比喻</strong>：<br>当人类闭上眼睛想象把生鸡蛋砸向墙壁时，脑海中能浮现出鸡蛋碎裂、蛋液溅出的画面。这种在脑海中进行“未来演练”的能力，是因为我们的大脑中有一个懂重力、懂碰撞的“世界模型”。AI 的世界模型也是要赋予机器同样的“脑内沙盘推演”能力。</p>
 </blockquote>
-<h2 id="2-世界模型的三大核心能力"><a href="#2-世界模型的三大核心能力" class="headerlink" title="2.世界模型的三大核心能力"></a>2.世界模型的三大核心能力</h2><ol>
-<li><p><strong>物理规律直觉 (Intuitive Physics)</strong><br>不需要写入严谨的代码公式（如 $F&#x3D;ma$），模型通过观察就能直觉地理解重力、遮挡、透视、流体动力学等客观规律。</p>
-</li>
-<li><p><strong>因果与时序推理 (Causality &amp; Temporal Dynamics)</strong><br>不仅知道“画面里有什么”，更知道“接下来会发生什么”。例如，看到风吹能推测树叶会动，并能精准预测环境在一秒钟或一分钟后的状态演变。</p>
-</li>
-<li><p><strong>反事实推理 (Counterfactual Reasoning)</strong><br>最高级的认知能力。模型能在内部沙盘做假设推演：“如果刚才那辆车没有刹车，现在会发生什么？”</p>
-</li>
-</ol>
+<h2 id="2-世界模型的三大核心能力"><a href="#2-世界模型的三大核心能力" class="headerlink" title="2.世界模型的三大核心能力"></a>2.世界模型的三大核心能力</h2><p><strong>物理规律直觉 (Intuitive Physics)</strong><br>不需要写入严谨的代码公式（如 $F&#x3D;ma$），模型通过观察就能直觉地理解重力、遮挡、透视、流体动力学等客观规律。</p>
+<p><strong>因果与时序推理 (Causality &amp; Temporal Dynamics)</strong><br>不仅知道“画面里有什么”，更知道“接下来会发生什么”。例如，看到风吹能推测树叶会动，并能精准预测环境在一秒钟或一分钟后的状态演变。</p>
+<p><strong>反事实推理 (Counterfactual Reasoning)</strong><br>最高级的认知能力。模型能在内部沙盘做假设推演：“如果刚才那辆车没有刹车，现在会发生什么？”</p>
 <h2 id="3-现实中的代表性案例"><a href="#3-现实中的代表性案例" class="headerlink" title="3.现实中的代表性案例"></a>3.现实中的代表性案例</h2><p>虽然完美的完全体世界模型尚未诞生，但工业界已有几个极具震撼力的雏形：</p>
-<ul>
-<li><p><strong>Sora (OpenAI)</strong><br>表面上是视频生成工具，实际上被官方定义为“世界模拟器”。Sora 之所以能生成逼真的一镜到底视频，是因为它在海量训练中隐式地学会了 <strong>3D 空间结构和摄像机运镜的物理透视法则</strong>。</p>
-</li>
-<li><p><strong>自动驾驶 (如 Tesla FSD v12)</strong><br>汽车在高速行驶时，AI 大脑不仅在识别前方车辆，还在实时<strong>预测周围所有车辆和行人未来 3 秒内的运动轨迹</strong>。这种“脑内预演”系统即是自动驾驶的世界模型。</p>
-</li>
-<li><p><strong>具身智能机器人的“模拟大脑”</strong><br>当机器人跨越障碍物时，其世界模型会在 <code>0.01</code> 秒内在虚拟空间将动作试演一遍，确认不会摔倒后，才下发实际的物理执行指令。</p>
-</li>
-</ul>
+<p><strong>Sora (OpenAI)</strong><br>表面上是视频生成工具，实际上被官方定义为“世界模拟器”。Sora 之所以能生成逼真的一镜到底视频，是因为它在海量训练中隐式地学会了 <strong>3D 空间结构和摄像机运镜的物理透视法则</strong>。</p>
+<p><strong>自动驾驶 (如 Tesla FSD v12)</strong><br>汽车在高速行驶时，AI 大脑不仅在识别前方车辆，还在实时<strong>预测周围所有车辆和行人未来 3 秒内的运动轨迹</strong>。这种“脑内预演”系统即是自动驾驶的世界模型。</p>
+<p><strong>具身智能机器人的“模拟大脑”</strong><br>当机器人跨越障碍物时，其世界模型会在 <code>0.01</code> 秒内在虚拟空间将动作试演一遍，确认不会摔倒后，才下发实际的物理执行指令。</p>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>如果说过去的大语言模型是<strong>“熟读唐诗三百首”的文科生</strong>，那么世界模型就是要培养一个<strong>“睁眼看世界、懂物理法则、能预知行动后果”的理科生兼实干家</strong>。谁能率先攻克世界模型，谁就能让人工智能在真实的物理世界（如自动驾驶、智能制造）中完美落地。</p>
 
       
@@ -1503,19 +1643,19 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-算法与数据结构模板与经典例题三：最短路" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-算法与数据结构模板与经典例题三：最短路和最小生成树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2026/04/11/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%89%EF%BC%9A%E6%9C%80%E7%9F%AD%E8%B7%AF/">算法与数据结构模板与经典例题三：最短路</a>
+      <a class="article-title" href="/2026/04/11/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%89%EF%BC%9A%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%92%8C%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/">算法与数据结构模板与经典例题三：最短路和最小生成树</a>
     </h1>
   
 
         
-        <a href="/2026/04/11/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%89%EF%BC%9A%E6%9C%80%E7%9F%AD%E8%B7%AF/" class="archive-article-date">
+        <a href="/2026/04/11/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%89%EF%BC%9A%E6%9C%80%E7%9F%AD%E8%B7%AF%E5%92%8C%E6%9C%80%E5%B0%8F%E7%94%9F%E6%88%90%E6%A0%91/" class="archive-article-date">
   	<time datetime="2026-04-11T09:26:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-04-11</time>
 </a>
         
@@ -1523,7 +1663,7 @@ var _hmt = _hmt || [];
     
     <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
       
-        <h2 id="1-Floyd算法"><a href="#1-Floyd算法" class="headerlink" title="1.Floyd算法"></a>1.Floyd算法</h2><p>用来求任意两个点之间的最短路，时间复杂度是O^3</p>
+        <h2 id="最短路"><a href="#最短路" class="headerlink" title="最短路"></a>最短路</h2><h2 id="1-Floyd算法"><a href="#1-Floyd算法" class="headerlink" title="1.Floyd算法"></a>1.Floyd算法</h2><p>用来求任意两个点之间的最短路，时间复杂度是O^3</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">for (k = 1; k &lt;= n; k++) &#123;</span><br><span class="line">  for (x = 1; x &lt;= n; x++) &#123;</span><br><span class="line">    for (y = 1; y &lt;= n; y++) &#123;</span><br><span class="line">      f[x][y] = min(f[x][y], f[x][k] + f[k][y]);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="2-Bellman–Ford-算法"><a href="#2-Bellman–Ford-算法" class="headerlink" title="2.Bellman–Ford 算法"></a>2.Bellman–Ford 算法</h2><p>Bellman–Ford 算法是一种基于松弛（relax）操作的最短路算法，可以求出有负权的图的最短路，并可以对最短路不存在的情况进行判断．时间复杂度是O^2</p>
@@ -1537,6 +1677,16 @@ var _hmt = _hmt || [];
 <p>优先队列实现才是最常用的，时间复杂度mlogm</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">struct edge &#123;</span><br><span class="line">  int v, w;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">struct node &#123;</span><br><span class="line">  int dis, u;</span><br><span class="line"></span><br><span class="line">  bool operator&gt;(const node&amp; a) const &#123; return dis &gt; a.dis; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">vector&lt;edge&gt; e[MAXN];</span><br><span class="line">int dis[MAXN], vis[MAXN];</span><br><span class="line">priority_queue&lt;node, vector&lt;node&gt;, greater&lt;node&gt;&gt; q;</span><br><span class="line"></span><br><span class="line">void dijkstra(int n, int s) &#123;</span><br><span class="line">  memset(dis, 0x3f, (n + 1) * sizeof(int));</span><br><span class="line">  memset(vis, 0, (n + 1) * sizeof(int));</span><br><span class="line">  dis[s] = 0;</span><br><span class="line">  q.push(&#123;0, s&#125;);</span><br><span class="line">  while (!q.empty()) &#123;</span><br><span class="line">    int u = q.top().u;</span><br><span class="line">    q.pop();</span><br><span class="line">    if (vis[u]) continue;</span><br><span class="line">    vis[u] = 1;</span><br><span class="line">    for (auto ed : e[u]) &#123;</span><br><span class="line">      int v = ed.v, w = ed.w;</span><br><span class="line">      if (dis[v] &gt; dis[u] + w) &#123;</span><br><span class="line">        dis[v] = dis[u] + w;</span><br><span class="line">        q.push(&#123;dis[v], v&#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="最小生成树"><a href="#最小生成树" class="headerlink" title="最小生成树"></a>最小生成树</h2><h3 id="1-Prim算法"><a href="#1-Prim算法" class="headerlink" title="1.Prim算法"></a>1.Prim算法</h3><p>思想：</p>
+<blockquote>
+<p>从一个顶点开始，每次加入距离生成树最近的顶点。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">int Prim()</span><br><span class="line">&#123;</span><br><span class="line">    memset(vis, false, sizeof(vis));</span><br><span class="line"></span><br><span class="line">    // 初始化</span><br><span class="line">    for(int i = 1; i &lt;= n; i++)</span><br><span class="line">        dist[i] = INF;</span><br><span class="line"></span><br><span class="line">    dist[1] = 0;        // 从1号点开始</span><br><span class="line"></span><br><span class="line">    int ans = 0;</span><br><span class="line"></span><br><span class="line">    for(int i = 1; i &lt;= n; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        int u = -1;</span><br><span class="line"></span><br><span class="line">        // 找距离最小的点</span><br><span class="line">        for(int j = 1; j &lt;= n; j++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(!vis[j] &amp;&amp; (u == -1 || dist[j] &lt; dist[u]))</span><br><span class="line">                u = j;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        vis[u] = true;</span><br><span class="line">        ans += dist[u];</span><br><span class="line"></span><br><span class="line">        // 更新距离</span><br><span class="line">        for(int v = 1; v &lt;= n; v++)</span><br><span class="line">        &#123;</span><br><span class="line">            if(!vis[v] &amp;&amp; g[u][v] &lt; dist[v])</span><br><span class="line">                dist[v] = g[u][v];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-Kruskal算法"><a href="#2-Kruskal算法" class="headerlink" title="2.Kruskal算法"></a>2.Kruskal算法</h3><p>思想：</p>
+<blockquote>
+<p>排序所有边，从小到大加入，只要不会形成环。</p>
+</blockquote>
 
       
 
@@ -1551,129 +1701,6 @@ var _hmt = _hmt || [];
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python学习日记一：print核心使用规则" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/04/03/Python%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%80%EF%BC%9Aprint%E6%A0%B8%E5%BF%83%E4%BD%BF%E7%94%A8%E8%A7%84%E5%88%99/">Python学习日记一：print核心使用规则</a>
-    </h1>
-  
-
-        
-        <a href="/2026/04/03/Python%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%80%EF%BC%9Aprint%E6%A0%B8%E5%BF%83%E4%BD%BF%E7%94%A8%E8%A7%84%E5%88%99/" class="archive-article-date">
-  	<time datetime="2026-04-03T15:53:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-04-03</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h2 id="一、基础用法"><a href="#一、基础用法" class="headerlink" title="一、基础用法"></a>一、基础用法</h2><ol>
-<li>输出单个对象：数字、字符串、变量、表达式均可</li>
-<li>Python3 中 <code>print</code> 是函数，必须带括号</li>
-<li>默认自动换行</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(123)</span><br><span class="line">print(&quot;hello&quot;)</span><br><span class="line">print(a + b)</span><br></pre></td></tr></table></figure>
-
-<h2 id="二、多对象输出"><a href="#二、多对象输出" class="headerlink" title="二、多对象输出"></a>二、多对象输出</h2><ul>
-<li>多个参数用逗号分隔</li>
-<li>默认以<strong>空格</strong>分隔</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(1, 2, 3, &quot;test&quot;)</span><br><span class="line"># 输出：1 2 3 test</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、关键参数"><a href="#三、关键参数" class="headerlink" title="三、关键参数"></a>三、关键参数</h2><h3 id="1-sep：自定义分隔符"><a href="#1-sep：自定义分隔符" class="headerlink" title="1. sep：自定义分隔符"></a>1. sep：自定义分隔符</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">print(1, 2, 3, sep=&#x27;-&#x27;)</span><br><span class="line"># 输出：1-2-3</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-end：自定义结尾（控制换行）"><a href="#2-end：自定义结尾（控制换行）" class="headerlink" title="2. end：自定义结尾（控制换行）"></a>2. end：自定义结尾（控制换行）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print(&quot;a&quot;, end=&#x27; &#x27;)</span><br><span class="line">print(&quot;b&quot;)</span><br><span class="line"># 输出：a b</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-flush：强制刷新缓冲区"><a href="#3-flush：强制刷新缓冲区" class="headerlink" title="3. flush：强制刷新缓冲区"></a>3. flush：强制刷新缓冲区</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(&quot;loading&quot;, flush=True)</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、字符串与转义"><a href="#四、字符串与转义" class="headerlink" title="四、字符串与转义"></a>四、字符串与转义</h2><ol>
-<li>单双引号均可：<code>print(&#39;a&#39;)</code> &#x2F; <code>print(&quot;b&quot;)</code></li>
-<li>常用转义：<ul>
-<li><code>\n</code> 换行</li>
-<li><code>\t</code> 制表符</li>
-<li><code>\\</code> 表示一个 \</li>
-</ul>
-</li>
-<li>原始字符串（不转义）：</li>
-</ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(r&quot;C:\Users\test&quot;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="五、格式化输出（推荐顺序）"><a href="#五、格式化输出（推荐顺序）" class="headerlink" title="五、格式化输出（推荐顺序）"></a>五、格式化输出（推荐顺序）</h2><p><strong>f-string（最常用）</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">name = &quot;Tom&quot;</span><br><span class="line">print(f&quot;name: &#123;name&#125;&quot;)</span><br></pre></td></tr></table></figure>
-
-<p><code>str.format()</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(&quot;age: &#123;&#125;&quot;.format(18))</span><br></pre></td></tr></table></figure>
-
-<p>% 格式化</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print(&quot;num: %d&quot; % 10)</span><br></pre></td></tr></table></figure>
-
-<h2 id="六、输出各类数据结构"><a href="#六、输出各类数据结构" class="headerlink" title="六、输出各类数据结构"></a>六、输出各类数据结构</h2><p>可直接输出列表、元组、字典、布尔值等</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">print([1,2,3])</span><br><span class="line">print(&#123;&quot;k&quot;: &quot;v&quot;&#125;)</span><br><span class="line">print(True)</span><br></pre></td></tr></table></figure>
-
-<h2 id="七、重要特性"><a href="#七、重要特性" class="headerlink" title="七、重要特性"></a>七、重要特性</h2><ol>
-<li><code>print()</code> 无参数时输出空行</li>
-<li><code>print</code> 函数返回值为 <code>None</code></li>
-<li>不建议在最后输出层随意使用 <code>print</code> 调试训练代码</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
         		</li>
       		
 		</ul>
@@ -1855,11 +1882,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
+                <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
               </li>
              
               <li class="article-tag-list-item">
