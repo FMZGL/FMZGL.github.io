@@ -109,28 +109,30 @@ var _hmt = _hmt || [];
     
     <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
       
-        <p><strong>7月21日</strong></p>
-<blockquote>
+        <h2 id="价值观：应该以什么样的眼光去认识这个世界"><a href="#价值观：应该以什么样的眼光去认识这个世界" class="headerlink" title="价值观：应该以什么样的眼光去认识这个世界"></a>价值观：应该以什么样的眼光去认识这个世界</h2><blockquote>
 <p>这个世界就是一个草台班子，不要幻想事情可以像童话故事一样发展。就算是高官也是如此。</p>
 </blockquote>
-<hr>
 <blockquote>
+<p>可以不做海瑞，但是至少要有底线，底线一破就不能称之为人了。</p>
+</blockquote>
+<blockquote>
+<p>不卑不亢的生活状态才是最健康最理想的，没必要去讨好别人，也没必要咄咄逼人。</p>
+</blockquote>
+<h2 id="方法论：如何在实际生活中应用价值观"><a href="#方法论：如何在实际生活中应用价值观" class="headerlink" title="方法论：如何在实际生活中应用价值观"></a>方法论：如何在实际生活中应用价值观</h2><blockquote>
 <p>敬酒礼仪：</p>
 <p>给人倒酒一定要倒满。</p>
 <p>给人敬酒不要隔着人或位子</p>
 <p>酒杯要比别人低</p>
 </blockquote>
-<p><strong>7月22日</strong></p>
 <blockquote>
 <p>与人相交的一个很有用的方法就是利他思维（让别人受益），也许你可能并不是真心的，也可能只是一个微不足道的小事，但是效果就是比华而不实的语言强。</p>
 </blockquote>
-<p><strong>7月27日</strong></p>
 <blockquote>
-<p>不卑不亢的生活状态才是最健康最理想的，没必要去讨好别人，也没必要咄咄逼人。</p>
+<p>短期的事最难的部分就是开始</p>
+<p>长期的事最难的部分就是坚持</p>
 </blockquote>
-<p><strong>8月6日</strong></p>
 <blockquote>
-<p>学习，工作，为自己的前途命运奔波确实是生活的核心，但绝对不是全部，像个真正的年轻人一样做个开明不死板的人。</p>
+<p>想与别人有话说，最重要的就是见人说人话，见鬼说鬼话</p>
 </blockquote>
 
       
@@ -146,6 +148,162 @@ var _hmt = _hmt || [];
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">正西风落叶下长安</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Python学习日记二：Literal、Optional、Enum对比分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/08/16/Python%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9ALiteral%E3%80%81Optional%E3%80%81Enum%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/">Python学习日记二：Literal、Optional、Enum对比分析</a>
+    </h1>
+  
+
+        
+        <a href="/2026/08/16/Python%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9ALiteral%E3%80%81Optional%E3%80%81Enum%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" class="archive-article-date">
+  	<time datetime="2026-08-16T08:37:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-08-16</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h2 id="一、Literal：限制“只能是这些值”"><a href="#一、Literal：限制“只能是这些值”" class="headerlink" title="一、Literal：限制“只能是这些值”"></a>一、Literal：限制“只能是这些值”</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from typing import Literal</span><br><span class="line"></span><br><span class="line">def train(mode: Literal[&quot;train&quot;, &quot;test&quot;]):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+
+<p>表示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">train(&quot;train&quot;)  # OK</span><br><span class="line">train(&quot;test&quot;)   # OK</span><br><span class="line"></span><br><span class="line">train(&quot;debug&quot;)  # 类型检查报错</span><br></pre></td></tr></table></figure>
+
+<p>它只是告诉 IDE：</p>
+<blockquote>
+<p>这个参数只能填这几个字符串。</p>
+</blockquote>
+<p>但是运行时：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train(&quot;debug&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>Python 其实不会阻止。</p>
+<hr>
+<h2 id="二、Optional：表示“可以没有值”"><a href="#二、Optional：表示“可以没有值”" class="headerlink" title="二、Optional：表示“可以没有值”"></a>二、Optional：表示“可以没有值”</h2><p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from typing import Optional</span><br><span class="line"></span><br><span class="line">def get_user(name: Optional[str]):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+
+<p>表示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">name 可以是：</span><br><span class="line"></span><br><span class="line">&quot;Tom&quot;</span><br><span class="line"></span><br><span class="line">或者：</span><br><span class="line"></span><br><span class="line">None</span><br></pre></td></tr></table></figure>
+
+<p>等价于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str | None</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">get_user(&quot;Tom&quot;)  # OK</span><br><span class="line">get_user(None)   # OK</span><br></pre></td></tr></table></figure>
+
+<p>但是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get_user(123)</span><br></pre></td></tr></table></figure>
+
+<p>类型检查会报错。</p>
+<hr>
+<h2 id="三、Enum：定义正式的枚举类型"><a href="#三、Enum：定义正式的枚举类型" class="headerlink" title="三、Enum：定义正式的枚举类型"></a>三、Enum：定义正式的枚举类型</h2><p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from enum import Enum</span><br><span class="line"></span><br><span class="line">class ModelType(Enum):</span><br><span class="line">    GPT = &quot;gpt&quot;</span><br><span class="line">    LLAMA = &quot;llama&quot;</span><br><span class="line">    QWEN = &quot;qwen&quot;</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = ModelType.QWEN</span><br></pre></td></tr></table></figure>
+
+<p>这里：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model</span><br></pre></td></tr></table></figure>
+
+<p>不是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;qwen&quot;</span><br></pre></td></tr></table></figure>
+
+<p>而是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ModelType.QWEN</span><br></pre></td></tr></table></figure>
+
+<p>需要：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.value</span><br></pre></td></tr></table></figure>
+
+<p>才能得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;qwen&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、类型注解"><a href="#四、类型注解" class="headerlink" title="四、类型注解"></a>四、类型注解</h2><p>Python 里<strong>变量后面的冒号 <code>:</code> 通常表示“类型注解（type hint）”</strong>，冒号后面一般跟<strong>类型</strong>，而不是具体的值。</p>
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>x: int</code></td>
+<td>x 应该是整数</td>
+</tr>
+<tr>
+<td><code>x: str</code></td>
+<td>x 应该是字符串</td>
+</tr>
+<tr>
+<td><code>x: Optional[str]</code></td>
+<td>x 可以是字符串或 None</td>
+</tr>
+<tr>
+<td><code>x: Literal[&quot;a&quot;,&quot;b&quot;]</code></td>
+<td>x 只能取指定几个值</td>
+</tr>
+<tr>
+<td><code>x: int = 10</code></td>
+<td>x 是整数，默认值10</td>
+</tr>
+</tbody></table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
         		</li>
       		
 		</ul>
@@ -275,75 +433,6 @@ var _hmt = _hmt || [];
 </tr>
 </tbody></table>
 <p>事业编中的职工岗（教师、医生、工程师、会计师）走职称：初级→中级→副高→正高。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-凤求凰" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/07/31/%E5%87%A4%E6%B1%82%E5%87%B0/">凤求凰</a>
-    </h1>
-  
-
-        
-        <a href="/2026/07/31/%E5%87%A4%E6%B1%82%E5%87%B0/" class="archive-article-date">
-  	<time datetime="2026-07-31T02:38:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-07-31</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <blockquote>
-<p>记得听过一个过来人曾讲如果真的想谈恋爱，就要像升学工作一样去认真对待这件事。这种说法我无疑是赞同的。</p>
-<p>我只能接受双方都真诚的关系，具体来说就是二分类。要么就是你同意我追你（有意向和我发展，得是真心的），我们可以多一些互动，试着培养感情，对原则的事情不能有隐瞒，更不能广撒网。另一种就是对方明确拒绝，那就以正常异性朋友的关系相处，不能搞暧昧，不能说奇怪的话。</p>
-<p>最后就是我要求别人真诚我发誓我自己肯定要先做到。</p>
-</blockquote>
 
       
 
@@ -1836,10 +1925,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
@@ -1848,19 +1933,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">颂</a>
+                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">颂</a>
               </li>
              
               <li class="article-tag-list-item">

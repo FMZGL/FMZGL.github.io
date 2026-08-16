@@ -6,17 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>凤求凰 | Tengfei Zhang - HomePage</title>
+  <title>Python学习日记二：Literal、Optional、Enum对比分析 | Tengfei Zhang - HomePage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="记得听过一个过来人曾讲如果真的想谈恋爱，就要像升学工作一样去认真对待这件事。这种说法我无疑是赞同的。 我只能接受双方都真诚的关系，具体来说就是二分类。要么就是你同意我追你（有意向和我发展，得是真心的），我们可以多一些互动，试着培养感情，对原则的事情不能有隐瞒，更不能广撒网。另一种就是对方明确拒绝，那就以正常异性朋友的关系相处，不能搞暧昧，不能说奇怪的话。 最后就是我要求别人真诚我发誓我自己肯定要">
+  <meta name="description" content="一、Literal：限制“只能是这些值”1234from typing import Literaldef train(mode: Literal[&quot;train&quot;, &quot;test&quot;]):    pass  表示： 1234train(&quot;train&quot;)  # OKtrain(&quot;test&quot;)   # OKtrain(&amp;quo">
 <meta property="og:type" content="article">
-<meta property="og:title" content="凤求凰">
-<meta property="og:url" content="http://example.com/2026/07/31/%E5%87%A4%E6%B1%82%E5%87%B0/index.html">
+<meta property="og:title" content="Python学习日记二：Literal、Optional、Enum对比分析">
+<meta property="og:url" content="http://example.com/2026/08/16/Python%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9ALiteral%E3%80%81Optional%E3%80%81Enum%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Tengfei Zhang - HomePage">
-<meta property="og:description" content="记得听过一个过来人曾讲如果真的想谈恋爱，就要像升学工作一样去认真对待这件事。这种说法我无疑是赞同的。 我只能接受双方都真诚的关系，具体来说就是二分类。要么就是你同意我追你（有意向和我发展，得是真心的），我们可以多一些互动，试着培养感情，对原则的事情不能有隐瞒，更不能广撒网。另一种就是对方明确拒绝，那就以正常异性朋友的关系相处，不能搞暧昧，不能说奇怪的话。 最后就是我要求别人真诚我发誓我自己肯定要">
+<meta property="og:description" content="一、Literal：限制“只能是这些值”1234from typing import Literaldef train(mode: Literal[&quot;train&quot;, &quot;test&quot;]):    pass  表示： 1234train(&quot;train&quot;)  # OKtrain(&quot;test&quot;)   # OKtrain(&amp;quo">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-07-31T02:38:08.000Z">
-<meta property="article:modified_time" content="2026-07-31T03:19:36.207Z">
+<meta property="article:published_time" content="2026-08-16T08:37:14.000Z">
+<meta property="article:modified_time" content="2026-08-16T08:42:19.756Z">
+<meta property="article:tag" content="Python">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Tengfei Zhang - HomePage" type="application/atom+xml">
@@ -86,31 +87,107 @@ var _hmt = _hmt || [];
     
     <div class="academic-main full-width">
       <div class="academic-content">
-        <article id="post-凤求凰" class="article article-type-post " itemscope itemprop="blogPost">
+        <article id="post-Python学习日记二：Literal、Optional、Enum对比分析" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      凤求凰
+      Python学习日记二：Literal、Optional、Enum对比分析
     </h1>
   
 
         
-        <a href="/2026/07/31/%E5%87%A4%E6%B1%82%E5%87%B0/" class="archive-article-date">
-  	<time datetime="2026-07-31T02:38:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-07-31</time>
+        <a href="/2026/08/16/Python%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9ALiteral%E3%80%81Optional%E3%80%81Enum%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" class="archive-article-date">
+  	<time datetime="2026-08-16T08:37:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-08-16</time>
 </a>
         
       </header>
     
     <div class="article-entry " itemprop="articleBody" >
       
-        <blockquote>
-<p>记得听过一个过来人曾讲如果真的想谈恋爱，就要像升学工作一样去认真对待这件事。这种说法我无疑是赞同的。</p>
-<p>我只能接受双方都真诚的关系，具体来说就是二分类。要么就是你同意我追你（有意向和我发展，得是真心的），我们可以多一些互动，试着培养感情，对原则的事情不能有隐瞒，更不能广撒网。另一种就是对方明确拒绝，那就以正常异性朋友的关系相处，不能搞暧昧，不能说奇怪的话。</p>
-<p>最后就是我要求别人真诚我发誓我自己肯定要先做到。</p>
+        <h2 id="一、Literal：限制“只能是这些值”"><a href="#一、Literal：限制“只能是这些值”" class="headerlink" title="一、Literal：限制“只能是这些值”"></a>一、Literal：限制“只能是这些值”</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from typing import Literal</span><br><span class="line"></span><br><span class="line">def train(mode: Literal[&quot;train&quot;, &quot;test&quot;]):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+
+<p>表示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">train(&quot;train&quot;)  # OK</span><br><span class="line">train(&quot;test&quot;)   # OK</span><br><span class="line"></span><br><span class="line">train(&quot;debug&quot;)  # 类型检查报错</span><br></pre></td></tr></table></figure>
+
+<p>它只是告诉 IDE：</p>
+<blockquote>
+<p>这个参数只能填这几个字符串。</p>
 </blockquote>
+<p>但是运行时：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train(&quot;debug&quot;)</span><br></pre></td></tr></table></figure>
+
+<p>Python 其实不会阻止。</p>
+<hr>
+<h2 id="二、Optional：表示“可以没有值”"><a href="#二、Optional：表示“可以没有值”" class="headerlink" title="二、Optional：表示“可以没有值”"></a>二、Optional：表示“可以没有值”</h2><p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from typing import Optional</span><br><span class="line"></span><br><span class="line">def get_user(name: Optional[str]):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
+
+<p>表示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">name 可以是：</span><br><span class="line"></span><br><span class="line">&quot;Tom&quot;</span><br><span class="line"></span><br><span class="line">或者：</span><br><span class="line"></span><br><span class="line">None</span><br></pre></td></tr></table></figure>
+
+<p>等价于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str | None</span><br></pre></td></tr></table></figure>
+
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">get_user(&quot;Tom&quot;)  # OK</span><br><span class="line">get_user(None)   # OK</span><br></pre></td></tr></table></figure>
+
+<p>但是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get_user(123)</span><br></pre></td></tr></table></figure>
+
+<p>类型检查会报错。</p>
+<hr>
+<h2 id="三、Enum：定义正式的枚举类型"><a href="#三、Enum：定义正式的枚举类型" class="headerlink" title="三、Enum：定义正式的枚举类型"></a>三、Enum：定义正式的枚举类型</h2><p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from enum import Enum</span><br><span class="line"></span><br><span class="line">class ModelType(Enum):</span><br><span class="line">    GPT = &quot;gpt&quot;</span><br><span class="line">    LLAMA = &quot;llama&quot;</span><br><span class="line">    QWEN = &quot;qwen&quot;</span><br></pre></td></tr></table></figure>
+
+<p>使用：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = ModelType.QWEN</span><br></pre></td></tr></table></figure>
+
+<p>这里：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model</span><br></pre></td></tr></table></figure>
+
+<p>不是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;qwen&quot;</span><br></pre></td></tr></table></figure>
+
+<p>而是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ModelType.QWEN</span><br></pre></td></tr></table></figure>
+
+<p>需要：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.value</span><br></pre></td></tr></table></figure>
+
+<p>才能得到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;qwen&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、类型注解"><a href="#四、类型注解" class="headerlink" title="四、类型注解"></a>四、类型注解</h2><p>Python 里<strong>变量后面的冒号 <code>:</code> 通常表示“类型注解（type hint）”</strong>，冒号后面一般跟<strong>类型</strong>，而不是具体的值。</p>
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>x: int</code></td>
+<td>x 应该是整数</td>
+</tr>
+<tr>
+<td><code>x: str</code></td>
+<td>x 应该是字符串</td>
+</tr>
+<tr>
+<td><code>x: Optional[str]</code></td>
+<td>x 可以是字符串或 None</td>
+</tr>
+<tr>
+<td><code>x: Literal[&quot;a&quot;,&quot;b&quot;]</code></td>
+<td>x 只能取指定几个值</td>
+</tr>
+<tr>
+<td><code>x: int = 10</code></td>
+<td>x 是整数，默认值10</td>
+</tr>
+</tbody></table>
 
       
 
@@ -120,6 +197,17 @@ var _hmt = _hmt || [];
       
         
         
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
         
 
       
@@ -170,7 +258,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2026/07/31/%E5%87%A4%E6%B1%82%E5%87%B0/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2026/08/16/Python%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9ALiteral%E3%80%81Optional%E3%80%81Enum%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -184,18 +272,18 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2026/08/06/%E5%85%AC%E5%8A%A1%E5%91%98%E5%92%8C%E4%BA%8B%E4%B8%9A%E7%BC%96%E8%81%8C%E5%8A%A1%E8%81%8C%E7%BA%A7%E5%AF%B9%E7%85%A7%E8%A1%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/9999/07/26/%E5%A4%A7%E4%B9%89%E8%A7%89%E8%BF%B7%E9%B9%BF/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          公务员和事业编职务职级对照表
+          大义觉迷鹿
         
       </div>
     </a>
   
   
-    <a href="/2026/07/19/Git-%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Git 简明教程</div>
+    <a href="/2026/08/06/%E5%85%AC%E5%8A%A1%E5%91%98%E5%92%8C%E4%BA%8B%E4%B8%9A%E7%BC%96%E8%81%8C%E5%8A%A1%E8%81%8C%E7%BA%A7%E5%AF%B9%E7%85%A7%E8%A1%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">公务员和事业编职务职级对照表</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -330,10 +418,6 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">AI</a>
               </li>
              
@@ -342,19 +426,23 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">git</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">颂</a>
+                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">颂</a>
               </li>
              
               <li class="article-tag-list-item">
