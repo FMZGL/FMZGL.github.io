@@ -187,7 +187,20 @@ var _hmt = _hmt || [];
 <h2 id="三、预训练和后训练？"><a href="#三、预训练和后训练？" class="headerlink" title="三、预训练和后训练？"></a>三、预训练和后训练？</h2><p>在现代大语言模型（LLM，如 GPT-4、Llama 3、DeepSeek-R1 等）的开发生命周期中，<strong>预训练（Pre-training）</strong> 和 <strong>后训练（Post-training）</strong> 是决定模型最终能力与行为模式的两个关键阶段。</p>
 <p>如果把大模型比作一个人，<strong>预训练</strong>就像是“十几年的通识教育与读万卷书”，负责为其注入海量的世界知识；而<strong>后训练</strong>则是“大学后的职业培训与伦理塑造”，教它如何听懂指令、礼貌对话、规范表达以及进行深度的逻辑推理。</p>
 <hr>
-<h2 id="📍-1-大模型生命周期全景图"><a href="#📍-1-大模型生命周期全景图" class="headerlink" title="📍 1. 大模型生命周期全景图"></a>📍 1. 大模型生命周期全景图</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">flowchart LR</span><br><span class="line">    A[海量无标注数据&lt;br/&gt;TB级网页/图书/代码] --&gt; B(预训练 Pre-training)</span><br><span class="line">    B --&gt; C[基座模型 Base Model&lt;br/&gt;如 Llama-3-Base]</span><br><span class="line">    </span><br><span class="line">    C --&gt; D(后训练 Post-training)</span><br><span class="line">    </span><br><span class="line">    subgraph D [后训练三大核心支柱]</span><br><span class="line">        D1[SFT 有监督微调&lt;br/&gt;指令遵循与格式化]</span><br><span class="line">        D2[RLHF / DPO 偏好对齐&lt;br/&gt;3H安全与价值观]</span><br><span class="line">        D3[RL 推理强化&lt;br/&gt;长 CoT 思维链演进]</span><br><span class="line">        D1 --&gt; D2 --&gt; D3</span><br><span class="line">    end</span><br><span class="line">    </span><br><span class="line">    D --&gt; E[对话/推理模型 Instruct / Reasoner&lt;br/&gt;如 ChatGPT / DeepSeek-R1]</span><br></pre></td></tr></table></figure>
+<h2 id="📍-1-大模型生命周期全景图"><a href="#📍-1-大模型生命周期全景图" class="headerlink" title="📍 1. 大模型生命周期全景图"></a>📍 1. 大模型生命周期全景图</h2><pre><code class="highlight mermaid">flowchart LR
+    A[海量无标注数据&lt;br/&gt;TB级网页/图书/代码] --&gt; B(预训练 Pre-training)
+    B --&gt; C[基座模型 Base Model&lt;br/&gt;如 Llama-3-Base]
+    
+    C --&gt; D(后训练 Post-training)
+    
+    subgraph D [后训练三大核心支柱]
+        D1[SFT 有监督微调&lt;br/&gt;指令遵循与格式化]
+        D2[RLHF / DPO 偏好对齐&lt;br/&gt;3H安全与价值观]
+        D3[RL 推理强化&lt;br/&gt;长 CoT 思维链演进]
+        D1 --&gt; D2 --&gt; D3
+    end
+    
+    D --&gt; E[对话/推理模型 Instruct / Reasoner&lt;br/&gt;如 ChatGPT / DeepSeek-R1]</code></pre>
 
 <hr>
 <h2 id="📊-2-核心维度对比一览表"><a href="#📊-2-核心维度对比一览表" class="headerlink" title="📊 2. 核心维度对比一览表"></a>📊 2. 核心维度对比一览表</h2><table>
@@ -553,11 +566,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -578,6 +591,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络安全</a>
               </li>
             
             <div class="clearfix"></div>
@@ -695,5 +712,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     </div>
 
 </div>
+  <style>
+  .article-entry pre.mermaid {
+    background: transparent;
+    border: 0;
+    text-align: center;
+  }
+
+  .article-entry pre.mermaid svg {
+    height: auto;
+    max-width: 100%;
+  }
+</style>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  var diagrams = Array.from(document.querySelectorAll('pre > code.mermaid')).map(function (code) {
+    var container = code.parentElement;
+    container.className = 'mermaid';
+    container.textContent = code.textContent;
+    return container;
+  });
+
+  mermaid.initialize({ startOnLoad: false, securityLevel: 'strict' });
+  await mermaid.run({ nodes: diagrams });
+</script>
+
 </body>
 </html>

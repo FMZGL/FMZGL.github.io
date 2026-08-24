@@ -6,17 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>凤求凰 | Tengfei Zhang - HomePage</title>
+  <title>网络安全二：静态分析与动态分析 | Tengfei Zhang - HomePage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="记得听过一个过来人曾讲如果真的想谈恋爱，就要像升学工作一样去认真对待这件事。这种说法我无疑是赞同的。 对方明确拒绝之后就迅速停止，以免搭进去更多的情感成本。 三条黄金法则：1.不要患得患失，豁达一些，没成就没成呗，这世界就是草台班子。2.不要轻易表白。3.这是个长期的事情，要有耐心。  一、开始之前，先达到基本要求  什么是基本要求？就是一个女生能够和你正常接触的下去。和建模经济无关（当然了数值">
-<meta property="og:type" content="website">
-<meta property="og:title" content="凤求凰">
-<meta property="og:url" content="http://example.com/%E5%87%A4%E6%B1%82%E5%87%B0.html">
+  <meta name="description" content="🔬 静态分析 vs 动态分析：核心区别与全景对比在软件工程、代码质量审计与网络安全漏洞挖掘中，静态分析（Static Analysis &#x2F; SAST） 与 动态分析（Dynamic Analysis &#x2F; DAST） 是分析软件行为与发现安全缺陷的两大基石技术。  🎯 一句话核心区别与生动比喻 静态分析（不运行程序）：通过“看”代码或反汇编指令来推测程序的行为与潜在漏洞。 �">
+<meta property="og:type" content="article">
+<meta property="og:title" content="网络安全二：静态分析与动态分析">
+<meta property="og:url" content="http://example.com/2026/08/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%BA%8C%EF%BC%9A%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90/index.html">
 <meta property="og:site_name" content="Tengfei Zhang - HomePage">
-<meta property="og:description" content="记得听过一个过来人曾讲如果真的想谈恋爱，就要像升学工作一样去认真对待这件事。这种说法我无疑是赞同的。 对方明确拒绝之后就迅速停止，以免搭进去更多的情感成本。 三条黄金法则：1.不要患得患失，豁达一些，没成就没成呗，这世界就是草台班子。2.不要轻易表白。3.这是个长期的事情，要有耐心。  一、开始之前，先达到基本要求  什么是基本要求？就是一个女生能够和你正常接触的下去。和建模经济无关（当然了数值">
+<meta property="og:description" content="🔬 静态分析 vs 动态分析：核心区别与全景对比在软件工程、代码质量审计与网络安全漏洞挖掘中，静态分析（Static Analysis &#x2F; SAST） 与 动态分析（Dynamic Analysis &#x2F; DAST） 是分析软件行为与发现安全缺陷的两大基石技术。  🎯 一句话核心区别与生动比喻 静态分析（不运行程序）：通过“看”代码或反汇编指令来推测程序的行为与潜在漏洞。 �">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2026-07-31T02:38:08.000Z">
-<meta property="article:modified_time" content="2026-08-20T03:56:33.417Z">
+<meta property="article:published_time" content="2026-08-24T14:32:30.000Z">
+<meta property="article:modified_time" content="2026-08-24T14:40:07.442Z">
+<meta property="article:tag" content="网络安全">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Tengfei Zhang - HomePage" type="application/atom+xml">
@@ -86,78 +87,146 @@ var _hmt = _hmt || [];
     
     <div class="academic-main full-width">
       <div class="academic-content">
-        <article id="page-" class="article article-type-page " itemscope itemprop="blogPost">
+        <article id="post-网络安全二：静态分析与动态分析" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      凤求凰
+      网络安全二：静态分析与动态分析
     </h1>
   
 
         
-        <a href="/%E5%87%A4%E6%B1%82%E5%87%B0.html" class="archive-article-date">
-  	<time datetime="2026-07-31T02:38:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-07-31</time>
+        <a href="/2026/08/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%BA%8C%EF%BC%9A%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90/" class="archive-article-date">
+  	<time datetime="2026-08-24T14:32:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-08-24</time>
 </a>
         
       </header>
     
     <div class="article-entry " itemprop="articleBody" >
       
-        <blockquote>
-<p>记得听过一个过来人曾讲如果真的想谈恋爱，就要像升学工作一样去认真对待这件事。这种说法我无疑是赞同的。</p>
-<p>对方明确拒绝之后就迅速停止，以免搭进去更多的情感成本。</p>
-<p>三条黄金法则：1.不要患得患失，豁达一些，没成就没成呗，这世界就是草台班子。2.不要轻易表白。3.这是个长期的事情，要有耐心。</p>
-</blockquote>
-<p>一、开始之前，先达到基本要求 </p>
-<p>什么是基本要求？就是一个女生能够和你正常接触的下去。和建模经济无关（当然了数值怪另说。） 主要有以下几点：</p>
-<p>外在：干净、清爽、无异味、衣服换洗勤、无奇装异服和特殊搭配 </p>
-<p>内在：尊重女性，不开下头玩笑，不随便讲黄色笑话 ，低脂网梗视情况而定（对方年龄小可以，其他情况建议不要玩）。头发和胡子整理好，衣服不必贵，但要干净合身；注意口气、体味和指甲。不要把“我比较真实”当作邋遢的借口，也不要把冒犯女性当作幽默。 </p>
-<p>尊重女性并不等于跪舔，更不等于她说什么你都要赞同。真正的尊重，是把对方当成一个完整的人而不是嘎啦game攻略对象。 </p>
-<p>二、如何自然地开始接触 </p>
-<p>认识女生无非两种途径：线上和线下。但不管从哪里开始，最后都必须回到线下。只在线上聊几个月，却迟迟不见面的直接pass。要么是未成年要么在体重、外在、家庭条件、环境等方面必开一个甚至多个debuff。</p>
-<p>线下开场不需要设计复杂话术，最好从当下的具体情境切入。例如在社团、课堂、活动或者共同朋友的聚会里，可以问：“你也是第一次参加这个活动吗？”“刚才你说的那个游戏，我也玩过。”“你这个拼豆挂件是某某作品里的吧？” 不要不敢搭话，也不要吝啬夸奖。如果自己不知道这个活动或者挂件、IP 、anything可以表达自己对这件事情或物的喜欢，然后希望对方能给自己讲解一下。 如果自己了解这个事情就表达自己的需求-扩列、同好等。话术一般是姓名加自己的专业和自己的利他性（例如会打比赛、会修电脑）。然后再回到IP上表示自己也很喜欢某某IP也喜欢拼豆。 上述只是举例，视情况举一反三。 </p>
-<p>线上也一样。不要上来就发“你好”“在吗”“小姐姐”，也不要复制黏贴某些低脂“开源话术”。可以从她公开分享的内容切入：“看到你也玩××，你更喜欢哪个角色？”或者“你发的那家店看起来不错，实际会不会排很久？” 开场的核心是日常交流，并且给对方一个自然舒适、容易回答、没有压力的入口。初期聊天也不要把每天聊满当成目标。聊得顺就多聊几句，明显没话题就自然结束。与其每天机械地问“吃了吗”“在干嘛”，不如通过共同兴趣、生活经历和具体事件，让双方逐渐熟悉。 这个阶段不必着急，通常至少维持一周以上。重点不是靠聊天把她“攻略”，而是初步判断她的性格特征、为人处世、和你的合拍度、以及是否愿意回应、是否会主动延伸话题，双方没有继续了解的欲望。 </p>
-<p>三、第一次单独出去玩 </p>
-<p>聊得比较熟路后可以提出一次简单的、容易接受的线下活动，比如去猫咖、拼豆、喝咖啡、逛展、吃饭、city walk、打桌游等。（猫咖和拼豆两个是神中神） 不要把它理解为“约会”，自己脑子里也不要反复强调“这是约会”。因为一旦把这次见面解读为约会那么你个人的动作、语言和表情都会变得紧绷。（你会变得不像你自己）反而不自然，还会丧失自己的性格特征和吸引度。 所以你应该把这个看成是一次双方相互了解、相互筛选的机会。 记住一点：谈恋爱的本质是互相筛选，遇到明显有问题的、性格缺陷的、不对劲的、伏地魔等直接跑。在大方面没问题的话小的缺点是可以后天慢慢洗点和养成的。 你可以通过一次接触，大致判断她的为人处世和性格特征：例如她如何对待服务人员，个人综合素质素养如何，是否尊重别人的时间，能不能正常沟通，遇到不同意见时是否容易攻击别人，你们的消费习惯、情绪状态和相处节奏是否接近。 同时，对方也在观察你。不要只想着怎么表现自己，更不要提前默认“她这么好，我一定要追到”。长得漂亮、聊天有趣，不代表一定适合你。 见面结束后，双方都感觉不错，再继续接触；发现明显不合适，也可以礼貌停止。</p>
-<p>四、从表面聊天走向情感升温 </p>
-<p>如果已经见过一两次，相处自然，对方也愿意继续出来，就可以逐渐进入深度交流也就是俗称的deep talking。 这个阶段要主动了解她的价值观、人生观、恋爱观、原生家庭，以及她对婚姻、工作、朋友、金钱和未来生活的看法。不是像面试一样连续提问，而是在相关话题出现时，认真听她讲，并分享你自己的经历。当你赞同她时，不要只会说“对方观点+可以可以”（这样太人机了），要说一下自己为什么认同，或者补充一个具体经历，让她知道你真的听进去了。 遇到不赞同的观点，也不要急着反驳。可以说：“这个角度还挺丰富、挺有意思的，我以前确实没有这样想过。”但前提是你真的觉得有启发。不要为了讨好她，假装所有观点都赞成。真正的深度交流不是无限迎合，而是双方都能表达真实想法，同时保持尊重。 </p>
-<p>五、暧昧与临门一脚 </p>
-<p>当你们已经形成稳定联系，会主动分享生活，也出现了明显的互相吸引，就不能永远停留在“普通朋友”的安全区里。这个阶段可以开始说一些带有暧昧意味的小玩笑，也可以在双方都接受、都能接住的情况下，稍微放开一点性的尺度。比如她明显也在和你调情时，你可以说自己梦见了她，甚至开玩笑说：“昨天晚上梦到你了，但是我要先换一下裤子。” 有些盒友可能会担心会不会让对方觉得自己很下头。其实不是的，拿捏好这个尺度和分寸就没问题。向对方展示自己的欲望其实也是示爱和调情的一环。问题不在于能不能表达欲望，而在于时机、关系基础和对方是否愿意接收。 需要注意的是这类暗示和玩笑对象只能是她本人，不要顺便贬低其他女性，也不要在毫无暧昧基础时突然性暗示。同时观察对方的反应：她如果主动接话，则可以继续。 如果转移话题、明显沉默或者表现不适，就立刻打住。礼貌和欲望并不冲突。敢于礼貌的表达欲望和需求，同时尊重对方随时拒绝的权利。 其实到了这一步了基本上十拿九稳了，剩下的表白也只是顺理成章的事情。</p>
-<p>最后总结：其实追女生并不是像嘎啦game一样，选择提高好感度的选项后就能把某个人攻略下来（现实里那些告诉你一套话术就能谈无数个女朋友的都是卖课的）。 你其实真正需要做的是不断改善自己的外在条件（健身、滑雪、游泳等），丰富自己的精神世界。同时做好筛选并尊重所有人。你能控制的只有自己的状态、表达和行为，不能控制对方是否喜欢你（许愿柳另说）。 保持干净，保持尊重，正常表达兴趣，也保留自己的判断和主体性。不要因为喜欢一个人就失去边界，更不要因为害怕失去，就提前把自己变成一个卑微、紧张、完全不像自己的人。 </p>
-<p>你要坚信一点：每个人都值得爱与被爱。即使你是一坨榴莲香菜折耳根味的史，也总会遇到一只喜欢吃热带水果风味的贵州田园犬。</p>
-<p>六、撩人小技巧</p>
-<blockquote>
-<p>我的手机说他想和你聊天</p>
-<p>我的耳朵有点疼  可能是听不到你说想我</p>
-</blockquote>
-<blockquote>
-<p>A：你在干嘛？</p>
-<p>我：你希望我在干嘛</p>
-<p>A：在想我</p>
-<p>我：恭喜你，心想事成</p>
-</blockquote>
-<blockquote>
-<p>A：明天好像要升温了</p>
-<p>我：那我们会升温吗</p>
-</blockquote>
-<blockquote>
-<p>A：我要去洗澡了</p>
-<p>我：有不会洗的问我&#x2F;我不看，谢谢&#x2F;和我聊天很脏吗&#x2F;那就不方便打字了，咱俩视频吧</p>
-</blockquote>
-<blockquote>
-<p>你为什么不回我消息。难道就因为我没发吗</p>
-</blockquote>
-<blockquote>
-<p>为什么不回我消息 </p>
-<p>又在和其他妹妹聊天吗</p>
-</blockquote>
-<blockquote>
-<p>A：我要睡觉觉了</p>
-<p>我：羡慕觉觉</p>
-</blockquote>
+        <h1 id="🔬-静态分析-vs-动态分析：核心区别与全景对比"><a href="#🔬-静态分析-vs-动态分析：核心区别与全景对比" class="headerlink" title="🔬 静态分析 vs 动态分析：核心区别与全景对比"></a>🔬 静态分析 vs 动态分析：核心区别与全景对比</h1><p>在软件工程、代码质量审计与网络安全漏洞挖掘中，<strong>静态分析（Static Analysis &#x2F; SAST）</strong> 与 <strong>动态分析（Dynamic Analysis &#x2F; DAST）</strong> 是分析软件行为与发现安全缺陷的两大基石技术。</p>
+<hr>
+<h2 id="🎯-一句话核心区别与生动比喻"><a href="#🎯-一句话核心区别与生动比喻" class="headerlink" title="🎯 一句话核心区别与生动比喻"></a>🎯 一句话核心区别与生动比喻</h2><ul>
+<li><strong>静态分析（不运行程序）</strong>：通过“看”代码或反汇编指令来推测程序的行为与潜在漏洞。<ul>
+<li>💡 <em>医疗比喻</em>：<strong>照 X 光片 &#x2F; 看图纸</strong> —— 医生不需要让你跑起来，仅通过静态照片就能检查你的骨骼是否有裂缝。</li>
+</ul>
+</li>
+<li><strong>动态分析（运行程序）</strong>：通过“跑”程序并输入各种数据，实时监控其运行时的内存、网络、系统调用等状态。模糊测试是动态分析的一种常用手段。<ul>
+<li>💡 <em>医疗比喻</em>：<strong>做运动负荷心电图</strong> —— 让你在跑步机上跑起来，实时监测你在剧烈运动时的心跳、血压与生理反应。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="📊-多维度对比矩阵"><a href="#📊-多维度对比矩阵" class="headerlink" title="📊 多维度对比矩阵"></a>📊 多维度对比矩阵</h2><table>
+<thead>
+<tr>
+<th align="left">对比维度</th>
+<th align="left">静态分析 (Static Analysis &#x2F; SAST)</th>
+<th align="left">动态分析 (Dynamic Analysis &#x2F; DAST)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>是否需要运行程序</strong></td>
+<td align="left">❌ <strong>不运行</strong>（直接读取源码或二进制字节码）</td>
+<td align="left">✅ <strong>必须运行</strong>（在真实或沙箱环境中执行）</td>
+</tr>
+<tr>
+<td align="left"><strong>核心关注点</strong></td>
+<td align="left">代码语法结构、数据流向、控制流图、危险函数调用</td>
+<td align="left">实际内存变化、崩溃异常（Crash）、网络交互、系统调用</td>
+</tr>
+<tr>
+<td align="left"><strong>代码覆盖率</strong></td>
+<td align="left">🌟 <strong>极高（理论可达 100%）</strong><br>能扫描到极其罕见的异常分支与死代码</td>
+<td align="left">⚠️ <strong>受限于测试用例（覆盖率有限）</strong><br>只有被执行到的路径才能被检测到</td>
+</tr>
+<tr>
+<td align="left"><strong>误报率 (False Positive)</strong></td>
+<td align="left">⚠️ <strong>偏高</strong>（容易把无害代码误判为漏洞）</td>
+<td align="left">🌟 <strong>极低</strong>（只要运行时触发了崩溃或漏洞，基本 100% 真实）</td>
+</tr>
+<tr>
+<td align="left"><strong>漏报率 (False Negative)</strong></td>
+<td align="left">偏低（但在高动态语言&#x2F;反射&#x2F;复杂指针时会漏报）</td>
+<td align="left">偏高（未覆盖到的代码路径中的漏洞会被漏掉）</td>
+</tr>
+<tr>
+<td align="left"><strong>依赖环境与搭建成本</strong></td>
+<td align="left"><strong>极低</strong>（只要有源码或二进制文件即可开始）</td>
+<td align="left"><strong>较高</strong>（需搭建数据库、依赖库、网络服务等运行环境）</td>
+</tr>
+<tr>
+<td align="left"><strong>检测阶段</strong></td>
+<td align="left">编码期、编译期（左移安全 DevSecOps）</td>
+<td align="left">测试期、预发布期、线上生产期</td>
+</tr>
+<tr>
+<td align="left"><strong>典型技术</strong></td>
+<td align="left">抽象语法树（AST）、控制流分析（CFG）、污点分析</td>
+<td align="left">模糊测试（Fuzzing）、API Hooking、动态插桩（DBI）、沙箱监控</td>
+</tr>
+<tr>
+<td align="left"><strong>代表工具</strong></td>
+<td align="left">CodeQL、SonarQube、Semgrep、Fortify、IDA Pro、Ghidra</td>
+<td align="left">AFL++、Burp Suite、Frida、x64dbg&#x2F;GDB、Cuckoo Sandbox</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🔄-双路线工作流程对比"><a href="#🔄-双路线工作流程对比" class="headerlink" title="🔄 双路线工作流程对比"></a>🔄 双路线工作流程对比</h2><pre><code class="highlight mermaid">flowchart TD
+    subgraph 静态分析链路 [静态分析 Static Analysis]
+        A1[源代码 / 二进制文件] --&gt; B1[语法树解析 &amp; 控制流建模]
+        B1 --&gt; C1[规则匹配 &amp; 污点数据流追踪]
+        C1 --&gt; D1[输出: 潜在代码缺陷与风险报告]
+    end
+
+    subgraph 动态分析链路 [动态分析 Dynamic Analysis]
+        A2[可执行程序 &amp; 运行环境] --&gt; B2[注入测试输入 / 模糊测试用例]
+        B2 --&gt; C2[监控运行状态 / 捕获 Crash / 插桩跟踪]
+        C2 --&gt; D2[输出: 真实漏洞证明 PoC / 崩溃转储]
+    end</code></pre>
+
+<hr>
+<h2 id="🔍-核心技术与优缺点深入拆解"><a href="#🔍-核心技术与优缺点深入拆解" class="headerlink" title="🔍 核心技术与优缺点深入拆解"></a>🔍 核心技术与优缺点深入拆解</h2><h3 id="1-静态分析-Static-Analysis"><a href="#1-静态分析-Static-Analysis" class="headerlink" title="1. 静态分析 (Static Analysis)"></a>1. 静态分析 (Static Analysis)</h3><h4 id="核心技术手段："><a href="#核心技术手段：" class="headerlink" title="核心技术手段："></a>核心技术手段：</h4><ul>
+<li><strong>模式匹配（Pattern Matching）</strong>：基于正则表达式或规则模板查找已知的不安全模式（如硬编码密码、使用弃用 API）。</li>
+<li><strong>抽象语法树（AST）分析</strong>：将代码转换为树形结构，分析函数嵌套与逻辑关系。</li>
+<li><strong>污点分析（Taint Analysis）</strong>：追踪未经过滤的外部输入（Source）是否最终流向了危险的执行槽点（Sink，如 <code>eval()</code>、<code>system()</code>、<code>SQL Execute</code>）。</li>
+</ul>
+<h4 id="优缺点："><a href="#优缺点：" class="headerlink" title="优缺点："></a>优缺点：</h4><ul>
+<li>✅ <strong>优点</strong>：检测速度极快，无需依赖环境，能在软件开发生命周期（SDLC）的最早期发现 Bug，修复成本最低。</li>
+<li>❌ <strong>缺点</strong>：缺少运行时的真实上下文（如不知道变量在运行时的具体值），经常产生海量“伪报警（误报）”，需要人工二次排查。</li>
+</ul>
+<hr>
+<h3 id="2-动态分析-Dynamic-Analysis"><a href="#2-动态分析-Dynamic-Analysis" class="headerlink" title="2. 动态分析 (Dynamic Analysis)"></a>2. 动态分析 (Dynamic Analysis)</h3><h4 id="核心技术手段：-1"><a href="#核心技术手段：-1" class="headerlink" title="核心技术手段："></a>核心技术手段：</h4><ul>
+<li><strong>模糊测试（Fuzzing）</strong>：向程序持续注入海量的随机、畸变输入，自动化触发缓冲区溢出、空指针解引用等崩溃。</li>
+<li><strong>动态二进制插桩（DBI, 如 Frida &#x2F; PIN）</strong>：在程序运行期间动态植入监控探针，拦截并记录函数的入参、返回值及寄存器状态。</li>
+<li><strong>黑盒渗透扫描（DAST）</strong>：对正在运行的 Web 服务发起跨站脚本（XSS）、SQL 注入等实际网络攻击测试。</li>
+</ul>
+<h4 id="优缺点：-1"><a href="#优缺点：-1" class="headerlink" title="优缺点："></a>优缺点：</h4><ul>
+<li>✅ <strong>优点</strong>：结果极其真实可信，零误报；能够穿透混淆、加壳和运行时动态生成的代码（如 JIT 编译）。</li>
+<li>❌ <strong>缺点</strong>：高度依赖输入用例的质量，如果用例没能触发特定 <code>if-else</code> 分支，该分支下的漏洞就永远无法被发现。</li>
+</ul>
+<hr>
+<h2 id="🚀-现代工业界趋势：动静结合-IAST-Hybrid"><a href="#🚀-现代工业界趋势：动静结合-IAST-Hybrid" class="headerlink" title="🚀 现代工业界趋势：动静结合 (IAST &#x2F; Hybrid)"></a>🚀 现代工业界趋势：动静结合 (IAST &#x2F; Hybrid)</h2><p>在现代 DevSecOps 与前沿漏洞挖掘中，单一方法已被淘汰，行业普遍转向<strong>动静融合</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                 IAST (交互式应用安全测试)                   │</span><br><span class="line">├──────────────────────────────┬──────────────────────────────┤</span><br><span class="line">│      静态能力：代码插桩      │      动态能力：实时流量触发  │</span><br><span class="line">│  在代码内部关键节点植入探针  │  在外部发起常规功能测试请求  │</span><br><span class="line">├──────────────────────────────┴──────────────────────────────┤</span><br><span class="line">│  🎯 效果：兼具静态分析的高覆盖率 + 动态分析的极低误报率    │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>先静后动（灰盒分析）</strong>：先用静态分析找出所有“疑似有漏洞的函数点”，再针对这些重点函数自动生成 Fuzzing 测试用例进行动态轰炸。</li>
+<li><strong>符号执行（Symbolic Execution）</strong>：将程序路径转化为数学约束方程，结合动态执行（Concolic Testing），自动求解能打通深层分支的精准输入。</li>
+</ol>
+<hr>
+<h2 id="💡-总结与选型指南"><a href="#💡-总结与选型指南" class="headerlink" title="💡 总结与选型指南"></a>💡 总结与选型指南</h2><ul>
+<li><strong>什么时候首选静态分析？</strong><ul>
+<li>在日常写代码、代码评审（Code Review）、CI&#x2F;CD 流水线门禁中，希望秒级&#x2F;分钟级快速排查通用代码缺陷。</li>
+</ul>
+</li>
+<li><strong>什么时候首选动态分析？</strong><ul>
+<li>在针对第三方闭源软件审计、CTF Pwn 题解题、攻防演练以及挖掘深层内存破坏漏洞（0-day）时。</li>
+</ul>
+</li>
+</ul>
 
       
 
@@ -167,6 +236,17 @@ var _hmt = _hmt || [];
       
         
         
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">网络安全</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
         
 
       
@@ -217,7 +297,7 @@ var _hmt = _hmt || [];
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/%E5%87%A4%E6%B1%82%E5%87%B0.html" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2026/08/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%BA%8C%EF%BC%9A%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -229,6 +309,25 @@ var _hmt = _hmt || [];
 </article>
 
   
+<nav id="article-nav">
+  
+    <a href="/2026/08/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%B8%89%EF%BC%9AWeb%E5%AE%89%E5%85%A8%E5%B8%B8%E8%A7%81%E6%BC%8F%E6%B4%9E/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          网络安全三：Web安全常见漏洞
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/08/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%B8%80%EF%BC%9A%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B8%8E%E6%BC%8F%E6%B4%9E%E5%88%A9%E7%94%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">网络安全一：漏洞挖掘与漏洞利用</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -275,7 +374,7 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
@@ -370,11 +469,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -395,6 +494,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络安全</a>
               </li>
             
             <div class="clearfix"></div>
@@ -512,5 +615,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     </div>
 
 </div>
+  <style>
+  .article-entry pre.mermaid {
+    background: transparent;
+    border: 0;
+    text-align: center;
+  }
+
+  .article-entry pre.mermaid svg {
+    height: auto;
+    max-width: 100%;
+  }
+</style>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  var diagrams = Array.from(document.querySelectorAll('pre > code.mermaid')).map(function (code) {
+    var container = code.parentElement;
+    container.className = 'mermaid';
+    container.textContent = code.textContent;
+    return container;
+  });
+
+  mermaid.initialize({ startOnLoad: false, securityLevel: 'strict' });
+  await mermaid.run({ nodes: diagrams });
+</script>
+
 </body>
 </html>

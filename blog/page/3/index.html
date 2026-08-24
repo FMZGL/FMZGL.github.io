@@ -89,6 +89,620 @@ var _hmt = _hmt || [];
 </div>
 
   
+    <article id="post-库、包、框架核心概念详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/03/13/%E5%BA%93%E3%80%81%E5%8C%85%E3%80%81%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3/">库、包、框架核心概念详解</a>
+    </h1>
+  
+
+        
+        <a href="/2026/03/13/%E5%BA%93%E3%80%81%E5%8C%85%E3%80%81%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
+  	<time datetime="2026-03-13T06:36:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h2 id="一、核心定义（一句话定调）"><a href="#一、核心定义（一句话定调）" class="headerlink" title="一、核心定义（一句话定调）"></a>一、核心定义（一句话定调）</h2><table>
+<thead>
+<tr>
+<th align="center">概念</th>
+<th align="center">核心定义</th>
+<th align="center">核心视角</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">库（Library）</td>
+<td align="center">一组实现特定功能的可复用代码集合（函数 &#x2F; 类 &#x2F; 模块），目的是避免重复造轮子</td>
+<td align="center">功能视角</td>
+</tr>
+<tr>
+<td align="center">包（Package）</td>
+<td align="center">库的 “分发 &#x2F; 安装单位”，是库的标准化交付形态（如<code>.whl</code>&#x2F;<code>.jar</code>&#x2F;<code>.tgz</code>文件）</td>
+<td align="center">交付 &#x2F; 使用视角</td>
+</tr>
+<tr>
+<td align="center">框架（Framework）</td>
+<td align="center">特殊的重量级库，提供 “整体开发骨架 + 规则”，开发者填充业务代码，框架主导执行流程</td>
+<td align="center">架构 &#x2F; 控制权视角</td>
+</tr>
+</tbody></table>
+<h2 id="二、详细解析"><a href="#二、详细解析" class="headerlink" title="二、详细解析"></a>二、详细解析</h2><h3 id="1-库（Library）"><a href="#1-库（Library）" class="headerlink" title="1. 库（Library）"></a>1. 库（Library）</h3><h4 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h4><p>开发者编写的、可直接调用的功能代码集合，是 “工具” 级别的代码复用。</p>
+<h4 id="核心特征"><a href="#核心特征" class="headerlink" title="核心特征"></a>核心特征</h4><ul>
+<li><strong>开发者主导</strong>：由开发者决定何时调用、如何调用，代码执行流程完全由开发者掌控；</li>
+<li><strong>功能单一 &#x2F; 聚焦</strong>：通常只解决某一类问题，边界清晰；</li>
+<li><strong>无强约束</strong>：无需遵循固定规则，按需导入、按需调用。</li>
+</ul>
+<h4 id="典型示例"><a href="#典型示例" class="headerlink" title="典型示例"></a>典型示例</h4><ul>
+<li>Python：<code>jieba</code>（中文分词）、<code>requests</code>（网络请求）、<code>numpy</code>（数值计算）；</li>
+<li>JavaScript：<code>lodash</code>（工具函数）、<code>axios</code>（异步请求）；</li>
+<li>Java：<code>apache-commons</code>（通用工具）。</li>
+</ul>
+<h4 id="使用示例（Python）"><a href="#使用示例（Python）" class="headerlink" title="使用示例（Python）"></a>使用示例（Python）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import jieba  # 导入库</span><br><span class="line">text = &quot;测试中文分词&quot;</span><br><span class="line">result = jieba.cut(text)  # 开发者主动调用库的功能</span><br><span class="line">print(list(result))</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-包（Package）"><a href="#2-包（Package）" class="headerlink" title="2. 包（Package）"></a>2. 包（Package）</h3><h4 id="本质-1"><a href="#本质-1" class="headerlink" title="本质"></a>本质</h4><p>库的 “可安装形态”，是包管理工具（<code>pip</code>&#x2F;<code>npm</code>&#x2F;<code>maven</code>）识别和分发的基本单位。</p>
+<h4 id="核心特征-1"><a href="#核心特征-1" class="headerlink" title="核心特征"></a>核心特征</h4><ul>
+<li><strong>标准化交付</strong>：包含库的代码、依赖说明、版本信息等，符合对应语言的打包规范；</li>
+<li><strong>安装即得库</strong>：通过包管理工具安装 “包” 后，本地环境中就会生成可调用的 “库”；</li>
+<li><strong>形态多样</strong>：不同语言的包格式不同（Python：<code>.whl</code>&#x2F;<code>.tar.gz</code>；JS：<code>.tgz</code>；Java：<code>.jar</code>）。</li>
+</ul>
+<h4 id="关键关联"><a href="#关键关联" class="headerlink" title="关键关联"></a>关键关联</h4><ul>
+<li>所有可通过包管理工具安装的库，在分发阶段都叫 “包”；</li>
+<li>少数库无需打包（如手动拷贝的代码片段），但无法通过包管理工具安装；</li>
+<li>一个包可包含多个子库（如 Python 的<code>scipy</code>包，包含数值计算、线性代数等子库）。</li>
+</ul>
+<h4 id="典型操作"><a href="#典型操作" class="headerlink" title="典型操作"></a>典型操作</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Python：安装jieba包 → 得到jieba库</span><br><span class="line">pip install jieba</span><br><span class="line"></span><br><span class="line"># JavaScript：安装axios包 → 得到axios库</span><br><span class="line">npm install axios</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-框架（Framework）"><a href="#3-框架（Framework）" class="headerlink" title="3. 框架（Framework）"></a>3. 框架（Framework）</h3><h4 id="本质-2"><a href="#本质-2" class="headerlink" title="本质"></a>本质</h4><p>“库的超集”，是提供完整开发体系的架构级工具，核心是 “控制权反转”（好莱坞原则：Don’t call us, we’ll call you）。</p>
+<h4 id="核心特征-2"><a href="#核心特征-2" class="headerlink" title="核心特征"></a>核心特征</h4><ul>
+<li><strong>框架主导</strong>：框架定义整体执行流程，开发者只需按规则编写 “业务逻辑片段”，由框架调用；</li>
+<li><strong>强约束性</strong>：必须遵循框架的开发规范（如目录结构、接口定义、生命周期）；</li>
+<li><strong>全流程覆盖</strong>：解决一类场景的全链路问题，而非单一功能。</li>
+</ul>
+<h4 id="典型示例-1"><a href="#典型示例-1" class="headerlink" title="典型示例"></a>典型示例</h4><ul>
+<li>Python：<code>Django</code>（Web 开发）、<code>Keras</code>（深度学习）；</li>
+<li>JavaScript：<code>Vue</code>&#x2F;<code>React</code>（前端）、<code>Express</code>（Node.js Web）；</li>
+<li>Java：<code>Spring</code>（后端）、<code>MyBatis</code>（数据库操作）。</li>
+</ul>
+<h4 id="使用示例（Python-Keras）"><a href="#使用示例（Python-Keras）" class="headerlink" title="使用示例（Python&#x2F;Keras）"></a>使用示例（Python&#x2F;Keras）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import keras</span><br><span class="line">from keras import layers</span><br><span class="line"></span><br><span class="line"># 开发者按框架规则填充代码（定义模型结构）</span><br><span class="line">model = keras.Sequential([layers.Dense(10, activation=&#x27;softmax&#x27;)])</span><br><span class="line">model.compile(optimizer=&#x27;adam&#x27;, loss=&#x27;categorical_crossentropy&#x27;)</span><br><span class="line"></span><br><span class="line"># 框架主导执行流程（训练过程由Keras接管）</span><br><span class="line">model.fit(x_train, y_train, epochs=10)</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、核心关系总结"><a href="#三、核心关系总结" class="headerlink" title="三、核心关系总结"></a>三、核心关系总结</h2><ol>
+<li><p><strong>包含关系</strong>：框架 ∈ 库 ∈ 包（框架是特殊的库，库的分发形态是包）；</p>
+</li>
+<li><p><strong>使用逻辑</strong>：通过包管理工具安装 “包” → 得到可调用的 “库” → 普通库直接调用，框架按规则嵌入代码并由框架执行；</p>
+</li>
+<li><p>控制权差异</p>
+<ul>
+<li>普通库：开发者调用库 → 开发者掌控流程；</li>
+<li>框架：框架调用开发者写的代码 → 框架掌控流程。</li>
+</ul>
+</li>
+</ol>
+<h2 id="四、易混淆场景补充"><a href="#四、易混淆场景补充" class="headerlink" title="四、易混淆场景补充"></a>四、易混淆场景补充</h2><table>
+<thead>
+<tr>
+<th align="center">场景</th>
+<th align="center">正确认知</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>pip install StanfordCoreNLP</code></td>
+<td align="center">安装的是 “Python 桥接包”，仅提供调用 Java 版 StanfordCoreNLP 的接口，核心 NLP 功能在 Java 包中</td>
+</tr>
+<tr>
+<td align="center"><code>npm install vue</code></td>
+<td align="center">安装的是 “vue 包”，得到的是 “vue 框架”（vue 兼具库和框架特性：调用 API 时是库，按生命周期开发时是框架）</td>
+</tr>
+<tr>
+<td align="center">Java 的<code>.jar</code>文件</td>
+<td align="center">是 Java 语言的 “包”，包含的是 Java 库（如<code>stanford-corenlp-4.5.10.jar</code>是 NLP 库的包形态）</td>
+</tr>
+</tbody></table>
+<h3 id="关键点回顾"><a href="#关键点回顾" class="headerlink" title="关键点回顾"></a>关键点回顾</h3><ol>
+<li>库是功能集合，包是库的安装 &#x2F; 分发单位，框架是主导执行流程的特殊库；</li>
+<li>普通库是 “开发者调用工具”，框架是 “工具调用开发者的代码”；</li>
+<li>包管理工具（pip&#x2F;npm）管理的是 “包”，开发者代码中使用的是 “库 &#x2F; 框架”。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JAVA学习日记七：常用函数及比赛所需的一些小技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/">JAVA学习日记七：常用函数及比赛所需的一些小技巧</a>
+    </h1>
+  
+
+        
+        <a href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="archive-article-date">
+  	<time datetime="2026-02-24T13:22:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-02-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h3 id="一、String的一些常用的封装函数"><a href="#一、String的一些常用的封装函数" class="headerlink" title="一、String的一些常用的封装函数"></a>一、String的一些常用的封装函数</h3><p><strong>1.charAt(int index) : char</strong></p>
+<p>给出索引返回对应位置的字符</p>
+<p><strong>2.compareTo(String another string) : int</strong></p>
+<p>与另一个字符串按照字典序比较大小，a&lt;b返回-1，a&#x3D;b返回0，a&gt;b返回正数</p>
+<p><strong>3.compareToignoreCase</strong></p>
+<p>类似但是忽略大小写</p>
+<p><strong>4.concat(String str) : String</strong></p>
+<p>返回两个字符串拼接之后的字符串</p>
+<p><strong>5.contains(CharSequence char) ：boolen</strong></p>
+<p>判断字符串中是否含有序列char</p>
+<p><strong>6.equals(Object object) : boolen</strong></p>
+<p>判断两个字符串是否相等！！！</p>
+<p><strong>7.equalsIgnoreCase(String another string) : boolen</strong></p>
+<p>类似只是不考虑大小写</p>
+<p><strong>8.indexof(CharSequence char) ：int</strong></p>
+<p>给一个序列，返回它在字符串中的索引，不存在返回-1.</p>
+<p><strong>9.length() :int</strong></p>
+<p>返回长度</p>
+<p><strong>10.substring(int beginindex) : string      substring(int beginindex,int endindex) : string</strong></p>
+<p>返回对应区间内的子串</p>
+<p>** 注意右边是开区间，也就是说endindex这个位置取不到</p>
+<p><strong>11.replace(char oldchar,char newchar) : string</strong></p>
+<p>用newchar替换字符串中所有的oldchar</p>
+<p><strong>12.replace(charSequence target  charSequence replacement) : string</strong></p>
+<p>用replacement替换target</p>
+<p><strong>13.valueof() ：string</strong></p>
+<p>这个比较重要，可以把其他类型的数据如int、long换成String</p>
+<p><strong>14.String 创建之后不能修改，比较方便的方法是 char[] ch &#x3D;str.toCharArray()</strong></p>
+<h2 id="二、一些比较重要的技巧"><a href="#二、一些比较重要的技巧" class="headerlink" title="二、一些比较重要的技巧"></a>二、一些比较重要的技巧</h2><p><strong>1.翻转字符串：String reversed &#x3D; new StringBuilder(原字符串).reverse().toString();</strong></p>
+<p><strong>2.快速初始化一个数组</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Arrays;</span><br><span class="line"></span><br><span class="line">int[] a = new int[100];</span><br><span class="line">Arrays.fill(a, 666);   // 全部变成 666</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="三、最经典的一些错误"><a href="#三、最经典的一些错误" class="headerlink" title="三、最经典的一些错误"></a>三、最经典的一些错误</h2><p>1.忘开long。这个真没话说</p>
+<p>2.序列处理完，忘了把最后一种情况也加上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int pre=arr[0];</span><br><span class="line">		int num=1;</span><br><span class="line">		for(int i=1;i&lt;n;i++) &#123;</span><br><span class="line">			if(arr[i]!=pre) &#123;</span><br><span class="line">				lst[pre].add(num);</span><br><span class="line">				pre=arr[i];</span><br><span class="line">				num=1;</span><br><span class="line">			&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				num++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		lst[pre].add(num);</span><br></pre></td></tr></table></figure>
+
+<p>3.完了考虑数组为空的情况。这种情况包re的</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JAVA学习日记六：Scanner以及数值混合类型转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">JAVA学习日记六：Scanner以及数值混合类型转换</a>
+    </h1>
+  
+
+        
+        <a href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
+  	<time datetime="2026-01-29T13:27:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-29</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h1 id="Java-Scanner-方法区别-数值混合运算类型提升规律总结"><a href="#Java-Scanner-方法区别-数值混合运算类型提升规律总结" class="headerlink" title="Java Scanner 方法区别 + 数值混合运算类型提升规律总结"></a>Java Scanner 方法区别 + 数值混合运算类型提升规律总结</h1><h2 id="一、Scanner-核心方法区别（next-nextLine-hasNext-hasNextLine）"><a href="#一、Scanner-核心方法区别（next-nextLine-hasNext-hasNextLine）" class="headerlink" title="一、Scanner 核心方法区别（next&#x2F;nextLine + hasNext&#x2F;hasNextLine）"></a>一、Scanner 核心方法区别（next&#x2F;nextLine + hasNext&#x2F;hasNextLine）</h2><h3 id="1-sc-next-与-sc-nextLine-区别"><a href="#1-sc-next-与-sc-nextLine-区别" class="headerlink" title="1. sc.next () 与 sc.nextLine () 区别"></a>1. sc.next () 与 sc.nextLine () 区别</h3><table>
+<thead>
+<tr>
+<th align="center">对比维度</th>
+<th align="center">sc.next()</th>
+<th align="center">sc.nextLine()</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">读取终止标志</td>
+<td align="center">任意空白符（空格、Tab、\n、\r）</td>
+<td align="center">仅换行符 \n（按回车触发）</td>
+</tr>
+<tr>
+<td align="center">空白符处理</td>
+<td align="center">自动忽略开头所有空白符，仅取有效内容</td>
+<td align="center">不忽略任何字符，保留行内所有空白符（开头 &#x2F; 中间）</td>
+</tr>
+<tr>
+<td align="center">返回内容</td>
+<td align="center">两个空白符间的有效标记（Token），无空白符</td>
+<td align="center">从光标到换行符的整行内容，不含末尾 \n</td>
+</tr>
+<tr>
+<td align="center">配套判断方法</td>
+<td align="center">必须搭配 sc.hasNext ()</td>
+<td align="center">必须搭配 sc.hasNextLine ()</td>
+</tr>
+<tr>
+<td align="center">核心特点</td>
+<td align="center">按「标记」读取，拆分连续数据</td>
+<td align="center">按「整行」读取，保留完整内容</td>
+</tr>
+<tr>
+<td align="center">适用场景</td>
+<td align="center">读取分隔的单个数据（整数、单词、独立指令）</td>
+<td align="center">读取整行内容（带空格文本、整行指令、一句话）</td>
+</tr>
+<tr>
+<td align="center">经典坑点</td>
+<td align="center">读取后不消耗末尾 \n，后续接 nextLine () 会读空行</td>
+<td align="center">无此坑，整行读取自然消耗 \n</td>
+</tr>
+</tbody></table>
+<p><strong>坑点解决</strong>：next ()&#x2F;nextInt () 后接 nextLine ()，需额外调用 <code>sc.nextLine()</code> 消耗换行符，或全程用 nextLine () 读取后手动转类型。</p>
+<h3 id="2-sc-hasNext-与-sc-hasNextLine-区别"><a href="#2-sc-hasNext-与-sc-hasNextLine-区别" class="headerlink" title="2. sc.hasNext () 与 sc.hasNextLine () 区别"></a>2. sc.hasNext () 与 sc.hasNextLine () 区别</h3><table>
+<thead>
+<tr>
+<th align="center">对比维度</th>
+<th align="center">sc.hasNext()</th>
+<th align="center">sc.hasNextLine()</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">判断依据</td>
+<td align="center">是否有下一个<strong>有效标记</strong>（非空白字符）</td>
+<td align="center">是否有下一个<strong>整行内容</strong>（可空行）</td>
+</tr>
+<tr>
+<td align="center">空白符处理</td>
+<td align="center">忽略开头空白符，仅判断有效内容是否存在</td>
+<td align="center">不忽略任何字符，包含空行、空白符行</td>
+</tr>
+<tr>
+<td align="center">核心目标</td>
+<td align="center">判断是否有可提取的单个数据单元</td>
+<td align="center">判断是否有可提取的完整行</td>
+</tr>
+<tr>
+<td align="center">配套读取方法</td>
+<td align="center">sc.next()&#x2F;sc.nextXxx()（nextInt&#x2F;nextLong）</td>
+<td align="center">sc.nextLine()</td>
+</tr>
+<tr>
+<td align="center">空行处理</td>
+<td align="center">空行返回 false（无有效标记）</td>
+<td align="center">空行返回 true（仍为一行内容）</td>
+</tr>
+</tbody></table>
+<p><strong>核心结论</strong>：判断「是否有单个数据」用 hasNext ()，判断「是否有整行内容」用 hasNextLine ()，<strong>严禁混用判断与读取方法</strong>。</p>
+<h2 id="二、Java-数值混合运算的类型提升核心规律"><a href="#二、Java-数值混合运算的类型提升核心规律" class="headerlink" title="二、Java 数值混合运算的类型提升核心规律"></a>二、Java 数值混合运算的类型提升核心规律</h2><h3 id="1-基础依据：数值类型精度层级（从低到高，核心排序）"><a href="#1-基础依据：数值类型精度层级（从低到高，核心排序）" class="headerlink" title="1. 基础依据：数值类型精度层级（从低到高，核心排序）"></a>1. 基础依据：数值类型精度层级（从低到高，核心排序）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">byte &lt; short &lt; int &lt; long &lt; float &lt; double</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>补充：<code>char</code> 参与数值运算时，<strong>先自动转为 int</strong>，再遵循此层级提升；</li>
+<li>原则：精度越高，可表示的数值范围 &#x2F; 小数精度越强，提升不可逆（低精度不降级）。</li>
+</ul>
+<h3 id="2-3-条通用提升规则（覆盖所有数值运算场景）"><a href="#2-3-条通用提升规则（覆盖所有数值运算场景）" class="headerlink" title="2. 3 条通用提升规则（覆盖所有数值运算场景）"></a>2. 3 条通用提升规则（覆盖所有数值运算场景）</h3><h4 id="规则-1：单类型运算-——-无提升，结果类型与操作数一致"><a href="#规则-1：单类型运算-——-无提升，结果类型与操作数一致" class="headerlink" title="规则 1：单类型运算 —— 无提升，结果类型与操作数一致"></a>规则 1：单类型运算 —— 无提升，结果类型与操作数一致</h4><p>所有操作数为同一种数值类型，直接运算，结果类型不变，无隐式转换：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a=10, b=20; int res = a+b; // 全int运算，结果仍为int</span><br><span class="line">long c=100L, d=200L; long res2 = c-d; // 全long运算，结果仍为long</span><br></pre></td></tr></table></figure>
+
+<h4 id="规则-2：多类型混合运算-——-全提升至「精度最高类型」，结果同此类型"><a href="#规则-2：多类型混合运算-——-全提升至「精度最高类型」，结果同此类型" class="headerlink" title="规则 2：多类型混合运算 —— 全提升至「精度最高类型」，结果同此类型"></a>规则 2：多类型混合运算 —— 全提升至「精度最高类型」，结果同此类型</h4><p>存在不同精度操作数时，<strong>所有低精度操作数依次自动转为运算中精度最高的类型</strong>，同类型运算后，结果为该最高类型（只能用该类型接收，否则编译报错）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a=10; long b=20L; long res = a+b; // int→long，结果long</span><br><span class="line">long c=100L; double d=20.5; double res2 = c+d; // long→double，结果double</span><br><span class="line">int e=5; float f=3.5f; double g=1.2; double res3 = e+f+g; // int→float→double，结果double</span><br></pre></td></tr></table></figure>
+
+<h4 id="规则-3：byte-short-char-运算-——-先统一转-int，再按规则-2-提升"><a href="#规则-3：byte-short-char-运算-——-先统一转-int，再按规则-2-提升" class="headerlink" title="规则 3：byte&#x2F;short&#x2F;char 运算 —— 先统一转 int，再按规则 2 提升"></a>规则 3：byte&#x2F;short&#x2F;char 运算 —— 先统一转 int，再按规则 2 提升</h4><p>这三种低精度类型，<strong>无论互相运算还是与其他类型运算</strong>，第一步必自动转为 int，后续再按「精度从低到高」继续提升：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte a=10; short b=20; int res = a+b; // byte/short→int，结果int</span><br><span class="line">char c=&#x27;a&#x27;; // ASCII码97，运算时→int(97)</span><br><span class="line">long res2 = c+a; // char→int→long，byte→int→long，结果long</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="三、浮点数在计算机中的存储规则（以255-5为例0"><a href="#三、浮点数在计算机中的存储规则（以255-5为例0" class="headerlink" title="三、浮点数在计算机中的存储规则（以255.5为例0)"></a>三、浮点数在计算机中的存储规则（以255.5为例0)</h1><h2 id="一、第一步：将-255-5-转为十进制整数-小数的二进制"><a href="#一、第一步：将-255-5-转为十进制整数-小数的二进制" class="headerlink" title="一、第一步：将 255.5 转为十进制整数 + 小数的二进制"></a>一、第一步：将 255.5 转为十进制整数 + 小数的二进制</h2><h3 id="1-整数部分（255）转二进制（除-2-取余，逆序排列）"><a href="#1-整数部分（255）转二进制（除-2-取余，逆序排列）" class="headerlink" title="1. 整数部分（255）转二进制（除 2 取余，逆序排列）"></a>1. 整数部分（255）转二进制（除 2 取余，逆序排列）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">255 ÷ 2 = 127 余 1</span><br><span class="line">127 ÷ 2 = 63  余 1</span><br><span class="line">63 ÷ 2 = 31   余 1</span><br><span class="line">31 ÷ 2 = 15   余 1</span><br><span class="line">15 ÷ 2 = 7    余 1</span><br><span class="line">7 ÷ 2 = 3     余 1</span><br><span class="line">3 ÷ 2 = 1     余 1</span><br><span class="line">1 ÷ 2 = 0     余 1</span><br></pre></td></tr></table></figure>
+
+<p>逆序取余得：<strong>255 的二进制 &#x3D; 11111111</strong>（8 个 1）。</p>
+<h3 id="2-小数部分（0-5）转二进制（乘-2-取整，顺序排列）"><a href="#2-小数部分（0-5）转二进制（乘-2-取整，顺序排列）" class="headerlink" title="2. 小数部分（0.5）转二进制（乘 2 取整，顺序排列）"></a>2. 小数部分（0.5）转二进制（乘 2 取整，顺序排列）</h3><p>十进制小数转二进制<strong>核心方法</strong>：乘 2 取整法，反复乘 2 取整数部分，按顺序排列</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.5 × 2 = 1.0  取整 1，小数部分为0，结束转换</span><br></pre></td></tr></table></figure>
+
+<p>顺序取整得：<strong>0.5 的二进制 &#x3D; 1</strong>。</p>
+<h3 id="3-合并整数-小数二进制"><a href="#3-合并整数-小数二进制" class="headerlink" title="3. 合并整数 + 小数二进制"></a>3. 合并整数 + 小数二进制</h3><p>255.5 的二进制 &#x3D; 整数部分 + 小数部分 &#x3D; <strong>11111111.1</strong>。</p>
+<h2 id="二、第二步：转为-IEEE-754-规格化二进制（1-M-×-2-e-形式）"><a href="#二、第二步：转为-IEEE-754-规格化二进制（1-M-×-2-e-形式）" class="headerlink" title="二、第二步：转为 IEEE 754 规格化二进制（1.M × 2^e 形式）"></a>二、第二步：转为 IEEE 754 规格化二进制（1.M × 2^e 形式）</h2><p>IEEE 754 要求浮点数以<strong>规格化形式</strong>表示，即<strong>小数点前必须只有 1 个有效数字 1</strong>，通过移动小数点实现：</p>
+<ul>
+<li>原始二进制：<code>11111111.1</code></li>
+<li>小数点左移 7 位：<code>1.11111111 × 2^7</code>（左移 n 位，指数为 + n；右移为 - n）</li>
+</ul>
+<p>由此得到规格化的核心参数：</p>
+<ul>
+<li>符号位基础：255.5 是正数 → 符号位 S &#x3D; 0</li>
+<li>尾数小数部分 M：<code>1.11111111</code> 中小数点后的部分 → <code>11111111</code></li>
+<li>实际指数 e：7</li>
+</ul>
+<h2 id="三、第三步：计算-double-专属的指数位（偏移量修正）"><a href="#三、第三步：计算-double-专属的指数位（偏移量修正）" class="headerlink" title="三、第三步：计算 double 专属的指数位（偏移量修正）"></a>三、第三步：计算 double 专属的指数位（偏移量修正）</h2><p>double 类型的指数位采用<strong>偏移表示法</strong>，<strong>偏移量固定为 1023</strong>，存储的指数值 E 计算公式为：</p>
+<p><strong>E &#x3D; 实际指数 e + 1023</strong></p>
+<p>代入计算：</p>
+<p>E &#x3D; 7 + 1023 &#x3D; <strong>1030</strong></p>
+<p>将 1030 转为 11 位二进制（double 指数位固定 11 位，不足补前导 0）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1030 ÷ 2 = 515 余 0</span><br><span class="line">515 ÷ 2 = 257 余 1</span><br><span class="line">257 ÷ 2 = 128 余 1</span><br><span class="line">128 ÷ 2 = 64  余 0</span><br><span class="line">64 ÷ 2 = 32   余 0</span><br><span class="line">32 ÷ 2 = 16   余 0</span><br><span class="line">16 ÷ 2 = 8    余 0</span><br><span class="line">8 ÷ 2 = 4     余 0</span><br><span class="line">4 ÷ 2 = 2     余 0</span><br><span class="line">2 ÷ 2 = 1     余 0</span><br><span class="line">1 ÷ 2 = 0     余 1</span><br></pre></td></tr></table></figure>
+
+<p>逆序取余并补为 11 位：<strong>10000000110</strong>（验证：2^10 + 2^3 + 2^2 &#x3D; 1024+8+4&#x3D;1030，正确）。</p>
+<h2 id="四、第四步：补全-52-位尾数位（double-尾数固定-52-位）"><a href="#四、第四步：补全-52-位尾数位（double-尾数固定-52-位）" class="headerlink" title="四、第四步：补全 52 位尾数位（double 尾数固定 52 位）"></a>四、第四步：补全 52 位尾数位（double 尾数固定 52 位）</h2><p>double 尾数位为 52 位，存储的是规格化形式<code>1.M</code>中<strong>小数点后的 M 部分</strong>，<strong>隐含最高位的 1</strong>（不占用存储位，节省精度），规则：</p>
+<ul>
+<li>若 M 长度 &lt; 52 位，<strong>末尾补 0</strong>至 52 位；</li>
+<li>若 M 长度 &gt; 52 位，按舍入规则截断。</li>
+</ul>
+<p>本题中 M &#x3D; <code>11111111</code>（8 位），需补 52-8&#x3D;44 个 0，最终尾数位为：</p>
+<p><strong>11111111 + 44 个 0</strong>（共 52 位）。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/">JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误</a>
+    </h1>
+  
+
+        
+        <a href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" class="archive-article-date">
+  	<time datetime="2026-01-24T06:58:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <p>在 Java 中，<code>long</code>（64 位）和 <code>int</code>（32 位）的转换分为<strong>自动转换</strong>和<strong>强制转换</strong>两种情况，核心是处理数据范围的差异。</p>
+<hr>
+<h3 id="1-自动转换：int-→-long（安全）"><a href="#1-自动转换：int-→-long（安全）" class="headerlink" title="1. 自动转换：int → long（安全）"></a>1. 自动转换：int → long（安全）</h3><ul>
+<li><strong>规则</strong>：当 <code>int</code> 类型的值赋值给 <code>long</code> 变量时，Java 会自动完成转换，因为 <code>long</code> 能容纳 <code>int</code> 的所有值（<code>long</code> 范围是 <code>-9e18 ~ 9e18</code>，<code>int</code> 范围是 <code>-2e9 ~ 2e9</code>），不会丢失数据。</li>
+<li><strong>示例</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 100;</span><br><span class="line">long b = a; // 自动转换，无风险</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-强制转换：long-→-int（有风险）"><a href="#2-强制转换：long-→-int（有风险）" class="headerlink" title="2. 强制转换：long → int（有风险）"></a>2. 强制转换：long → int（有风险）</h3><ul>
+<li><strong>规则</strong>：当 <code>long</code> 类型的值赋值给 <code>int</code> 变量时，必须显式强制转换，因为 <code>long</code> 的值可能超出 <code>int</code> 的范围，导致数据溢出或精度丢失。</li>
+<li><strong>语法</strong>：<code>(int) 要转换的long值</code></li>
+<li><strong>示例</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">long a = 100L;</span><br><span class="line">int b = (int) a; // 安全：100在int范围内</span><br><span class="line">long c = 3000000000L; // 超出int最大值（2147483647）</span><br><span class="line">int d = (int) c; // 溢出！结果会变成错误的负数（实际值为-1294967296）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-常见场景与避坑"><a href="#3-常见场景与避坑" class="headerlink" title="3. 常见场景与避坑"></a>3. 常见场景与避坑</h3><h4 id="场景-1：计算时的自动提升"><a href="#场景-1：计算时的自动提升" class="headerlink" title="场景 1：计算时的自动提升"></a>场景 1：计算时的自动提升</h4><p>在混合运算中，<code>int</code> 会自动提升为 <code>long</code>，避免溢出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 1000000;</span><br><span class="line">int b = 2000000;</span><br><span class="line">long c = (long) a * b; // 先把a转为long，再计算，避免int相乘溢出</span><br></pre></td></tr></table></figure>
+
+<h4 id="场景-2：避免溢出的强制转换"><a href="#场景-2：避免溢出的强制转换" class="headerlink" title="场景 2：避免溢出的强制转换"></a>场景 2：避免溢出的强制转换</h4><p>如果需要把一个可能超出 <code>int</code> 范围的 <code>long</code> 转成 <code>int</code>，建议先做范围检查：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">long num = 1234567890L;</span><br><span class="line">int result;</span><br><span class="line">if (num &gt;= Integer.MIN_VALUE &amp;&amp; num &lt;= Integer.MAX_VALUE) &#123;</span><br><span class="line">    result = (int) num; // 安全转换</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    throw new IllegalArgumentException(&quot;数值超出int范围&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-转换规则总结"><a href="#4-转换规则总结" class="headerlink" title="4. 转换规则总结"></a>4. 转换规则总结</h3><table>
+<thead>
+<tr>
+<th align="center">转换方向</th>
+<th align="center">方式</th>
+<th align="center">风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>int → long</code></td>
+<td align="center">自动转换</td>
+<td align="center">无风险，不会丢失数据</td>
+</tr>
+<tr>
+<td align="center"><code>long → int</code></td>
+<td align="center">强制转换 <code>(int)</code></td>
+<td align="center">有风险，可能溢出或丢失精度</td>
+</tr>
+</tbody></table>
+<h2 id="如何处理不开long导致的低级错误"><a href="#如何处理不开long导致的低级错误" class="headerlink" title="如何处理不开long导致的低级错误"></a>如何处理不开long导致的低级错误</h2><p><strong>竞赛最优选择</strong>：直接全量用<code>long</code>，记住 “数组长度转 int、字面量加 L” 两个细节，既能避免溢出，又不用额外封装，是最高效的方式。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JAVA学习日记四：继承Compareable接口自定义比较方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1277,738 +1891,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-常见包管理器及简单使用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/">常见包管理器及简单使用</a>
-    </h1>
-  
-
-        
-        <a href="/2025/11/18/%E5%B8%B8%E8%A7%81%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E5%8F%8A%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/" class="archive-article-date">
-  	<time datetime="2025-11-18T06:43:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h2 id="1-apt-get"><a href="#1-apt-get" class="headerlink" title="1.apt-get"></a>1.apt-get</h2><p><strong>核心定位</strong>：Debian、Ubuntu 等 Debian 系 Linux 发行版的系统级包管理器，基于.deb 格式包，主打系统软件的安装、升级与依赖管理，需 root 权限执行。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>更新软件包列表</td>
-<td>sudo apt-get update</td>
-</tr>
-<tr>
-<td>安装软件包</td>
-<td>sudo apt-get install 包名</td>
-</tr>
-<tr>
-<td>卸载软件（保留配置）</td>
-<td>sudo apt-get remove 包名</td>
-</tr>
-<tr>
-<td>彻底卸载软件（含配置）</td>
-<td>sudo apt-get purge 包名</td>
-</tr>
-<tr>
-<td>升级所有软件</td>
-<td>sudo apt-get upgrade</td>
-</tr>
-<tr>
-<td>清理下载的包缓存</td>
-<td>sudo apt-get clean</td>
-</tr>
-</tbody></table>
-<h2 id="2-winget"><a href="#2-winget" class="headerlink" title="2.winget"></a>2.winget</h2><p><strong>核心定位</strong>：微软官方推出的 Windows 系统包管理器，适配 Windows 10 及以上版本，用于快速管理桌面软件与应用，无需复杂的图形化安装步骤。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>搜索软件</td>
-<td>winget search 软件关键词</td>
-</tr>
-<tr>
-<td>安装指定软件</td>
-<td>winget install 软件 ID</td>
-</tr>
-<tr>
-<td>更新所有已装软件</td>
-<td>winget upgrade –all</td>
-</tr>
-<tr>
-<td>卸载软件</td>
-<td>winget uninstall 软件 ID</td>
-</tr>
-<tr>
-<td>查看已安装软件</td>
-<td>winget list</td>
-</tr>
-<tr>
-<td>导出软件列表到文件</td>
-<td>winget export -o 文件名.json</td>
-</tr>
-</tbody></table>
-<h2 id="3-pip"><a href="#3-pip" class="headerlink" title="3.pip"></a>3.pip</h2><p><strong>核心定位</strong>：Python 专属的包管理器，用于管理 Python 第三方库，支持 PyPI 等仓库，适配 Windows、Linux、macOS 多平台，常随 Python 默认安装。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>安装指定包</td>
-<td>pip install 包名</td>
-</tr>
-<tr>
-<td>安装指定版本包</td>
-<td>pip install 包名 &#x3D;&#x3D; 版本号</td>
-</tr>
-<tr>
-<td>卸载包</td>
-<td>pip uninstall 包名</td>
-</tr>
-<tr>
-<td>升级指定包</td>
-<td>pip install –upgrade 包名</td>
-</tr>
-<tr>
-<td>列出已安装包</td>
-<td>pip list</td>
-</tr>
-<tr>
-<td>导出依赖列表</td>
-<td>pip freeze &gt; requirements.txt</td>
-</tr>
-<tr>
-<td>批量安装依赖</td>
-<td>pip install -r requirements.txt</td>
-</tr>
-</tbody></table>
-<h2 id="4-maven"><a href="#4-maven" class="headerlink" title="4.maven"></a>4.maven</h2><p><strong>核心定位</strong>：Java 项目的构建与依赖管理工具，不仅能管理 Jar 包依赖，还能规范化项目构建流程（编译、测试、打包等），核心依赖<code>pom.xml</code>文件管理配置。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>清理构建产物</td>
-<td>mvn clean</td>
-</tr>
-<tr>
-<td>编译源代码</td>
-<td>mvn compile</td>
-</tr>
-<tr>
-<td>运行单元测试</td>
-<td>mvn test</td>
-</tr>
-<tr>
-<td>打包项目（生成 Jar&#x2F;WAR）</td>
-<td>mvn package</td>
-</tr>
-<tr>
-<td>打包并安装到本地仓库</td>
-<td>mvn install</td>
-</tr>
-<tr>
-<td>将包部署到远程仓库</td>
-<td>mvn deploy</td>
-</tr>
-</tbody></table>
-<h2 id="5-npm"><a href="#5-npm" class="headerlink" title="5.npm"></a>5.npm</h2><p><strong>核心定位</strong>：Node.js 自带的包管理器，用于管理前端或 Node.js 项目的依赖包，依托 npm 仓库，可定义项目脚本，是前端开发的核心工具之一。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>初始化项目生成配置文件</td>
-<td>npm init -y</td>
-</tr>
-<tr>
-<td>安装生产依赖</td>
-<td>npm install 包名</td>
-</tr>
-<tr>
-<td>安装开发依赖</td>
-<td>npm install 包名 –save-dev</td>
-</tr>
-<tr>
-<td>卸载依赖包</td>
-<td>npm uninstall 包名</td>
-</tr>
-<tr>
-<td>更新指定依赖</td>
-<td>npm update 包名</td>
-</tr>
-<tr>
-<td>执行自定义项目脚本</td>
-<td>npm run 脚本名</td>
-</tr>
-<tr>
-<td>查看项目依赖列表</td>
-<td>npm list</td>
-</tr>
-</tbody></table>
-<h2 id="6-vcpkg"><a href="#6-vcpkg" class="headerlink" title="6.vcpkg"></a>6.vcpkg</h2><p><strong>核心定位</strong>：微软开发的跨平台 C&#x2F;C++ 包管理器，支持 Windows、Linux、macOS，通过源码编译安装库文件，适配 CMake 等构建系统，解决 C&#x2F;C++ 依赖配置复杂的问题。</p>
-<p><strong>基本操作</strong></p>
-<table>
-<thead>
-<tr>
-<th>操作目的</th>
-<th>命令</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>搜索 C&#x2F;C++ 库</td>
-<td>.&#x2F;vcpkg search 库关键词</td>
-</tr>
-<tr>
-<td>安装指定库</td>
-<td>.&#x2F;vcpkg install 库名</td>
-</tr>
-<tr>
-<td>安装指定平台的库</td>
-<td>.&#x2F;vcpkg install 库名：目标平台（如 x64-windows）</td>
-</tr>
-<tr>
-<td>卸载库</td>
-<td>.&#x2F;vcpkg remove 库名</td>
-</tr>
-<tr>
-<td>列出已安装库</td>
-<td>.&#x2F;vcpkg list</td>
-</tr>
-<tr>
-<td>全局集成到开发环境</td>
-<td>.&#x2F;vcpkg integrate install</td>
-</tr>
-</tbody></table>
-<h3 id="六款包管理器核心对比"><a href="#六款包管理器核心对比" class="headerlink" title="六款包管理器核心对比"></a>六款包管理器核心对比</h3><table>
-<thead>
-<tr>
-<th>对比维度</th>
-<th>apt-get</th>
-<th>winget</th>
-<th>pip</th>
-<th>maven</th>
-<th>npm</th>
-<th>vcpkg</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>适用领域</td>
-<td>Debian 系 Linux 系统软件</td>
-<td>Windows 系统桌面应用</td>
-<td>Python 第三方库</td>
-<td>Java 项目构建与依赖</td>
-<td>Node.js&#x2F; 前端项目依赖</td>
-<td>C&#x2F;C++ 跨平台库</td>
-</tr>
-<tr>
-<td>支持平台</td>
-<td>Debian&#x2F;Ubuntu 等 Linux 发行版</td>
-<td>Windows 10+</td>
-<td>Windows、Linux、macOS</td>
-<td>全平台</td>
-<td>全平台</td>
-<td>Windows、Linux、macOS</td>
-</tr>
-<tr>
-<td>依赖配置文件</td>
-<td>&#x2F;etc&#x2F;apt&#x2F;sources.list</td>
-<td>无，依赖系统源</td>
-<td>requirements.txt</td>
-<td>pom.xml</td>
-<td>package.json</td>
-<td>vcpkg.json（清单模式）</td>
-</tr>
-<tr>
-<td>核心优势</td>
-<td>系统级依赖自动处理，稳定可靠</td>
-<td>Windows 官方适配，软件管理便捷</td>
-<td>轻量，Python 生态适配性强</td>
-<td>规范 Java 项目构建流程，依赖传递清晰</td>
-<td>前端生态丰富，脚本功能灵活</td>
-<td>解决 C&#x2F;C++ 库编译与跨平台依赖问题</td>
-</tr>
-<tr>
-<td>典型使用场景</td>
-<td>Linux 系统运维、软件部署</td>
-<td>Windows 环境快速装机、软件批量管理</td>
-<td>Python 脚本开发、数据分析项目</td>
-<td>Java 后端开发、多模块项目</td>
-<td>前端框架开发、Node.js 服务开发</td>
-<td>C&#x2F;C++ 跨平台项目开发</td>
-</tr>
-</tbody></table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-powershell常用命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">PowerShell常用命令</a>
-    </h1>
-  
-
-        
-        <a href="/2025/11/18/powershell%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-  	<time datetime="2025-11-18T04:40:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h3 id="1-文件与目录操作"><a href="#1-文件与目录操作" class="headerlink" title="1. 文件与目录操作"></a><strong>1. 文件与目录操作</strong></h3><ul>
-<li><p><code>Get-ChildItem</code>（别名 <code>ls</code>、<code>dir</code>）：列出目录内容</p>
-<p>例：<code>ls C:\Users</code>（列出用户目录下的文件 &#x2F; 文件夹）</p>
-</li>
-<li><p><code>cd</code>（<code>Set-Location</code>）：切换目录</p>
-<p>例：<code>cd Documents</code>（进入当前目录的 Documents 文件夹）</p>
-</li>
-<li><p><code>mkdir</code>（<code>New-Item -ItemType Directory</code>）：创建目录</p>
-<p>例：<code>mkdir TestFolder</code>（创建名为 TestFolder 的文件夹）</p>
-</li>
-<li><p><code>rm</code>（<code>Remove-Item</code>）：删除文件 &#x2F; 目录</p>
-<p>例：<code>rm old.txt</code>（删除文件，加 <code>-Recurse</code> 删除目录）</p>
-</li>
-<li><p><code>cp</code>（<code>Copy-Item</code>）：复制文件 &#x2F; 目录</p>
-<p>例：<code>cp file.txt D:\Backup</code>（复制文件到目标路径）</p>
-</li>
-<li><p><code>mv</code>（<code>Move-Item</code>）：移动 &#x2F; 重命名文件 &#x2F; 目录</p>
-<p>例：<code>mv file.txt newname.txt</code>（重命名文件）</p>
-</li>
-<li><p><code>cat</code>（<code>Get-Content</code>）：查看文件内容</p>
-<p>例：<code>cat readme.txt</code>（显示文件内容）</p>
-</li>
-<li><p><code>echo</code>（<code>Write-Output</code>）：输出文本或创建文件</p>
-<p>例：<code>echo &quot;Hello&quot; &gt; test.txt</code>（将文本写入文件）</p>
-</li>
-</ul>
-<h3 id="2-系统信息查询"><a href="#2-系统信息查询" class="headerlink" title="2. 系统信息查询"></a><strong>2. 系统信息查询</strong></h3><ul>
-<li><p><code>Get-ComputerInfo</code>：查看计算机详细信息（系统版本、内存、CPU 等）</p>
-</li>
-<li><p><code>Get-Service</code>：查看系统服务状态</p>
-<p>例：<code>Get-Service | Where-Object Status -eq &quot;Running&quot;</code>（查看运行中的服务）</p>
-</li>
-<li><p><code>Get-Process</code>（别名 <code>ps</code>）：查看进程</p>
-<p>例：<code>ps chrome</code>（查看 Chrome 相关进程）</p>
-</li>
-<li><p><code>Get-EventLog</code>：查看系统日志</p>
-<p>例：<code>Get-EventLog -LogName System -Newest 10</code>（查看系统日志最新 10 条）</p>
-</li>
-<li><p><code>systeminfo</code>：查看系统摘要信息（兼容 CMD 命令）</p>
-</li>
-</ul>
-<h3 id="3-进程与服务管理"><a href="#3-进程与服务管理" class="headerlink" title="3. 进程与服务管理"></a><strong>3. 进程与服务管理</strong></h3><ul>
-<li><p><code>Start-Process</code>：启动进程</p>
-<p>例：<code>Start-Process notepad.exe</code>（打开记事本）</p>
-</li>
-<li><p><code>Stop-Process</code>：终止进程</p>
-<p>例：<code>Stop-Process -Name chrome</code>（关闭所有 Chrome 进程）</p>
-</li>
-<li><p><code>Start-Service</code> &#x2F; <code>Stop-Service</code>：启动 &#x2F; 停止服务</p>
-<p>例：<code>Start-Service -Name wuauserv</code>（启动 Windows 更新服务）</p>
-</li>
-</ul>
-<h3 id="4-网络相关"><a href="#4-网络相关" class="headerlink" title="4. 网络相关"></a><strong>4. 网络相关</strong></h3><ul>
-<li><p><code>Test-Connection</code>（别名 <code>ping</code>）：测试网络连通性</p>
-<p>例：<code>Test-Connection baidu.com</code>（ping 百度）</p>
-</li>
-<li><p><code>Get-NetIPAddress</code>：查看本机 IP 地址</p>
-<p>例：<code>Get-NetIPAddress -AddressFamily IPv4</code>（只显示 IPv4 地址）</p>
-</li>
-<li><p><code>Get-NetAdapter</code>：查看网络适配器信息</p>
-</li>
-<li><p><code>Invoke-WebRequest</code>（别名 <code>curl</code>、<code>wget</code>）：发送 HTTP 请求</p>
-<p>例：<code>Invoke-WebRequest https://example.com</code>（获取网页内容）</p>
-</li>
-</ul>
-<h3 id="5-用户与权限管理"><a href="#5-用户与权限管理" class="headerlink" title="5. 用户与权限管理"></a><strong>5. 用户与权限管理</strong></h3><ul>
-<li><p><code>Get-LocalUser</code>：查看本地用户账户</p>
-</li>
-<li><p><code>New-LocalUser</code>：创建本地用户</p>
-<p>例：<code>New-LocalUser -Name &quot;NewUser&quot; -Password (ConvertTo-SecureString &quot;P@ssw0rd&quot; -AsPlainText -Force)</code></p>
-</li>
-<li><p><code>Get-ChildItem -Force</code>：查看隐藏文件 &#x2F; 目录</p>
-</li>
-</ul>
-<h3 id="6-其他实用命令"><a href="#6-其他实用命令" class="headerlink" title="6. 其他实用命令"></a><strong>6. 其他实用命令</strong></h3><ul>
-<li><p><code>Get-Help</code>（别名 <code>help</code>）：查看命令帮助</p>
-<p>例：<code>Get-Help Get-ChildItem -Detailed</code>（查看详细帮助）</p>
-</li>
-<li><p><code>Clear-Host</code>（别名 <code>cls</code>）：清空控制台</p>
-</li>
-<li><p><code>$env:PATH</code>：查看系统环境变量 PATH</p>
-</li>
-<li><p><code>Get-Command</code>：搜索命令</p>
-</li>
-</ul>
-<h3 id="7-路径命令"><a href="#7-路径命令" class="headerlink" title="7.路径命令"></a><strong>7.路径命令</strong></h3><table>
-<thead>
-<tr>
-<th>符号</th>
-<th>含义</th>
-<th>适用系统</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>/</code></td>
-<td>路径分隔符（根目录符号）</td>
-<td>Linux&#x2F;macOS（必用）</td>
-</tr>
-<tr>
-<td><code>\</code></td>
-<td>路径分隔符</td>
-<td>Windows（常用，<code>/</code>也兼容）</td>
-</tr>
-<tr>
-<td><code>.</code></td>
-<td>代表 “当前目录”</td>
-<td>所有系统</td>
-</tr>
-<tr>
-<td><code>..</code></td>
-<td>代表 “上一级目录”（父目录）</td>
-<td>所有系统</td>
-</tr>
-<tr>
-<td><code>~</code></td>
-<td>代表 “当前用户的主目录”</td>
-<td>所有系统（类 Unix 更常用）</td>
-</tr>
-<tr>
-<td><code>*</code></td>
-<td>通配符，匹配任意多个字符（0 个或多个）</td>
-<td>所有系统（命令行中）</td>
-</tr>
-<tr>
-<td><code>?</code></td>
-<td>通配符，匹配单个字符</td>
-<td>所有系统（命令行中）</td>
-</tr>
-</tbody></table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-不以物喜，不以己悲" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/11/12/%E4%B8%8D%E4%BB%A5%E7%89%A9%E5%96%9C%EF%BC%8C%E4%B8%8D%E4%BB%A5%E5%B7%B1%E6%82%B2/">不以物喜，不以己悲</a>
-    </h1>
-  
-
-        
-        <a href="/2025/11/12/%E4%B8%8D%E4%BB%A5%E7%89%A9%E5%96%9C%EF%BC%8C%E4%B8%8D%E4%BB%A5%E5%B7%B1%E6%82%B2/" class="archive-article-date">
-  	<time datetime="2025-11-12T00:38:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-11-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <p>现在是1:46，好久没有失眠过了，说实话失眠的感觉确实不好受。我发现我失眠的原因往往很相似，只要某件事开始在脑子里打转我就一定会失眠。你越是不去想它，它越是会在你的脑子里停留更长的时间，最近确实经常被某些事情缠身，但我仔细想了想觉得还是内耗罢了。因为很多事情并没有想象中的那么严肃或复杂，只是你自己去给它加了一层滤镜，让你感觉到心烦意乱。我这人还真有个优点，一到心烦意乱到极点的时候我就会启动自我保护机制，开始自己开导自己，最近呢我又瞎琢磨出来一个道理。有人讨厌平淡的生活，认为生活就应该是诗和远方。我逐渐认为平淡才是生活的归宿。</p>
-<p>接受平淡，享受平淡，在平淡中寻找乐趣。据我观察，人生在世三万多天，对于大部分人来说至少有三万天都是重复的平淡生活。平淡就是生活的主旋律，换个角度想想，如果没有每天重复的平淡生活衬托，人类又怎么能感受到偶尔的自由带来的解脱。既然平淡是生活的主旋律，那么接受不了平淡就是你无穷无尽的痛苦来源。这倒不是说我们不能去追求偶尔的放松与高潮，只是要认清谁才是真正的主角，不要本末倒置，不要期待每天都会有好事发生，正所谓希望越大，失望越大。接受平淡，在平淡中寻找乐趣，每天按照自己的计划与想法来度过，这何尝不是一种快乐呢。总之，光鲜亮丽，精彩绝伦的生活是假，每天一遍遍一次次重复的平淡生活才是真。我一直觉得，作为一名成年人思想不能太幼稚，不能不切实际每天都活在梦里，但是现在看来现代年轻人或多或少会有一些小资思想，过着不属于自己的生活，做着不切实际的美梦。等到梦醒来面对的是残酷的现实，或者有人根本醒不来。我又想起来贺炜的一句话:</p>
-<blockquote>
-<p>人与人之间最大的区别就在于你是活了一万天，还是只活了一天却重复了一万次。</p>
-</blockquote>
-<p>很有道理的一句话，我们仔细分析一下是真的活了一万天吗，还是说这一万天是重复的，但是我们在重复的日子里找到乐趣，每天都充实有收获，很明显是后者。</p>
-<p>光荣在于平淡，艰巨在于漫长。我是个中庸的人，要善于从平淡的生活中寻找乐趣不假，但是平淡其实是最隐蔽的刀，它会在无形之中消磨人的意志，很多人在平淡的生活中迷失，放弃了理想，不知道自己为何而来，第一次踏入校园的豪情壮志早已不在，成为了一具真正的行尸走肉。对于这一点，我想引用当年明月在《明朝那些事儿》里的一段话:</p>
-<blockquote>
-<p>你还很年轻，将来你会遇到很多人，经历很多事，得到很多，也会失去很多，但无论如何有两样东西你绝对不能丢弃，一个叫良心，另一个叫理想。</p>
-</blockquote>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">正西风落叶下长安</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-男子的阳刚之美" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/10/12/%E7%94%B7%E5%AD%90%E7%9A%84%E9%98%B3%E5%88%9A%E4%B9%8B%E7%BE%8E/">男子的阳刚之美</a>
-    </h1>
-  
-
-        
-        <a href="/2025/10/12/%E7%94%B7%E5%AD%90%E7%9A%84%E9%98%B3%E5%88%9A%E4%B9%8B%E7%BE%8E/" class="archive-article-date">
-  	<time datetime="2025-10-12T14:02:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-10-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <p>一、男子的阳刚之美（壮美感）</p>
-<p>1、刚劲强壮、英勇、威武之貌。</p>
-<p>2、在任何场合，表情自然大方、从容不迫，谈笑自若。不装腔作势。</p>
-<p>3、喜庆场合，春风化雨，笑逐颜开。</p>
-<p>男人洒脱：乐观，积极，不去计较鸡毛蒜皮的小事，把你的心放在美好的感觉方面。</p>
-<p>二、阳刚之气无关性别，是坚韧担当的精神风貌，需通过体育与教育共同培养，倡导多元包容的成长环境。</p>
-<p>1.阳刚之气并不只是男性化，应当看到阳刚之气被延伸出来更多的内涵:有责任，有担当，自强不息，合作共嬴，顶天立地，锐意进取的创新精神等等。</p>
-<p>2.阳刚之气应当指向一种心理状态，精神面貌，而不是一种单纯的性别特征。</p>
-<p>3.阳刚之气的培养是通过强健的体魄，培养学生敢于担当，勇敢无畏的精神。</p>
-<p>4.强调养成良好锻炼习惯和健康生活方式，锤炼坚强意志，培养合作精神。是文化学习，体育锻炼，心理健康的协调发展，最终落在身心健康，体魄强健，健全人格。</p>
-<p>5.男性在风度，气概，体魄等方面表现出刚强之气是一种阳刚之美。一方面有比较强的独立性，意志独立，有勇气，另一方面拥有健康的体魄，能够做自己想做的事情，正如毛泽东所说，文明其精神，野蛮其体魄，身体和心灵的阳刚之气兼修，但阳刚之气并不等于男子汉气概，应该是一种充满活力，积极向上，坚韧顽强的蓬勃生命力。</p>
-<p>6.建立多元化，更加包容的教育评价体系，引导学生养成良好锻炼习惯和健康生活方式，锤炼坚强意志，培养合作精神。</p>
-<p>附：男士健康标准</p>
-<p>一、身体健康：没有生病。（身体上）</p>
-<p>1、日本学者提出四快：吃得快（食欲好）、便得快（消化能力好）、睡得快（神经系统功能好）、说得快（思维敏捷，反应能力强）。</p>
-<p>2、按世界卫生组织规定的准则：眼睛明亮、头发有光泽，无头屑。牙齿清洁，无龋齿，不疼痛；牙龈颜色正常，无出血现象。能够抵抗一般性感冒和传染病。</p>
-<p>二、心理健康：没有心理问题。（精神上）</p>
-<p>1、有充沛的精力，能从容不迫地担负日常生活和繁重工作，而且不感到过分紧张与疲劳。</p>
-<p>2、处事乐观，态度积极，乐于承担责任，事无大小，不挑剔。</p>
-<p>3、应变能力强，能适应外界环境的各种变化。</p>
-<p>三、社会交往方面的健康：没有躲避与自我封闭。（社会交往上）</p>
-<hr>
-<p>本篇内容非原创，转载至微信公众号<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/9FWG5LHGmP_nNVw400meIg">男子的阳刚之美</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">正西风落叶下长安</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   <script>
     (function() {
       document.addEventListener('click', function(event) {
@@ -2157,11 +2039,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -2182,6 +2064,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络安全</a>
               </li>
             
             <div class="clearfix"></div>
@@ -2299,5 +2185,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     </div>
 
 </div>
+  <style>
+  .article-entry pre.mermaid {
+    background: transparent;
+    border: 0;
+    text-align: center;
+  }
+
+  .article-entry pre.mermaid svg {
+    height: auto;
+    max-width: 100%;
+  }
+</style>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  var diagrams = Array.from(document.querySelectorAll('pre > code.mermaid')).map(function (code) {
+    var container = code.parentElement;
+    container.className = 'mermaid';
+    container.textContent = code.textContent;
+    return container;
+  });
+
+  mermaid.initialize({ startOnLoad: false, securityLevel: 'strict' });
+  await mermaid.run({ nodes: diagrams });
+</script>
+
 </body>
 </html>

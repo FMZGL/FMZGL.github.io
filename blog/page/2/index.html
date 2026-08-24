@@ -89,6 +89,679 @@ var _hmt = _hmt || [];
 </div>
 
   
+    <article id="post-算法与数据结构模板与经典例题五：树" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/05/28/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%94%EF%BC%9A%E6%A0%91/">算法与数据结构模板与经典例题五：树</a>
+    </h1>
+  
+
+        
+        <a href="/2026/05/28/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%94%EF%BC%9A%E6%A0%91/" class="archive-article-date">
+  	<time datetime="2026-05-28T12:15:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-05-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h1 id="前缀、中缀、后缀表达式常见转换方法总结"><a href="#前缀、中缀、后缀表达式常见转换方法总结" class="headerlink" title="前缀、中缀、后缀表达式常见转换方法总结"></a>前缀、中缀、后缀表达式常见转换方法总结</h1><p>在计算机科学中，表达式有三种常见的表示方式。它们的主要区别在于<strong>运算符（Operator）相对于操作数（Operand）的位置</strong>：</p>
+<ol>
+<li><strong>中缀表达式</strong> (Infix Expression)：运算符在两个操作数中间（例如：<code>a + b</code>）。这是人类最习惯的表示法，但需要括号和优先级规则来消除歧义。</li>
+<li><strong>前缀表达式</strong> (Prefix Expression &#x2F; 波兰式 Polish Notation)：运算符在操作数前面（例如：<code>+ a b</code>）。不需要括号，无歧义，便于计算机处理。</li>
+<li><strong>后缀表达式</strong> (Postfix Expression &#x2F; 逆波兰式 Reverse Polish Notation, RPN)：运算符在操作数后面（例如：<code>a b +</code>）。不需要括号，无歧义，是计算机（尤其是利用栈结构）评估和计算表达式最常用的格式。</li>
+</ol>
+<hr>
+<h2 id="一、-通用万能方法：加括号法（最适合手工转换）"><a href="#一、-通用万能方法：加括号法（最适合手工转换）" class="headerlink" title="一、 通用万能方法：加括号法（最适合手工转换）"></a>一、 通用万能方法：加括号法（最适合手工转换）</h2><p>这是<strong>人类手动转换</strong>最快、最不容易出错的方法。无论进行什么转换，核心思想都是：<strong>“利用运算符优先级，把所有子表达式用括号括起来，然后移动运算符。”</strong></p>
+<h3 id="核心步骤："><a href="#核心步骤：" class="headerlink" title="核心步骤："></a>核心步骤：</h3><ol>
+<li><strong>完全括号化</strong>：根据运算符的优先级和结合性，给表达式的所有运算步骤都加上括号。</li>
+<li><strong>移动运算符</strong>：<ul>
+<li><strong>转前缀</strong>：将每个括号内的运算符移到该括号的<strong>左括号前面</strong>。</li>
+<li><strong>转后缀</strong>：将每个括号内的运算符移到该括号的<strong>右括号后面</strong>。</li>
+</ul>
+</li>
+<li><strong>消除括号</strong>：擦除所有的左右括号，即得到目标表达式。</li>
+</ol>
+<h3 id="📌-实例演练：将-a-b-c-d-e-进行转换"><a href="#📌-实例演练：将-a-b-c-d-e-进行转换" class="headerlink" title="📌 实例演练：将 a + b * c - (d / e) 进行转换"></a>📌 实例演练：将 <code>a + b * c - (d / e)</code> 进行转换</h3><h4 id="步骤-1：完全括号化"><a href="#步骤-1：完全括号化" class="headerlink" title="步骤 1：完全括号化"></a>步骤 1：完全括号化</h4><p>按照优先级（先乘除、后加减、括号最先），逐步加上括号：</p>
+<ol>
+<li>先计算 <code>b * c</code> 和 <code>d / e</code>：<code>a + (b * c) - (d / e)</code></li>
+<li>再计算 <code>a</code> 与 <code>(b * c)</code> 的加法：<code>((a + (b * c)) - (d / e))</code></li>
+<li>得到完全括号化的表达式：<code>((a + (b * c)) - (d / e))</code></li>
+</ol>
+<h4 id="步骤-2-3：移动并消除括号"><a href="#步骤-2-3：移动并消除括号" class="headerlink" title="步骤 2 &amp; 3：移动并消除括号"></a>步骤 2 &amp; 3：移动并消除括号</h4><table>
+<thead>
+<tr>
+<th align="left">转换类型</th>
+<th align="left">移动过程演示</th>
+<th align="left">消除括号后的最终结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>中缀</strong> → <strong>前缀</strong></td>
+<td align="left">将运算符移到对应<strong>左括号左边</strong>：<br><code>-(+(a *(b c)) /(d e))</code></td>
+<td align="left"><code>- + a * b c / d e</code></td>
+</tr>
+<tr>
+<td align="left"><strong>中缀</strong> → <strong>后缀</strong></td>
+<td align="left">将运算符移到对应<strong>右括号右边</strong>：<br><code>((a (b c)*)+ (d e)/)-</code></td>
+<td align="left"><code>a b c * + d e / -</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、-图像法：表达式树法（最直观）"><a href="#二、-图像法：表达式树法（最直观）" class="headerlink" title="二、 图像法：表达式树法（最直观）"></a>二、 图像法：表达式树法（最直观）</h2><p>表达式树（Expression Tree）是一种二叉树，其中<strong>叶子节点</strong>代表操作数，<strong>非叶节点</strong>（内部节点）代表运算符。构建出表达式树后，通过不同的树遍历方式，可以直接输出对应的表达式。</p>
+<h3 id="核心步骤：-1"><a href="#核心步骤：-1" class="headerlink" title="核心步骤："></a>核心步骤：</h3><ol>
+<li><strong>构建二叉树</strong>：根据优先级将中缀表达式建成一棵二叉树（根节点是最后执行的运算符）。</li>
+<li><strong>遍历二叉树</strong>：<ul>
+<li><strong>前序遍历</strong> (根 → 左 → 右) → <strong>前缀表达式</strong></li>
+<li><strong>中序遍历</strong> (左 → 根 → 右) → <strong>中缀表达式</strong> (需还原括号)</li>
+<li><strong>后序遍历</strong> (左 → 右 → 根) → <strong>后缀表达式</strong></li>
+</ul>
+</li>
+</ol>
+<h3 id="📌-实例：a-b-c-d-e-对应的树结构"><a href="#📌-实例：a-b-c-d-e-对应的树结构" class="headerlink" title="📌 实例：a + b * c - d / e 对应的树结构"></a>📌 实例：<code>a + b * c - d / e</code> 对应的树结构</h3><ul>
+<li><strong>前序遍历</strong> (中-左-right&#x2F;中-左-右)：从根 <code>-</code> 开始 → <code>-</code> → <code>+</code> → <code>a</code> → <code>*</code> → <code>b</code> → <code>c</code> → <code>/</code> → <code>d</code> → <code>e</code> → <code>- + a * b c / d e</code></li>
+<li><strong>后序遍历</strong> (左-右-中)：从最左下开始 → <code>a</code> → <code>b</code> → <code>c</code> → <code>*</code> → <code>+</code> → <code>d</code> → <code>e</code> → <code>/</code> → <code>-</code> → <code>a b c * + d e / -</code></li>
+</ul>
+<hr>
+<h2 id="三、-计算机算法：栈式转换法（最适合编程实现）"><a href="#三、-计算机算法：栈式转换法（最适合编程实现）" class="headerlink" title="三、 计算机算法：栈式转换法（最适合编程实现）"></a>三、 计算机算法：栈式转换法（最适合编程实现）</h2><p>在计算机程序中，我们通常使用<strong>栈（Stack）</strong>这一数据结构来实现它们之间的互相转换。</p>
+<h3 id="1-中缀表达式-→-后缀表达式-经典的-Shunting-yard-调度场算法"><a href="#1-中缀表达式-→-后缀表达式-经典的-Shunting-yard-调度场算法" class="headerlink" title="1. 中缀表达式 → 后缀表达式 (经典的 Shunting-yard 调度场算法)"></a>1. 中缀表达式 → 后缀表达式 (经典的 Shunting-yard 调度场算法)</h3><p>这是最著名的算法，由迪杰斯特拉（Dijkstra）发明。</p>
+<h4 id="算法逻辑："><a href="#算法逻辑：" class="headerlink" title="算法逻辑："></a>算法逻辑：</h4><p>准备一个<strong>运算符栈</strong>和一个<strong>输出队列&#x2F;列表</strong>。从左到右扫描中缀表达式的每个字符：</p>
+<ul>
+<li><strong>如果是操作数</strong>：直接输出（加入到输出队列）。</li>
+<li><strong>如果是左括号</strong> <code>(</code>：直接压入运算符栈。</li>
+<li><strong>如果是右括号</strong> <code>)</code>：不断弹出运算符栈顶的运算符并输出，直到遇到左括号 <code>(</code>。最后弹出并丢弃左括号 <code>(</code>。</li>
+<li><strong>如果是运算符</strong> (如 <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>)：<ul>
+<li>比较当前运算符与栈顶运算符的<strong>优先级</strong>。</li>
+<li>如果<strong>栈顶运算符优先级</strong> ≥ <strong>当前运算符</strong> (且栈顶不为 <code>(</code>)，则弹出栈顶运算符并输出。重复此步骤，直到栈顶运算符优先级更低或栈为空。</li>
+<li>然后将当前运算符压入栈中。</li>
+</ul>
+</li>
+<li><strong>扫描结束后</strong>：如果栈中还有运算符，依次弹出并输出。</li>
+</ul>
+<hr>
+<h3 id="2-中缀表达式-→-前缀表达式"><a href="#2-中缀表达式-→-前缀表达式" class="headerlink" title="2. 中缀表达式 → 前缀表达式"></a>2. 中缀表达式 → 前缀表达式</h3><h4 id="算法逻辑（巧妙的逆向法）："><a href="#算法逻辑（巧妙的逆向法）：" class="headerlink" title="算法逻辑（巧妙的逆向法）："></a>算法逻辑（巧妙的逆向法）：</h4><p>中缀转前缀可以通过<strong>“反转-转后缀-再反转”</strong>的方式，复用中缀转后缀的逻辑：</p>
+<ol>
+<li><strong>反转</strong>中缀表达式的字符串。在反转时，<strong>将所有的 ( 换成 )，所有的 ) 换成 (</strong>。</li>
+<li>使用修改后的中缀转后缀算法，计算出反转后表达式的后缀形式。<blockquote>
+<p><em>注：修改点在于，在遇到同等优先级的运算符时，原算法是“栈顶 ≥ 当前”则出栈（左结合），这里为了保持前缀表达式的右结合性质，改为“栈顶 &gt; 当前”才出栈（即同级时不弹栈）。</em></p>
+</blockquote>
+</li>
+<li><strong>反转</strong>步骤 2 得到的后缀表达式，得到的结果即为前缀表达式。</li>
+</ol>
+<hr>
+<h3 id="3-后缀表达式-→-中缀表达式"><a href="#3-后缀表达式-→-中缀表达式" class="headerlink" title="3. 后缀表达式 → 中缀表达式"></a>3. 后缀表达式 → 中缀表达式</h3><h4 id="算法逻辑：-1"><a href="#算法逻辑：-1" class="headerlink" title="算法逻辑："></a>算法逻辑：</h4><p>使用一个<strong>操作数栈</strong>。从左到右扫描后缀表达式：</p>
+<ul>
+<li><strong>如果是操作数</strong>：压入栈中。</li>
+<li><strong>如果是运算符</strong>：<ol>
+<li>从栈中弹出两个操作数：先弹出的作为<strong>右操作数</strong> <code>Op_2</code>，后弹出的作为<strong>左操作数</strong> <code>Op_1</code>。</li>
+<li>将它们与当前运算符组合成一个带括号的新字符串：<code>&quot;( &quot; + Op_1 + &quot; &quot; + Operator + &quot; &quot; + Op_2 + &quot; )&quot;</code>。</li>
+<li>将这个组合后的新字符串重新压入栈中。</li>
+</ol>
+</li>
+<li><strong>扫描结束后</strong>：栈顶剩下的唯一元素就是完整的中缀表达式。</li>
+</ul>
+<hr>
+<h3 id="4-前缀表达式-→-中缀表达式"><a href="#4-前缀表达式-→-中缀表达式" class="headerlink" title="4. 前缀表达式 → 中缀表达式"></a>4. 前缀表达式 → 中缀表达式</h3><h4 id="算法逻辑：-2"><a href="#算法逻辑：-2" class="headerlink" title="算法逻辑："></a>算法逻辑：</h4><p>与后缀转中缀非常相似，区别在于<strong>扫描方向</strong>和<strong>操作数组装顺序</strong>。<br>从<strong>右到左</strong>扫描前缀表达式：</p>
+<ul>
+<li><strong>如果是操作数</strong>：压入栈中。</li>
+<li><strong>如果是运算符</strong>：<ol>
+<li>从栈中弹出两个操作数：先弹出的作为<strong>左操作数</strong> <code>Op_1</code>，后弹出的作为<strong>右操作数</strong> <code>Op_2</code>。</li>
+<li>将它们组合成：<code>&quot;( &quot; + Op_1 + &quot; &quot; + Operator + &quot; &quot; + Op_2 + &quot; )&quot;</code>。</li>
+<li>压入栈中。</li>
+</ol>
+</li>
+<li><strong>扫描结束后</strong>：栈顶剩下的唯一元素就是中缀表达式。</li>
+</ul>
+<hr>
+<h3 id="5-前缀与后缀之间的直接转换-前缀-↔-后缀"><a href="#5-前缀与后缀之间的直接转换-前缀-↔-后缀" class="headerlink" title="5. 前缀与后缀之间的直接转换 (前缀 ↔ 后缀)"></a>5. 前缀与后缀之间的直接转换 (前缀 ↔ 后缀)</h3><p>如果不需要经过中缀，前缀和后缀之间也可以通过栈直接转换：</p>
+<table>
+<thead>
+<tr>
+<th align="left">转换类型</th>
+<th align="left">扫描方向</th>
+<th align="left">操作数处理</th>
+<th align="left">遇到运算符时的操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>前缀</strong> → <strong>后缀</strong></td>
+<td align="left"><strong>从右到左</strong></td>
+<td align="left">遇到操作数压入栈</td>
+<td align="left">弹出两个元素 <code>Op_1</code> 和 <code>Op_2</code>。<br>组合为：<code>Op_1 + Op_2 + Operator</code><br>重新压入栈。</td>
+</tr>
+<tr>
+<td align="left"><strong>后缀</strong> → <strong>前缀</strong></td>
+<td align="left"><strong>从左到右</strong></td>
+<td align="left">遇到操作数压入栈</td>
+<td align="left">弹出两个元素（先弹出的为 <code>Op_2</code>，后弹出的为 <code>Op_1</code>）。<br>组合为：<code>Operator + Op_1 + Op_2</code><br>重新压入栈。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="四、-总结与快速对比"><a href="#四、-总结与快速对比" class="headerlink" title="四、 总结与快速对比"></a>四、 总结与快速对比</h2><p>下表总结了计算机内部在处理这三类转换时的规律：</p>
+<table>
+<thead>
+<tr>
+<th align="left">转换方向</th>
+<th align="center">扫描方向</th>
+<th align="center">栈的类型</th>
+<th align="left">核心操作特性</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>中缀</strong> → <strong>后缀</strong></td>
+<td align="center">从左到右</td>
+<td align="center">运算符栈</td>
+<td align="left">比较优先级，根据优先级高低决定运算符出栈或入栈。</td>
+</tr>
+<tr>
+<td align="left"><strong>中缀</strong> → <strong>前缀</strong></td>
+<td align="center">从右到左</td>
+<td align="center">运算符栈</td>
+<td align="left">类似于反向中缀转后缀，括号方向对调，保持右结合。</td>
+</tr>
+<tr>
+<td align="left"><strong>后缀</strong> → <strong>中&#x2F;前</strong></td>
+<td align="center"><strong>从左到右</strong></td>
+<td align="center">操作数栈</td>
+<td align="left">每次遇到运算符，弹出两个元素，拼接后重新入栈。</td>
+</tr>
+<tr>
+<td align="left"><strong>前缀</strong> → <strong>中&#x2F;后</strong></td>
+<td align="center"><strong>从右到左</strong></td>
+<td align="center">操作数栈</td>
+<td align="left">每次遇到运算符，弹出两个元素，拼接后重新入栈。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>[!TIP]<br><strong>记忆小窍门</strong>：</p>
+<ul>
+<li>涉及<strong>中缀到其他</strong>的转换，栈里存的是<strong>运算符</strong>，需要处理优先级。</li>
+<li>涉及<strong>非中缀到其他</strong>（前&#x2F;后缀相互转或转中缀），栈里存的是<strong>操作数（或子表达式字符串）</strong>，无需考虑优先级。</li>
+<li>只要表达式以<strong>前缀</strong>开头或需要转成<strong>前缀</strong>，通常<strong>从右向左</strong>扫描效率最高；反之，若涉及<strong>后缀</strong>，则<strong>从左向右</strong>扫描。</li>
+</ul>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-大语言模型（LLM）微调方法全景指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/05/21/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%88LLM%EF%BC%89%E5%BE%AE%E8%B0%83%E6%96%B9%E6%B3%95%E5%85%A8%E6%99%AF%E6%8C%87%E5%8D%97/">大语言模型（LLM）微调方法全景指南</a>
+    </h1>
+  
+
+        
+        <a href="/2026/05/21/%E5%A4%A7%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%88LLM%EF%BC%89%E5%BE%AE%E8%B0%83%E6%96%B9%E6%B3%95%E5%85%A8%E6%99%AF%E6%8C%87%E5%8D%97/" class="archive-article-date">
+  	<time datetime="2026-05-20T16:52:54.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-05-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <p>在实际应用中，大语言模型的微调（Fine-Tuning）是一个多维度的系统工程。我们通常从<strong>参数更新策略</strong>（怎么改权重）、<strong>任务与架构适配</strong>（解决什么任务）以及<strong>人类偏好对齐</strong>（如何符合人类预期）三个维度来理解和选择微调方法。</p>
+<hr>
+<h2 id="维度一：参数更新策略（How-to-update-parameters）"><a href="#维度一：参数更新策略（How-to-update-parameters）" class="headerlink" title="维度一：参数更新策略（How to update parameters）"></a>维度一：参数更新策略（How to update parameters）</h2><p>参数更新策略决定了在微调过程中，模型的哪些权重需要被训练，哪些需要被冻结。</p>
+<h3 id="1-全参数微调（Full-Fine-Tuning-FFT）"><a href="#1-全参数微调（Full-Fine-Tuning-FFT）" class="headerlink" title="1. 全参数微调（Full Fine-Tuning, FFT）"></a>1. 全参数微调（Full Fine-Tuning, FFT）</h3><ul>
+<li><strong>原理</strong>：更新模型内的所有权重参数。</li>
+<li>优缺点：<ul>
+<li><strong>优点</strong>：模型调整最彻底，理论性能上限最高，适合学习全新的领域知识或深刻改变模型的行为模式。</li>
+<li><strong>缺点</strong>：算力消耗极高（需要数倍于模型体量的高性能显存来存储梯度和优化器状态）；极易引发<strong>灾难性遗忘</strong>（Catastrophic Forgetting）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-参数高效微调（Parameter-Efficient-Fine-Tuning-PEFT）"><a href="#2-参数高效微调（Parameter-Efficient-Fine-Tuning-PEFT）" class="headerlink" title="2. 参数高效微调（Parameter-Efficient Fine-Tuning, PEFT）"></a>2. 参数高效微调（Parameter-Efficient Fine-Tuning, PEFT）</h3><p>通过冻结大模型的大部分参数，仅引入并训练极少量的额外参数（通常 &lt;1%），在极低资源下实现接近全参微调的效果。</p>
+<h4 id="A-旁路低秩矩阵类（目前最主流）"><a href="#A-旁路低秩矩阵类（目前最主流）" class="headerlink" title="A. 旁路低秩矩阵类（目前最主流）"></a>A. 旁路低秩矩阵类（目前最主流）</h4><ul>
+<li>LoRA (Low-Rank Adaptation - 低秩适应)<ul>
+<li><strong>原理</strong>：冻结原始权重 <em>W</em>，在矩阵乘法旁路并联两个低秩矩阵 <em>A</em>（降维）和 <em>B</em>（升维）。训练时只更新 <em>A</em> 和 <em>B</em> 的参数。</li>
+<li><strong>优点</strong>：训练完后可将旁路权重<strong>无缝合并</strong>回主权重，<strong>不增加推理延迟</strong>。</li>
+</ul>
+</li>
+<li>QLoRA (Quantized LoRA)<ul>
+<li><strong>原理</strong>：将基础模型量化为极低精度的 4-bit（NF4格式），在此基础上挂载 LoRA 进行微调。</li>
+<li><strong>优点</strong>：将显存开销压缩到极致，使得在单张消费级显卡（如 RTX 4090）上微调 33B&#x2F;70B 级别大模型成为可能。</li>
+</ul>
+</li>
+<li>DoRA (Weight-Decomposed Low-Rank Adaptation)<ul>
+<li><strong>原理</strong>：将权重分解为大小（Magnitude）和方向（Direction）两个通道，仅对方向通道应用 LoRA。</li>
+<li><strong>优点</strong>：拟合能力更逼近全参数微调。</li>
+</ul>
+</li>
+</ul>
+<h4 id="B-前缀与提示词微调类（修改输入端）"><a href="#B-前缀与提示词微调类（修改输入端）" class="headerlink" title="B. 前缀与提示词微调类（修改输入端）"></a>B. 前缀与提示词微调类（修改输入端）</h4><ul>
+<li><strong>Prompt Tuning</strong>：在输入的 Embedding 层前拼接一串可学习的连续向量（虚拟 Token），微调时只训练这几个虚拟 Token。</li>
+<li><strong>Prefix Tuning</strong>：在 Transformer 的所有隐藏层（Hidden States）前都插入可训练的前缀虚拟 Token。</li>
+</ul>
+<h4 id="C-插件与选择性微调类"><a href="#C-插件与选择性微调类" class="headerlink" title="C. 插件与选择性微调类"></a>C. 插件与选择性微调类</h4><ul>
+<li><strong>Adapter</strong>：在 Transformer 的 Self-Attention 和 MLP 层后插入小型瓶颈结构（Adapter 块），微调时仅训练 Adapter。</li>
+<li><strong>BitFit</strong>：仅微调模型中的 Bias（偏置）项，极其轻量但调节能力非常有限。</li>
+</ul>
+<hr>
+<h2 id="维度二：任务与架构适配（What-task-structure-to-tune-for）"><a href="#维度二：任务与架构适配（What-task-structure-to-tune-for）" class="headerlink" title="维度二：任务与架构适配（What task structure to tune for）"></a>维度二：任务与架构适配（What task structure to tune for）</h2><p>任务与架构适配决定了如何改造模型结构、设计输入输出格式，以解决具体的下游业务问题。</p>
+<p><img src="C:\Users\86132\AppData\Roaming\Typora\typora-user-images\image-20260521005559673.png" alt="image-20260521005559673"></p>
+<h3 id="1-序列分类任务（Sequence-Classification）"><a href="#1-序列分类任务（Sequence-Classification）" class="headerlink" title="1. 序列分类任务（Sequence Classification）"></a>1. 序列分类任务（Sequence Classification）</h3><ul>
+<li><strong>代表任务</strong>：情感分析、垃圾邮件分类、意图识别、文本匹配。</li>
+<li>架构改造：<ul>
+<li>在大模型的顶层拼接一个随机初始化的线性映射层（Classification Head）。</li>
+<li>提取整句话的向量表示（如 BERT 的 <code>[CLS]</code> 向量，或 LLaMA 最后一个 Token 的输出向量）送入分类头进行 <em>N</em> 分类。</li>
+</ul>
+</li>
+<li>具体微调形式：<ul>
+<li><strong>线性探测（Linear Probing）</strong>：完全冻结模型本体，<strong>只训练分类头</strong>。适合样本极少、基础模型极强的场景。</li>
+<li><strong>全参分类微调</strong>：同时训练模型本体和分类头。</li>
+<li><strong>PEFT分类微调</strong>：冻结模型本体，同时训练挂载的 <strong>LoRA 参数和分类头</strong>（工业界最常用）。</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-序列标记任务（Token-Classification）"><a href="#2-序列标记任务（Token-Classification）" class="headerlink" title="2. 序列标记任务（Token Classification）"></a>2. 序列标记任务（Token Classification）</h3><ul>
+<li><strong>代表任务</strong>：命名实体识别（NER）、词性标注。</li>
+<li><strong>架构改造</strong>：为每一个 Token 的输出向量都连接一个分类头，判断每个 Token 的具体标签（如人名、地名等）。</li>
+</ul>
+<h3 id="3-因果语言模型生成任务（Causal-LM-Generation）"><a href="#3-因果语言模型生成任务（Causal-LM-Generation）" class="headerlink" title="3. 因果语言模型生成任务（Causal LM Generation）"></a>3. 因果语言模型生成任务（Causal LM Generation）</h3><ul>
+<li><strong>代表任务</strong>：智能对话、代码生成、摘要生成。</li>
+<li><strong>架构改造</strong>：无需修改模型架构，直接使用自回归的方式，预测下一个 Token 的概率分布。</li>
+</ul>
+<hr>
+<h2 id="维度三：人类偏好对齐（Alignment）"><a href="#维度三：人类偏好对齐（Alignment）" class="headerlink" title="维度三：人类偏好对齐（Alignment）"></a>维度三：人类偏好对齐（Alignment）</h2><p>偏好对齐通常是微调的最后一步，目的是让模型的输出更符合人类的价值观、安全规范以及特定指令风格。</p>
+<ul>
+<li>RLHF (基于人类反馈的强化学习)：<ul>
+<li><strong>机制</strong>：通过“策略模型 + 奖励模型（Reward Model） + 价值模型 + PPO算法”协同训练。</li>
+<li><strong>评价</strong>：效果上限极高，但涉及多个模型交互，训练极其不稳定且调参难度极大。</li>
+</ul>
+</li>
+<li>DPO (直接偏好优化)：<ul>
+<li><strong>机制</strong>：省去显式的“奖励模型”，直接将损失函数与人类偏好配对数据（Chosen vs Rejected）挂钩，通过简单的二分类交叉熵直接优化大模型。</li>
+<li><strong>评价</strong>：目前最主流的对齐手段，训练稳定且高效。</li>
+</ul>
+</li>
+<li>ORPO (优势比偏好优化)：<ul>
+<li><strong>机制</strong>：将监督微调（SFT）与偏好对齐融为一步，通过优势比损失对负面样本进行惩罚。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="总结：选型决策矩阵"><a href="#总结：选型决策矩阵" class="headerlink" title="总结：选型决策矩阵"></a>总结：选型决策矩阵</h2><table>
+<thead>
+<tr>
+<th align="left">微调目标</th>
+<th align="left">硬件算力</th>
+<th align="left">推荐方案组合</th>
+<th align="left">理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>学习全新且庞大的垂直领域知识</strong></td>
+<td align="left">极其充沛</td>
+<td align="left"><strong>FFT (全参数微调) + Causal LM</strong></td>
+<td align="left">需要对底层权重进行深度塑造，注入行业壁垒知识。</td>
+</tr>
+<tr>
+<td align="left"><strong>日常垂直业务任务（如客服对话、写文案）</strong></td>
+<td align="left">中等 &#x2F; 单卡</td>
+<td align="left"><strong>LoRA + Causal LM</strong></td>
+<td align="left">性价比最高，不增加推理延迟，训练极快。</td>
+</tr>
+<tr>
+<td align="left"><strong>小样本下的文本分类&#x2F;情感分析</strong></td>
+<td align="left">极少</td>
+<td align="left"><strong>Linear Probing (仅微调分类头)</strong></td>
+<td align="left">防止过拟合，保留预训练模型的泛化特征。</td>
+</tr>
+<tr>
+<td align="left"><strong>大规模业务文本分类&#x2F;文本匹配</strong></td>
+<td align="left">中等 &#x2F; 单卡</td>
+<td align="left"><strong>LoRA + Sequence Classification Head</strong></td>
+<td align="left">兼顾语义空间的微调与分类头的优化，准确率高。</td>
+</tr>
+<tr>
+<td align="left"><strong>微调后模型对齐安全规范与人类偏好</strong></td>
+<td align="left">中等</td>
+<td align="left"><strong>DPO</strong></td>
+<td align="left">比 RLHF 稳定且省资源，对齐效果优秀。</td>
+</tr>
+</tbody></table>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LLM</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-JAVA与C-C-的内存分配机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/05/18/JAVA%E4%B8%8EC-C-%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6/">JAVA与C/C++的内存分配机制</a>
+    </h1>
+  
+
+        
+        <a href="/2026/05/18/JAVA%E4%B8%8EC-C-%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6/" class="archive-article-date">
+  	<time datetime="2026-05-18T13:38:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-05-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <p>这次我们抛开所有难懂的专业术语，不用“深拷贝”、“解引用”或者“生命周期管理”这些高大上的词。我们用最接地气的两样东西来打比方：**“口袋（栈）”**和**“大仓库（堆）”**。</p>
+<p>我们可以把 Java 和 C++ 的设计思路，简化为两个完全不同的“生活习惯”。</p>
+<hr>
+<h2 id="1-Java-的设计思路：严格、死板，但绝不出错"><a href="#1-Java-的设计思路：严格、死板，但绝不出错" class="headerlink" title="1. Java 的设计思路：严格、死板，但绝不出错"></a>1. Java 的设计思路：严格、死板，但绝不出错</h2><p>Java 的核心思想是：<strong>“程序员容易粗心，所以必须立死规矩。”</strong></p>
+<p>为了不让程序崩溃，Java 把所有的数据分成了两个绝对的阵营，谁也不能越界：</p>
+<h3 id="规矩一：小东西放“口袋”，大东西放“仓库”"><a href="#规矩一：小东西放“口袋”，大东西放“仓库”" class="headerlink" title="规矩一：小东西放“口袋”，大东西放“仓库”"></a>规矩一：小东西放“口袋”，大东西放“仓库”</h3><ul>
+<li><strong>口袋（栈）</strong>：只用来放最简单的数字和布尔值（比如 <code>int a = 10;</code>），或者是<strong>各种遥控器</strong>。</li>
+<li><strong>大仓库（堆）</strong>：只要是稍微复杂一点的东西（比如一段文字 <code>String</code>、一个链表节点 <code>Node</code>、甚至是一个最普通的整数数组 <code>int[]</code>），<strong>统统必须塞进大仓库里</strong>。</li>
+</ul>
+<h3 id="规矩二：看管大仓库，全靠“遥控器（引用）”"><a href="#规矩二：看管大仓库，全靠“遥控器（引用）”" class="headerlink" title="规矩二：看管大仓库，全靠“遥控器（引用）”"></a>规矩二：看管大仓库，全靠“遥控器（引用）”</h3><p>在 Java 里，你根本没办法直接用手摸到仓库里的东西。你手里拿到的，永远是一个“遥控器”。</p>
+<ul>
+<li>你写 <code>Node el = new Node();</code>，实际上是在大仓库里建了一个节点，然后把控制这个节点的遥控器 <code>el</code> 揣在了口袋里。</li>
+<li>你写 <code>el.val = 5;</code>，实际上是按了一下遥控器上的按钮，隔空把大仓库里的那个节点的数值改成了 5。</li>
+</ul>
+<h3 id="这样做的好处："><a href="#这样做的好处：" class="headerlink" title="这样做的好处："></a>这样做的好处：</h3><p>因为全靠遥控器隔空操作，Java 在后台雇了一个“清洁工（垃圾回收器）”。一旦发现大仓库里的某个东西没有遥控器连着它了，清洁工就会自动把它收走。你永远不用担心仓库被塞满，也永远不会摸错地方。</p>
+<hr>
+<h2 id="2-C-的设计思路：绝对自由，怎么爽怎么来"><a href="#2-C-的设计思路：绝对自由，怎么爽怎么来" class="headerlink" title="2. C++ 的设计思路：绝对自由，怎么爽怎么来"></a>2. C++ 的设计思路：绝对自由，怎么爽怎么来</h2><p>C++ 的核心思想是：<strong>“你是老板，你说了算。你想把东西放哪，就放哪。”</strong></p>
+<p>C++ 根本不搞“类型决定位置”那一套。不管是一个数字，还是一个巨大的链表，你都可以自由选择存放的方式。在 C++ 的世界里，有三种玩法：</p>
+<h3 id="玩法一：直接揣口袋里（值类型）"><a href="#玩法一：直接揣口袋里（值类型）" class="headerlink" title="玩法一：直接揣口袋里（值类型）"></a>玩法一：直接揣口袋里（值类型）</h3><p>你写 <code>Node el;</code>。这时候，C++ <strong>直接在你的口袋（栈）里塞进了一个货真价实的节点实体</strong>。</p>
+<ul>
+<li>它不是遥控器，它就是那个东西本身。</li>
+<li>你想改它，直接伸手在口袋里摸到它就能改（<code>el.val = 5</code>）。</li>
+<li>当你的函数结束时，你的口袋会被整体翻过来倒干净，这个节点也就跟着一起消失了。不需要任何人来打扫。</li>
+</ul>
+<h3 id="玩法二：用“纸条”记录仓库地址（指针）"><a href="#玩法二：用“纸条”记录仓库地址（指针）" class="headerlink" title="玩法二：用“纸条”记录仓库地址（指针）"></a>玩法二：用“纸条”记录仓库地址（指针）</h3><p>如果你觉得口袋太小放不下，或者希望这个东西在函数结束后还能留着，你也可以用 <code>new</code> 把它放进大仓库（堆）里。</p>
+<ul>
+<li>你写 <code>Node* p = new Node();</code>。这时候，你在仓库里建了一个节点，同时在口袋里放了一张“写着仓库货架号的纸条（指针）”。</li>
+<li>你想改它，必须先看一眼纸条上的地址，然后顺着地址找到仓库里的货架（<code>p-&gt;val = 5</code>）。</li>
+</ul>
+<h3 id="玩法三：给东西起个“外号”（引用）"><a href="#玩法三：给东西起个“外号”（引用）" class="headerlink" title="玩法三：给东西起个“外号”（引用）"></a>玩法三：给东西起个“外号”（引用）</h3><p>你嫌天天看纸条找地址太麻烦，C++ 还允许你给已有的东西起个外号：<code>Node&amp; ref = el;</code>。</p>
+<ul>
+<li><code>ref</code> 不是新东西，也不是纸条，它就是 <code>el</code> 的另一个名字。打它就等于打 <code>el</code>。</li>
+</ul>
+<h3 id="这样做的好处：-1"><a href="#这样做的好处：-1" class="headerlink" title="这样做的好处："></a>这样做的好处：</h3><p>速度极快！因为直接把实体放口袋里（栈），省去了去大仓库里来回找货架的时间。但代价是，如果你用纸条（指针）在仓库里建了东西，最后忘了把货架清空（<code>delete</code>），那个东西就会永远占用仓库空间，直到电脑死机。</p>
+<hr>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> \* Definition for singly-linked list.</span><br><span class="line"> \* struct ListNode &#123;</span><br><span class="line"> \*     int val;</span><br><span class="line"> \*     ListNode *next;</span><br><span class="line"> \*     ListNode() : val(0), next(nullptr) &#123;&#125;</span><br><span class="line"> \*     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span><br><span class="line"> \*     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span><br><span class="line"> \* &#125;;</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
+
+<p>一种使用struct来定义类的方式，因为没有this指针，构造方式特殊一些，初始化的时候可以使用new但是要用一个指针去接。</p>
+<h2 id="3-一目了然的对比表"><a href="#3-一目了然的对比表" class="headerlink" title="3. 一目了然的对比表"></a>3. 一目了然的对比表</h2><p>我们用最直观的代码和行为来做个总结：</p>
+<table>
+<thead>
+<tr>
+<th>实际场景</th>
+<th>Java 的做法 (唯一的路)</th>
+<th>C++ 的做法 (多条路可选)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>创建一个链表节点</strong></td>
+<td>必须用 <code>new</code> 建在仓库里，口袋里拿个<strong>遥控器</strong>。</td>
+<td>可以直接塞在口袋里（<code>Node el</code>），也可以写地址放仓库里（<code>Node* p</code>）。</td>
+</tr>
+<tr>
+<td><strong>创建一个整数数组</strong></td>
+<td>哪怕是 <code>int[]</code>，也必须建在仓库里，拿<strong>遥控器</strong>控制。</td>
+<td>可以直接把整条数组拍在口袋里（<code>int arr[10]</code>）。</td>
+</tr>
+<tr>
+<td><strong>把东西传给另一个函数</strong></td>
+<td>把口袋里的<strong>遥控器（地址）复制一把</strong>给对方。两个人控制同一个东西。</td>
+<td>默认把口袋里的<strong>实体完完整整复制一份</strong>给对方（开销大）；除非你主动决定只传纸条（指针）或外号（引用）。</td>
+</tr>
+<tr>
+<td><strong>不用的东西怎么处理</strong></td>
+<td>遥控器扔了就行，后台<strong>清洁工自动打扫</strong>。</td>
+<td>放在口袋里的会自动消失；放在仓库里的<strong>必须自己亲手扔掉</strong>，否则仓库会满。</td>
+</tr>
+</tbody></table>
+<p>导出到 Google 表格</p>
+<h2 id="总结总结"><a href="#总结总结" class="headerlink" title="总结总结"></a>总结总结</h2><ul>
+<li><strong>Java</strong> 就像开全自动挡的普通轿车，所有的机械细节（大仓库、内存地址）都用外壳包起来，不让你碰，只给你一个方向盘和几个遥控按钮。虽然不刺激，但很安全。</li>
+<li><strong>C++</strong> 就像开手动挡的赛车，引擎、齿轮、轮胎（口袋、仓库、每一个字节的地址）全部赤裸裸地暴露在你面前。你可以玩出最极限的速度，但方向盘要是多打了一点点，车就会当场散架。</li>
+</ul>
+<p>用“口袋”和“大仓库”这样去想，再去看前面那些链表反转或者指针移动的代码，是不是感觉顺畅多了？</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">编程语言</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-算法与数据结构模板与经典例题四：分治" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/05/09/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E5%9B%9B%EF%BC%9A%E5%88%86%E6%B2%BB/">算法与数据结构模板与经典例题四：分治</a>
+    </h1>
+  
+
+        
+        <a href="/2026/05/09/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E5%9B%9B%EF%BC%9A%E5%88%86%E6%B2%BB/" class="archive-article-date">
+  	<time datetime="2026-05-09T10:53:48.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-05-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h3 id="1-归并排序求逆序对"><a href="#1-归并排序求逆序对" class="headerlink" title="1.归并排序求逆序对"></a>1.归并排序求逆序对</h3><p>这种方法利用分治思想，在合并两个有序序列时，通过左侧剩余元素直接计算逆序对数量。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">long</span> <span class="type">long</span> <span class="title">mergeAndCount</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; arr, vector&lt;<span class="type">int</span>&gt;&amp; temp, <span class="type">int</span> left, <span class="type">int</span> right)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (left &gt;= right) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> mid = left + (right - left) / <span class="number">2</span>;</span><br><span class="line">    <span class="type">long</span> <span class="type">long</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    count += <span class="built_in">mergeAndCount</span>(arr, temp, left, mid);</span><br><span class="line">    count += <span class="built_in">mergeAndCount</span>(arr, temp, mid + <span class="number">1</span>, right);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 合并逻辑</span></span><br><span class="line">    <span class="type">int</span> i = left;      <span class="comment">// 左半部分指针</span></span><br><span class="line">    <span class="type">int</span> j = mid + <span class="number">1</span>;   <span class="comment">// 右半部分指针</span></span><br><span class="line">    <span class="type">int</span> k = left;      <span class="comment">// 临时数组指针</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= right) &#123;</span><br><span class="line">        <span class="keyword">if</span> (arr[i] &lt;= arr[j]) &#123;</span><br><span class="line">            temp[k++] = arr[i++];</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// arr[i] &gt; arr[j]，说明 arr[i...mid] 与 arr[j] 都构成逆序对</span></span><br><span class="line">            temp[k++] = arr[j++];</span><br><span class="line">            count += (mid - i + <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (i &lt;= mid) temp[k++] = arr[i++];</span><br><span class="line">    <span class="keyword">while</span> (j &lt;= right) temp[k++] = arr[j++];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> idx = left; idx &lt;= right; idx++) &#123;</span><br><span class="line">        arr[idx] = temp[idx];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; data = &#123;<span class="number">7</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">4</span>&#125;;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">temp</span><span class="params">(data.size())</span></span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;归并排序求得逆序对: &quot;</span> &lt;&lt; <span class="built_in">mergeAndCount</span>(data, temp, <span class="number">0</span>, data.<span class="built_in">size</span>() - <span class="number">1</span>) &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-C-STL与algorithm" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -844,620 +1517,6 @@ var _hmt = _hmt || [];
 
 
   
-    <article id="post-库、包、框架核心概念详解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/03/13/%E5%BA%93%E3%80%81%E5%8C%85%E3%80%81%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3/">库、包、框架核心概念详解</a>
-    </h1>
-  
-
-        
-        <a href="/2026/03/13/%E5%BA%93%E3%80%81%E5%8C%85%E3%80%81%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-  	<time datetime="2026-03-13T06:36:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-13</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h2 id="一、核心定义（一句话定调）"><a href="#一、核心定义（一句话定调）" class="headerlink" title="一、核心定义（一句话定调）"></a>一、核心定义（一句话定调）</h2><table>
-<thead>
-<tr>
-<th align="center">概念</th>
-<th align="center">核心定义</th>
-<th align="center">核心视角</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">库（Library）</td>
-<td align="center">一组实现特定功能的可复用代码集合（函数 &#x2F; 类 &#x2F; 模块），目的是避免重复造轮子</td>
-<td align="center">功能视角</td>
-</tr>
-<tr>
-<td align="center">包（Package）</td>
-<td align="center">库的 “分发 &#x2F; 安装单位”，是库的标准化交付形态（如<code>.whl</code>&#x2F;<code>.jar</code>&#x2F;<code>.tgz</code>文件）</td>
-<td align="center">交付 &#x2F; 使用视角</td>
-</tr>
-<tr>
-<td align="center">框架（Framework）</td>
-<td align="center">特殊的重量级库，提供 “整体开发骨架 + 规则”，开发者填充业务代码，框架主导执行流程</td>
-<td align="center">架构 &#x2F; 控制权视角</td>
-</tr>
-</tbody></table>
-<h2 id="二、详细解析"><a href="#二、详细解析" class="headerlink" title="二、详细解析"></a>二、详细解析</h2><h3 id="1-库（Library）"><a href="#1-库（Library）" class="headerlink" title="1. 库（Library）"></a>1. 库（Library）</h3><h4 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h4><p>开发者编写的、可直接调用的功能代码集合，是 “工具” 级别的代码复用。</p>
-<h4 id="核心特征"><a href="#核心特征" class="headerlink" title="核心特征"></a>核心特征</h4><ul>
-<li><strong>开发者主导</strong>：由开发者决定何时调用、如何调用，代码执行流程完全由开发者掌控；</li>
-<li><strong>功能单一 &#x2F; 聚焦</strong>：通常只解决某一类问题，边界清晰；</li>
-<li><strong>无强约束</strong>：无需遵循固定规则，按需导入、按需调用。</li>
-</ul>
-<h4 id="典型示例"><a href="#典型示例" class="headerlink" title="典型示例"></a>典型示例</h4><ul>
-<li>Python：<code>jieba</code>（中文分词）、<code>requests</code>（网络请求）、<code>numpy</code>（数值计算）；</li>
-<li>JavaScript：<code>lodash</code>（工具函数）、<code>axios</code>（异步请求）；</li>
-<li>Java：<code>apache-commons</code>（通用工具）。</li>
-</ul>
-<h4 id="使用示例（Python）"><a href="#使用示例（Python）" class="headerlink" title="使用示例（Python）"></a>使用示例（Python）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import jieba  # 导入库</span><br><span class="line">text = &quot;测试中文分词&quot;</span><br><span class="line">result = jieba.cut(text)  # 开发者主动调用库的功能</span><br><span class="line">print(list(result))</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-包（Package）"><a href="#2-包（Package）" class="headerlink" title="2. 包（Package）"></a>2. 包（Package）</h3><h4 id="本质-1"><a href="#本质-1" class="headerlink" title="本质"></a>本质</h4><p>库的 “可安装形态”，是包管理工具（<code>pip</code>&#x2F;<code>npm</code>&#x2F;<code>maven</code>）识别和分发的基本单位。</p>
-<h4 id="核心特征-1"><a href="#核心特征-1" class="headerlink" title="核心特征"></a>核心特征</h4><ul>
-<li><strong>标准化交付</strong>：包含库的代码、依赖说明、版本信息等，符合对应语言的打包规范；</li>
-<li><strong>安装即得库</strong>：通过包管理工具安装 “包” 后，本地环境中就会生成可调用的 “库”；</li>
-<li><strong>形态多样</strong>：不同语言的包格式不同（Python：<code>.whl</code>&#x2F;<code>.tar.gz</code>；JS：<code>.tgz</code>；Java：<code>.jar</code>）。</li>
-</ul>
-<h4 id="关键关联"><a href="#关键关联" class="headerlink" title="关键关联"></a>关键关联</h4><ul>
-<li>所有可通过包管理工具安装的库，在分发阶段都叫 “包”；</li>
-<li>少数库无需打包（如手动拷贝的代码片段），但无法通过包管理工具安装；</li>
-<li>一个包可包含多个子库（如 Python 的<code>scipy</code>包，包含数值计算、线性代数等子库）。</li>
-</ul>
-<h4 id="典型操作"><a href="#典型操作" class="headerlink" title="典型操作"></a>典型操作</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Python：安装jieba包 → 得到jieba库</span><br><span class="line">pip install jieba</span><br><span class="line"></span><br><span class="line"># JavaScript：安装axios包 → 得到axios库</span><br><span class="line">npm install axios</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-框架（Framework）"><a href="#3-框架（Framework）" class="headerlink" title="3. 框架（Framework）"></a>3. 框架（Framework）</h3><h4 id="本质-2"><a href="#本质-2" class="headerlink" title="本质"></a>本质</h4><p>“库的超集”，是提供完整开发体系的架构级工具，核心是 “控制权反转”（好莱坞原则：Don’t call us, we’ll call you）。</p>
-<h4 id="核心特征-2"><a href="#核心特征-2" class="headerlink" title="核心特征"></a>核心特征</h4><ul>
-<li><strong>框架主导</strong>：框架定义整体执行流程，开发者只需按规则编写 “业务逻辑片段”，由框架调用；</li>
-<li><strong>强约束性</strong>：必须遵循框架的开发规范（如目录结构、接口定义、生命周期）；</li>
-<li><strong>全流程覆盖</strong>：解决一类场景的全链路问题，而非单一功能。</li>
-</ul>
-<h4 id="典型示例-1"><a href="#典型示例-1" class="headerlink" title="典型示例"></a>典型示例</h4><ul>
-<li>Python：<code>Django</code>（Web 开发）、<code>Keras</code>（深度学习）；</li>
-<li>JavaScript：<code>Vue</code>&#x2F;<code>React</code>（前端）、<code>Express</code>（Node.js Web）；</li>
-<li>Java：<code>Spring</code>（后端）、<code>MyBatis</code>（数据库操作）。</li>
-</ul>
-<h4 id="使用示例（Python-Keras）"><a href="#使用示例（Python-Keras）" class="headerlink" title="使用示例（Python&#x2F;Keras）"></a>使用示例（Python&#x2F;Keras）</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import keras</span><br><span class="line">from keras import layers</span><br><span class="line"></span><br><span class="line"># 开发者按框架规则填充代码（定义模型结构）</span><br><span class="line">model = keras.Sequential([layers.Dense(10, activation=&#x27;softmax&#x27;)])</span><br><span class="line">model.compile(optimizer=&#x27;adam&#x27;, loss=&#x27;categorical_crossentropy&#x27;)</span><br><span class="line"></span><br><span class="line"># 框架主导执行流程（训练过程由Keras接管）</span><br><span class="line">model.fit(x_train, y_train, epochs=10)</span><br></pre></td></tr></table></figure>
-
-<h2 id="三、核心关系总结"><a href="#三、核心关系总结" class="headerlink" title="三、核心关系总结"></a>三、核心关系总结</h2><ol>
-<li><p><strong>包含关系</strong>：框架 ∈ 库 ∈ 包（框架是特殊的库，库的分发形态是包）；</p>
-</li>
-<li><p><strong>使用逻辑</strong>：通过包管理工具安装 “包” → 得到可调用的 “库” → 普通库直接调用，框架按规则嵌入代码并由框架执行；</p>
-</li>
-<li><p>控制权差异</p>
-<ul>
-<li>普通库：开发者调用库 → 开发者掌控流程；</li>
-<li>框架：框架调用开发者写的代码 → 框架掌控流程。</li>
-</ul>
-</li>
-</ol>
-<h2 id="四、易混淆场景补充"><a href="#四、易混淆场景补充" class="headerlink" title="四、易混淆场景补充"></a>四、易混淆场景补充</h2><table>
-<thead>
-<tr>
-<th align="center">场景</th>
-<th align="center">正确认知</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><code>pip install StanfordCoreNLP</code></td>
-<td align="center">安装的是 “Python 桥接包”，仅提供调用 Java 版 StanfordCoreNLP 的接口，核心 NLP 功能在 Java 包中</td>
-</tr>
-<tr>
-<td align="center"><code>npm install vue</code></td>
-<td align="center">安装的是 “vue 包”，得到的是 “vue 框架”（vue 兼具库和框架特性：调用 API 时是库，按生命周期开发时是框架）</td>
-</tr>
-<tr>
-<td align="center">Java 的<code>.jar</code>文件</td>
-<td align="center">是 Java 语言的 “包”，包含的是 Java 库（如<code>stanford-corenlp-4.5.10.jar</code>是 NLP 库的包形态）</td>
-</tr>
-</tbody></table>
-<h3 id="关键点回顾"><a href="#关键点回顾" class="headerlink" title="关键点回顾"></a>关键点回顾</h3><ol>
-<li>库是功能集合，包是库的安装 &#x2F; 分发单位，框架是主导执行流程的特殊库；</li>
-<li>普通库是 “开发者调用工具”，框架是 “工具调用开发者的代码”；</li>
-<li>包管理工具（pip&#x2F;npm）管理的是 “包”，开发者代码中使用的是 “库 &#x2F; 框架”。</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JAVA学习日记七：常用函数及比赛所需的一些小技巧" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/">JAVA学习日记七：常用函数及比赛所需的一些小技巧</a>
-    </h1>
-  
-
-        
-        <a href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="archive-article-date">
-  	<time datetime="2026-02-24T13:22:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-02-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h3 id="一、String的一些常用的封装函数"><a href="#一、String的一些常用的封装函数" class="headerlink" title="一、String的一些常用的封装函数"></a>一、String的一些常用的封装函数</h3><p><strong>1.charAt(int index) : char</strong></p>
-<p>给出索引返回对应位置的字符</p>
-<p><strong>2.compareTo(String another string) : int</strong></p>
-<p>与另一个字符串按照字典序比较大小，a&lt;b返回-1，a&#x3D;b返回0，a&gt;b返回正数</p>
-<p><strong>3.compareToignoreCase</strong></p>
-<p>类似但是忽略大小写</p>
-<p><strong>4.concat(String str) : String</strong></p>
-<p>返回两个字符串拼接之后的字符串</p>
-<p><strong>5.contains(CharSequence char) ：boolen</strong></p>
-<p>判断字符串中是否含有序列char</p>
-<p><strong>6.equals(Object object) : boolen</strong></p>
-<p>判断两个字符串是否相等！！！</p>
-<p><strong>7.equalsIgnoreCase(String another string) : boolen</strong></p>
-<p>类似只是不考虑大小写</p>
-<p><strong>8.indexof(CharSequence char) ：int</strong></p>
-<p>给一个序列，返回它在字符串中的索引，不存在返回-1.</p>
-<p><strong>9.length() :int</strong></p>
-<p>返回长度</p>
-<p><strong>10.substring(int beginindex) : string      substring(int beginindex,int endindex) : string</strong></p>
-<p>返回对应区间内的子串</p>
-<p>** 注意右边是开区间，也就是说endindex这个位置取不到</p>
-<p><strong>11.replace(char oldchar,char newchar) : string</strong></p>
-<p>用newchar替换字符串中所有的oldchar</p>
-<p><strong>12.replace(charSequence target  charSequence replacement) : string</strong></p>
-<p>用replacement替换target</p>
-<p><strong>13.valueof() ：string</strong></p>
-<p>这个比较重要，可以把其他类型的数据如int、long换成String</p>
-<p><strong>14.String 创建之后不能修改，比较方便的方法是 char[] ch &#x3D;str.toCharArray()</strong></p>
-<h2 id="二、一些比较重要的技巧"><a href="#二、一些比较重要的技巧" class="headerlink" title="二、一些比较重要的技巧"></a>二、一些比较重要的技巧</h2><p><strong>1.翻转字符串：String reversed &#x3D; new StringBuilder(原字符串).reverse().toString();</strong></p>
-<p><strong>2.快速初始化一个数组</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import java.util.Arrays;</span><br><span class="line"></span><br><span class="line">int[] a = new int[100];</span><br><span class="line">Arrays.fill(a, 666);   // 全部变成 666</span><br></pre></td></tr></table></figure>
-
-
-
-<h2 id="三、最经典的一些错误"><a href="#三、最经典的一些错误" class="headerlink" title="三、最经典的一些错误"></a>三、最经典的一些错误</h2><p>1.忘开long。这个真没话说</p>
-<p>2.序列处理完，忘了把最后一种情况也加上</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">int pre=arr[0];</span><br><span class="line">		int num=1;</span><br><span class="line">		for(int i=1;i&lt;n;i++) &#123;</span><br><span class="line">			if(arr[i]!=pre) &#123;</span><br><span class="line">				lst[pre].add(num);</span><br><span class="line">				pre=arr[i];</span><br><span class="line">				num=1;</span><br><span class="line">			&#125;</span><br><span class="line">			else &#123;</span><br><span class="line">				num++;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		lst[pre].add(num);</span><br></pre></td></tr></table></figure>
-
-<p>3.完了考虑数组为空的情况。这种情况包re的</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JAVA学习日记六：Scanner以及数值混合类型转换" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">JAVA学习日记六：Scanner以及数值混合类型转换</a>
-    </h1>
-  
-
-        
-        <a href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2026-01-29T13:27:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h1 id="Java-Scanner-方法区别-数值混合运算类型提升规律总结"><a href="#Java-Scanner-方法区别-数值混合运算类型提升规律总结" class="headerlink" title="Java Scanner 方法区别 + 数值混合运算类型提升规律总结"></a>Java Scanner 方法区别 + 数值混合运算类型提升规律总结</h1><h2 id="一、Scanner-核心方法区别（next-nextLine-hasNext-hasNextLine）"><a href="#一、Scanner-核心方法区别（next-nextLine-hasNext-hasNextLine）" class="headerlink" title="一、Scanner 核心方法区别（next&#x2F;nextLine + hasNext&#x2F;hasNextLine）"></a>一、Scanner 核心方法区别（next&#x2F;nextLine + hasNext&#x2F;hasNextLine）</h2><h3 id="1-sc-next-与-sc-nextLine-区别"><a href="#1-sc-next-与-sc-nextLine-区别" class="headerlink" title="1. sc.next () 与 sc.nextLine () 区别"></a>1. sc.next () 与 sc.nextLine () 区别</h3><table>
-<thead>
-<tr>
-<th align="center">对比维度</th>
-<th align="center">sc.next()</th>
-<th align="center">sc.nextLine()</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">读取终止标志</td>
-<td align="center">任意空白符（空格、Tab、\n、\r）</td>
-<td align="center">仅换行符 \n（按回车触发）</td>
-</tr>
-<tr>
-<td align="center">空白符处理</td>
-<td align="center">自动忽略开头所有空白符，仅取有效内容</td>
-<td align="center">不忽略任何字符，保留行内所有空白符（开头 &#x2F; 中间）</td>
-</tr>
-<tr>
-<td align="center">返回内容</td>
-<td align="center">两个空白符间的有效标记（Token），无空白符</td>
-<td align="center">从光标到换行符的整行内容，不含末尾 \n</td>
-</tr>
-<tr>
-<td align="center">配套判断方法</td>
-<td align="center">必须搭配 sc.hasNext ()</td>
-<td align="center">必须搭配 sc.hasNextLine ()</td>
-</tr>
-<tr>
-<td align="center">核心特点</td>
-<td align="center">按「标记」读取，拆分连续数据</td>
-<td align="center">按「整行」读取，保留完整内容</td>
-</tr>
-<tr>
-<td align="center">适用场景</td>
-<td align="center">读取分隔的单个数据（整数、单词、独立指令）</td>
-<td align="center">读取整行内容（带空格文本、整行指令、一句话）</td>
-</tr>
-<tr>
-<td align="center">经典坑点</td>
-<td align="center">读取后不消耗末尾 \n，后续接 nextLine () 会读空行</td>
-<td align="center">无此坑，整行读取自然消耗 \n</td>
-</tr>
-</tbody></table>
-<p><strong>坑点解决</strong>：next ()&#x2F;nextInt () 后接 nextLine ()，需额外调用 <code>sc.nextLine()</code> 消耗换行符，或全程用 nextLine () 读取后手动转类型。</p>
-<h3 id="2-sc-hasNext-与-sc-hasNextLine-区别"><a href="#2-sc-hasNext-与-sc-hasNextLine-区别" class="headerlink" title="2. sc.hasNext () 与 sc.hasNextLine () 区别"></a>2. sc.hasNext () 与 sc.hasNextLine () 区别</h3><table>
-<thead>
-<tr>
-<th align="center">对比维度</th>
-<th align="center">sc.hasNext()</th>
-<th align="center">sc.hasNextLine()</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">判断依据</td>
-<td align="center">是否有下一个<strong>有效标记</strong>（非空白字符）</td>
-<td align="center">是否有下一个<strong>整行内容</strong>（可空行）</td>
-</tr>
-<tr>
-<td align="center">空白符处理</td>
-<td align="center">忽略开头空白符，仅判断有效内容是否存在</td>
-<td align="center">不忽略任何字符，包含空行、空白符行</td>
-</tr>
-<tr>
-<td align="center">核心目标</td>
-<td align="center">判断是否有可提取的单个数据单元</td>
-<td align="center">判断是否有可提取的完整行</td>
-</tr>
-<tr>
-<td align="center">配套读取方法</td>
-<td align="center">sc.next()&#x2F;sc.nextXxx()（nextInt&#x2F;nextLong）</td>
-<td align="center">sc.nextLine()</td>
-</tr>
-<tr>
-<td align="center">空行处理</td>
-<td align="center">空行返回 false（无有效标记）</td>
-<td align="center">空行返回 true（仍为一行内容）</td>
-</tr>
-</tbody></table>
-<p><strong>核心结论</strong>：判断「是否有单个数据」用 hasNext ()，判断「是否有整行内容」用 hasNextLine ()，<strong>严禁混用判断与读取方法</strong>。</p>
-<h2 id="二、Java-数值混合运算的类型提升核心规律"><a href="#二、Java-数值混合运算的类型提升核心规律" class="headerlink" title="二、Java 数值混合运算的类型提升核心规律"></a>二、Java 数值混合运算的类型提升核心规律</h2><h3 id="1-基础依据：数值类型精度层级（从低到高，核心排序）"><a href="#1-基础依据：数值类型精度层级（从低到高，核心排序）" class="headerlink" title="1. 基础依据：数值类型精度层级（从低到高，核心排序）"></a>1. 基础依据：数值类型精度层级（从低到高，核心排序）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">byte &lt; short &lt; int &lt; long &lt; float &lt; double</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>补充：<code>char</code> 参与数值运算时，<strong>先自动转为 int</strong>，再遵循此层级提升；</li>
-<li>原则：精度越高，可表示的数值范围 &#x2F; 小数精度越强，提升不可逆（低精度不降级）。</li>
-</ul>
-<h3 id="2-3-条通用提升规则（覆盖所有数值运算场景）"><a href="#2-3-条通用提升规则（覆盖所有数值运算场景）" class="headerlink" title="2. 3 条通用提升规则（覆盖所有数值运算场景）"></a>2. 3 条通用提升规则（覆盖所有数值运算场景）</h3><h4 id="规则-1：单类型运算-——-无提升，结果类型与操作数一致"><a href="#规则-1：单类型运算-——-无提升，结果类型与操作数一致" class="headerlink" title="规则 1：单类型运算 —— 无提升，结果类型与操作数一致"></a>规则 1：单类型运算 —— 无提升，结果类型与操作数一致</h4><p>所有操作数为同一种数值类型，直接运算，结果类型不变，无隐式转换：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a=10, b=20; int res = a+b; // 全int运算，结果仍为int</span><br><span class="line">long c=100L, d=200L; long res2 = c-d; // 全long运算，结果仍为long</span><br></pre></td></tr></table></figure>
-
-<h4 id="规则-2：多类型混合运算-——-全提升至「精度最高类型」，结果同此类型"><a href="#规则-2：多类型混合运算-——-全提升至「精度最高类型」，结果同此类型" class="headerlink" title="规则 2：多类型混合运算 —— 全提升至「精度最高类型」，结果同此类型"></a>规则 2：多类型混合运算 —— 全提升至「精度最高类型」，结果同此类型</h4><p>存在不同精度操作数时，<strong>所有低精度操作数依次自动转为运算中精度最高的类型</strong>，同类型运算后，结果为该最高类型（只能用该类型接收，否则编译报错）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a=10; long b=20L; long res = a+b; // int→long，结果long</span><br><span class="line">long c=100L; double d=20.5; double res2 = c+d; // long→double，结果double</span><br><span class="line">int e=5; float f=3.5f; double g=1.2; double res3 = e+f+g; // int→float→double，结果double</span><br></pre></td></tr></table></figure>
-
-<h4 id="规则-3：byte-short-char-运算-——-先统一转-int，再按规则-2-提升"><a href="#规则-3：byte-short-char-运算-——-先统一转-int，再按规则-2-提升" class="headerlink" title="规则 3：byte&#x2F;short&#x2F;char 运算 —— 先统一转 int，再按规则 2 提升"></a>规则 3：byte&#x2F;short&#x2F;char 运算 —— 先统一转 int，再按规则 2 提升</h4><p>这三种低精度类型，<strong>无论互相运算还是与其他类型运算</strong>，第一步必自动转为 int，后续再按「精度从低到高」继续提升：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">byte a=10; short b=20; int res = a+b; // byte/short→int，结果int</span><br><span class="line">char c=&#x27;a&#x27;; // ASCII码97，运算时→int(97)</span><br><span class="line">long res2 = c+a; // char→int→long，byte→int→long，结果long</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="三、浮点数在计算机中的存储规则（以255-5为例0"><a href="#三、浮点数在计算机中的存储规则（以255-5为例0" class="headerlink" title="三、浮点数在计算机中的存储规则（以255.5为例0)"></a>三、浮点数在计算机中的存储规则（以255.5为例0)</h1><h2 id="一、第一步：将-255-5-转为十进制整数-小数的二进制"><a href="#一、第一步：将-255-5-转为十进制整数-小数的二进制" class="headerlink" title="一、第一步：将 255.5 转为十进制整数 + 小数的二进制"></a>一、第一步：将 255.5 转为十进制整数 + 小数的二进制</h2><h3 id="1-整数部分（255）转二进制（除-2-取余，逆序排列）"><a href="#1-整数部分（255）转二进制（除-2-取余，逆序排列）" class="headerlink" title="1. 整数部分（255）转二进制（除 2 取余，逆序排列）"></a>1. 整数部分（255）转二进制（除 2 取余，逆序排列）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">255 ÷ 2 = 127 余 1</span><br><span class="line">127 ÷ 2 = 63  余 1</span><br><span class="line">63 ÷ 2 = 31   余 1</span><br><span class="line">31 ÷ 2 = 15   余 1</span><br><span class="line">15 ÷ 2 = 7    余 1</span><br><span class="line">7 ÷ 2 = 3     余 1</span><br><span class="line">3 ÷ 2 = 1     余 1</span><br><span class="line">1 ÷ 2 = 0     余 1</span><br></pre></td></tr></table></figure>
-
-<p>逆序取余得：<strong>255 的二进制 &#x3D; 11111111</strong>（8 个 1）。</p>
-<h3 id="2-小数部分（0-5）转二进制（乘-2-取整，顺序排列）"><a href="#2-小数部分（0-5）转二进制（乘-2-取整，顺序排列）" class="headerlink" title="2. 小数部分（0.5）转二进制（乘 2 取整，顺序排列）"></a>2. 小数部分（0.5）转二进制（乘 2 取整，顺序排列）</h3><p>十进制小数转二进制<strong>核心方法</strong>：乘 2 取整法，反复乘 2 取整数部分，按顺序排列</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0.5 × 2 = 1.0  取整 1，小数部分为0，结束转换</span><br></pre></td></tr></table></figure>
-
-<p>顺序取整得：<strong>0.5 的二进制 &#x3D; 1</strong>。</p>
-<h3 id="3-合并整数-小数二进制"><a href="#3-合并整数-小数二进制" class="headerlink" title="3. 合并整数 + 小数二进制"></a>3. 合并整数 + 小数二进制</h3><p>255.5 的二进制 &#x3D; 整数部分 + 小数部分 &#x3D; <strong>11111111.1</strong>。</p>
-<h2 id="二、第二步：转为-IEEE-754-规格化二进制（1-M-×-2-e-形式）"><a href="#二、第二步：转为-IEEE-754-规格化二进制（1-M-×-2-e-形式）" class="headerlink" title="二、第二步：转为 IEEE 754 规格化二进制（1.M × 2^e 形式）"></a>二、第二步：转为 IEEE 754 规格化二进制（1.M × 2^e 形式）</h2><p>IEEE 754 要求浮点数以<strong>规格化形式</strong>表示，即<strong>小数点前必须只有 1 个有效数字 1</strong>，通过移动小数点实现：</p>
-<ul>
-<li>原始二进制：<code>11111111.1</code></li>
-<li>小数点左移 7 位：<code>1.11111111 × 2^7</code>（左移 n 位，指数为 + n；右移为 - n）</li>
-</ul>
-<p>由此得到规格化的核心参数：</p>
-<ul>
-<li>符号位基础：255.5 是正数 → 符号位 S &#x3D; 0</li>
-<li>尾数小数部分 M：<code>1.11111111</code> 中小数点后的部分 → <code>11111111</code></li>
-<li>实际指数 e：7</li>
-</ul>
-<h2 id="三、第三步：计算-double-专属的指数位（偏移量修正）"><a href="#三、第三步：计算-double-专属的指数位（偏移量修正）" class="headerlink" title="三、第三步：计算 double 专属的指数位（偏移量修正）"></a>三、第三步：计算 double 专属的指数位（偏移量修正）</h2><p>double 类型的指数位采用<strong>偏移表示法</strong>，<strong>偏移量固定为 1023</strong>，存储的指数值 E 计算公式为：</p>
-<p><strong>E &#x3D; 实际指数 e + 1023</strong></p>
-<p>代入计算：</p>
-<p>E &#x3D; 7 + 1023 &#x3D; <strong>1030</strong></p>
-<p>将 1030 转为 11 位二进制（double 指数位固定 11 位，不足补前导 0）：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1030 ÷ 2 = 515 余 0</span><br><span class="line">515 ÷ 2 = 257 余 1</span><br><span class="line">257 ÷ 2 = 128 余 1</span><br><span class="line">128 ÷ 2 = 64  余 0</span><br><span class="line">64 ÷ 2 = 32   余 0</span><br><span class="line">32 ÷ 2 = 16   余 0</span><br><span class="line">16 ÷ 2 = 8    余 0</span><br><span class="line">8 ÷ 2 = 4     余 0</span><br><span class="line">4 ÷ 2 = 2     余 0</span><br><span class="line">2 ÷ 2 = 1     余 0</span><br><span class="line">1 ÷ 2 = 0     余 1</span><br></pre></td></tr></table></figure>
-
-<p>逆序取余并补为 11 位：<strong>10000000110</strong>（验证：2^10 + 2^3 + 2^2 &#x3D; 1024+8+4&#x3D;1030，正确）。</p>
-<h2 id="四、第四步：补全-52-位尾数位（double-尾数固定-52-位）"><a href="#四、第四步：补全-52-位尾数位（double-尾数固定-52-位）" class="headerlink" title="四、第四步：补全 52 位尾数位（double 尾数固定 52 位）"></a>四、第四步：补全 52 位尾数位（double 尾数固定 52 位）</h2><p>double 尾数位为 52 位，存储的是规格化形式<code>1.M</code>中<strong>小数点后的 M 部分</strong>，<strong>隐含最高位的 1</strong>（不占用存储位，节省精度），规则：</p>
-<ul>
-<li>若 M 长度 &lt; 52 位，<strong>末尾补 0</strong>至 52 位；</li>
-<li>若 M 长度 &gt; 52 位，按舍入规则截断。</li>
-</ul>
-<p>本题中 M &#x3D; <code>11111111</code>（8 位），需补 52-8&#x3D;44 个 0，最终尾数位为：</p>
-<p><strong>11111111 + 44 个 0</strong>（共 52 位）。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/">JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误</a>
-    </h1>
-  
-
-        
-        <a href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" class="archive-article-date">
-  	<time datetime="2026-01-24T06:58:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-24</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <p>在 Java 中，<code>long</code>（64 位）和 <code>int</code>（32 位）的转换分为<strong>自动转换</strong>和<strong>强制转换</strong>两种情况，核心是处理数据范围的差异。</p>
-<hr>
-<h3 id="1-自动转换：int-→-long（安全）"><a href="#1-自动转换：int-→-long（安全）" class="headerlink" title="1. 自动转换：int → long（安全）"></a>1. 自动转换：int → long（安全）</h3><ul>
-<li><strong>规则</strong>：当 <code>int</code> 类型的值赋值给 <code>long</code> 变量时，Java 会自动完成转换，因为 <code>long</code> 能容纳 <code>int</code> 的所有值（<code>long</code> 范围是 <code>-9e18 ~ 9e18</code>，<code>int</code> 范围是 <code>-2e9 ~ 2e9</code>），不会丢失数据。</li>
-<li><strong>示例</strong>：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 100;</span><br><span class="line">long b = a; // 自动转换，无风险</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="2-强制转换：long-→-int（有风险）"><a href="#2-强制转换：long-→-int（有风险）" class="headerlink" title="2. 强制转换：long → int（有风险）"></a>2. 强制转换：long → int（有风险）</h3><ul>
-<li><strong>规则</strong>：当 <code>long</code> 类型的值赋值给 <code>int</code> 变量时，必须显式强制转换，因为 <code>long</code> 的值可能超出 <code>int</code> 的范围，导致数据溢出或精度丢失。</li>
-<li><strong>语法</strong>：<code>(int) 要转换的long值</code></li>
-<li><strong>示例</strong>：</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">long a = 100L;</span><br><span class="line">int b = (int) a; // 安全：100在int范围内</span><br><span class="line">long c = 3000000000L; // 超出int最大值（2147483647）</span><br><span class="line">int d = (int) c; // 溢出！结果会变成错误的负数（实际值为-1294967296）</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="3-常见场景与避坑"><a href="#3-常见场景与避坑" class="headerlink" title="3. 常见场景与避坑"></a>3. 常见场景与避坑</h3><h4 id="场景-1：计算时的自动提升"><a href="#场景-1：计算时的自动提升" class="headerlink" title="场景 1：计算时的自动提升"></a>场景 1：计算时的自动提升</h4><p>在混合运算中，<code>int</code> 会自动提升为 <code>long</code>，避免溢出：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 1000000;</span><br><span class="line">int b = 2000000;</span><br><span class="line">long c = (long) a * b; // 先把a转为long，再计算，避免int相乘溢出</span><br></pre></td></tr></table></figure>
-
-<h4 id="场景-2：避免溢出的强制转换"><a href="#场景-2：避免溢出的强制转换" class="headerlink" title="场景 2：避免溢出的强制转换"></a>场景 2：避免溢出的强制转换</h4><p>如果需要把一个可能超出 <code>int</code> 范围的 <code>long</code> 转成 <code>int</code>，建议先做范围检查：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">long num = 1234567890L;</span><br><span class="line">int result;</span><br><span class="line">if (num &gt;= Integer.MIN_VALUE &amp;&amp; num &lt;= Integer.MAX_VALUE) &#123;</span><br><span class="line">    result = (int) num; // 安全转换</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    throw new IllegalArgumentException(&quot;数值超出int范围&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="4-转换规则总结"><a href="#4-转换规则总结" class="headerlink" title="4. 转换规则总结"></a>4. 转换规则总结</h3><table>
-<thead>
-<tr>
-<th align="center">转换方向</th>
-<th align="center">方式</th>
-<th align="center">风险</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><code>int → long</code></td>
-<td align="center">自动转换</td>
-<td align="center">无风险，不会丢失数据</td>
-</tr>
-<tr>
-<td align="center"><code>long → int</code></td>
-<td align="center">强制转换 <code>(int)</code></td>
-<td align="center">有风险，可能溢出或丢失精度</td>
-</tr>
-</tbody></table>
-<h2 id="如何处理不开long导致的低级错误"><a href="#如何处理不开long导致的低级错误" class="headerlink" title="如何处理不开long导致的低级错误"></a>如何处理不开long导致的低级错误</h2><p><strong>竞赛最优选择</strong>：直接全量用<code>long</code>，记住 “数组长度转 int、字面量加 L” 两个细节，既能避免溢出，又不用额外封装，是最高效的方式。</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   <script>
     (function() {
       document.addEventListener('click', function(event) {
@@ -1606,11 +1665,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1631,6 +1690,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">算法与数据结构</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">网络安全</a>
               </li>
             
             <div class="clearfix"></div>
@@ -1748,5 +1811,31 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
     </div>
 
 </div>
+  <style>
+  .article-entry pre.mermaid {
+    background: transparent;
+    border: 0;
+    text-align: center;
+  }
+
+  .article-entry pre.mermaid svg {
+    height: auto;
+    max-width: 100%;
+  }
+</style>
+<script type="module">
+  import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+  var diagrams = Array.from(document.querySelectorAll('pre > code.mermaid')).map(function (code) {
+    var container = code.parentElement;
+    container.className = 'mermaid';
+    container.textContent = code.textContent;
+    return container;
+  });
+
+  mermaid.initialize({ startOnLoad: false, securityLevel: 'strict' });
+  await mermaid.run({ nodes: diagrams });
+</script>
+
 </body>
 </html>
