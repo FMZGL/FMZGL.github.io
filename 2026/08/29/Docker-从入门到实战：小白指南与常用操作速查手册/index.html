@@ -6,13 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | Tengfei Zhang - HomePage</title>
+  <title>Docker 从入门到实战：小白指南与常用操作速查手册 | Tengfei Zhang - HomePage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Tengfei Zhang - HomePage">
-<meta property="og:url" content="http://example.com/archives/page/3/index.html">
+  <meta name="description" content="🐳 Docker 从入门到实战：小白指南与常用操作速查手册 📖 一、 什么是 Docker？如果用一句话概括 Docker，那就是：“软件世界的‘标准化集装箱’。” 1. 它要解决什么痛点？过去软件开发中最让人抓狂的问题是：“代码在我电脑上明明跑得好好的，怎么部署到服务器&#x2F;发给同事就各种报错崩溃？”这是因为软件不仅依赖代码本身，还高度依赖底层的运行环境（操作系统版本、Python&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker 从入门到实战：小白指南与常用操作速查手册">
+<meta property="og:url" content="http://example.com/2026/08/29/Docker-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%8F%E7%99%BD%E6%8C%87%E5%8D%97%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/index.html">
 <meta property="og:site_name" content="Tengfei Zhang - HomePage">
+<meta property="og:description" content="🐳 Docker 从入门到实战：小白指南与常用操作速查手册 📖 一、 什么是 Docker？如果用一句话概括 Docker，那就是：“软件世界的‘标准化集装箱’。” 1. 它要解决什么痛点？过去软件开发中最让人抓狂的问题是：“代码在我电脑上明明跑得好好的，怎么部署到服务器&#x2F;发给同事就各种报错崩溃？”这是因为软件不仅依赖代码本身，还高度依赖底层的运行环境（操作系统版本、Python&amp;#">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-08-29T12:53:39.000Z">
+<meta property="article:modified_time" content="2026-08-29T12:54:45.664Z">
+<meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Tengfei Zhang - HomePage" type="application/atom+xml">
@@ -82,407 +87,232 @@ var _hmt = _hmt || [];
     
     <div class="academic-main full-width">
       <div class="academic-content">
+        <article id="post-Docker-从入门到实战：小白指南与常用操作速查手册" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
         
   
+    <h1 class="article-title" itemprop="name">
+      Docker 从入门到实战：小白指南与常用操作速查手册
+    </h1>
   
+
+        
+        <a href="/2026/08/29/Docker-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%8F%E7%99%BD%E6%8C%87%E5%8D%97%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/" class="archive-article-date">
+  	<time datetime="2026-08-29T12:53:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-08-29</time>
+</a>
+        
+      </header>
     
-    
+    <div class="article-entry " itemprop="articleBody" >
       
+        <h1 id="🐳-Docker-从入门到实战：小白指南与常用操作速查手册"><a href="#🐳-Docker-从入门到实战：小白指南与常用操作速查手册" class="headerlink" title="🐳 Docker 从入门到实战：小白指南与常用操作速查手册"></a>🐳 Docker 从入门到实战：小白指南与常用操作速查手册</h1><hr>
+<h2 id="📖-一、-什么是-Docker？"><a href="#📖-一、-什么是-Docker？" class="headerlink" title="📖 一、 什么是 Docker？"></a>📖 一、 什么是 Docker？</h2><p>如果用一句话概括 Docker，那就是：<strong>“软件世界的‘标准化集装箱’。”</strong></p>
+<h3 id="1-它要解决什么痛点？"><a href="#1-它要解决什么痛点？" class="headerlink" title="1. 它要解决什么痛点？"></a>1. 它要解决什么痛点？</h3><p>过去软件开发中最让人抓狂的问题是：<strong>“代码在我电脑上明明跑得好好的，怎么部署到服务器&#x2F;发给同事就各种报错崩溃？”</strong><br>这是因为软件不仅依赖代码本身，还高度依赖底层的运行环境（操作系统版本、Python&#x2F;Node&#x2F;Java版本、缺失的系统动态库等）。</p>
+<h3 id="2-Docker-的解决之道（集装箱哲学）"><a href="#2-Docker-的解决之道（集装箱哲学）" class="headerlink" title="2. Docker 的解决之道（集装箱哲学）"></a>2. Docker 的解决之道（集装箱哲学）</h3><p>Docker 将<strong>应用程序代码 + 其所需的所有运行环境、依赖库、系统工具和配置文件</strong>打包封进一个标准化的“集装箱（容器）”中。<br>只要宿主机安装了 Docker 引擎，无论在 Windows、macOS 还是 Linux 上，这个集装箱运行起来的<strong>行为都 100% 绝对一致</strong>。</p>
+<h3 id="3-Docker-vs-传统虚拟机-VMware-VirtualBox"><a href="#3-Docker-vs-传统虚拟机-VMware-VirtualBox" class="headerlink" title="3. Docker vs 传统虚拟机 (VMware &#x2F; VirtualBox)"></a>3. Docker vs 传统虚拟机 (VMware &#x2F; VirtualBox)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────┐     ┌──────────────────────────────────────┐</span><br><span class="line">│         传统虚拟机 (VMware)          │     │            Docker 容器               │</span><br><span class="line">├──────────────────────────────────────┤     ├──────────────────────────────────────┤</span><br><span class="line">│  App A   │   App B   │    App C      │     │  App A   │   App B   │    App C      │</span><br><span class="line">├──────────┴───────────┴───────────────┤     ├──────────┴───────────┴───────────────┤</span><br><span class="line">│    客居完整操作系统 (Guest OS)       │     │     Docker 引擎 (资源隔离沙盒)       │</span><br><span class="line">├──────────────────────────────────────┤     ├──────────────────────────────────────┤</span><br><span class="line">│    Hypervisor 虚拟化硬件层           │     │                                      │</span><br><span class="line">├──────────────────────────────────────┤     │    宿主机操作系统内核 (Host OS)      │</span><br><span class="line">│    宿主机操作系统 (Host OS)          │     │    (多个容器直接共享宿主机内核)      │</span><br><span class="line">└──────────────────────────────────────┘     └──────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th align="left">对比维度</th>
+<th align="left">传统虚拟机 (VMware &#x2F; KVM)</th>
+<th align="left">Docker 容器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>启动速度</strong></td>
+<td align="left">🐢 较慢（开机需几十秒到几分钟）</td>
+<td align="left">🚀 <strong>极快（毫秒级，按回车瞬间启动）</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>资源与内存占用</strong></td>
+<td align="left">🔴 极大（每个虚拟机独占数 GB 内存和数十 GB 硬盘）</td>
+<td align="left">🟢 <strong>极小（仅几 MB 到几百 MB）</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>性能损耗</strong></td>
+<td align="left">🔴 存在虚拟化指令折损</td>
+<td align="left">🟢 <strong>近乎原生裸机性能（Zero Overhead）</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>隔离级别</strong></td>
+<td align="left">硬件级完全隔离</td>
+<td align="left">进程&#x2F;命名空间（Namespace + Cgroups）级隔离</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🧱-二、-Docker-核心“三大件”与重要概念"><a href="#🧱-二、-Docker-核心“三大件”与重要概念" class="headerlink" title="🧱 二、 Docker 核心“三大件”与重要概念"></a>🧱 二、 Docker 核心“三大件”与重要概念</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 1. 仓库 (Docker Hub / Registry) ──► 类似于【App Store】     │</span><br><span class="line">│    全世界开发者共享和下载镜像的云端仓库                     │</span><br><span class="line">└──────────────────────────────┬──────────────────────────────┘</span><br><span class="line">                               │ docker pull (下载)</span><br><span class="line">                               ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 2. 镜像 (Image) ───────────────────► 类似于【安装包 / 模具】│</span><br><span class="line">│    只读的、打包好的静态模板文件                             │</span><br><span class="line">└──────────────────────────────┬──────────────────────────────┘</span><br><span class="line">                               │ docker run (运行)</span><br><span class="line">                               ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 3. 容器 (Container) ───────────────► 类似于【运行中的 App】 │</span><br><span class="line">│    根据镜像生成的、正在独立运行的动态沙盒进程               │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="进阶两个核心机制："><a href="#进阶两个核心机制：" class="headerlink" title="进阶两个核心机制："></a>进阶两个核心机制：</h3><ul>
+<li>**端口映射 (<code>-p 宿主机端口:容器端口</code>)**：把容器内部的服务端口暴露给外部电脑访问（如 <code>-p 8080:80</code>）。</li>
+<li>**数据卷挂载 (<code>-v 宿主机目录:容器目录</code>)**：容器被删除后其内部数据会丢失，通过 <code>-v</code> 把数据持久化保存在宿主机的硬盘上。</li>
+</ul>
+<hr>
+<h2 id="🛠️-三、-Docker-常用命令全景速查表"><a href="#🛠️-三、-Docker-常用命令全景速查表" class="headerlink" title="🛠️ 三、 Docker 常用命令全景速查表"></a>🛠️ 三、 Docker 常用命令全景速查表</h2><h3 id="1-镜像操作命令-Image"><a href="#1-镜像操作命令-Image" class="headerlink" title="1. 镜像操作命令 (Image)"></a>1. 镜像操作命令 (Image)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从仓库搜索镜像（如搜索 mysql）</span></span><br><span class="line">docker search mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从远程仓库拉取（下载）镜像（不加版本号默认拉取最新 latest）</span></span><br><span class="line">docker pull nginx:latest</span><br><span class="line">docker pull mysql:8.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看本地已下载的所有镜像</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除某个本地镜像（需确保没有容器正在使用它）</span></span><br><span class="line">docker rmi &lt;镜像ID或镜像名:标签&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制删除镜像</span></span><br><span class="line">docker rmi -f &lt;镜像ID&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-容器生命周期管理-Container"><a href="#2-容器生命周期管理-Container" class="headerlink" title="2. 容器生命周期管理 (Container)"></a>2. 容器生命周期管理 (Container)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 【最核心命令】从镜像创建并后台启动一个容器</span></span><br><span class="line"><span class="comment"># 参数解释：</span></span><br><span class="line"><span class="comment"># -d: 后台运行 (detached mode)</span></span><br><span class="line"><span class="comment"># --name: 给容器起一个好记的名字</span></span><br><span class="line"><span class="comment"># -p: 端口映射（宿主机端口:容器内端口）</span></span><br><span class="line"><span class="comment"># -v: 目录挂载（宿主机路径:容器路径）</span></span><br><span class="line"><span class="comment"># -e: 注入环境变量（如配置密码）</span></span><br><span class="line">docker run -d --name my-web -p 80:80 nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前正在运行的容器</span></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有容器（包括已停止退出的容器，常用！）</span></span><br><span class="line">docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 / 停止 / 重启容器</span></span><br><span class="line">docker start &lt;容器名或容器ID&gt;</span><br><span class="line">docker stop &lt;容器名或容器ID&gt;</span><br><span class="line">docker restart &lt;容器名或容器ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除某个已停止的容器</span></span><br><span class="line">docker <span class="built_in">rm</span> &lt;容器名或容器ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制删除正在运行的容器（慎用）</span></span><br><span class="line">docker <span class="built_in">rm</span> -f &lt;容器名或容器ID&gt;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-容器运维、调试与排错-Debug-Logs"><a href="#3-容器运维、调试与排错-Debug-Logs" class="headerlink" title="3. 容器运维、调试与排错 (Debug &amp; Logs)"></a>3. 容器运维、调试与排错 (Debug &amp; Logs)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看容器的实时运行日志（排查启动报错必备）</span></span><br><span class="line">docker logs &lt;容器名或容器ID&gt;</span><br><span class="line">docker logs -f --<span class="built_in">tail</span> 100 &lt;容器名&gt;  <span class="comment"># 实时持续跟踪最新 100 行日志</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入正在运行的容器内部终端（类似 SSH 登录进去）</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器名或容器ID&gt; /bin/bash</span><br><span class="line"><span class="comment"># (若容器内无 bash，可改用 /bin/sh)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从容器内拷贝文件到宿主机（或反向拷贝）</span></span><br><span class="line">docker <span class="built_in">cp</span> &lt;容器名&gt;:/app/config.json ./local_config.json</span><br><span class="line">docker <span class="built_in">cp</span> ./my-file.txt &lt;容器名&gt;:/app/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器详细元数据（IP地址、挂载目录、环境变量等）</span></span><br><span class="line">docker inspect &lt;容器名&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器的实时 CPU、内存资源占用情况</span></span><br><span class="line">docker stats</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-磁盘空间清理-Clean-up"><a href="#4-磁盘空间清理-Clean-up" class="headerlink" title="4. 磁盘空间清理 (Clean up)"></a>4. 磁盘空间清理 (Clean up)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一键清理所有已停止的容器、未使用的网络和悬空镜像（安全释放空间）</span></span><br><span class="line">docker system prune</span><br><span class="line"></span><br><span class="line"><span class="comment"># 彻底清理所有未使用的镜像（加 -a）</span></span><br><span class="line">docker system prune -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 Docker 占用的磁盘空间分布</span></span><br><span class="line">docker system <span class="built_in">df</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="🚀-四、-四大经典实战场景（照着敲即可）"><a href="#🚀-四、-四大经典实战场景（照着敲即可）" class="headerlink" title="🚀 四、 四大经典实战场景（照着敲即可）"></a>🚀 四、 四大经典实战场景（照着敲即可）</h2><h3 id="场景-1：秒级启动一个-Nginx-网页服务器"><a href="#场景-1：秒级启动一个-Nginx-网页服务器" class="headerlink" title="场景 1：秒级启动一个 Nginx 网页服务器"></a>场景 1：秒级启动一个 Nginx 网页服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 运行 Nginx 并将电脑的 8080 端口映射到容器的 80 端口</span></span><br><span class="line">docker run -d --name my-nginx -p 8080:80 nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证：打开浏览器访问 http://localhost:8080 即可看到 Welcome to nginx!</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="场景-2：一键部署-MySQL-数据库（带数据持久化）"><a href="#场景-2：一键部署-MySQL-数据库（带数据持久化）" class="headerlink" title="场景 2：一键部署 MySQL 数据库（带数据持久化）"></a>场景 2：一键部署 MySQL 数据库（带数据持久化）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建本地数据存储目录</span></span><br><span class="line"><span class="built_in">mkdir</span> -p ~/mysql_data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 MySQL 8.0 容器</span></span><br><span class="line">docker run -d \</span><br><span class="line">  --name local-mysql \</span><br><span class="line">  -p 3306:3306 \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=MyPassword123! \</span><br><span class="line">  -v ~/mysql_data:/var/lib/mysql \</span><br><span class="line">  mysql:8.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 效果：数据保存在本地 ~/mysql_data，即使容器被删除了，数据依然完好无损！</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="场景-3：编写你的第一个-Dockerfile（打包自己的代码）"><a href="#场景-3：编写你的第一个-Dockerfile（打包自己的代码）" class="headerlink" title="场景 3：编写你的第一个 Dockerfile（打包自己的代码）"></a>场景 3：编写你的第一个 <code>Dockerfile</code>（打包自己的代码）</h3><p>在你的项目根目录下创建一个名为 <strong><code>Dockerfile</code></strong> 的文件：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 基础镜像：基于轻量版 Python</span></span><br><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.10</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 设置容器内的工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 拷贝依赖清单并安装</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> requirements.txt .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip install --no-cache-dir -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 拷贝当前目录的所有源码到容器中</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 声明暴露端口并指定启动命令</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">5000</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;python&quot;</span>, <span class="string">&quot;app.py&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<p>在终端中构建并运行镜像：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 构建镜像并命名为 my-python-app</span></span><br><span class="line">docker build -t my-python-app:1.0 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 运行打包好的镜像</span></span><br><span class="line">docker run -d -p 5000:5000 --name my-app my-python-app:1.0</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="场景-4：使用-docker-compose-一键启动多容器服务"><a href="#场景-4：使用-docker-compose-一键启动多容器服务" class="headerlink" title="场景 4：使用 docker-compose 一键启动多容器服务"></a>场景 4：使用 <code>docker-compose</code> 一键启动多容器服务</h3><p>当项目需要同时依赖前端、后端和数据库时，用一个 <strong><code>docker-compose.yml</code></strong> 文件即可一键管理：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">database:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis:alpine</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;6379:6379&quot;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一键后台启动所有服务</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键停止并销毁所有服务</span></span><br><span class="line">docker compose down</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="💡-五、-新手避坑三定律"><a href="#💡-五、-新手避坑三定律" class="headerlink" title="💡 五、 新手避坑三定律"></a>💡 五、 新手避坑三定律</h2><ol>
+<li><strong>容器即“消耗品”</strong>：千万不要直接在容器里存关键数据，<strong>重要数据必须通过 <code>-v</code> 挂载到宿主机硬盘</strong>。</li>
+<li><strong>忘记映射端口导致无法访问</strong>：如果不加 <code>-p 8080:80</code>，容器里的服务在宿主机外部是无法直接通过浏览器访问的。</li>
+<li><strong>镜像名加 Tag 标签</strong>：在生产环境中尽量明确指定版本号（如 <code>mysql:8.0.35</code>），避免盲目使用 <code>latest</code> 导致自动升级引发不兼容。</li>
+</ol>
+
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2026" class="archive-year">2026</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2026/03/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%8C%EF%BC%9A%E6%95%B0%E5%AD%A6/" class="archive-article-date">
-  	<time datetime="2026-03-30T15:21:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-30</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2026/03/30/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%BA%8C%EF%BC%9A%E6%95%B0%E5%AD%A6/">算法与数据结构模板与经典例题二：数学</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+        
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Docker</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+        
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://example.com/2026/08/29/Docker-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%8F%E7%99%BD%E6%8C%87%E5%8D%97%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2026/03/29/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%80%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/" class="archive-article-date">
-  	<time datetime="2026-03-29T15:18:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-29</time>
-</a>
+<nav id="article-nav">
+  
+    <a href="/9999/07/26/%E5%A4%A7%E4%B9%89%E8%A7%89%E8%BF%B7%E9%B9%BF/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          大义觉迷鹿
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/08/26/SSH%E4%B8%8EVPN/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">SSH与VPN</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2026/03/29/%E7%AE%97%E6%B3%95%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E6%9D%BF%E4%B8%8E%E7%BB%8F%E5%85%B8%E4%BE%8B%E9%A2%98%E4%B8%80%EF%BC%9A%E5%B9%B6%E6%9F%A5%E9%9B%86/">算法与数据结构模板与经典例题一：并查集</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">算法与数据结构</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2026/03/13/%E5%BA%93%E3%80%81%E5%8C%85%E3%80%81%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3/" class="archive-article-date">
-  	<time datetime="2026-03-13T06:36:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-03-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2026/03/13/%E5%BA%93%E3%80%81%E5%8C%85%E3%80%81%E6%A1%86%E6%9E%B6%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E8%AF%A6%E8%A7%A3/">库、包、框架核心概念详解</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">颂</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="archive-article-date">
-  	<time datetime="2026-02-24T13:22:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-02-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2026/02/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%83%EF%BC%9A%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0%E5%8F%8A%E6%AF%94%E8%B5%9B%E6%89%80%E9%9C%80%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E6%8A%80%E5%B7%A7/">JAVA学习日记七：常用函数及比赛所需的一些小技巧</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/" class="archive-article-date">
-  	<time datetime="2026-01-29T13:27:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-29</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2026/01/29/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%85%AD%EF%BC%9AScanner%E4%BB%A5%E5%8F%8A%E6%95%B0%E5%80%BC%E6%B7%B7%E5%90%88%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2/">JAVA学习日记六：Scanner以及数值混合类型转换</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" class="archive-article-date">
-  	<time datetime="2026-01-24T06:58:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-24</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/">JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/" class="archive-article-date">
-  	<time datetime="2026-01-22T07:14:28.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-22</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2026/01/22/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E5%9B%9B%EF%BC%9A%E7%BB%A7%E6%89%BFCompareable%E6%8E%A5%E5%8F%A3%E8%87%AA%E5%AE%9A%E4%B9%89%E6%AF%94%E8%BE%83%E6%96%B9%E5%BC%8F/">JAVA学习日记四：继承Compareable接口自定义比较方式</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2026/01/19/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%89%EF%BC%9AJAVA%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E9%9B%86%E5%90%88%EF%BC%89/" class="archive-article-date">
-  	<time datetime="2026-01-19T06:11:57.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2026/01/19/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%89%EF%BC%9AJAVA%E5%B8%B8%E7%94%A8%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E9%9B%86%E5%90%88%EF%BC%89/">JAVA学习日记三：JAVA常用数据结构（集合）</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2026/01/18/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9A%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%B8%8E%E9%9D%9E%E5%85%AC%E6%9C%89%E9%A1%B6%E7%BA%A7%E7%B1%BB/" class="archive-article-date">
-  	<time datetime="2026-01-18T06:57:59.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-18</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2026/01/18/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9A%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E4%B8%8E%E9%9D%9E%E5%85%AC%E6%9C%89%E9%A1%B6%E7%BA%A7%E7%B1%BB/">JAVA学习日记二：访问权限与非公有顶级类</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2026/01/17/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%80%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%8E%E7%BB%A7%E6%89%BF%E3%80%81%E4%BD%95%E4%B8%BAObject/" class="archive-article-date">
-  	<time datetime="2026-01-17T06:53:29.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-17</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2026/01/17/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%B8%80%EF%BC%9A%E5%AE%9E%E7%8E%B0%E4%B8%8E%E7%BB%A7%E6%89%BF%E3%80%81%E4%BD%95%E4%B8%BAObject/">JAVA学习日记一：实现与继承、何为Object、基本类型与包装类</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/page/2/">&laquo; Prev</a><a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/archives/page/4/">4</a><a class="page-number" href="/archives/page/5/">5</a><a class="extend next" rel="next" href="/archives/page/4/">Next &raquo;</a>
-    </nav>
-  
-
 
 
       </div>
@@ -503,8 +333,8 @@ var _hmt = _hmt || [];
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
