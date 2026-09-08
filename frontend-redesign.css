@@ -21,9 +21,46 @@ body {
   display: none !important; /* Hide animation canvas */
 }
 
-/* Hide Yilia's mobile nav and tools if they pop up */
-.left-col, .mid-col, #mobile-nav, .tools-col {
+/* Hide the legacy navigation while retaining the article search panel. */
+.left-col, .mid-col, #mobile-nav {
   display: none !important;
+}
+
+.tools-col {
+  display: none;
+  left: 0;
+  top: 64px;
+  bottom: 0;
+  height: auto;
+  width: 360px;
+  max-width: calc(100vw - 24px);
+  background: #333;
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+  animation: none !important;
+  transform: none !important;
+}
+
+.tools-col.show {
+  display: block;
+  opacity: 1;
+}
+
+.tools-col .tools-wrap,
+.tools-col .tools-section {
+  width: 100%;
+}
+
+.tools-col .tools-wrap {
+  padding-top: 0;
+}
+
+.tools-col .tools-section .search-wrap {
+  width: auto;
+}
+
+.tools-col .tools-section .search-wrap .search-ipt {
+  width: 100%;
 }
 
 /* 2. ACADEMIC LAYOUT GRID */
@@ -380,7 +417,7 @@ body {
 @media (max-width: 800px) {
   #academic-container {
     flex-direction: column;
-    padding: 20px;
+    padding: 90px 20px 20px;
   }
   
   .academic-sidebar {
