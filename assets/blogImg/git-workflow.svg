@@ -1,0 +1,181 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="2020" viewBox="0 0 1200 2020" role="img" aria-labelledby="title desc" lang="zh-CN">
+  <title id="title">Git 工作原理：四个区域与常用命令</title>
+  <desc id="desc">原创中文四列泳道图。珊瑚红工作区、金黄暂存区、青绿本地仓库属于本地，紫色远程仓库属于远程。主图依次说明 add、commit、push、fetch、本地 merge 或 rebase，以及先 fetch 再 merge 或 rebase 的 pull。下方补充 clone 默认检出、分支切换、文件恢复、commit -a 的自动暂存限制，以及独立于暂存区的 stash push、apply、pop 流程。箭头表示命令作用范围，不是底层数据搬运模型。</desc>
+  <defs>
+    <style>
+      text { font-family: "Noto Sans CJK SC", "Microsoft YaHei", "PingFang SC", sans-serif; fill: #253249; }
+      .title { font-size: 37px; font-weight: 800; letter-spacing: 1px; }
+      .subtitle { font-size: 20px; fill: #607086; }
+      .group { font-size: 18px; font-weight: 700; letter-spacing: 2px; }
+      .lane-title { font-size: 27px; font-weight: 750; }
+      .english { font-size: 17px; fill: #556579; }
+      .note { font-size: 19px; fill: #526278; }
+      .small { font-size: 17px; fill: #607086; }
+      .section { font-size: 24px; font-weight: 750; }
+      .cmd { font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace; font-size: 23px; font-weight: 700; }
+      .cmd-sm { font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace; font-size: 20px; font-weight: 700; }
+      .chip { font-size: 18px; font-weight: 700; }
+      .flow { fill: none; stroke: #34465d; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow); }
+      .soft-flow { fill: none; stroke: #78869a; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; marker-end: url(#arrow-soft); }
+      .divider { stroke: #e4e9ef; stroke-width: 1; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#34465d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="arrow-soft" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M1 1 9 5 1 9" fill="none" stroke="#78869a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+
+  <!-- A white editorial canvas; all typography and vector geometry are local. -->
+  <rect width="1200" height="2020" fill="#fff"/>
+  <rect x="44" y="40" width="7" height="52" rx="3.5" fill="#ef786b"/>
+  <text x="68" y="78" class="title">Git 工作原理</text>
+  <text x="1156" y="72" text-anchor="end" class="small" letter-spacing="2">从本地改动，到远程协作</text>
+  <text x="68" y="112" class="subtitle">四个区域 · 六组主命令 · 常用操作补充</text>
+
+  <!-- Grouping and column headers. -->
+  <rect x="44" y="143" width="830" height="34" rx="8" fill="#f0f3f7"/>
+  <text x="459" y="167" text-anchor="middle" class="group">本地 LOCAL</text>
+  <rect x="890" y="143" width="266" height="34" rx="8" fill="#f0ebff"/>
+  <text x="1023" y="167" text-anchor="middle" class="group" style="fill:#7451b5">远程 REMOTE</text>
+  <rect x="44" y="189" width="266" height="98" rx="15" fill="#ffdfd9"/>
+  <rect x="326" y="189" width="266" height="98" rx="15" fill="#ffedb3"/>
+  <rect x="608" y="189" width="266" height="98" rx="15" fill="#cdf1e8"/>
+  <rect x="890" y="189" width="266" height="98" rx="15" fill="#e9dfff"/>
+  <path d="M64 205h28m-28 10h19" fill="none" stroke="#cf6155" stroke-width="3" stroke-linecap="round"/>
+  <path d="M346 205h28m-28 10h19" fill="none" stroke="#a57a19" stroke-width="3" stroke-linecap="round"/>
+  <path d="M628 205h28m-28 10h19" fill="none" stroke="#258c77" stroke-width="3" stroke-linecap="round"/>
+  <path d="M910 205h28m-28 10h19" fill="none" stroke="#825bc4" stroke-width="3" stroke-linecap="round"/>
+  <text x="177" y="239" text-anchor="middle" class="lane-title" style="fill:#a94b42">工作区</text>
+  <text x="459" y="239" text-anchor="middle" class="lane-title" style="fill:#89620c">暂存区</text>
+  <text x="741" y="239" text-anchor="middle" class="lane-title" style="fill:#207764">本地仓库</text>
+  <text x="1023" y="239" text-anchor="middle" class="lane-title" style="fill:#7451b5">远程仓库</text>
+  <text x="177" y="269" text-anchor="middle" class="english">Working Tree</text>
+  <text x="459" y="269" text-anchor="middle" class="english">Index / Stage</text>
+  <text x="741" y="269" text-anchor="middle" class="english">Local Repository</text>
+  <text x="1023" y="269" text-anchor="middle" class="english">Remote Repository</text>
+
+  <!-- Continuous, subtly tinted lanes keep every arrow's endpoints readable. -->
+  <rect x="44" y="300" width="266" height="730" rx="12" fill="#fff6f3"/>
+  <rect x="326" y="300" width="266" height="730" rx="12" fill="#fffbeb"/>
+  <rect x="608" y="300" width="266" height="730" rx="12" fill="#f0fbf7"/>
+  <rect x="890" y="300" width="266" height="730" rx="12" fill="#f8f5ff"/>
+  <path d="M177 315v696M459 315v696M741 315v696M1023 315v696" stroke="#d9e0e8" stroke-width="1.4" stroke-dasharray="3 7"/>
+  <path d="M60 434h1080M60 544h1080M60 654h1080M60 764h1080M60 884h1080" class="divider"/>
+
+  <!-- 01 / add -->
+  <text x="67" y="330" class="small">01</text>
+  <rect x="241" y="324" width="154" height="40" rx="10" fill="#fff" stroke="#f2cdc5"/>
+  <text x="318" y="352" text-anchor="middle" class="cmd">git add</text>
+  <circle cx="177" cy="380" r="6" fill="#e87769"/>
+  <path d="M188 380H452" class="flow"/>
+  <text x="68" y="415" class="note">将选定改动加入暂存区，准备下一次提交</text>
+
+  <!-- 02 / commit -->
+  <text x="67" y="450" class="small">02</text>
+  <rect x="505" y="444" width="190" height="40" rx="10" fill="#fff" stroke="#e8d7a5"/>
+  <text x="600" y="472" text-anchor="middle" class="cmd">git commit</text>
+  <circle cx="459" cy="490" r="6" fill="#d2a52a"/>
+  <path d="M470 490H734" class="flow"/>
+  <text x="68" y="525" class="note">把暂存区的快照记录为本地提交</text>
+
+  <!-- 03 / push -->
+  <text x="67" y="560" class="small">03</text>
+  <rect x="800" y="554" width="164" height="40" rx="10" fill="#fff" stroke="#b8e2d7"/>
+  <text x="882" y="582" text-anchor="middle" class="cmd">git push</text>
+  <circle cx="741" cy="600" r="6" fill="#2ca88e"/>
+  <path d="M752 600H1016" class="flow"/>
+  <text x="68" y="635" class="note">将本地提交发布到远程仓库</text>
+
+  <!-- 04 / fetch -->
+  <text x="67" y="670" class="small">04</text>
+  <rect x="791" y="664" width="182" height="40" rx="10" fill="#fff" stroke="#d9c8f5"/>
+  <text x="882" y="692" text-anchor="middle" class="cmd">git fetch</text>
+  <circle cx="1023" cy="710" r="6" fill="#9571cf"/>
+  <path d="M1012 710H748" class="flow"/>
+  <text x="68" y="745" class="note">获取远程对象并更新远程跟踪引用；不直接修改工作区</text>
+
+  <!-- 05 / local integration: one scope arrow, three affected areas. -->
+  <text x="67" y="780" class="small">05</text>
+  <rect x="272" y="774" width="374" height="40" rx="10" fill="#fff" stroke="#cfe3dc"/>
+  <text x="459" y="802" text-anchor="middle" class="cmd">git merge / git rebase</text>
+  <circle cx="741" cy="828" r="6" fill="#2ca88e"/>
+  <path d="M730 828H184" class="flow"/>
+  <circle cx="459" cy="828" r="5" fill="#d2a52a" stroke="#fff" stroke-width="2"/>
+  <text x="68" y="864" class="note">在本地整合提交历史，更新当前分支、暂存区与工作区（不是简单复制文件）</text>
+
+  <!-- 06 / pull visibly has two ordered stages, not a remote-to-files shortcut. -->
+  <text x="67" y="902" class="small">06</text>
+  <rect x="802" y="894" width="160" height="40" rx="10" fill="#fff" stroke="#d9c8f5"/>
+  <text x="882" y="922" text-anchor="middle" class="cmd">git pull</text>
+  <circle cx="1023" cy="948" r="6" fill="#9571cf"/>
+  <path d="M1012 948H748" class="flow"/>
+  <text x="882" y="978" text-anchor="middle" class="small">① fetch</text>
+  <circle cx="741" cy="948" r="6" fill="#2ca88e"/>
+  <path d="M730 948H184" class="flow"/>
+  <circle cx="459" cy="948" r="5" fill="#d2a52a" stroke="#fff" stroke-width="2"/>
+  <text x="459" y="978" text-anchor="middle" class="small">② merge 或 rebase</text>
+  <text x="68" y="1014" class="note">先获取，再在本地整合；采用 merge 还是 rebase，取决于选项与配置</text>
+
+  <!-- Supplementary operations: explicit labels avoid overloading the main lanes. -->
+  <text x="44" y="1080" class="section">常用操作补充</text>
+  <text x="1156" y="1078" text-anchor="end" class="small">先区分「分支切换」与「文件恢复」</text>
+
+  <rect x="44" y="1100" width="1112" height="108" rx="14" fill="#fbfcfe" stroke="#e1e7ef"/>
+  <text x="68" y="1137" class="cmd">git clone</text>
+  <rect x="294" y="1120" width="176" height="34" rx="9" fill="#e9dfff"/>
+  <text x="382" y="1144" text-anchor="middle" class="chip" style="fill:#7451b5">远程仓库</text>
+  <path d="M484 1137H553" class="soft-flow"/>
+  <rect x="568" y="1120" width="224" height="34" rx="9" fill="#cdf1e8"/>
+  <text x="680" y="1144" text-anchor="middle" class="chip" style="fill:#207764">新建本地仓库</text>
+  <path d="M806 1137H875" class="soft-flow"/>
+  <rect x="890" y="1120" width="240" height="34" rx="9" fill="#ffdfd9"/>
+  <text x="1010" y="1144" text-anchor="middle" class="chip" style="fill:#a94b42">默认检出到工作区</text>
+  <text x="68" y="1185" class="note">不仅获取仓库历史：默认还会检出初始分支，建立可编辑的工作区</text>
+
+  <rect x="44" y="1220" width="1112" height="108" rx="14" fill="#fbfcfe" stroke="#e1e7ef"/>
+  <text x="68" y="1257" class="cmd">git switch / git checkout</text>
+  <rect x="930" y="1238" width="200" height="33" rx="9" fill="#eef3f8"/>
+  <text x="1030" y="1262" text-anchor="middle" class="chip">此处仅指切换分支</text>
+  <text x="68" y="1303" class="note">切换当前分支，并相应更新暂存区与工作区；不会丢弃不兼容的本地改动来强行切换</text>
+
+  <rect x="44" y="1340" width="1112" height="108" rx="14" fill="#fbfcfe" stroke="#e1e7ef"/>
+  <text x="68" y="1377" class="cmd">git restore</text>
+  <text x="358" y="1377" class="note">文件恢复，不负责切换分支</text>
+  <text x="68" y="1423" class="note">默认：暂存区 → 工作区；--staged：默认从 HEAD 恢复暂存区；--source 可指定来源</text>
+
+  <rect x="44" y="1460" width="1112" height="130" rx="14" fill="#fffcf2" stroke="#e9d8a0"/>
+  <text x="68" y="1498" class="cmd">git commit -a</text>
+  <text x="350" y="1498" class="note">自动暂存 + 提交，并非绕过暂存区</text>
+  <text x="68" y="1536" class="note">已跟踪文件的修改 / 删除</text>
+  <path d="M350 1530H427" class="soft-flow"/>
+  <rect x="442" y="1510" width="150" height="34" rx="9" fill="#ffedb3"/>
+  <text x="517" y="1534" text-anchor="middle" class="chip" style="fill:#89620c">自动暂存</text>
+  <path d="M606 1530H683" class="soft-flow"/>
+  <rect x="698" y="1510" width="200" height="34" rx="9" fill="#cdf1e8"/>
+  <text x="798" y="1534" text-anchor="middle" class="chip" style="fill:#207764">创建本地提交</text>
+  <text x="68" y="1570" class="small">不包括未跟踪的新文件；新文件需先 git add</text>
+
+  <!-- Stash is deliberately detached from Index and all four main columns. -->
+  <rect x="44" y="1614" width="1112" height="306" rx="16" fill="#f7f9fc" stroke="#d7e0eb"/>
+  <text x="68" y="1653" class="section">临时收起改动</text>
+  <text x="1130" y="1651" text-anchor="end" class="small">独立 stash 存放区 ≠ 暂存区 Index</text>
+  <rect x="68" y="1692" width="224" height="140" rx="13" fill="#fff" stroke="#edc3b9"/>
+  <rect x="68" y="1692" width="6" height="140" rx="3" fill="#e87769"/>
+  <text x="180" y="1748" text-anchor="middle" class="section">本地改动</text>
+  <text x="180" y="1782" text-anchor="middle" class="small">工作区 + 暂存区</text>
+  <rect x="914" y="1692" width="216" height="140" rx="13" fill="#fff" stroke="#b8c8dc"/>
+  <rect x="1124" y="1692" width="6" height="140" rx="3" fill="#8198b5"/>
+  <text x="1022" y="1748" text-anchor="middle" class="section">Stash</text>
+  <text x="1022" y="1782" text-anchor="middle" class="small">独立保存的记录</text>
+  <text x="603" y="1692" text-anchor="middle" class="cmd-sm">git stash push</text>
+  <path d="M310 1707H896" class="flow"/>
+  <text x="603" y="1735" text-anchor="middle" class="small">保存本地改动；默认不含未跟踪文件</text>
+  <text x="603" y="1767" text-anchor="middle" class="cmd-sm">git stash apply / git stash pop</text>
+  <path d="M896 1782H310" class="flow"/>
+  <text x="603" y="1811" text-anchor="middle" class="small">apply：恢复并保留记录</text>
+  <text x="68" y="1863" class="note">pop：成功恢复后删除记录；发生冲突时保留记录</text>
+  <text x="68" y="1896" class="note">默认 apply 不保证恢复原暂存状态；可用 --index 尝试恢复</text>
+
+  <path d="M44 1950H1156" stroke="#dfe6ee"/>
+  <circle cx="55" cy="1978" r="10" fill="#edf2f7"/>
+  <text x="55" y="1984" text-anchor="middle" font-size="16" font-weight="700">i</text>
+  <text x="78" y="1985" class="note">箭头表示命令的作用范围与先后关系，不是 Git 底层数据搬运模型。</text>
+</svg>
