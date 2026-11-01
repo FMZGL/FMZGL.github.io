@@ -162,6 +162,97 @@ body {
   color: #0056b3; /* Academic Blue */
 }
 
+.social-links a.mail {
+  text-transform: none;
+}
+
+/* Education (sidebar) */
+.edu-list {
+  width: 100%;
+  margin: 28px auto 0;
+  padding-top: 22px;
+  border-top: 1px solid #eaeaea;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.edu-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.edu-degree {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: #8a94a6;
+}
+
+.edu-school {
+  font-size: 0.95rem;
+  line-height: 1.45;
+  text-wrap: balance;
+  color: #333;
+}
+
+/* Home hero (school emblem) */
+.home-hero {
+  min-height: calc(100vh - 260px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px 0 40px;
+}
+
+.home-hero-emblem {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 0 0 1px rgba(0, 58, 140, 0.08), 0 18px 48px rgba(0, 58, 140, 0.14);
+}
+
+.home-hero-emblem img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.resume-content h2.home-hero-school {
+  margin: 36px 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.7rem;
+  font-weight: 400;
+  letter-spacing: 0.3px;
+  text-transform: none;
+  color: #1f2d4d;
+}
+
+.home-hero-rule {
+  display: block;
+  width: 48px;
+  height: 2px;
+  margin: 18px auto;
+  background: #003a8c;
+}
+
+.resume-content p.home-hero-sub {
+  margin: 0;
+  font-size: 0.85rem;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
 /* 4. ACADEMIC MAIN CONTENT (RIGHT) */
 .academic-main {
   flex-grow: 1;
@@ -436,6 +527,19 @@ body {
   
   .academic-main {
     padding-left: 0;
+  }
+
+  .home-hero {
+    min-height: 0;
+  }
+
+  .home-hero-emblem {
+    width: 180px;
+    height: 180px;
+  }
+
+  .resume-content h2.home-hero-school {
+    font-size: 1.35rem;
   }
   
   .academic-top-nav ul {
