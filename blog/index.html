@@ -191,6 +191,221 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-Vibe-Coding方法论：AI负责加速，人负责正确" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/11/02/Vibe-Coding%E6%96%B9%E6%B3%95%E8%AE%BA%EF%BC%9AAI%E8%B4%9F%E8%B4%A3%E5%8A%A0%E9%80%9F%EF%BC%8C%E4%BA%BA%E8%B4%9F%E8%B4%A3%E6%AD%A3%E7%A1%AE/">Vibe Coding 方法论：AI 负责加速，人负责正确</a>
+    </h1>
+  
+
+        
+        <a href="/2026/11/02/Vibe-Coding%E6%96%B9%E6%B3%95%E8%AE%BA%EF%BC%9AAI%E8%B4%9F%E8%B4%A3%E5%8A%A0%E9%80%9F%EF%BC%8C%E4%BA%BA%E8%B4%9F%E8%B4%A3%E6%AD%A3%E7%A1%AE/" class="archive-article-date">
+  	<time datetime="2026-11-02T13:10:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-11-02</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <blockquote>
+<p>本文整理自「抖音 AI 夜校 · 北大专场」讲座中关于 Vibe Coding 的方法论部分（第 20–22 页），并加入了我自己的理解和例子。</p>
+</blockquote>
+<p><strong>一句话核心：AI 负责加速，人负责正确。</strong></p>
+<span id="more"></span>
+
+<h2 id="一、两条有效的-Vibe-Coding-原则"><a href="#一、两条有效的-Vibe-Coding-原则" class="headerlink" title="一、两条有效的 Vibe Coding 原则"></a>一、两条有效的 Vibe Coding 原则</h2><h3 id="心法一：尽可能放大-AI-加速环节的权重"><a href="#心法一：尽可能放大-AI-加速环节的权重" class="headerlink" title="心法一：尽可能放大 AI 加速环节的权重"></a>心法一：尽可能放大 AI 加速环节的权重</h3><p>能自动化的生产动作，全部交出去：</p>
+<table>
+<thead>
+<tr>
+<th>动作</th>
+<th>交给 AI 的例子</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>检索</strong></td>
+<td>找某个函数在哪被调用、查某个库的用法</td>
+</tr>
+<tr>
+<td><strong>生成</strong></td>
+<td>写样板代码、CRUD 接口、配置文件</td>
+</tr>
+<tr>
+<td><strong>重复修改</strong></td>
+<td>批量改命名、把 20 处同类写法统一替换</td>
+</tr>
+<tr>
+<td><strong>写测试</strong></td>
+<td>根据函数签名和需求补单元测试</td>
+</tr>
+</tbody></table>
+<p>这些事情 AI 又快又不嫌烦，人亲自做就是在浪费最贵的资源——自己的注意力。</p>
+<h3 id="心法二：尽可能提高人类思考环节的效率"><a href="#心法二：尽可能提高人类思考环节的效率" class="headerlink" title="心法二：尽可能提高人类思考环节的效率"></a>心法二：尽可能提高人类思考环节的效率</h3><p>人只做两件事：</p>
+<ul>
+<li><strong>保证 AI 加速的方向正确</strong>（定义与规则）：要做什么、不做什么、做到什么程度算完。</li>
+<li><strong>保证结果可控</strong>（证据与验收）：怎么证明它真的做对了，而不是“看起来做完了”。</li>
+</ul>
+<blockquote>
+<p><strong>AI 负责加速，人负责正确。</strong></p>
+</blockquote>
+<p>打个比方：AI 是一台马力很大的车，人是司机兼导航。车开得再快，方向错了只会离目的地越来越远；没有刹车和仪表盘，跑得越快越危险。</p>
+<hr>
+<h2 id="二、一张开发打法卡，可复制到任何课题"><a href="#二、一张开发打法卡，可复制到任何课题" class="headerlink" title="二、一张开发打法卡，可复制到任何课题"></a>二、一张开发打法卡，可复制到任何课题</h2><table>
+<thead>
+<tr>
+<th>#</th>
+<th>打法</th>
+<th>要点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td><strong>写一页需求蓝图</strong></td>
+<td>五件事 + 让 AI 复述反问，不许它急着写</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>先立产品规则</strong></td>
+<td>真实 · 失败交代 · 验收标准，做成系统行为</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>竖切最小闭环</strong></td>
+<td>最短一条真实链路证明走得通，第一天就跑真数据</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>一圈圈加固</strong></td>
+<td>批量、重试、重启不丢、人机分工页，每轮只解决一类问题</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>一个功能一个存档点</strong></td>
+<td>Git 频繁存档，改坏立刻退回</td>
+</tr>
+<tr>
+<td>6</td>
+<td><strong>排障只认证据</strong></td>
+<td>不争论、不重复试；抓运行态事实，分层换假设</td>
+</tr>
+<tr>
+<td>7</td>
+<td><strong>严格验收 + 敢踩刹车</strong></td>
+<td>对照清单逐条验收；AI 超范围加功能，立刻撤回</td>
+</tr>
+</tbody></table>
+<h3 id="1-写一页需求蓝图"><a href="#1-写一页需求蓝图" class="headerlink" title="1. 写一页需求蓝图"></a>1. 写一页需求蓝图</h3><ul>
+<li>动手之前，先用一页纸把需求写清楚（对应下文“五句话”里的说清任务、给足材料、明确交付物）。</li>
+<li>写完<strong>让 AI 先复述一遍、再反问你</strong>，确认它理解对了，而不是一上来就开始写代码。</li>
+<li>例子：让 AI 做“爬取论文列表”，它复述时问出“要不要处理分页？失败的条目怎么记录？”——这些问题越早暴露越便宜。</li>
+</ul>
+<h3 id="2-先立产品规则"><a href="#2-先立产品规则" class="headerlink" title="2. 先立产品规则"></a>2. 先立产品规则</h3><ul>
+<li><strong>真实</strong>：不许编造数据、不许用假结果冒充成功。</li>
+<li><strong>失败交代</strong>：失败了要说清楚哪里失败、为什么。</li>
+<li><strong>验收标准</strong>：什么样才算做完。</li>
+<li>关键是把这些规则<strong>做成系统行为</strong>（写进提示词、配置、代码检查），而不是每次靠嘴提醒。</li>
+</ul>
+<h3 id="3-竖切最小闭环"><a href="#3-竖切最小闭环" class="headerlink" title="3. 竖切最小闭环"></a>3. 竖切最小闭环</h3><ul>
+<li>“竖切”的意思是：不要先把每一层都做完美，而是从输入到输出<strong>打通一条最短的真实链路</strong>。</li>
+<li><strong>第一天就跑真数据</strong>，用真实结果证明这条路走得通。</li>
+<li>例子：做一个问答系统，先让“上传一篇文档 → 提一个问题 → 得到一个答案”能跑通，再去管界面好不好看、并发多不多。</li>
+</ul>
+<h3 id="4-一圈圈加固"><a href="#4-一圈圈加固" class="headerlink" title="4. 一圈圈加固"></a>4. 一圈圈加固</h3><ul>
+<li>闭环跑通后，再一圈一圈往上加：批量处理、失败重试、重启后进度不丢、人机分工页面……</li>
+<li><strong>每一轮只解决一类问题</strong>，避免一次改太多、出了问题不知道是谁导致的。</li>
+</ul>
+<h3 id="5-一个功能一个存档点"><a href="#5-一个功能一个存档点" class="headerlink" title="5. 一个功能一个存档点"></a>5. 一个功能一个存档点</h3><ul>
+<li>每完成一个功能就 <code>git commit</code> 一次，相当于打游戏时的存档。</li>
+<li>AI 一次改坏了一大片，直接 <code>git reset</code> &#x2F; <code>git restore</code> 退回上一个存档点，不用跟它反复拉扯。</li>
+</ul>
+<h3 id="6-排障只认证据"><a href="#6-排障只认证据" class="headerlink" title="6. 排障只认证据"></a>6. 排障只认证据</h3><ul>
+<li><strong>不争论</strong>：不要和 AI 争“应该没问题啊”。</li>
+<li><strong>不重复试</strong>：同一个办法失败两次，就别再试第三次。</li>
+<li><strong>抓运行态事实</strong>：日志、报错、实际输入输出，比猜测可靠得多。</li>
+<li><strong>分层换假设</strong>：从网络、配置、数据、代码逐层排查，每层提出一个假设、用证据验证或推翻。</li>
+</ul>
+<h3 id="7-严格验收-敢踩刹车"><a href="#7-严格验收-敢踩刹车" class="headerlink" title="7. 严格验收 + 敢踩刹车"></a>7. 严格验收 + 敢踩刹车</h3><ul>
+<li>对照第 1 步的需求清单<strong>逐条验收</strong>，不是“跑了一下好像能用”。</li>
+<li>AI 经常“热心”地多加功能、多改文件——<strong>超出范围的改动立刻撤回</strong>，哪怕它看起来不错。</li>
+</ul>
+<hr>
+<h2 id="三、五句话带走"><a href="#三、五句话带走" class="headerlink" title="三、五句话带走"></a>三、五句话带走</h2><ol>
+<li><strong>说清任务</strong></li>
+<li><strong>给足材料</strong></li>
+<li><strong>明确交付物</strong></li>
+<li><strong>持续追问</strong></li>
+<li><strong>严格验收</strong></li>
+</ol>
+<p>讲座最后的三条结论：</p>
+<ul>
+<li>AI 没有降低软件开发的<strong>客观复杂度</strong>，它提升的是生产效率；<strong>判断、取舍和品味变得更关键</strong>。</li>
+<li>「卡住」也是一种正确答案：<strong>blocked 加一份人工清单</strong>，比一份编造的「成功」<strong>诚实且有用</strong>得多。</li>
+<li>最小版本必然粗糙——<strong>粗糙但真实跑通</strong>，远胜于精致的假装。</li>
+</ul>
+<hr>
+<h2 id="四、我的理解"><a href="#四、我的理解" class="headerlink" title="四、我的理解"></a>四、我的理解</h2><ul>
+<li>以前写代码，瓶颈是“写得慢”；有了 AI 之后，瓶颈变成了“想不清楚”和“验不严格”。</li>
+<li>所以 Vibe Coding 不是“随便说说让 AI 写”，恰恰相反，<strong>它对人的需求定义能力和验收能力要求更高</strong>。</li>
+<li>一个好用的检验标准：如果你说不清“做完”是什么样子，那就还没到让 AI 动手的时候。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-深入浅出：向量存储（Vector-Storage）技术全景指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1969,162 +2184,6 @@ var _hmt = _hmt || [];
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">北邮网安</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Python学习日记二：Literal、Optional、Enum对比分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/08/16/Python%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9ALiteral%E3%80%81Optional%E3%80%81Enum%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/">Python学习日记二：Literal、Optional、Enum对比分析</a>
-    </h1>
-  
-
-        
-        <a href="/2026/08/16/Python%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%8C%EF%BC%9ALiteral%E3%80%81Optional%E3%80%81Enum%E5%AF%B9%E6%AF%94%E5%88%86%E6%9E%90/" class="archive-article-date">
-  	<time datetime="2026-08-16T08:37:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-08-16</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h2 id="一、Literal：限制“只能是这些值”"><a href="#一、Literal：限制“只能是这些值”" class="headerlink" title="一、Literal：限制“只能是这些值”"></a>一、Literal：限制“只能是这些值”</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from typing import Literal</span><br><span class="line"></span><br><span class="line">def train(mode: Literal[&quot;train&quot;, &quot;test&quot;]):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-
-<p>表示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">train(&quot;train&quot;)  # OK</span><br><span class="line">train(&quot;test&quot;)   # OK</span><br><span class="line"></span><br><span class="line">train(&quot;debug&quot;)  # 类型检查报错</span><br></pre></td></tr></table></figure>
-
-<p>它只是告诉 IDE：</p>
-<blockquote>
-<p>这个参数只能填这几个字符串。</p>
-</blockquote>
-<p>但是运行时：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">train(&quot;debug&quot;)</span><br></pre></td></tr></table></figure>
-
-<p>Python 其实不会阻止。</p>
-<hr>
-<h2 id="二、Optional：表示“可以没有值”"><a href="#二、Optional：表示“可以没有值”" class="headerlink" title="二、Optional：表示“可以没有值”"></a>二、Optional：表示“可以没有值”</h2><p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from typing import Optional</span><br><span class="line"></span><br><span class="line">def get_user(name: Optional[str]):</span><br><span class="line">    pass</span><br></pre></td></tr></table></figure>
-
-<p>表示：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">name 可以是：</span><br><span class="line"></span><br><span class="line">&quot;Tom&quot;</span><br><span class="line"></span><br><span class="line">或者：</span><br><span class="line"></span><br><span class="line">None</span><br></pre></td></tr></table></figure>
-
-<p>等价于：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">str | None</span><br></pre></td></tr></table></figure>
-
-<p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">get_user(&quot;Tom&quot;)  # OK</span><br><span class="line">get_user(None)   # OK</span><br></pre></td></tr></table></figure>
-
-<p>但是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">get_user(123)</span><br></pre></td></tr></table></figure>
-
-<p>类型检查会报错。</p>
-<hr>
-<h2 id="三、Enum：定义正式的枚举类型"><a href="#三、Enum：定义正式的枚举类型" class="headerlink" title="三、Enum：定义正式的枚举类型"></a>三、Enum：定义正式的枚举类型</h2><p>例如：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">from enum import Enum</span><br><span class="line"></span><br><span class="line">class ModelType(Enum):</span><br><span class="line">    GPT = &quot;gpt&quot;</span><br><span class="line">    LLAMA = &quot;llama&quot;</span><br><span class="line">    QWEN = &quot;qwen&quot;</span><br></pre></td></tr></table></figure>
-
-<p>使用：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model = ModelType.QWEN</span><br></pre></td></tr></table></figure>
-
-<p>这里：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model</span><br></pre></td></tr></table></figure>
-
-<p>不是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;qwen&quot;</span><br></pre></td></tr></table></figure>
-
-<p>而是：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ModelType.QWEN</span><br></pre></td></tr></table></figure>
-
-<p>需要：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.value</span><br></pre></td></tr></table></figure>
-
-<p>才能得到：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;qwen&quot;</span><br></pre></td></tr></table></figure>
-
-<h2 id="四、类型注解"><a href="#四、类型注解" class="headerlink" title="四、类型注解"></a>四、类型注解</h2><p>Python 里<strong>变量后面的冒号 <code>:</code> 通常表示“类型注解（type hint）”</strong>，冒号后面一般跟<strong>类型</strong>，而不是具体的值。</p>
-<table>
-<thead>
-<tr>
-<th>写法</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>x: int</code></td>
-<td>x 应该是整数</td>
-</tr>
-<tr>
-<td><code>x: str</code></td>
-<td>x 应该是字符串</td>
-</tr>
-<tr>
-<td><code>x: Optional[str]</code></td>
-<td>x 可以是字符串或 None</td>
-</tr>
-<tr>
-<td><code>x: Literal[&quot;a&quot;,&quot;b&quot;]</code></td>
-<td>x 只能取指定几个值</td>
-</tr>
-<tr>
-<td><code>x: int = 10</code></td>
-<td>x 是整数，默认值10</td>
-</tr>
-</tbody></table>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Python</a>
         		</li>
       		
 		</ul>
