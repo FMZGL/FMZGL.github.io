@@ -89,6 +89,125 @@ var _hmt = _hmt || [];
 </div>
 
   
+    <article id="post-JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/">JAVA学习日记五：int与long的转换以及如何处理不开long导致的低级错误</a>
+    </h1>
+  
+
+        
+        <a href="/2026/01/24/JAVA%E5%AD%A6%E4%B9%A0%E6%97%A5%E8%AE%B0%E4%BA%94%EF%BC%9Aint%E4%B8%8Elong%E7%9A%84%E8%BD%AC%E6%8D%A2%E4%BB%A5%E5%8F%8A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%BC%80long%E5%AF%BC%E8%87%B4%E7%9A%84%E4%BD%8E%E7%BA%A7%E9%94%99%E8%AF%AF/" class="archive-article-date">
+  	<time datetime="2026-01-24T06:58:52.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-01-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <p>在 Java 中，<code>long</code>（64 位）和 <code>int</code>（32 位）的转换分为<strong>自动转换</strong>和<strong>强制转换</strong>两种情况，核心是处理数据范围的差异。</p>
+<hr>
+<h3 id="1-自动转换：int-→-long（安全）"><a href="#1-自动转换：int-→-long（安全）" class="headerlink" title="1. 自动转换：int → long（安全）"></a>1. 自动转换：int → long（安全）</h3><ul>
+<li><strong>规则</strong>：当 <code>int</code> 类型的值赋值给 <code>long</code> 变量时，Java 会自动完成转换，因为 <code>long</code> 能容纳 <code>int</code> 的所有值（<code>long</code> 范围是 <code>-9e18 ~ 9e18</code>，<code>int</code> 范围是 <code>-2e9 ~ 2e9</code>），不会丢失数据。</li>
+<li><strong>示例</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 100;</span><br><span class="line">long b = a; // 自动转换，无风险</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-强制转换：long-→-int（有风险）"><a href="#2-强制转换：long-→-int（有风险）" class="headerlink" title="2. 强制转换：long → int（有风险）"></a>2. 强制转换：long → int（有风险）</h3><ul>
+<li><strong>规则</strong>：当 <code>long</code> 类型的值赋值给 <code>int</code> 变量时，必须显式强制转换，因为 <code>long</code> 的值可能超出 <code>int</code> 的范围，导致数据溢出或精度丢失。</li>
+<li><strong>语法</strong>：<code>(int) 要转换的long值</code></li>
+<li><strong>示例</strong>：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">long a = 100L;</span><br><span class="line">int b = (int) a; // 安全：100在int范围内</span><br><span class="line">long c = 3000000000L; // 超出int最大值（2147483647）</span><br><span class="line">int d = (int) c; // 溢出！结果会变成错误的负数（实际值为-1294967296）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-常见场景与避坑"><a href="#3-常见场景与避坑" class="headerlink" title="3. 常见场景与避坑"></a>3. 常见场景与避坑</h3><h4 id="场景-1：计算时的自动提升"><a href="#场景-1：计算时的自动提升" class="headerlink" title="场景 1：计算时的自动提升"></a>场景 1：计算时的自动提升</h4><p>在混合运算中，<code>int</code> 会自动提升为 <code>long</code>，避免溢出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = 1000000;</span><br><span class="line">int b = 2000000;</span><br><span class="line">long c = (long) a * b; // 先把a转为long，再计算，避免int相乘溢出</span><br></pre></td></tr></table></figure>
+
+<h4 id="场景-2：避免溢出的强制转换"><a href="#场景-2：避免溢出的强制转换" class="headerlink" title="场景 2：避免溢出的强制转换"></a>场景 2：避免溢出的强制转换</h4><p>如果需要把一个可能超出 <code>int</code> 范围的 <code>long</code> 转成 <code>int</code>，建议先做范围检查：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">long num = 1234567890L;</span><br><span class="line">int result;</span><br><span class="line">if (num &gt;= Integer.MIN_VALUE &amp;&amp; num &lt;= Integer.MAX_VALUE) &#123;</span><br><span class="line">    result = (int) num; // 安全转换</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    throw new IllegalArgumentException(&quot;数值超出int范围&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="4-转换规则总结"><a href="#4-转换规则总结" class="headerlink" title="4. 转换规则总结"></a>4. 转换规则总结</h3><table>
+<thead>
+<tr>
+<th align="center">转换方向</th>
+<th align="center">方式</th>
+<th align="center">风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>int → long</code></td>
+<td align="center">自动转换</td>
+<td align="center">无风险，不会丢失数据</td>
+</tr>
+<tr>
+<td align="center"><code>long → int</code></td>
+<td align="center">强制转换 <code>(int)</code></td>
+<td align="center">有风险，可能溢出或丢失精度</td>
+</tr>
+</tbody></table>
+<h2 id="如何处理不开long导致的低级错误"><a href="#如何处理不开long导致的低级错误" class="headerlink" title="如何处理不开long导致的低级错误"></a>如何处理不开long导致的低级错误</h2><p><strong>竞赛最优选择</strong>：直接全量用<code>long</code>，记住 “数组长度转 int、字面量加 L” 两个细节，既能避免溢出，又不用额外封装，是最高效的方式。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-JAVA学习日记四：继承Compareable接口自定义比较方式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1142,86 +1261,6 @@ var _hmt = _hmt || [];
 <li>放平心态，这件事可能并不是你想象中的那样重要，即使出错大概率也有回旋的余地。</li>
 <li>自信一点。在座的人里边你已经很优秀了。</li>
 </ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">正西风落叶下长安</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-如何当好班长" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2025/12/02/%E5%A6%82%E4%BD%95%E5%BD%93%E5%A5%BD%E7%8F%AD%E9%95%BF/">如何当好班长</a>
-    </h1>
-  
-
-        
-        <a href="/2025/12/02/%E5%A6%82%E4%BD%95%E5%BD%93%E5%A5%BD%E7%8F%AD%E9%95%BF/" class="archive-article-date">
-  	<time datetime="2025-12-02T15:45:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2025-12-02</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <p> 到今天为止（12月2号）我已经担任班长这个职位两个月了。说心里话，我还是比较喜欢这个职务的，和同学们接触的机会更多一些，但具体这两个月我的班长当的怎么样，其实当局者迷，自己往往是最不了解自己的人。但在日常中还是总结到了一些浅显的当班长的经验。其实我也想过不就是一个班长吗，有必要这么认真吗。有些事情的价值并不是当下能体现出来的，对于每一件小事都能当作救命稻草一样抓住的人，那么这个人一定会有所成就。</p>
-<p><strong>具体要求如下：</strong></p>
-<p>一、以身作则，规范言行，主动担责</p>
-<p>二、在公共场合与群聊要保持严肃，树立威信</p>
-<p>三、一对一时要礼貌热情</p>
 
       
 
