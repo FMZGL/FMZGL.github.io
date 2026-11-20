@@ -15,12 +15,12 @@
 <meta property="og:site_name" content="Tengfei Zhang - HomePage">
 <meta property="og:description" content="Harbor 框架与网络安全（CTF）数据集规范指南Harbor（Harbor Framework） 是一个专为 AI Agent 设计的开源评测与强化学习训练框架。它通过高度隔离的沙箱编排与标准化验证接口，实现了“任意智能体（Agent）+ 任意大模型（Model）+ 任意任务（Task）+ 任意沙箱（Sandbox）”的大规模并行评估。 在网络安全（CTF &#x2F; Vulnerabili">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="c:\Users\86132\AppData\Roaming\Typora\typora-user-images\image-20261119194935973.png">
+<meta property="og:image" content="http://example.com/assets/blogImg/harbor-trial-lifecycle.png">
 <meta property="article:published_time" content="2026-11-19T11:55:53.000Z">
-<meta property="article:modified_time" content="2026-11-19T11:58:44.810Z">
+<meta property="article:modified_time" content="2026-11-20T04:56:16.305Z">
 <meta property="article:tag" content="北邮网安">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="c:\Users\86132\AppData\Roaming\Typora\typora-user-images\image-20261119194935973.png">
+<meta name="twitter:image" content="http://example.com/assets/blogImg/harbor-trial-lifecycle.png">
   
     <link rel="alternative" href="/atom.xml" title="Tengfei Zhang - HomePage" type="application/atom+xml">
   
@@ -163,7 +163,7 @@ var _hmt = _hmt || [];
 <li>Harbor 收集整个攻防过程中 Agent 的所有推理思考（Reasoning）、执行的 Bash 命令、网络交互输出以及最终得分，封装为标准的 <strong>ATIF（Agent Trajectory Interchange Format）</strong> JSON 文件，用于后续的模型分析或强化学习（RL）训练。</li>
 <li>执行 <code>docker compose down -v</code> 彻底销毁 <code>agent</code> 与 <code>target</code> 容器及虚拟网络，释放算力资源，进入下一个 Trial。</li>
 </ol>
-<p><img src="C:\Users\86132\AppData\Roaming\Typora\typora-user-images\image-20261119194935973.png" alt="image-20261119194935973"></p>
+<p><img src="/assets/blogImg/harbor-trial-lifecycle.png" alt="Harbor 一次 Trial 的流程：Job 选好题目与 Agent 后启动沙箱，Agent 做题（或 Oracle 跑参考解 solve.sh），提交 flag.txt，Verifier 运行 tests/test.sh 判分，最后 Harbor 收集分数与日志并关闭环境"></p>
 <blockquote>
 <p><strong>Oracle 的作用是让出题人用参考解试跑一道题，确认它在 Harbor 里能从开局一路走到拿分。</strong> 选 Oracle 时，Harbor 执行出题人写好的 <code>solution/solve.sh</code>。选普通 Agent 时，由模型做题。两次是独立的 Trial，各自交卷，各自用同一个 <code>tests/test.sh</code> 判一次分。 (<a target="_blank" rel="noopener" href="https://docs.harborframework.com/tasks/solution">docs.harborframework.com</a>)</p>
 </blockquote>
@@ -368,10 +368,6 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
               </li>
              
@@ -380,15 +376,19 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
+                <a href="javascript:void(0)" class="js-tag color2">颂</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">颂</a>
+                <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
               </li>
              
               <li class="article-tag-list-item">

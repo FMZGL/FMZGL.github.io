@@ -109,7 +109,13 @@ var _hmt = _hmt || [];
     
     <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
       
-        <h2 id="价值观：应该以什么样的眼光去认识这个世界"><a href="#价值观：应该以什么样的眼光去认识这个世界" class="headerlink" title="价值观：应该以什么样的眼光去认识这个世界"></a>价值观：应该以什么样的眼光去认识这个世界</h2><blockquote>
+        <h2 id="AI方法"><a href="#AI方法" class="headerlink" title="AI方法"></a>AI方法</h2><blockquote>
+<p>不要着急，想清楚需求再提问   –grill me插件</p>
+</blockquote>
+<blockquote>
+<p>就现状来说，很多时候AI才是老师，不要急着反驳，不符合预期的情况下搞清楚AI为什么会这么写</p>
+</blockquote>
+<h2 id="价值观：应该以什么样的眼光去认识这个世界"><a href="#价值观：应该以什么样的眼光去认识这个世界" class="headerlink" title="价值观：应该以什么样的眼光去认识这个世界"></a>价值观：应该以什么样的眼光去认识这个世界</h2><blockquote>
 <p>这个世界就是一个草台班子，不要幻想事情可以像童话故事一样发展。就算是高官也是如此。</p>
 </blockquote>
 <blockquote>
@@ -135,9 +141,6 @@ var _hmt = _hmt || [];
 </blockquote>
 <blockquote>
 <p>顺着别人说就等于是承认了对方的逻辑，这时候应该做的其实是把水搅浑，自己占据主动。</p>
-</blockquote>
-<h2 id="太阳照常升起"><a href="#太阳照常升起" class="headerlink" title="太阳照常升起"></a>太阳照常升起</h2><blockquote>
-<p>中国人从小到大就是被吓大的，一点小事就能让人睡不着觉。经常被恐吓 没做好就完蛋了。上小学忘带红领巾就完蛋了，上初中家长不给签字就完蛋了，上高中考不上大学就完蛋了。老师说档案要跟你一辈子，可你根本找不到要看档案的工作。最离谱的是有人觉得自己科目一没过也完蛋了，甚至有人科目三还没开开考，就已经在家里瑟瑟发抖。其实这些都是自己吓自己，无论怎样明天的太阳都会照常升起。在未来的某一天你会意识到：只是些许微风罢了。</p>
 </blockquote>
 
       
@@ -268,7 +271,7 @@ var _hmt = _hmt || [];
 <li>Harbor 收集整个攻防过程中 Agent 的所有推理思考（Reasoning）、执行的 Bash 命令、网络交互输出以及最终得分，封装为标准的 <strong>ATIF（Agent Trajectory Interchange Format）</strong> JSON 文件，用于后续的模型分析或强化学习（RL）训练。</li>
 <li>执行 <code>docker compose down -v</code> 彻底销毁 <code>agent</code> 与 <code>target</code> 容器及虚拟网络，释放算力资源，进入下一个 Trial。</li>
 </ol>
-<p><img src="C:\Users\86132\AppData\Roaming\Typora\typora-user-images\image-20261119194935973.png" alt="image-20261119194935973"></p>
+<p><img src="/assets/blogImg/harbor-trial-lifecycle.png" alt="Harbor 一次 Trial 的流程：Job 选好题目与 Agent 后启动沙箱，Agent 做题（或 Oracle 跑参考解 solve.sh），提交 flag.txt，Verifier 运行 tests/test.sh 判分，最后 Harbor 收集分数与日志并关闭环境"></p>
 <blockquote>
 <p><strong>Oracle 的作用是让出题人用参考解试跑一道题，确认它在 Harbor 里能从开局一路走到拿分。</strong> 选 Oracle 时，Harbor 执行出题人写好的 <code>solution/solve.sh</code>。选普通 Agent 时，由模型做题。两次是独立的 Trial，各自交卷，各自用同一个 <code>tests/test.sh</code> 判一次分。 (<a target="_blank" rel="noopener" href="https://docs.harborframework.com/tasks/solution">docs.harborframework.com</a>)</p>
 </blockquote>
@@ -2291,10 +2294,6 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">编程语言</a>
               </li>
              
@@ -2303,15 +2302,19 @@ var _hmt = _hmt || [];
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">C/C++</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Python</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
+                <a href="javascript:void(0)" class="js-tag color2">颂</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">颂</a>
+                <a href="javascript:void(0)" class="js-tag color4">正西风落叶下长安</a>
               </li>
              
               <li class="article-tag-list-item">
