@@ -89,6 +89,201 @@ var _hmt = _hmt || [];
 </div>
 
   
+    <article id="post-网络安全二：静态分析与动态分析" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/08/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%BA%8C%EF%BC%9A%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90/">网络安全二：静态分析与动态分析</a>
+    </h1>
+  
+
+        
+        <a href="/2026/08/24/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8%E4%BA%8C%EF%BC%9A%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E4%B8%8E%E5%8A%A8%E6%80%81%E5%88%86%E6%9E%90/" class="archive-article-date">
+  	<time datetime="2026-08-24T14:32:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-08-24</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h1 id="🔬-静态分析-vs-动态分析：核心区别与全景对比"><a href="#🔬-静态分析-vs-动态分析：核心区别与全景对比" class="headerlink" title="🔬 静态分析 vs 动态分析：核心区别与全景对比"></a>🔬 静态分析 vs 动态分析：核心区别与全景对比</h1><p>在软件工程、代码质量审计与网络安全漏洞挖掘中，<strong>静态分析（Static Analysis &#x2F; SAST）</strong> 与 <strong>动态分析（Dynamic Analysis &#x2F; DAST）</strong> 是分析软件行为与发现安全缺陷的两大基石技术。</p>
+<hr>
+<h2 id="🎯-一句话核心区别与生动比喻"><a href="#🎯-一句话核心区别与生动比喻" class="headerlink" title="🎯 一句话核心区别与生动比喻"></a>🎯 一句话核心区别与生动比喻</h2><ul>
+<li><strong>静态分析（不运行程序）</strong>：通过“看”代码或反汇编指令来推测程序的行为与潜在漏洞。<ul>
+<li>💡 <em>医疗比喻</em>：<strong>照 X 光片 &#x2F; 看图纸</strong> —— 医生不需要让你跑起来，仅通过静态照片就能检查你的骨骼是否有裂缝。</li>
+</ul>
+</li>
+<li><strong>动态分析（运行程序）</strong>：通过“跑”程序并输入各种数据，实时监控其运行时的内存、网络、系统调用等状态。模糊测试是动态分析的一种常用手段。<ul>
+<li>💡 <em>医疗比喻</em>：<strong>做运动负荷心电图</strong> —— 让你在跑步机上跑起来，实时监测你在剧烈运动时的心跳、血压与生理反应。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="📊-多维度对比矩阵"><a href="#📊-多维度对比矩阵" class="headerlink" title="📊 多维度对比矩阵"></a>📊 多维度对比矩阵</h2><table>
+<thead>
+<tr>
+<th align="left">对比维度</th>
+<th align="left">静态分析 (Static Analysis &#x2F; SAST)</th>
+<th align="left">动态分析 (Dynamic Analysis &#x2F; DAST)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>是否需要运行程序</strong></td>
+<td align="left">❌ <strong>不运行</strong>（直接读取源码或二进制字节码）</td>
+<td align="left">✅ <strong>必须运行</strong>（在真实或沙箱环境中执行）</td>
+</tr>
+<tr>
+<td align="left"><strong>核心关注点</strong></td>
+<td align="left">代码语法结构、数据流向、控制流图、危险函数调用</td>
+<td align="left">实际内存变化、崩溃异常（Crash）、网络交互、系统调用</td>
+</tr>
+<tr>
+<td align="left"><strong>代码覆盖率</strong></td>
+<td align="left">🌟 <strong>极高（理论可达 100%）</strong><br>能扫描到极其罕见的异常分支与死代码</td>
+<td align="left">⚠️ <strong>受限于测试用例（覆盖率有限）</strong><br>只有被执行到的路径才能被检测到</td>
+</tr>
+<tr>
+<td align="left"><strong>误报率 (False Positive)</strong></td>
+<td align="left">⚠️ <strong>偏高</strong>（容易把无害代码误判为漏洞）</td>
+<td align="left">🌟 <strong>极低</strong>（只要运行时触发了崩溃或漏洞，基本 100% 真实）</td>
+</tr>
+<tr>
+<td align="left"><strong>漏报率 (False Negative)</strong></td>
+<td align="left">偏低（但在高动态语言&#x2F;反射&#x2F;复杂指针时会漏报）</td>
+<td align="left">偏高（未覆盖到的代码路径中的漏洞会被漏掉）</td>
+</tr>
+<tr>
+<td align="left"><strong>依赖环境与搭建成本</strong></td>
+<td align="left"><strong>极低</strong>（只要有源码或二进制文件即可开始）</td>
+<td align="left"><strong>较高</strong>（需搭建数据库、依赖库、网络服务等运行环境）</td>
+</tr>
+<tr>
+<td align="left"><strong>检测阶段</strong></td>
+<td align="left">编码期、编译期（左移安全 DevSecOps）</td>
+<td align="left">测试期、预发布期、线上生产期</td>
+</tr>
+<tr>
+<td align="left"><strong>典型技术</strong></td>
+<td align="left">抽象语法树（AST）、控制流分析（CFG）、污点分析</td>
+<td align="left">模糊测试（Fuzzing）、API Hooking、动态插桩（DBI）、沙箱监控</td>
+</tr>
+<tr>
+<td align="left"><strong>代表工具</strong></td>
+<td align="left">CodeQL、SonarQube、Semgrep、Fortify、IDA Pro、Ghidra</td>
+<td align="left">AFL++、Burp Suite、Frida、x64dbg&#x2F;GDB、Cuckoo Sandbox</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="🔄-双路线工作流程对比"><a href="#🔄-双路线工作流程对比" class="headerlink" title="🔄 双路线工作流程对比"></a>🔄 双路线工作流程对比</h2><pre><code class="highlight mermaid">flowchart TD
+    subgraph 静态分析链路 [静态分析 Static Analysis]
+        A1[源代码 / 二进制文件] --&gt; B1[语法树解析 &amp; 控制流建模]
+        B1 --&gt; C1[规则匹配 &amp; 污点数据流追踪]
+        C1 --&gt; D1[输出: 潜在代码缺陷与风险报告]
+    end
+
+    subgraph 动态分析链路 [动态分析 Dynamic Analysis]
+        A2[可执行程序 &amp; 运行环境] --&gt; B2[注入测试输入 / 模糊测试用例]
+        B2 --&gt; C2[监控运行状态 / 捕获 Crash / 插桩跟踪]
+        C2 --&gt; D2[输出: 真实漏洞证明 PoC / 崩溃转储]
+    end</code></pre>
+
+<hr>
+<h2 id="🔍-核心技术与优缺点深入拆解"><a href="#🔍-核心技术与优缺点深入拆解" class="headerlink" title="🔍 核心技术与优缺点深入拆解"></a>🔍 核心技术与优缺点深入拆解</h2><h3 id="1-静态分析-Static-Analysis"><a href="#1-静态分析-Static-Analysis" class="headerlink" title="1. 静态分析 (Static Analysis)"></a>1. 静态分析 (Static Analysis)</h3><h4 id="核心技术手段："><a href="#核心技术手段：" class="headerlink" title="核心技术手段："></a>核心技术手段：</h4><ul>
+<li><strong>模式匹配（Pattern Matching）</strong>：基于正则表达式或规则模板查找已知的不安全模式（如硬编码密码、使用弃用 API）。</li>
+<li><strong>抽象语法树（AST）分析</strong>：将代码转换为树形结构，分析函数嵌套与逻辑关系。</li>
+<li><strong>污点分析（Taint Analysis）</strong>：追踪未经过滤的外部输入（Source）是否最终流向了危险的执行槽点（Sink，如 <code>eval()</code>、<code>system()</code>、<code>SQL Execute</code>）。</li>
+</ul>
+<h4 id="优缺点："><a href="#优缺点：" class="headerlink" title="优缺点："></a>优缺点：</h4><ul>
+<li>✅ <strong>优点</strong>：检测速度极快，无需依赖环境，能在软件开发生命周期（SDLC）的最早期发现 Bug，修复成本最低。</li>
+<li>❌ <strong>缺点</strong>：缺少运行时的真实上下文（如不知道变量在运行时的具体值），经常产生海量“伪报警（误报）”，需要人工二次排查。</li>
+</ul>
+<hr>
+<h3 id="2-动态分析-Dynamic-Analysis"><a href="#2-动态分析-Dynamic-Analysis" class="headerlink" title="2. 动态分析 (Dynamic Analysis)"></a>2. 动态分析 (Dynamic Analysis)</h3><h4 id="核心技术手段：-1"><a href="#核心技术手段：-1" class="headerlink" title="核心技术手段："></a>核心技术手段：</h4><ul>
+<li><strong>模糊测试（Fuzzing）</strong>：向程序持续注入海量的随机、畸变输入，自动化触发缓冲区溢出、空指针解引用等崩溃。</li>
+<li><strong>动态二进制插桩（DBI, 如 Frida &#x2F; PIN）</strong>：在程序运行期间动态植入监控探针，拦截并记录函数的入参、返回值及寄存器状态。</li>
+<li><strong>黑盒渗透扫描（DAST）</strong>：对正在运行的 Web 服务发起跨站脚本（XSS）、SQL 注入等实际网络攻击测试。</li>
+</ul>
+<h4 id="优缺点：-1"><a href="#优缺点：-1" class="headerlink" title="优缺点："></a>优缺点：</h4><ul>
+<li>✅ <strong>优点</strong>：结果极其真实可信，零误报；能够穿透混淆、加壳和运行时动态生成的代码（如 JIT 编译）。</li>
+<li>❌ <strong>缺点</strong>：高度依赖输入用例的质量，如果用例没能触发特定 <code>if-else</code> 分支，该分支下的漏洞就永远无法被发现。</li>
+</ul>
+<hr>
+<h2 id="🚀-现代工业界趋势：动静结合-IAST-Hybrid"><a href="#🚀-现代工业界趋势：动静结合-IAST-Hybrid" class="headerlink" title="🚀 现代工业界趋势：动静结合 (IAST &#x2F; Hybrid)"></a>🚀 现代工业界趋势：动静结合 (IAST &#x2F; Hybrid)</h2><p>在现代 DevSecOps 与前沿漏洞挖掘中，单一方法已被淘汰，行业普遍转向<strong>动静融合</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                 IAST (交互式应用安全测试)                   │</span><br><span class="line">├──────────────────────────────┬──────────────────────────────┤</span><br><span class="line">│      静态能力：代码插桩      │      动态能力：实时流量触发  │</span><br><span class="line">│  在代码内部关键节点植入探针  │  在外部发起常规功能测试请求  │</span><br><span class="line">├──────────────────────────────┴──────────────────────────────┤</span><br><span class="line">│  🎯 效果：兼具静态分析的高覆盖率 + 动态分析的极低误报率    │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><strong>先静后动（灰盒分析）</strong>：先用静态分析找出所有“疑似有漏洞的函数点”，再针对这些重点函数自动生成 Fuzzing 测试用例进行动态轰炸。</li>
+<li><strong>符号执行（Symbolic Execution）</strong>：将程序路径转化为数学约束方程，结合动态执行（Concolic Testing），自动求解能打通深层分支的精准输入。</li>
+</ol>
+<hr>
+<h2 id="💡-总结与选型指南"><a href="#💡-总结与选型指南" class="headerlink" title="💡 总结与选型指南"></a>💡 总结与选型指南</h2><ul>
+<li><strong>什么时候首选静态分析？</strong><ul>
+<li>在日常写代码、代码评审（Code Review）、CI&#x2F;CD 流水线门禁中，希望秒级&#x2F;分钟级快速排查通用代码缺陷。</li>
+</ul>
+</li>
+<li><strong>什么时候首选动态分析？</strong><ul>
+<li>在针对第三方闭源软件审计、CTF Pwn 题解题、攻防演练以及挖掘深层内存破坏漏洞（0-day）时。</li>
+</ul>
+</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">北邮网安</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-网络安全一：漏洞挖掘与漏洞利用" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1734,155 +1929,6 @@ var _hmt = _hmt || [];
 			 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JAVA与C-C-的内存分配机制" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/05/18/JAVA%E4%B8%8EC-C-%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6/">JAVA与C/C++的内存分配机制</a>
-    </h1>
-  
-
-        
-        <a href="/2026/05/18/JAVA%E4%B8%8EC-C-%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E6%9C%BA%E5%88%B6/" class="archive-article-date">
-  	<time datetime="2026-05-18T13:38:09.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-05-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <p>这次我们抛开所有难懂的专业术语，不用“深拷贝”、“解引用”或者“生命周期管理”这些高大上的词。我们用最接地气的两样东西来打比方：**“口袋（栈）”**和**“大仓库（堆）”**。</p>
-<p>我们可以把 Java 和 C++ 的设计思路，简化为两个完全不同的“生活习惯”。</p>
-<hr>
-<h2 id="1-Java-的设计思路：严格、死板，但绝不出错"><a href="#1-Java-的设计思路：严格、死板，但绝不出错" class="headerlink" title="1. Java 的设计思路：严格、死板，但绝不出错"></a>1. Java 的设计思路：严格、死板，但绝不出错</h2><p>Java 的核心思想是：<strong>“程序员容易粗心，所以必须立死规矩。”</strong></p>
-<p>为了不让程序崩溃，Java 把所有的数据分成了两个绝对的阵营，谁也不能越界：</p>
-<h3 id="规矩一：小东西放“口袋”，大东西放“仓库”"><a href="#规矩一：小东西放“口袋”，大东西放“仓库”" class="headerlink" title="规矩一：小东西放“口袋”，大东西放“仓库”"></a>规矩一：小东西放“口袋”，大东西放“仓库”</h3><ul>
-<li><strong>口袋（栈）</strong>：只用来放最简单的数字和布尔值（比如 <code>int a = 10;</code>），或者是<strong>各种遥控器</strong>。</li>
-<li><strong>大仓库（堆）</strong>：只要是稍微复杂一点的东西（比如一段文字 <code>String</code>、一个链表节点 <code>Node</code>、甚至是一个最普通的整数数组 <code>int[]</code>），<strong>统统必须塞进大仓库里</strong>。</li>
-</ul>
-<h3 id="规矩二：看管大仓库，全靠“遥控器（引用）”"><a href="#规矩二：看管大仓库，全靠“遥控器（引用）”" class="headerlink" title="规矩二：看管大仓库，全靠“遥控器（引用）”"></a>规矩二：看管大仓库，全靠“遥控器（引用）”</h3><p>在 Java 里，你根本没办法直接用手摸到仓库里的东西。你手里拿到的，永远是一个“遥控器”。</p>
-<ul>
-<li>你写 <code>Node el = new Node();</code>，实际上是在大仓库里建了一个节点，然后把控制这个节点的遥控器 <code>el</code> 揣在了口袋里。</li>
-<li>你写 <code>el.val = 5;</code>，实际上是按了一下遥控器上的按钮，隔空把大仓库里的那个节点的数值改成了 5。</li>
-</ul>
-<h3 id="这样做的好处："><a href="#这样做的好处：" class="headerlink" title="这样做的好处："></a>这样做的好处：</h3><p>因为全靠遥控器隔空操作，Java 在后台雇了一个“清洁工（垃圾回收器）”。一旦发现大仓库里的某个东西没有遥控器连着它了，清洁工就会自动把它收走。你永远不用担心仓库被塞满，也永远不会摸错地方。</p>
-<hr>
-<h2 id="2-C-的设计思路：绝对自由，怎么爽怎么来"><a href="#2-C-的设计思路：绝对自由，怎么爽怎么来" class="headerlink" title="2. C++ 的设计思路：绝对自由，怎么爽怎么来"></a>2. C++ 的设计思路：绝对自由，怎么爽怎么来</h2><p>C++ 的核心思想是：<strong>“你是老板，你说了算。你想把东西放哪，就放哪。”</strong></p>
-<p>C++ 根本不搞“类型决定位置”那一套。不管是一个数字，还是一个巨大的链表，你都可以自由选择存放的方式。在 C++ 的世界里，有三种玩法：</p>
-<h3 id="玩法一：直接揣口袋里（值类型）"><a href="#玩法一：直接揣口袋里（值类型）" class="headerlink" title="玩法一：直接揣口袋里（值类型）"></a>玩法一：直接揣口袋里（值类型）</h3><p>你写 <code>Node el;</code>。这时候，C++ <strong>直接在你的口袋（栈）里塞进了一个货真价实的节点实体</strong>。</p>
-<ul>
-<li>它不是遥控器，它就是那个东西本身。</li>
-<li>你想改它，直接伸手在口袋里摸到它就能改（<code>el.val = 5</code>）。</li>
-<li>当你的函数结束时，你的口袋会被整体翻过来倒干净，这个节点也就跟着一起消失了。不需要任何人来打扫。</li>
-</ul>
-<h3 id="玩法二：用“纸条”记录仓库地址（指针）"><a href="#玩法二：用“纸条”记录仓库地址（指针）" class="headerlink" title="玩法二：用“纸条”记录仓库地址（指针）"></a>玩法二：用“纸条”记录仓库地址（指针）</h3><p>如果你觉得口袋太小放不下，或者希望这个东西在函数结束后还能留着，你也可以用 <code>new</code> 把它放进大仓库（堆）里。</p>
-<ul>
-<li>你写 <code>Node* p = new Node();</code>。这时候，你在仓库里建了一个节点，同时在口袋里放了一张“写着仓库货架号的纸条（指针）”。</li>
-<li>你想改它，必须先看一眼纸条上的地址，然后顺着地址找到仓库里的货架（<code>p-&gt;val = 5</code>）。</li>
-</ul>
-<h3 id="玩法三：给东西起个“外号”（引用）"><a href="#玩法三：给东西起个“外号”（引用）" class="headerlink" title="玩法三：给东西起个“外号”（引用）"></a>玩法三：给东西起个“外号”（引用）</h3><p>你嫌天天看纸条找地址太麻烦，C++ 还允许你给已有的东西起个外号：<code>Node&amp; ref = el;</code>。</p>
-<ul>
-<li><code>ref</code> 不是新东西，也不是纸条，它就是 <code>el</code> 的另一个名字。打它就等于打 <code>el</code>。</li>
-</ul>
-<h3 id="这样做的好处：-1"><a href="#这样做的好处：-1" class="headerlink" title="这样做的好处："></a>这样做的好处：</h3><p>速度极快！因为直接把实体放口袋里（栈），省去了去大仓库里来回找货架的时间。但代价是，如果你用纸条（指针）在仓库里建了东西，最后忘了把货架清空（<code>delete</code>），那个东西就会永远占用仓库空间，直到电脑死机。</p>
-<hr>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> \* Definition for singly-linked list.</span><br><span class="line"> \* struct ListNode &#123;</span><br><span class="line"> \*     int val;</span><br><span class="line"> \*     ListNode *next;</span><br><span class="line"> \*     ListNode() : val(0), next(nullptr) &#123;&#125;</span><br><span class="line"> \*     ListNode(int x) : val(x), next(nullptr) &#123;&#125;</span><br><span class="line"> \*     ListNode(int x, ListNode *next) : val(x), next(next) &#123;&#125;</span><br><span class="line"> \* &#125;;</span><br><span class="line"> */</span><br></pre></td></tr></table></figure>
-
-<p>一种使用struct来定义类的方式，因为没有this指针，构造方式特殊一些，初始化的时候可以使用new但是要用一个指针去接。</p>
-<h2 id="3-一目了然的对比表"><a href="#3-一目了然的对比表" class="headerlink" title="3. 一目了然的对比表"></a>3. 一目了然的对比表</h2><p>我们用最直观的代码和行为来做个总结：</p>
-<table>
-<thead>
-<tr>
-<th>实际场景</th>
-<th>Java 的做法 (唯一的路)</th>
-<th>C++ 的做法 (多条路可选)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><strong>创建一个链表节点</strong></td>
-<td>必须用 <code>new</code> 建在仓库里，口袋里拿个<strong>遥控器</strong>。</td>
-<td>可以直接塞在口袋里（<code>Node el</code>），也可以写地址放仓库里（<code>Node* p</code>）。</td>
-</tr>
-<tr>
-<td><strong>创建一个整数数组</strong></td>
-<td>哪怕是 <code>int[]</code>，也必须建在仓库里，拿<strong>遥控器</strong>控制。</td>
-<td>可以直接把整条数组拍在口袋里（<code>int arr[10]</code>）。</td>
-</tr>
-<tr>
-<td><strong>把东西传给另一个函数</strong></td>
-<td>把口袋里的<strong>遥控器（地址）复制一把</strong>给对方。两个人控制同一个东西。</td>
-<td>默认把口袋里的<strong>实体完完整整复制一份</strong>给对方（开销大）；除非你主动决定只传纸条（指针）或外号（引用）。</td>
-</tr>
-<tr>
-<td><strong>不用的东西怎么处理</strong></td>
-<td>遥控器扔了就行，后台<strong>清洁工自动打扫</strong>。</td>
-<td>放在口袋里的会自动消失；放在仓库里的<strong>必须自己亲手扔掉</strong>，否则仓库会满。</td>
-</tr>
-</tbody></table>
-<p>导出到 Google 表格</p>
-<h2 id="总结总结"><a href="#总结总结" class="headerlink" title="总结总结"></a>总结总结</h2><ul>
-<li><strong>Java</strong> 就像开全自动挡的普通轿车，所有的机械细节（大仓库、内存地址）都用外壳包起来，不让你碰，只给你一个方向盘和几个遥控按钮。虽然不刺激，但很安全。</li>
-<li><strong>C++</strong> 就像开手动挡的赛车，引擎、齿轮、轮胎（口袋、仓库、每一个字节的地址）全部赤裸裸地暴露在你面前。你可以玩出最极限的速度，但方向盘要是多打了一点点，车就会当场散架。</li>
-</ul>
-<p>用“口袋”和“大仓库”这样去想，再去看前面那些链表反转或者指针移动的代码，是不是感觉顺畅多了？</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">编程语言</a>
         		</li>
       		
 		</ul>
