@@ -1210,6 +1210,92 @@ var _hmt = _hmt || [];
 <li><strong><code>pull</code><strong>：去网上把同事的草稿纸</strong>下载下来，并当场订到你的草稿纸上</strong>（下载 + 订装一体化）。</li>
 </ul>
 </blockquote>
+<blockquote>
+<p>我现在已经提交了mr，如果负责人把我的分支合并进入主分支，分支图会发生什么变化</p>
+</blockquote>
+<p><strong>结论：大概率会在 main 上多出一个“合并提交”（merge commit），图上出现一个 <code>|\</code> 的汇合点，<code>main</code> 前移；你的分支指针不动。具体形态取决于负责人在 GitLab 上选的合并方式。</strong></p>
+<h3 id="1-你仓库里的真实先例"><a href="#1-你仓库里的真实先例" class="headerlink" title="1. 你仓库里的真实先例"></a>1. 你仓库里的真实先例</h3><p>main 的历史里已经有一堆 MR 合并提交，比如：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*   d802b1e merge: MR !11 delivery: 20261122 web 48 + pwn 38 tasks (86 tasks)</span><br><span class="line">|\</span><br><span class="line">| * 593ed84 (origin/xyh-2) delivery: 20261122 ...</span><br><span class="line">* |   3c59172 merge: MR !10 delivery: 20261123 web 12 tasks ...</span><br></pre></td></tr></table></figure>
+
+<p><code>|\</code> 就是一次 MR 合并产生的汇合点：左边是 main 主线，右边是 MR 分支线。你们团队用的就是 <strong>Merge commit</strong> 方式。</p>
+<h3 id="2-合并后会发生什么（以你当前分支为例）"><a href="#2-合并后会发生什么（以你当前分支为例）" class="headerlink" title="2. 合并后会发生什么（以你当前分支为例）"></a>2. 合并后会发生什么（以你当前分支为例）</h3><p>你的 <code>feat/crypto-batch2</code> 比 main <strong>领先 8 个提交、落后 76 个提交</strong>（分叉状态），合并前大致是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">270d083 ──（main 方向 76 个提交）── c08665b   (main, origin/main, tag delivery/20261123)</span><br><span class="line">     └────（你的 8 个提交）────── 42e2ed5   (feat/crypto-batch2)</span><br></pre></td></tr></table></figure>
+
+<p><strong>Merge commit 方式（最可能）</strong> 合并后：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*   M  (main，新提交，两个父：c08665b 和 42e2ed5)</span><br><span class="line">|\</span><br><span class="line">| * 42e2ed5  (feat/crypto-batch2，保持不变)</span><br><span class="line">* | c08665b  (原来的 main)</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>对象</th>
+<th>变化</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>main</code> 指针</td>
+<td>从 c08665b → 新的合并提交 M</td>
+</tr>
+<tr>
+<td>你的分支</td>
+<td>不动，仍指向 42e2ed5</td>
+</tr>
+<tr>
+<td>提交历史</td>
+<td>你的 8 个提交进入 main 的历史；main 多 1 个合并提交</td>
+</tr>
+<tr>
+<td><code>origin/main</code>（本地缓存）</td>
+<td><strong>不会自动变</strong>，要等你 <code>git fetch</code></td>
+</tr>
+<tr>
+<td>远端你的分支</td>
+<td>若勾选“删除源分支”，会被删；否则还在</td>
+</tr>
+<tr>
+<td>MR 页面</td>
+<td>显示 Merged</td>
+</tr>
+<tr>
+<td><code>delivery/20261123</code> tag</td>
+<td>不动（tag 永远钉在原提交上）</td>
+</tr>
+</tbody></table>
+<h3 id="3-其他两种合并方式"><a href="#3-其他两种合并方式" class="headerlink" title="3. 其他两种合并方式"></a>3. 其他两种合并方式</h3><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>图的样子</th>
+<th>你的提交会怎样</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Squash</strong>（压缩合并）</td>
+<td>main 上只多 <strong>1 个新提交 S</strong>（单父），直线，没有 &#96;</td>
+<td>`</td>
+</tr>
+<tr>
+<td><strong>Fast-forward</strong>（快进）</td>
+<td>main 直接跳到 42e2ed5，无新提交</td>
+<td>你的分支与 main 重合</td>
+</tr>
+<tr>
+<td><strong>Merge commit</strong></td>
+<td>多一个双父合并提交</td>
+<td>你的提交全部保留在 main 历史中</td>
+</tr>
+</tbody></table>
+<p>注意：你现在<strong>落后 main 76 个提交</strong>，所以纯 fast-forward 不可能发生（除非负责人先 rebase 你的分支）；GitLab 也会提示需要 merge commit 或 rebase。</p>
+<h3 id="4-合并后你本地要做的同步"><a href="#4-合并后你本地要做的同步" class="headerlink" title="4. 合并后你本地要做的同步"></a>4. 合并后你本地要做的同步</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git fetch origin --prune          <span class="comment"># 更新 origin/main，清理已删的远端分支</span></span><br><span class="line">git switch main</span><br><span class="line">git pull --ff-only                <span class="comment"># 本地 main 前进到合并后的 M</span></span><br><span class="line">git <span class="built_in">log</span> --graph --oneline -10     <span class="comment"># 这时能看到 |\ 汇合点</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果远端分支被删：<code>git fetch --prune</code> 后 <code>origin/feat/crypto-batch2</code> 会消失，本地分支还在，可 <code>git branch -d</code> 删掉；</li>
+<li>如果还要在这个分支上继续开发：<code>git rebase origin/main</code>（但如果是 squash 合并，分支提交和 main 已重复，通常直接切回 main 重新开分支更干净）。</li>
+</ul>
+<h3 id="5-两个容易踩的点"><a href="#5-两个容易踩的点" class="headerlink" title="5. 两个容易踩的点"></a>5. 两个容易踩的点</h3><ol>
+<li><strong>合并后本地 <code>git log</code> 看不到变化</strong>：正常，<code>origin/*</code> 只是缓存，先 <code>fetch</code>；</li>
+<li><strong>负责人若先 rebase 你的分支再合并</strong>：远端分支 hash 会变，你本地分支会变成 ahead&#x2F;behind 分叉，需要 <code>git fetch</code> 后 <code>git reset --hard origin/feat/...</code> 对齐（确认没有本地未保存提交再操作）。</li>
+</ol>
+<p><strong>一句话总结：负责人一合并，main 上会多一个 <code>|\</code> 汇合点（或 squash 后的单个提交），main 前移、你的分支不动；你本地要 fetch + pull 才能看到新图。</strong></p>
 
       
 
