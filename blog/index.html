@@ -200,6 +200,651 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-mihomo内核代理软件的工作流程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/11/27/mihomo%E5%86%85%E6%A0%B8%E4%BB%A3%E7%90%86%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/">mihomo内核代理软件的工作流程</a>
+    </h1>
+  
+
+        
+        <a href="/2026/11/27/mihomo%E5%86%85%E6%A0%B8%E4%BB%A3%E7%90%86%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2026-11-27T09:22:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-11-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h3 id="一句话总览"><a href="#一句话总览" class="headerlink" title="一句话总览"></a>一句话总览</h3><p>你的电脑并没有“通知各个应用去使用代理”，它现在采用 <strong>TUN 模式</strong>：把整个系统的默认路由改到一张虚拟网卡上，所有流量先交给 mihomo 判断“直连”还是“绕去美国节点”。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">应用 (Chrome / git)</span><br><span class="line">   │  以为自己在正常联网</span><br><span class="line">   ▼</span><br><span class="line">虚拟网卡 Mihomo (198.18.0.1)   ← 默认路由 0.0.0.0/0 指到这里</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">mihomo 内核：还原域名 → 匹配规则</span><br><span class="line">   ├── DIRECT → 物理网卡 → 目标网站（你的真实 IP 暴露）</span><br><span class="line">   └── Proxy  → TCP 443 到美国节点 → 节点替你连（只暴露节点 IP）</span><br></pre></td></tr></table></figure>
+
+<p>先确认一点：你的 Verge 是 <code>enable_system_proxy: false</code> + <code>enable_tun_mode: true</code>，所以<strong>系统代理没开</strong>，全靠 TUN 拦截。<code>ProxyEnable=0</code>，应用完全不知道自己被代理了。</p>
+<hr>
+<h3 id="第-1-步：DNS-先被接管"><a href="#第-1-步：DNS-先被接管" class="headerlink" title="第 1 步：DNS 先被接管"></a>第 1 步：DNS 先被接管</h3><p>Windows 现在的 DNS 服务器是 <code>198.18.0.2</code> 和 <code>fdfe:dcba:9876::2</code>，都是 TUN 的地址。</p>
+<p>你访问 <code>www.google.com</code> 时：</p>
+<ol>
+<li>系统把 DNS 查询发到 <code>198.18.0.2</code></li>
+<li>mihomo 收到后<strong>不立刻真的去查</strong>，先返回一个假地址，比如 <code>198.18.0.7</code>（fake-ip，<code>198.18.0.1/16</code> 这个段）</li>
+<li>浏览器拿着 <code>198.18.0.7</code> 去连接，流量进 TUN</li>
+<li>mihomo 看到 <code>198.18.0.7</code>，就知道“这是 google.com”，再真正去解析</li>
+</ol>
+<p>好处是：<strong>DNS 查询永远不经过校园网和运营商</strong>，直接由 mihomo 用加密 DoH 发出去，这就是你担心 DNS 泄露时真正起作用的东西。</p>
+<p>例外：<code>*.dubhe-lab.fdtwh.com</code> 在你的 fake-ip-filter 里，所以给它<strong>真实地址</strong> <code>10.7.10.212</code>。</p>
+<hr>
+<h3 id="第-2-步：流量进-TUN"><a href="#第-2-步：流量进-TUN" class="headerlink" title="第 2 步：流量进 TUN"></a>第 2 步：流量进 TUN</h3><p>路由表里 <code>0.0.0.0/0 → 198.18.0.2</code>（metric 0）、<code>::/0 → fdfe:dcba:9876::2</code>（metric 0），都比 WLAN 的 50 &#x2F; 66 优先。</p>
+<p>所以哪怕是 <code>ping</code> 一个公网 IP，包也会先被送进虚拟网卡，这是“全接管”的由来。</p>
+<hr>
+<h3 id="第-3-步：mihomo-按规则决定去向"><a href="#第-3-步：mihomo-按规则决定去向" class="headerlink" title="第 3 步：mihomo 按规则决定去向"></a>第 3 步：mihomo 按规则决定去向</h3><table>
+<thead>
+<tr>
+<th>访问对象</th>
+<th>命中的规则</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>10.x</code> &#x2F; <code>192.168.x</code> 内网</td>
+<td><code>IP-CIDR,10.0.0.0/8,DIRECT</code></td>
+<td>直连</td>
+</tr>
+<tr>
+<td>国内网站（baidu 等）</td>
+<td><code>GEOSITE,cn,DIRECT</code></td>
+<td>直连</td>
+</tr>
+<tr>
+<td>国内 IP</td>
+<td><code>GEOIP,CN,DIRECT</code></td>
+<td>直连</td>
+</tr>
+<tr>
+<td>实验室域名</td>
+<td><code>DOMAIN-SUFFIX,dubhe-lab...,DIRECT</code></td>
+<td>直连</td>
+</tr>
+<tr>
+<td>其它一切（Google、GitHub）</td>
+<td><code>MATCH,Proxy</code></td>
+<td>走美国节点</td>
+</tr>
+</tbody></table>
+<p>你的代理节点是 <strong>VLESS + Reality</strong>，伪装成访问 <code>cdn.fastly.steamstatic.com</code>，并且 <code>udp: false</code>。所以你规则里那两条 <code>REJECT</code>（UDP 443、UDP 3478）是有意为之：QUIC 走不了，浏览器会退回 TCP。</p>
+<hr>
+<h3 id="第-4-步：走代理时的完整过程"><a href="#第-4-步：走代理时的完整过程" class="headerlink" title="第 4 步：走代理时的完整过程"></a>第 4 步：走代理时的完整过程</h3><p>以访问 <code>www.google.com</code> 为例：</p>
+<ol>
+<li>mihomo 用 <code>1.1.1.1 / 8.8.8.8</code> 的 DoH 查出真实 IP（这一步本身按 <code>MATCH,Proxy</code> 也走代理）</li>
+<li>mihomo 跟 <code>p9.vimovox.com:443</code> 建立一条 <strong>TLS 连接</strong>（VLESS + Reality）</li>
+<li>在这条加密隧道里告诉节点：“帮我连 <code>www.google.com:443</code>”</li>
+<li>节点在美国落地，替你建连接，数据原路返回</li>
+</ol>
+<p>关键点：<strong>目标网站只看到节点 IP，看不到你的真实 IP</strong>；节点能看到你访问的域名（这是不可避免的，除非用 ECH）。</p>
+<hr>
+<h3 id="第-5-步：直连时的过程"><a href="#第-5-步：直连时的过程" class="headerlink" title="第 5 步：直连时的过程"></a>第 5 步：直连时的过程</h3><p>mihomo 直接用物理网卡发出去，源地址是 <code>10.58.187.123</code>，经过校园网 NAT 到公网。国内网站、实验室都走这条，<strong>你的真实 IP 对目标可见</strong>。</p>
+<hr>
+<h3 id="第-6-步：实验室这条链路其实绕了一圈"><a href="#第-6-步：实验室这条链路其实绕了一圈" class="headerlink" title="第 6 步：实验室这条链路其实绕了一圈"></a>第 6 步：实验室这条链路其实绕了一圈</h3><p>访问 <code>gitlab.dubhe-lab.fdtwh.com</code> 时：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git → 10.7.10.212</span><br><span class="line">  → ZeroTier 虚拟网卡 (10.7.12.195)</span><br><span class="line">    → ZT 服务加密成 UDP 9993，发给中继 211.68.71.122</span><br><span class="line">      → 这个 UDP 又撞上默认路由，进 TUN</span><br><span class="line">        → mihomo 按 GEOIP,CN 判 DIRECT</span><br><span class="line">          → 从物理网卡发出去</span><br></pre></td></tr></table></figure>
+
+<p>也就是说实验室流量被<strong>套了两层</strong>：ZeroTier 一层，mihomo TUN 一层。这就是它比直连慢、而且 TUN 一出问题它就一起卡的原因。把 <code>211.68.71.122</code> 加进 TUN 的排除列表，就能让它直接从物理网卡发出，只留 ZeroTier 一层。</p>
+<hr>
+<h3 id="三条路径对比"><a href="#三条路径对比" class="headerlink" title="三条路径对比"></a>三条路径对比</h3><table>
+<thead>
+<tr>
+<th>访问对象</th>
+<th>DNS 由谁解析</th>
+<th>实际路径</th>
+<th>谁看得到你的真实 IP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>国内网站</td>
+<td>mihomo → 223.5.5.5 DoT</td>
+<td>物理网卡直出</td>
+<td>目标网站</td>
+</tr>
+<tr>
+<td>境外网站</td>
+<td>mihomo → 1.1.1.1 DoH（走代理）</td>
+<td>美国节点中转</td>
+<td>只有节点</td>
+</tr>
+<tr>
+<td>实验室</td>
+<td>mihomo → 1.1.1.1（直连发）</td>
+<td>ZT → 中继 → 又被 TUN 判直连</td>
+<td>中继和实验室</td>
+</tr>
+</tbody></table>
+<p><strong>总结：TUN 抢了默认路由，DNS 被换成假地址交给 mihomo，它按规则把流量分成“直连”和“美国节点”两路，实验室那条则是在 ZeroTier 之上又套了一层 TUN。</strong></p>
+<h2 id="额外"><a href="#额外" class="headerlink" title="额外"></a>额外</h2><ul>
+<li><code>ipconfig</code> &#x2F; <code>netsh</code> 看的是<strong>网卡上配了什么</strong></li>
+<li><code>nslookup</code> 看的是<strong>系统实际用了哪个</strong></li>
+</ul>
+<p>就是直接运行 <code>nslookup</code>，然后看它在输出开头打印的服务器地址。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nslookup www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p>输出是这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">服务器:  UnKnown                  ← 它实际查询的 DNS</span><br><span class="line">Address:  fdfe:dcba:9876::2       ← 就是这一行</span><br><span class="line"></span><br><span class="line">名称:    www.baidu.com</span><br><span class="line">Addresses:  2001:2::a6</span><br><span class="line">            198.18.0.162</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="两个要点"><a href="#两个要点" class="headerlink" title="两个要点"></a>两个要点</h3><ul>
+<li><strong><code>Address:</code> 是正在查询的 DNS 服务器</strong>，<code>名称:</code> 才是查询结果。第一行 <code>服务器:</code> 和它下面的 <code>Address:</code> 指的是同一个 DNS 服务器。</li>
+<li><strong><code>UnKnown</code> 不是错误</strong>，是因为这个地址没有 PTR 反向记录，nslookup 解析不出主机名，只影响显示。</li>
+</ul>
+<hr>
+<h3 id="判断是否使用代理的简单判据"><a href="#判断是否使用代理的简单判据" class="headerlink" title="判断是否使用代理的简单判据"></a>判断是否使用代理的简单判据</h3><p>看返回的解析结果：</p>
+<ul>
+<li>返回 <code>198.18.x.x</code> 或 <code>2001:2::x</code>，说明是 <strong>mihomo 的 fake-ip</strong>，查询被代理接管了</li>
+<li>返回真实的公网 IP，说明是<strong>直接向该 DNS 服务器查询</strong>的</li>
+</ul>
+<p><strong>总结：<code>nslookup</code> 第一段的 <code>Address:</code> 就是实际查询的 DNS，出现 <code>198.18.x</code> 就证明 DNS 走了 mihomo。</strong></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">北邮网安</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Ollama-全面使用指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/11/26/Ollama-%E5%85%A8%E9%9D%A2%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/">Ollama 全面使用指南</a>
+    </h1>
+  
+
+        
+        <a href="/2026/11/26/Ollama-%E5%85%A8%E9%9D%A2%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" class="archive-article-date">
+  	<time datetime="2026-11-26T14:18:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-11-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h1 id="Ollama-全面使用指南"><a href="#Ollama-全面使用指南" class="headerlink" title="Ollama 全面使用指南"></a>Ollama 全面使用指南</h1><blockquote>
+<p>本文档整理了 <strong>Ollama</strong> 的核心概念、安装上手、模型选型（含本地量化模型与 <code>:cloud</code> 云端模型）、常用命令、<code>Modelfile</code> 定制、环境变量调优（重点含 Windows 配置）、<code>ollama launch</code> 编程 Agent 一键集成、API 开发接入与常见问题排查。</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E4%B8%8E%E6%9E%B6%E6%9E%84">核心概念与架构</a></li>
+<li><a href="#2-%E5%AE%89%E8%A3%85%E4%B8%8E%E5%BF%AB%E9%80%9F%E4%B8%8A%E6%89%8B">安装与快速上手</a></li>
+<li><a href="#3-%E6%A8%A1%E5%9E%8B%E5%91%BD%E5%90%8D%E8%A7%84%E5%88%99%E9%80%89%E5%9E%8B%E4%B8%8E-cloud-%E4%BA%91%E7%AB%AF%E6%A8%A1%E5%9E%8B">模型命名规则、选型与 <code>:cloud</code> 云端模型</a></li>
+<li><a href="#4-cli-%E6%A0%B8%E5%BF%83%E5%91%BD%E4%BB%A4%E9%80%9F%E6%9F%A5">CLI 核心命令速查</a></li>
+<li><a href="#5-%E4%BA%A4%E4%BA%92%E6%A8%A1%E5%BC%8F%E5%B8%B8%E7%94%A8%E6%96%9C%E6%9D%A0%E5%91%BD%E4%BB%A4%E4%B8%8E%E6%8A%80%E5%B7%A7">交互模式常用斜杠命令与技巧</a></li>
+<li><a href="#6-%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8Bmodelfile-%E4%B8%8E%E5%AF%BC%E5%85%A5-gguf">自定义模型：<code>Modelfile</code> 与导入 GGUF</a></li>
+<li><a href="#7-%E5%85%B3%E9%94%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AEwindows-%E5%BF%85%E7%9C%8B">关键环境变量配置（Windows 必看）</a></li>
+<li><a href="#8-ollama-launch%E4%B8%80%E9%94%AE%E6%8E%A5%E5%85%A5%E7%BC%96%E7%A8%8B-agentdsh--claude-code-%E7%AD%89"><code>ollama launch</code>：一键接入编程 Agent（<code>dsh</code> &#x2F; Claude Code 等）</a></li>
+<li><a href="#9-api-%E8%B0%83%E7%94%A8%E4%B8%8E%E7%BC%96%E7%A8%8B%E6%8E%A5%E5%85%A5">API 调用与编程接入</a></li>
+<li><a href="#10-%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5faq">常见问题排查（FAQ）</a></li>
+</ol>
+<hr>
+<h2 id="1-核心概念与架构"><a href="#1-核心概念与架构" class="headerlink" title="1. 核心概念与架构"></a>1. 核心概念与架构</h2><p>Ollama 本质上是一个<strong>本地模型运行时与管理服务</strong>，采用「后台服务 + 客户端」架构：</p>
+<ul>
+<li><strong>后台服务（<code>ollama serve</code>）</strong>：默认在 <code>http://127.0.0.1:11434</code> 启动 HTTP 服务，负责把模型加载进显存&#x2F;内存、管理 KV Cache、处理推理调度，并同时对外提供原生 REST API 与 OpenAI 兼容接口（<code>/v1</code>）。</li>
+<li><strong>命令行与桌面客户端</strong>：无论是终端里的 <code>ollama run</code>、桌面端 App，还是第三方工具（Open WebUI、Dify、Cursor、<code>dsh</code> 等），底层都是在请求这个 <code>11434</code> 服务。</li>
+<li><strong>双模式运行</strong>：<ul>
+<li><strong>纯本地模型</strong>：下载权重到本机磁盘，断网可用、数据不出本地。</li>
+<li><strong><code>:cloud</code> 云端模型</strong>：仅在本地注册元信息，不下载几十&#x2F;几百 GB 权重，推理请求由本地 Ollama 转发至 Ollama Cloud 服务器执行。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="2-安装与快速上手"><a href="#2-安装与快速上手" class="headerlink" title="2. 安装与快速上手"></a>2. 安装与快速上手</h2><h3 id="2-1-安装"><a href="#2-1-安装" class="headerlink" title="2.1 安装"></a>2.1 安装</h3><ul>
+<li><p><strong>Windows</strong>：</p>
+<ul>
+<li>官网下载安装包：前往 <a target="_blank" rel="noopener" href="https://ollama.com/">ollama.com</a> 下载 <code>OllamaSetup.exe</code> 安装。</li>
+<li>或使用 <code>winget</code>：<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">winget install Ollama.Ollama</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>macOS</strong>：</p>
+<ul>
+<li>从官网下载 <code>.dmg</code> 安装，或通过 Homebrew：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install --cask ollama</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>Linux</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -fsSL https://ollama.com/install.sh | sh</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-2-跑通第一个模型"><a href="#2-2-跑通第一个模型" class="headerlink" title="2.2 跑通第一个模型"></a>2.2 跑通第一个模型</h3><p>打开终端（Windows 下用 PowerShell 或 CMD）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看版本，确认安装成功</span></span><br><span class="line">ollama <span class="literal">--version</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 拉取并直接进入交互对话（如果本地没有该模型会自动先下载）</span></span><br><span class="line">ollama run qwen3:<span class="number">8</span>b</span><br></pre></td></tr></table></figure>
+
+<p>在桌面端安装完成后，Ollama 通常会自动在系统托盘&#x2F;菜单栏驻留后台服务；如果手动关闭了托盘程序，可以在终端运行 <code>ollama serve</code> 手动拉起后台服务。</p>
+<hr>
+<h2 id="3-模型命名规则、选型与-cloud-云端模型"><a href="#3-模型命名规则、选型与-cloud-云端模型" class="headerlink" title="3. 模型命名规则、选型与 :cloud 云端模型"></a>3. 模型命名规则、选型与 <code>:cloud</code> 云端模型</h2><h3 id="3-1-模型标签格式"><a href="#3-1-模型标签格式" class="headerlink" title="3.1 模型标签格式"></a>3.1 模型标签格式</h3><p>Ollama 模型名通常遵循 <code>&lt;模型家族&gt;:&lt;标签&gt;</code>，例如 <code>qwen2.5:14b-instruct-q4_K_M</code>：</p>
+<table>
+<thead>
+<tr>
+<th align="left">组成部分</th>
+<th align="left">含义</th>
+<th align="left">示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>模型名</strong></td>
+<td align="left">模型系列</td>
+<td align="left"><code>qwen3</code>、<code>llama3.2</code>、<code>deepseek-r1</code>、<code>gemma3</code></td>
+</tr>
+<tr>
+<td align="left"><strong>参数规模</strong></td>
+<td align="left">参数量大小</td>
+<td align="left"><code>1.5b</code>、<code>7b</code>、<code>8b</code>、<code>14b</code>、<code>32b</code></td>
+</tr>
+<tr>
+<td align="left"><strong>量化精度</strong></td>
+<td align="left">权重压缩方式（影响体积与精度）</td>
+<td align="left"><code>q4_K_M</code>（默认均衡）、<code>q8_0</code>（高精度）、<code>fp16</code>（半精度）</td>
+</tr>
+<tr>
+<td align="left"><strong><code>:cloud</code> 后缀</strong></td>
+<td align="left">云端托管模型，不在本地下载权重</td>
+<td align="left"><code>hy4:cloud</code>、<code>gemma4:cloud</code>、<code>deepseek-v4-flash:cloud</code></td>
+</tr>
+</tbody></table>
+<h3 id="3-2-本地模型硬件粗算建议（以常见的-Q4-量化为例）"><a href="#3-2-本地模型硬件粗算建议（以常见的-Q4-量化为例）" class="headerlink" title="3.2 本地模型硬件粗算建议（以常见的 Q4 量化为例）"></a>3.2 本地模型硬件粗算建议（以常见的 <code>Q4</code> 量化为例）</h3><blockquote>
+<p>粗略经验：<strong>所需显存（或内存）≈ 参数量（B）× 0.6～0.8 GB + 上下文 KV Cache 占用</strong>。</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">可用显存 &#x2F; 内存</th>
+<th align="left">推荐本地模型参数量</th>
+<th align="left">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>8 GB</strong></td>
+<td align="left"><code>4B</code> ～ <code>9B</code></td>
+<td align="left">适合日常问答、轻量代码补全</td>
+</tr>
+<tr>
+<td align="left"><strong>16 GB</strong></td>
+<td align="left"><code>14B</code>（可配合较长上下文）或 <code>24B/27B</code>（小上下文）</td>
+<td align="left">兼顾代码与多轮推理</td>
+</tr>
+<tr>
+<td align="left"><strong>24 GB+</strong></td>
+<td align="left"><code>32B</code> 及以上</td>
+<td align="left">适合高难度代码生成、Agent 工具调用</td>
+</tr>
+<tr>
+<td align="left"><strong>无独立显卡（纯 CPU）</strong></td>
+<td align="left"><code>1.5B</code> ～ <code>8B</code></td>
+<td align="left">依赖内存带宽，建议优先选小模型或 MoE 架构，或者改用 <code>:cloud</code></td>
+</tr>
+</tbody></table>
+<h3 id="3-3-cloud-云端模型机制"><a href="#3-3-cloud-云端模型机制" class="headerlink" title="3.3 :cloud 云端模型机制"></a>3.3 <code>:cloud</code> 云端模型机制</h3><p>对于参数量上百 B 的超大开源模型（如 <code>hy4:cloud</code>、<code>qwen3-coder:480b-cloud</code> 等），普通个人电脑无法本地承载：</p>
+<ul>
+<li><strong>不占硬盘</strong>：执行 <code>ollama run hy4:cloud</code> 只会同步极小的模型元信息并在本地注册标签，<strong>不会下载模型权重文件</strong>。</li>
+<li><strong>需要联网与账号认证</strong>：调用云端模型需要登录 Ollama 账号，且网络需能正常访问 Ollama Cloud。</li>
+<li><strong>彻底禁用云端调用（保密场景）</strong>：如果出于数据合规要求，绝对不允许任何对话离开本机，可设置环境变量 <code>OLLAMA_NO_CLOUD=1</code>（或在 <code>~/.ollama/server.json</code> 中配置 <code>&quot;disable_ollama_cloud&quot;: true</code>）。</li>
+</ul>
+<hr>
+<h2 id="4-CLI-核心命令速查"><a href="#4-CLI-核心命令速查" class="headerlink" title="4. CLI 核心命令速查"></a>4. CLI 核心命令速查</h2><table>
+<thead>
+<tr>
+<th align="left">命令</th>
+<th align="left">作用</th>
+<th align="left">常用参数与示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>ollama serve</code></td>
+<td align="left">手动启动 Ollama 后台服务</td>
+<td align="left"><code>ollama serve</code></td>
+</tr>
+<tr>
+<td align="left"><code>ollama run &lt;model&gt;</code></td>
+<td align="left">拉取（如缺失）并进入交互对话；也可单次执行</td>
+<td align="left"><code>ollama run qwen3:8b --verbose</code><br><code>ollama run qwen3:8b &quot;用一句话解释 Docker&quot;</code></td>
+</tr>
+<tr>
+<td align="left"><code>ollama pull &lt;model&gt;</code></td>
+<td align="left">仅下载或更新模型，不进入对话</td>
+<td align="left"><code>ollama pull llama3.2</code></td>
+</tr>
+<tr>
+<td align="left"><code>ollama ls</code></td>
+<td align="left">列出本地已安装及已注册的模型</td>
+<td align="left"><code>ollama ls</code></td>
+</tr>
+<tr>
+<td align="left"><code>ollama ps</code></td>
+<td align="left">查看当前加载在显存&#x2F;内存中的模型及处理器占比</td>
+<td align="left"><code>ollama ps</code>（重点看 <code>PROCESSOR</code> 列确认 GPU&#x2F;CPU 比例）</td>
+</tr>
+<tr>
+<td align="left"><code>ollama show &lt;model&gt;</code></td>
+<td align="left">查看模型架构、上下文上限、模板和 Modelfile</td>
+<td align="left"><code>ollama show qwen3:8b --modelfile</code></td>
+</tr>
+<tr>
+<td align="left"><code>ollama create &lt;name&gt; -f &lt;file&gt;</code></td>
+<td align="left">根据 <code>Modelfile</code> 创建自定义模型</td>
+<td align="left"><code>ollama create my-coder -f ./Modelfile</code></td>
+</tr>
+<tr>
+<td align="left"><code>ollama cp &lt;src&gt; &lt;dst&gt;</code></td>
+<td align="left">复制或重命名已有模型</td>
+<td align="left"><code>ollama cp qwen3:8b my-qwen</code></td>
+</tr>
+<tr>
+<td align="left"><code>ollama rm &lt;model&gt;</code></td>
+<td align="left">删除本地模型并释放磁盘空间</td>
+<td align="left"><code>ollama rm qwen3:8b</code></td>
+</tr>
+<tr>
+<td align="left"><code>ollama push &lt;model&gt;</code></td>
+<td align="left">将自定义模型推送到自己的 Ollama 仓库</td>
+<td align="left"><code>ollama push user/my-model</code></td>
+</tr>
+<tr>
+<td align="left"><code>ollama launch</code></td>
+<td align="left">一键配置并启动外部编程 Agent 工具</td>
+<td align="left"><code>ollama launch dsh</code> &#x2F; <code>ollama launch claude</code></td>
+</tr>
+</tbody></table>
+<p><strong><code>ollama run</code> 常用附加参数</strong>：</p>
+<ul>
+<li><code>--verbose</code>：每次回复后输出耗时、Prompt 处理速度（<code>eval rate</code>）与 Token 生成速度（tokens&#x2F;s）。</li>
+<li><code>--format json</code>：强制要求模型输出合法 JSON。</li>
+<li><code>--keepalive 30m</code>：退出终端后仍将模型保留在显存中 30 分钟（设为 <code>0</code> 则退出即卸载）。</li>
+</ul>
+<hr>
+<h2 id="5-交互模式常用斜杠命令与技巧"><a href="#5-交互模式常用斜杠命令与技巧" class="headerlink" title="5. 交互模式常用斜杠命令与技巧"></a>5. 交互模式常用斜杠命令与技巧</h2><p>在执行 <code>ollama run &lt;model&gt;</code> 进入对话界面后，可以使用以下斜杠命令：</p>
+<table>
+<thead>
+<tr>
+<th align="left">指令</th>
+<th align="left">作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>/?</code> 或 <code>/help</code></td>
+<td align="left">查看交互模式帮助</td>
+</tr>
+<tr>
+<td align="left"><code>/bye</code></td>
+<td align="left">退出对话</td>
+</tr>
+<tr>
+<td align="left"><code>/clear</code></td>
+<td align="left">清空当前对话上下文</td>
+</tr>
+<tr>
+<td align="left"><code>/show info</code></td>
+<td align="left">查看当前模型的架构与参数详情</td>
+</tr>
+<tr>
+<td align="left"><code>/show system</code></td>
+<td align="left">查看当前生效的系统提示词</td>
+</tr>
+<tr>
+<td align="left"><code>/set system &lt;内容&gt;</code></td>
+<td align="left">临时修改当前会话的 System Prompt</td>
+</tr>
+<tr>
+<td align="left"><code>/set parameter num_ctx 32768</code></td>
+<td align="left">临时调整上下文窗口大小（同理可设 <code>temperature</code>、<code>top_p</code> 等）</td>
+</tr>
+<tr>
+<td align="left"><code>/set verbose</code></td>
+<td align="left">开启&#x2F;关闭生成速度统计</td>
+</tr>
+<tr>
+<td align="left"><code>/save &lt;新模型名&gt;</code></td>
+<td align="left">将当前带有自定义参数&#x2F;系统提示词的会话保存为一个新模型</td>
+</tr>
+</tbody></table>
+<p><strong>输入技巧</strong>：</p>
+<ul>
+<li><strong>多行输入</strong>：使用三引号 <code>&quot;&quot;&quot;</code> 包裹多行文本或代码片段。</li>
+<li><strong>识图输入</strong>（需使用支持视觉的多模态模型）：在终端输入文字时直接把图片路径写进去或把图片文件拖入终端窗口。</li>
+</ul>
+<hr>
+<h2 id="6-自定义模型：Modelfile-与导入-GGUF"><a href="#6-自定义模型：Modelfile-与导入-GGUF" class="headerlink" title="6. 自定义模型：Modelfile 与导入 GGUF"></a>6. 自定义模型：<code>Modelfile</code> 与导入 GGUF</h2><p><code>Modelfile</code> 类似于 Docker 的 <code>Dockerfile</code>，用来把固定的系统提示词、推理参数或本地 <code>.gguf</code> 权重打包成一个新的 Ollama 模型。</p>
+<h3 id="6-1-核心指令"><a href="#6-1-核心指令" class="headerlink" title="6.1 核心指令"></a>6.1 核心指令</h3><ul>
+<li><code>FROM &lt;基础模型或本地 .gguf 路径&gt;</code>（必填）：指定底座模型。</li>
+<li><code>PARAMETER &lt;参数名&gt; &lt;值&gt;</code>：设置默认运行参数：<ul>
+<li><code>temperature</code>：采样随机度（写代码建议 <code>0.1</code>～<code>0.3</code>，创作可 <code>0.7</code>～<code>1.0</code>）。</li>
+<li><code>num_ctx</code>：上下文窗口大小（如 <code>8192</code>、<code>32768</code>、<code>65536</code>）。</li>
+<li><code>num_predict</code>：单次回复最大生成 Token 数（<code>-1</code> 为不限制）。</li>
+<li><code>top_p</code>、<code>top_k</code>、<code>repeat_penalty</code>、<code>stop</code>。</li>
+</ul>
+</li>
+<li><code>SYSTEM &quot;&quot;&quot;...&quot;&quot;&quot;</code>：固化系统提示词（人设与输出要求）。</li>
+<li><code>TEMPLATE &quot;&quot;&quot;...&quot;&quot;&quot;</code>：自定义 Go 模板格式的 Prompt 拼装方式（导入外部原生 GGUF 时常需配置）。</li>
+<li><code>ADAPTER &lt;路径&gt;</code>：挂载 LoRA &#x2F; QLoRA 微调权重。</li>
+<li><code>MESSAGE &lt;role&gt; &quot;&quot;&quot;...&quot;&quot;&quot;</code>：预置历史对话示例（Few-shot）。</li>
+</ul>
+<h3 id="6-2-示例：创建一个固定中文输出、大上下文的编程助手"><a href="#6-2-示例：创建一个固定中文输出、大上下文的编程助手" class="headerlink" title="6.2 示例：创建一个固定中文输出、大上下文的编程助手"></a>6.2 示例：创建一个固定中文输出、大上下文的编程助手</h3><p>新建文件 <code>Modelfile</code>：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> qwen3:<span class="number">8</span>b</span><br><span class="line"></span><br><span class="line"><span class="comment"># 调整默认上下文与温度</span></span><br><span class="line">PARAMETER num_ctx <span class="number">32768</span></span><br><span class="line">PARAMETER temperature <span class="number">0.2</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 固化系统提示词</span></span><br><span class="line">SYSTEM <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br><span class="line"><span class="string">你是一名资深全栈工程师。所有解释与注释请优先使用简体中文，给出的代码必须可直接运行且避免省略关键逻辑。</span></span><br><span class="line"><span class="string">&quot;</span><span class="string">&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>构建并运行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ollama create cn<span class="literal">-coder</span> <span class="operator">-f</span> .\Modelfile</span><br><span class="line">ollama run cn<span class="literal">-coder</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="6-3-导入本地-gguf-文件"><a href="#6-3-导入本地-gguf-文件" class="headerlink" title="6.3 导入本地 .gguf 文件"></a>6.3 导入本地 <code>.gguf</code> 文件</h3><figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> D:\models\my-model-Q4_K_M.gguf</span><br><span class="line">PARAMETER num_ctx <span class="number">16384</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>兼容性注意</strong>：Ollama 原生支持常规 GGUF 量化格式；但对于极特殊的新型自定义内核格式（例如部分实验性 1-bit &#x2F; 三值权重 <code>PQ2_0</code>、<code>PTQ1_0</code> 等非标准量化包），原生 Ollama 可能无法直接解析，此时需使用对应项目提供的定制版 <code>llama.cpp</code> 运行。</p>
+</blockquote>
+<hr>
+<h2 id="7-关键环境变量配置（Windows-必看）"><a href="#7-关键环境变量配置（Windows-必看）" class="headerlink" title="7. 关键环境变量配置（Windows 必看）"></a>7. 关键环境变量配置（Windows 必看）</h2><p>Ollama 通过环境变量控制存储路径、网络监听和显存优化。</p>
+<h3 id="7-1-常用环境变量一览"><a href="#7-1-常用环境变量一览" class="headerlink" title="7.1 常用环境变量一览"></a>7.1 常用环境变量一览</h3><table>
+<thead>
+<tr>
+<th align="left">变量名</th>
+<th align="left">默认值</th>
+<th align="left">说明与推荐值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong><code>OLLAMA_MODELS</code></strong></td>
+<td align="left"><code>%USERPROFILE%\.ollama\models</code></td>
+<td align="left"><strong>强烈建议修改</strong>！把模型目录迁移到非 C 盘（如 <code>D:\OllamaModels</code>），避免 C 盘爆满</td>
+</tr>
+<tr>
+<td align="left"><strong><code>OLLAMA_HOST</code></strong></td>
+<td align="left"><code>127.0.0.1:11434</code></td>
+<td align="left">设为 <code>0.0.0.0:11434</code> 可让局域网其他设备或 Docker 容器访问本机 Ollama</td>
+</tr>
+<tr>
+<td align="left"><strong><code>OLLAMA_ORIGINS</code></strong></td>
+<td align="left">仅本地</td>
+<td align="left">跨域白名单（CORS）。对接网页前端或浏览器插件时可设为 <code>*</code></td>
+</tr>
+<tr>
+<td align="left"><strong><code>OLLAMA_CONTEXT_LENGTH</code></strong></td>
+<td align="left"><code>4096</code></td>
+<td align="left">全局默认上下文长度。跑编程 Agent 时建议调高至 <code>32768</code> 或 <code>65536</code></td>
+</tr>
+<tr>
+<td align="left"><strong><code>OLLAMA_KEEP_ALIVE</code></strong></td>
+<td align="left"><code>5m</code></td>
+<td align="left">模型空闲后在显存&#x2F;内存中的驻留时间（如 <code>30m</code>、<code>24h</code>，<code>-1</code> 永不卸载，<code>0</code> 用完即卸）</td>
+</tr>
+<tr>
+<td align="left"><strong><code>OLLAMA_FLASH_ATTENTION</code></strong></td>
+<td align="left">自动判断</td>
+<td align="left">设为 <code>1</code> 强制开启 Flash Attention，大幅降低长上下文显存占用</td>
+</tr>
+<tr>
+<td align="left"><strong><code>OLLAMA_KV_CACHE_TYPE</code></strong></td>
+<td align="left"><code>f16</code></td>
+<td align="left">KV Cache 量化精度，配合 Flash Attention 可设为 <code>q8_0</code> 或 <code>q4_0</code> 显著省显存</td>
+</tr>
+<tr>
+<td align="left"><strong><code>OLLAMA_NUM_PARALLEL</code></strong></td>
+<td align="left">自动</td>
+<td align="left">最大并发请求数（显存吃紧时建议设为 <code>1</code> 节省显存）</td>
+</tr>
+<tr>
+<td align="left"><strong><code>OLLAMA_MAX_LOADED_MODELS</code></strong></td>
+<td align="left">自动</td>
+<td align="left">同时驻留显存的模型数量上限</td>
+</tr>
+<tr>
+<td align="left"><strong><code>OLLAMA_NO_CLOUD</code></strong></td>
+<td align="left">未设置</td>
+<td align="left">设为 <code>1</code> 彻底禁用所有 <code>:cloud</code> 云端模型</td>
+</tr>
+</tbody></table>
+<h3 id="7-2-Windows-下如何永久配置并生效"><a href="#7-2-Windows-下如何永久配置并生效" class="headerlink" title="7.2 Windows 下如何永久配置并生效"></a>7.2 Windows 下如何永久配置并生效</h3><p>在 PowerShell 中设置<strong>用户级环境变量</strong>（以迁移模型目录和开启局域网监听为例）：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 先创建目标文件夹</span></span><br><span class="line"><span class="built_in">New-Item</span> <span class="literal">-ItemType</span> Directory <span class="literal">-Path</span> <span class="string">&quot;D:\OllamaModels&quot;</span> <span class="literal">-Force</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 写入永久环境变量</span></span><br><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">&quot;OLLAMA_MODELS&quot;</span>, <span class="string">&quot;D:\OllamaModels&quot;</span>, <span class="string">&quot;User&quot;</span>)</span><br><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">&quot;OLLAMA_CONTEXT_LENGTH&quot;</span>, <span class="string">&quot;32768&quot;</span>, <span class="string">&quot;User&quot;</span>)</span><br><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">&quot;OLLAMA_FLASH_ATTENTION&quot;</span>, <span class="string">&quot;1&quot;</span>, <span class="string">&quot;User&quot;</span>)</span><br><span class="line">[<span class="type">Environment</span>]::SetEnvironmentVariable(<span class="string">&quot;OLLAMA_KV_CACHE_TYPE&quot;</span>, <span class="string">&quot;q8_0&quot;</span>, <span class="string">&quot;User&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>重要</strong>：设置完环境变量后，<strong>必须完全退出任务栏右下角的 Ollama 托盘图标（Quit Ollama），再重新打开 Ollama</strong>，新环境变量才会生效（如果之前已经下过模型，可把原 <code>C:\Users\&lt;用户名&gt;\.ollama\models</code> 里的 <code>blobs</code> 和 <code>manifests</code> 直接剪切到新目录）。</p>
+</blockquote>
+<hr>
+<h2 id="8-ollama-launch：一键接入编程-Agent（dsh-Claude-Code-等）"><a href="#8-ollama-launch：一键接入编程-Agent（dsh-Claude-Code-等）" class="headerlink" title="8. ollama launch：一键接入编程 Agent（dsh &#x2F; Claude Code 等）"></a>8. <code>ollama launch</code>：一键接入编程 Agent（<code>dsh</code> &#x2F; Claude Code 等）</h2><p>新版 Ollama 内置了 <code>ollama launch</code>，无需手动写配置文件或折腾环境变量，即可把本地模型或 <code>:cloud</code> 模型直接接到各类开源编程 Agent：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入交互式向导，选择工具与模型</span></span><br><span class="line">ollama launch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键启动 DeepSeek Harness (dsh)（若未安装会自动帮你安装 @deepseek-ai/dsh）</span></span><br><span class="line">ollama launch dsh</span><br><span class="line">ollama launch dsh <span class="literal">--model</span> hy4:cloud</span><br><span class="line"></span><br><span class="line"><span class="comment"># 其他主流编程 Agent 集成</span></span><br><span class="line">ollama launch claude                  <span class="comment"># Claude Code</span></span><br><span class="line">ollama launch opencode                <span class="comment"># OpenCode</span></span><br><span class="line">ollama launch codex                   <span class="comment"># Codex CLI</span></span><br><span class="line">ollama launch droid                   <span class="comment"># Droid</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 仅生成/修改对应工具的配置文件，不立即启动对话</span></span><br><span class="line">ollama launch dsh <span class="literal">--config</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>跑编程 Agent 的两条关键建议</strong>：</p>
+<ol>
+<li>尽量将 <code>OLLAMA_CONTEXT_LENGTH</code> 设为 <strong><code>64000</code> 以上</strong>（本地硬件不够时可开启 <code>OLLAMA_FLASH_ATTENTION=1</code> + <code>OLLAMA_KV_CACHE_TYPE=q8_0</code>，或直接用 <code>:cloud</code> 模型）。</li>
+<li>本地模型必须具备稳定的 <strong>Tool Calling（工具调用）</strong> 能力，否则 Agent 在读文件、改代码和跑命令的多轮循环里容易卡住。</li>
+</ol>
+<hr>
+<h2 id="9-API-调用与编程接入"><a href="#9-API-调用与编程接入" class="headerlink" title="9. API 调用与编程接入"></a>9. API 调用与编程接入</h2><p>Ollama 启动后，同时提供 <strong>Ollama 原生 API</strong> 与 <strong>OpenAI 兼容 API</strong>。</p>
+<h3 id="9-1-接口地址速览"><a href="#9-1-接口地址速览" class="headerlink" title="9.1 接口地址速览"></a>9.1 接口地址速览</h3><ul>
+<li><strong>OpenAI 兼容接口 Base URL</strong>：<code>http://127.0.0.1:11434/v1</code>（绝大多数 AI 客户端、插件、Agent 填这个即可，API Key 随便填任意非空字符如 <code>ollama</code>）。</li>
+<li><strong>原生聊天接口</strong>：<code>POST http://127.0.0.1:11434/api/chat</code></li>
+<li><strong>原生单次生成接口</strong>：<code>POST http://127.0.0.1:11434/api/generate</code></li>
+<li><strong>向量嵌入接口</strong>：<code>POST http://127.0.0.1:11434/api/embed</code></li>
+</ul>
+<h3 id="9-2-使用-Python-openai-SDK-接入（通用性强）"><a href="#9-2-使用-Python-openai-SDK-接入（通用性强）" class="headerlink" title="9.2 使用 Python openai SDK 接入（通用性强）"></a>9.2 使用 Python <code>openai</code> SDK 接入（通用性强）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> openai <span class="keyword">import</span> OpenAI</span><br><span class="line"></span><br><span class="line">client = OpenAI(</span><br><span class="line">    base_url=<span class="string">&quot;http://127.0.0.1:11434/v1&quot;</span>,</span><br><span class="line">    api_key=<span class="string">&quot;ollama&quot;</span>,  <span class="comment"># 本地无需真实 Key，非空即可</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">resp = client.chat.completions.create(</span><br><span class="line">    model=<span class="string">&quot;qwen3:8b&quot;</span>,</span><br><span class="line">    messages=[</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;system&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;你是一个简洁的技术助手。&quot;</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;role&quot;</span>: <span class="string">&quot;user&quot;</span>, <span class="string">&quot;content&quot;</span>: <span class="string">&quot;用三点概括 HTTP 和 WebSocket 的区别。&quot;</span>&#125;,</span><br><span class="line">    ],</span><br><span class="line">    temperature=<span class="number">0.3</span>,</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(resp.choices[<span class="number">0</span>].message.content)</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-3-使用-PowerShell-curl-测试原生-API"><a href="#9-3-使用-PowerShell-curl-测试原生-API" class="headerlink" title="9.3 使用 PowerShell &#x2F; curl 测试原生 API"></a>9.3 使用 PowerShell &#x2F; <code>curl</code> 测试原生 API</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Invoke-RestMethod</span> <span class="literal">-Uri</span> <span class="string">&quot;http://127.0.0.1:11434/api/chat&quot;</span> <span class="literal">-Method</span> Post <span class="literal">-ContentType</span> <span class="string">&quot;application/json&quot;</span> <span class="literal">-Body</span> <span class="string">&#x27;&#123;</span></span><br><span class="line"><span class="string">  &quot;model&quot;: &quot;qwen3:8b&quot;,</span></span><br><span class="line"><span class="string">  &quot;messages&quot;: [&#123;&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;你好&quot;&#125;],</span></span><br><span class="line"><span class="string">  &quot;stream&quot;: false</span></span><br><span class="line"><span class="string">&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="10-常见问题排查（FAQ）"><a href="#10-常见问题排查（FAQ）" class="headerlink" title="10. 常见问题排查（FAQ）"></a>10. 常见问题排查（FAQ）</h2><h3 id="Q1：怎么判断模型到底有没有用上显卡（GPU），还是在纯-CPU-慢跑？"><a href="#Q1：怎么判断模型到底有没有用上显卡（GPU），还是在纯-CPU-慢跑？" class="headerlink" title="Q1：怎么判断模型到底有没有用上显卡（GPU），还是在纯 CPU 慢跑？"></a>Q1：怎么判断模型到底有没有用上显卡（GPU），还是在纯 CPU 慢跑？</h3><p>运行：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ollama <span class="built_in">ps</span></span><br></pre></td></tr></table></figure>
+<p>查看输出中的 <strong><code>PROCESSOR</code></strong> 列：</p>
+<ul>
+<li>显示 **<code>100% GPU</code>**：全部权重都在显存里，速度最快。</li>
+<li>显示 **<code>60% GPU / 40% CPU</code>**：显存不够，部分层溢出到了内存，速度会明显下降。可以尝试换更小的模型、降低 <code>OLLAMA_CONTEXT_LENGTH</code>，或开启 <code>OLLAMA_FLASH_ATTENTION=1</code> + <code>OLLAMA_KV_CACHE_TYPE=q8_0</code>。</li>
+<li>显示 **<code>100% CPU</code>**：未识别到可用显卡加速（检查驱动&#x2F;CUDA&#x2F;ROCm&#x2F;Vulkan 支持情况）。</li>
+</ul>
+<h3 id="Q2：为什么模型聊着聊着就忘了前面说的话，或者代码写到一半丢上下文？"><a href="#Q2：为什么模型聊着聊着就忘了前面说的话，或者代码写到一半丢上下文？" class="headerlink" title="Q2：为什么模型聊着聊着就忘了前面说的话，或者代码写到一半丢上下文？"></a>Q2：为什么模型聊着聊着就忘了前面说的话，或者代码写到一半丢上下文？</h3><p>Ollama 全局默认上下文窗口 <code>OLLAMA_CONTEXT_LENGTH</code> 通常只有 <code>4096</code> Token（约两三千汉字）。按第 7 节的方法将 <code>OLLAMA_CONTEXT_LENGTH</code> 调大到 <code>16384</code> &#x2F; <code>32768</code> &#x2F; <code>65536</code> 并重启 Ollama 即可，或在 API 请求中传入 <code>options: &#123;&quot;num_ctx&quot;: 32768&#125;</code>。</p>
+<h3 id="Q3：拉取模型（ollama-pull）速度极慢甚至超时？"><a href="#Q3：拉取模型（ollama-pull）速度极慢甚至超时？" class="headerlink" title="Q3：拉取模型（ollama pull）速度极慢甚至超时？"></a>Q3：拉取模型（<code>ollama pull</code>）速度极慢甚至超时？</h3><ul>
+<li><strong>确认代理生效</strong>：Ollama 后台服务进程需要走网络代理（建议开启代理软件的 <strong>TUN 模式</strong>，或为后台服务所在环境配置 <code>HTTP_PROXY</code> &#x2F; <code>HTTPS_PROXY</code> 后完全重启 Ollama）。</li>
+<li><strong>断点续传</strong>：<code>ollama pull</code> 支持断点续传，如果速度越跑越慢，按 <code>Ctrl + C</code> 中断后立即重跑 <code>ollama pull &lt;model&gt;</code> 往往能重新握手到更快节点。</li>
+</ul>
+<h3 id="Q4：外部软件（如浏览器扩展、Docker-容器里的-Dify-Open-WebUI、dsh）连不上-Ollama？"><a href="#Q4：外部软件（如浏览器扩展、Docker-容器里的-Dify-Open-WebUI、dsh）连不上-Ollama？" class="headerlink" title="Q4：外部软件（如浏览器扩展、Docker 容器里的 Dify&#x2F;Open WebUI、dsh）连不上 Ollama？"></a>Q4：外部软件（如浏览器扩展、Docker 容器里的 Dify&#x2F;Open WebUI、<code>dsh</code>）连不上 Ollama？</h3><p>按顺序检查三件事：</p>
+<ol>
+<li><code>OLLAMA_HOST</code> 是否设成了 <code>0.0.0.0:11434</code>（如果客户端在 Docker 容器内，容器里不要写 <code>127.0.0.1</code>，要写 <code>http://host.docker.internal:11434</code>）。</li>
+<li>OpenAI 兼容模式下的 Base URL 末尾是否加了 **<code>/v1</code>**。</li>
+<li>浏览器前端直接请求时，检查 <code>OLLAMA_ORIGINS</code> 是否包含对应来源（或临时设为 <code>*</code>）。</li>
+</ol>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-网络适配器（网卡）配置列表" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1592,315 +2237,6 @@ var _hmt = _hmt || [];
 <li><strong>可扩展性（性能 &#x2F; TPS）</strong>：每秒能处理的交易笔数（如比特币每秒只能处理约 7 笔，而支付宝双十一峰值几十万笔）。</li>
 </ol>
 <p><em>目前的 Layer 2（二层网络分卷技术）和分片技术（Sharding）正是为了打破这个不可能三角而诞生的最新前沿方向。</em></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">北邮网安</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-Docker-从入门到实战：小白指南与常用操作速查手册" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/08/29/Docker-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%8F%E7%99%BD%E6%8C%87%E5%8D%97%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/">Docker 从入门到实战：小白指南与常用操作速查手册</a>
-    </h1>
-  
-
-        
-        <a href="/2026/08/29/Docker-%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E5%AE%9E%E6%88%98%EF%BC%9A%E5%B0%8F%E7%99%BD%E6%8C%87%E5%8D%97%E4%B8%8E%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E9%80%9F%E6%9F%A5%E6%89%8B%E5%86%8C/" class="archive-article-date">
-  	<time datetime="2026-08-29T12:53:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-08-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h1 id="🐳-Docker-从入门到实战：小白指南与常用操作速查手册"><a href="#🐳-Docker-从入门到实战：小白指南与常用操作速查手册" class="headerlink" title="🐳 Docker 从入门到实战：小白指南与常用操作速查手册"></a>🐳 Docker 从入门到实战：小白指南与常用操作速查手册</h1><hr>
-<h2 id="📖-一、-什么是-Docker？"><a href="#📖-一、-什么是-Docker？" class="headerlink" title="📖 一、 什么是 Docker？"></a>📖 一、 什么是 Docker？</h2><p>如果用一句话概括 Docker，那就是：<strong>“软件世界的‘标准化集装箱’。”</strong></p>
-<h3 id="1-它要解决什么痛点？"><a href="#1-它要解决什么痛点？" class="headerlink" title="1. 它要解决什么痛点？"></a>1. 它要解决什么痛点？</h3><p>过去软件开发中最让人抓狂的问题是：<strong>“代码在我电脑上明明跑得好好的，怎么部署到服务器&#x2F;发给同事就各种报错崩溃？”</strong><br>这是因为软件不仅依赖代码本身，还高度依赖底层的运行环境（操作系统版本、Python&#x2F;Node&#x2F;Java版本、缺失的系统动态库等）。</p>
-<h3 id="2-Docker-的解决之道（集装箱哲学）"><a href="#2-Docker-的解决之道（集装箱哲学）" class="headerlink" title="2. Docker 的解决之道（集装箱哲学）"></a>2. Docker 的解决之道（集装箱哲学）</h3><p>Docker 将<strong>应用程序代码 + 其所需的所有运行环境、依赖库、系统工具和配置文件</strong>打包封进一个标准化的“集装箱（容器）”中。<br>只要宿主机安装了 Docker 引擎，无论在 Windows、macOS 还是 Linux 上，这个集装箱运行起来的<strong>行为都 100% 绝对一致</strong>。</p>
-<h3 id="3-Docker-vs-传统虚拟机-VMware-VirtualBox"><a href="#3-Docker-vs-传统虚拟机-VMware-VirtualBox" class="headerlink" title="3. Docker vs 传统虚拟机 (VMware &#x2F; VirtualBox)"></a>3. Docker vs 传统虚拟机 (VMware &#x2F; VirtualBox)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────────────┐     ┌──────────────────────────────────────┐</span><br><span class="line">│         传统虚拟机 (VMware)          │     │            Docker 容器               │</span><br><span class="line">├──────────────────────────────────────┤     ├──────────────────────────────────────┤</span><br><span class="line">│  App A   │   App B   │    App C      │     │  App A   │   App B   │    App C      │</span><br><span class="line">├──────────┴───────────┴───────────────┤     ├──────────┴───────────┴───────────────┤</span><br><span class="line">│    客居完整操作系统 (Guest OS)       │     │     Docker 引擎 (资源隔离沙盒)       │</span><br><span class="line">├──────────────────────────────────────┤     ├──────────────────────────────────────┤</span><br><span class="line">│    Hypervisor 虚拟化硬件层           │     │                                      │</span><br><span class="line">├──────────────────────────────────────┤     │    宿主机操作系统内核 (Host OS)      │</span><br><span class="line">│    宿主机操作系统 (Host OS)          │     │    (多个容器直接共享宿主机内核)      │</span><br><span class="line">└──────────────────────────────────────┘     └──────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th align="left">对比维度</th>
-<th align="left">传统虚拟机 (VMware &#x2F; KVM)</th>
-<th align="left">Docker 容器</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>启动速度</strong></td>
-<td align="left">🐢 较慢（开机需几十秒到几分钟）</td>
-<td align="left">🚀 <strong>极快（毫秒级，按回车瞬间启动）</strong></td>
-</tr>
-<tr>
-<td align="left"><strong>资源与内存占用</strong></td>
-<td align="left">🔴 极大（每个虚拟机独占数 GB 内存和数十 GB 硬盘）</td>
-<td align="left">🟢 <strong>极小（仅几 MB 到几百 MB）</strong></td>
-</tr>
-<tr>
-<td align="left"><strong>性能损耗</strong></td>
-<td align="left">🔴 存在虚拟化指令折损</td>
-<td align="left">🟢 <strong>近乎原生裸机性能（Zero Overhead）</strong></td>
-</tr>
-<tr>
-<td align="left"><strong>隔离级别</strong></td>
-<td align="left">硬件级完全隔离</td>
-<td align="left">进程&#x2F;命名空间（Namespace + Cgroups）级隔离</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="🧱-二、-Docker-核心“三大件”与重要概念"><a href="#🧱-二、-Docker-核心“三大件”与重要概念" class="headerlink" title="🧱 二、 Docker 核心“三大件”与重要概念"></a>🧱 二、 Docker 核心“三大件”与重要概念</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 1. 仓库 (Docker Hub / Registry) ──► 类似于【App Store】     │</span><br><span class="line">│    全世界开发者共享和下载镜像的云端仓库                     │</span><br><span class="line">└──────────────────────────────┬──────────────────────────────┘</span><br><span class="line">                               │ docker pull (下载)</span><br><span class="line">                               ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 2. 镜像 (Image) ───────────────────► 类似于【安装包 / 模具】│</span><br><span class="line">│    只读的、打包好的静态模板文件                             │</span><br><span class="line">└──────────────────────────────┬──────────────────────────────┘</span><br><span class="line">                               │ docker run (运行)</span><br><span class="line">                               ▼</span><br><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 3. 容器 (Container) ───────────────► 类似于【运行中的 App】 │</span><br><span class="line">│    根据镜像生成的、正在独立运行的动态沙盒进程               │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
-
-<h3 id="进阶两个核心机制："><a href="#进阶两个核心机制：" class="headerlink" title="进阶两个核心机制："></a>进阶两个核心机制：</h3><ul>
-<li>**端口映射 (<code>-p 宿主机端口:容器端口</code>)**：把容器内部的服务端口暴露给外部电脑访问（如 <code>-p 8080:80</code>）。</li>
-<li>**数据卷挂载 (<code>-v 宿主机目录:容器目录</code>)**：容器被删除后其内部数据会丢失，通过 <code>-v</code> 把数据持久化保存在宿主机的硬盘上。</li>
-</ul>
-<hr>
-<h2 id="🛠️-三、-Docker-常用命令全景速查表"><a href="#🛠️-三、-Docker-常用命令全景速查表" class="headerlink" title="🛠️ 三、 Docker 常用命令全景速查表"></a>🛠️ 三、 Docker 常用命令全景速查表</h2><h3 id="1-镜像操作命令-Image"><a href="#1-镜像操作命令-Image" class="headerlink" title="1. 镜像操作命令 (Image)"></a>1. 镜像操作命令 (Image)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 从仓库搜索镜像（如搜索 mysql）</span></span><br><span class="line">docker search mysql</span><br><span class="line"></span><br><span class="line"><span class="comment"># 从远程仓库拉取（下载）镜像（不加版本号默认拉取最新 latest）</span></span><br><span class="line">docker pull nginx:latest</span><br><span class="line">docker pull mysql:8.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看本地已下载的所有镜像</span></span><br><span class="line">docker images</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除某个本地镜像（需确保没有容器正在使用它）</span></span><br><span class="line">docker rmi &lt;镜像ID或镜像名:标签&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制删除镜像</span></span><br><span class="line">docker rmi -f &lt;镜像ID&gt;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="2-容器生命周期管理-Container"><a href="#2-容器生命周期管理-Container" class="headerlink" title="2. 容器生命周期管理 (Container)"></a>2. 容器生命周期管理 (Container)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 【最核心命令】从镜像创建并后台启动一个容器</span></span><br><span class="line"><span class="comment"># 参数解释：</span></span><br><span class="line"><span class="comment"># -d: 后台运行 (detached mode)</span></span><br><span class="line"><span class="comment"># --name: 给容器起一个好记的名字</span></span><br><span class="line"><span class="comment"># -p: 端口映射（宿主机端口:容器内端口）</span></span><br><span class="line"><span class="comment"># -v: 目录挂载（宿主机路径:容器路径）</span></span><br><span class="line"><span class="comment"># -e: 注入环境变量（如配置密码）</span></span><br><span class="line">docker run -d --name my-web -p 80:80 nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看当前正在运行的容器</span></span><br><span class="line">docker ps</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看所有容器（包括已停止退出的容器，常用！）</span></span><br><span class="line">docker ps -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 / 停止 / 重启容器</span></span><br><span class="line">docker start &lt;容器名或容器ID&gt;</span><br><span class="line">docker stop &lt;容器名或容器ID&gt;</span><br><span class="line">docker restart &lt;容器名或容器ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 删除某个已停止的容器</span></span><br><span class="line">docker <span class="built_in">rm</span> &lt;容器名或容器ID&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 强制删除正在运行的容器（慎用）</span></span><br><span class="line">docker <span class="built_in">rm</span> -f &lt;容器名或容器ID&gt;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="3-容器运维、调试与排错-Debug-Logs"><a href="#3-容器运维、调试与排错-Debug-Logs" class="headerlink" title="3. 容器运维、调试与排错 (Debug &amp; Logs)"></a>3. 容器运维、调试与排错 (Debug &amp; Logs)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查看容器的实时运行日志（排查启动报错必备）</span></span><br><span class="line">docker logs &lt;容器名或容器ID&gt;</span><br><span class="line">docker logs -f --<span class="built_in">tail</span> 100 &lt;容器名&gt;  <span class="comment"># 实时持续跟踪最新 100 行日志</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入正在运行的容器内部终端（类似 SSH 登录进去）</span></span><br><span class="line">docker <span class="built_in">exec</span> -it &lt;容器名或容器ID&gt; /bin/bash</span><br><span class="line"><span class="comment"># (若容器内无 bash，可改用 /bin/sh)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 从容器内拷贝文件到宿主机（或反向拷贝）</span></span><br><span class="line">docker <span class="built_in">cp</span> &lt;容器名&gt;:/app/config.json ./local_config.json</span><br><span class="line">docker <span class="built_in">cp</span> ./my-file.txt &lt;容器名&gt;:/app/</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器详细元数据（IP地址、挂载目录、环境变量等）</span></span><br><span class="line">docker inspect &lt;容器名&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看容器的实时 CPU、内存资源占用情况</span></span><br><span class="line">docker stats</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="4-磁盘空间清理-Clean-up"><a href="#4-磁盘空间清理-Clean-up" class="headerlink" title="4. 磁盘空间清理 (Clean up)"></a>4. 磁盘空间清理 (Clean up)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一键清理所有已停止的容器、未使用的网络和悬空镜像（安全释放空间）</span></span><br><span class="line">docker system prune</span><br><span class="line"></span><br><span class="line"><span class="comment"># 彻底清理所有未使用的镜像（加 -a）</span></span><br><span class="line">docker system prune -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看 Docker 占用的磁盘空间分布</span></span><br><span class="line">docker system <span class="built_in">df</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="🚀-四、-四大经典实战场景（照着敲即可）"><a href="#🚀-四、-四大经典实战场景（照着敲即可）" class="headerlink" title="🚀 四、 四大经典实战场景（照着敲即可）"></a>🚀 四、 四大经典实战场景（照着敲即可）</h2><h3 id="场景-1：秒级启动一个-Nginx-网页服务器"><a href="#场景-1：秒级启动一个-Nginx-网页服务器" class="headerlink" title="场景 1：秒级启动一个 Nginx 网页服务器"></a>场景 1：秒级启动一个 Nginx 网页服务器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 运行 Nginx 并将电脑的 8080 端口映射到容器的 80 端口</span></span><br><span class="line">docker run -d --name my-nginx -p 8080:80 nginx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 验证：打开浏览器访问 http://localhost:8080 即可看到 Welcome to nginx!</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="场景-2：一键部署-MySQL-数据库（带数据持久化）"><a href="#场景-2：一键部署-MySQL-数据库（带数据持久化）" class="headerlink" title="场景 2：一键部署 MySQL 数据库（带数据持久化）"></a>场景 2：一键部署 MySQL 数据库（带数据持久化）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建本地数据存储目录</span></span><br><span class="line"><span class="built_in">mkdir</span> -p ~/mysql_data</span><br><span class="line"></span><br><span class="line"><span class="comment"># 启动 MySQL 8.0 容器</span></span><br><span class="line">docker run -d \</span><br><span class="line">  --name local-mysql \</span><br><span class="line">  -p 3306:3306 \</span><br><span class="line">  -e MYSQL_ROOT_PASSWORD=MyPassword123! \</span><br><span class="line">  -v ~/mysql_data:/var/lib/mysql \</span><br><span class="line">  mysql:8.0</span><br><span class="line"></span><br><span class="line"><span class="comment"># 效果：数据保存在本地 ~/mysql_data，即使容器被删除了，数据依然完好无损！</span></span><br></pre></td></tr></table></figure>
-
-<hr>
-<h3 id="场景-3：编写你的第一个-Dockerfile（打包自己的代码）"><a href="#场景-3：编写你的第一个-Dockerfile（打包自己的代码）" class="headerlink" title="场景 3：编写你的第一个 Dockerfile（打包自己的代码）"></a>场景 3：编写你的第一个 <code>Dockerfile</code>（打包自己的代码）</h3><p><strong><code>Dockerfile</code> 是一份告诉 Docker 怎么构建镜像的文本文件。</strong> 它通常就叫 <code>Dockerfile</code>，没有扩展名。你可以把它理解成一份环境配置清单，写清楚从哪个基础环境开始、要安装哪些依赖、要放入哪些文件，以及容器启动时默认执行什么命令。</p>
-<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 基础镜像：基于轻量版 Python</span></span><br><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.10</span>-slim</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 设置容器内的工作目录</span></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /app</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 拷贝依赖清单并安装</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> requirements.txt .</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip install --no-cache-dir -r requirements.txt</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 拷贝当前目录的所有源码到容器中</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 声明暴露端口并指定启动命令</span></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">5000</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;python&quot;</span>, <span class="string">&quot;app.py&quot;</span>]</span></span><br></pre></td></tr></table></figure>
-
-<p>在终端中构建并运行镜像：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 构建镜像并命名为 my-python-app</span></span><br><span class="line">docker build -t my-python-app:1.0 .</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 运行打包好的镜像</span></span><br><span class="line">docker run -d -p 5000:5000 --name my-app my-python-app:1.0</span><br></pre></td></tr></table></figure>
-
-<p>整个流程是 <strong><code>Dockerfile</code> → 构建出镜像 → 用镜像启动容器</strong>。镜像打包了程序和运行环境，容器就是用这份镜像启动的一个实例。</p>
-<hr>
-<h3 id="场景-4：使用-docker-compose-一键启动多容器服务"><a href="#场景-4：使用-docker-compose-一键启动多容器服务" class="headerlink" title="场景 4：使用 docker-compose 一键启动多容器服务"></a>场景 4：使用 <code>docker-compose</code> 一键启动多容器服务</h3><p><strong>Docker Compose 是用来一起启动和管理多个 Docker 容器的工具。</strong> 比如一个网站需要 Python 后端和 PostgreSQL 数据库，你可以把两个服务写在同一个 <code>compose.yaml</code> 文件里，然后运行 <code>docker compose up</code>，一起启动它们。Compose 还会创建默认网络，让后端可以用数据库的服务名连接它。</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">nginx:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">database:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis:alpine</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;6379:6379&quot;</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 一键后台启动所有服务</span></span><br><span class="line">docker compose up -d</span><br><span class="line"></span><br><span class="line"><span class="comment"># 一键停止并销毁所有服务</span></span><br><span class="line">docker compose down</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="💡-五、-新手避坑三定律"><a href="#💡-五、-新手避坑三定律" class="headerlink" title="💡 五、 新手避坑三定律"></a>💡 五、 新手避坑三定律</h2><ol>
-<li><strong>容器即“消耗品”</strong>：千万不要直接在容器里存关键数据，<strong>重要数据必须通过 <code>-v</code> 挂载到宿主机硬盘</strong>。</li>
-<li><strong>忘记映射端口导致无法访问</strong>：如果不加 <code>-p 8080:80</code>，容器里的服务在宿主机外部是无法直接通过浏览器访问的。</li>
-<li><strong>镜像名加 Tag 标签</strong>：在生产环境中尽量明确指定版本号（如 <code>mysql:8.0.35</code>），避免盲目使用 <code>latest</code> 导致自动升级引发不兼容。</li>
-</ol>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">北邮网安</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-SSH与VPN" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/08/26/SSH%E4%B8%8EVPN/">SSH与VPN</a>
-    </h1>
-  
-
-        
-        <a href="/2026/08/26/SSH%E4%B8%8EVPN/" class="archive-article-date">
-  	<time datetime="2026-08-26T05:44:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-08-26</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h1 id="VPN-和-SSH：它们到底有什么区别？怎么配合使用？"><a href="#VPN-和-SSH：它们到底有什么区别？怎么配合使用？" class="headerlink" title="VPN 和 SSH：它们到底有什么区别？怎么配合使用？"></a>VPN 和 SSH：它们到底有什么区别？怎么配合使用？</h1><p>在平时写代码、做实验或者连实验室服务器时，我们经常会听到两个词：<strong>VPN</strong> 和 <strong>SSH</strong>。</p>
-<p>很多刚接触的同学容易被搞糊涂：“它们俩好像都是用来‘远程连接’的，而且都能加密，到底有啥区别？有了 VPN 为什么还要用 SSH？”</p>
-<p>其实，用一句话就能说清楚它们的关系：</p>
-<blockquote>
-<p>🛣️ <strong>VPN 是帮你“拉网线 &#x2F; 修路”的；</strong><br>🚗 <strong>SSH 是让你在这条路上“开车 &#x2F; 坐到远程电脑面前敲键盘”的。</strong></p>
-</blockquote>
-<hr>
-<h2 id="1-VPN-是干什么的？（负责把网络连通）"><a href="#1-VPN-是干什么的？（负责把网络连通）" class="headerlink" title="1. VPN 是干什么的？（负责把网络连通）"></a>1. VPN 是干什么的？（负责把网络连通）</h2><p>假设你在<strong>宿舍</strong>，实验室的显卡服务器在<strong>学校机房</strong>。</p>
-<p>因为机房的服务器处于学校内网，没有公网 IP，你在宿舍直接用普通 Wi-Fi 是根本连不上的。</p>
-<p>这时候你就需要 <strong>VPN（虚拟专用网络）</strong>：</p>
-<ul>
-<li><strong>它的作用</strong>：相当于从学校机房偷偷拉了一根<strong>很长很长的“隐形加密网线”</strong>，直接插到了你宿舍的笔记本电脑上。</li>
-<li><strong>连上后的效果</strong>：你的笔记本电脑和机房的服务器瞬间进入了<strong>同一个局域网</strong>（就像你们连在同一个 Wi-Fi 下一样）。</li>
-<li><strong>标志</strong>：此时你打开黑框终端输入 <code>ping 10.7.10.88</code>（服务器内网 IP），能看到有数据回包了，说明<strong>路已经修通了</strong>！</li>
-</ul>
-<blockquote>
-<p>⚠️ <strong>注意</strong>：VPN 只负责“网络通不通”。连上 VPN 之后，你并不能直接在远程电脑上敲代码，你只是和它建立了网络连接。</p>
-</blockquote>
-<hr>
-<h2 id="2-SSH-是干什么的？（负责远程控制和敲命令）"><a href="#2-SSH-是干什么的？（负责远程控制和敲命令）" class="headerlink" title="2. SSH 是干什么的？（负责远程控制和敲命令）"></a>2. SSH 是干什么的？（负责远程控制和敲命令）</h2><p>现在网线拉好了（路通了），但你人还在宿舍，怎么去操作机房那台 Linux 电脑呢？</p>
-<p>这时候就需要 <strong>SSH（安全外壳协议）</strong>：</p>
-<ul>
-<li><strong>它的作用</strong>：相当于一个<strong>安全的远程桌面&#x2F;黑框命令行窗口</strong>。</li>
-<li><strong>连上后的效果</strong>：你在本地终端输入 <code>ssh username@10.7.10.88</code> 并输完密码后，你的屏幕就变成了那台服务器的界面。你在自己键盘上敲下的每一行命令（比如 <code>nvidia-smi</code> 查显卡、<code>python train.py</code> 跑模型），都会实时传到机房服务器上去执行。</li>
-<li><strong>其他技能</strong>：除了敲命令，SSH 还可以用来在两台电脑之间加密传文件（SFTP&#x2F;SCP），或者配合 VS Code 进行远程写代码。</li>
-</ul>
-<hr>
-<h2 id="3-一眼看懂：VPN-与-SSH-的对比"><a href="#3-一眼看懂：VPN-与-SSH-的对比" class="headerlink" title="3. 一眼看懂：VPN 与 SSH 的对比"></a>3. 一眼看懂：VPN 与 SSH 的对比</h2><table>
-<thead>
-<tr>
-<th align="left">比较维度</th>
-<th align="left">VPN（比如 ZeroTier、校园 VPN）</th>
-<th align="left">SSH（比如终端里的 ssh 命令）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>主要负责什么？</strong></td>
-<td align="left"><strong>修路 &#x2F; 拉网线</strong>（负责把两台电脑连进同一个局域网）</td>
-<td align="left"><strong>开车 &#x2F; 操作电脑</strong>（负责登录进那台机器去敲命令）</td>
-</tr>
-<tr>
-<td align="left"><strong>打个生动的比方</strong></td>
-<td align="left">从你家修了一条直通实验室机房的<strong>专属加密地下隧道</strong></td>
-<td align="left">顺着隧道开进机房后，<strong>坐在那台电脑前打字办公的人</strong></td>
-</tr>
-<tr>
-<td align="left"><strong>连上之后能干嘛？</strong></td>
-<td align="left">能 ping 通对方，所有流量（网页、数据库、共享文件夹）都能走</td>
-<td align="left">能在远程 Linux 系统里敲命令、跑程序、传文件</td>
-</tr>
-<tr>
-<td align="left"><strong>在电脑里的表现</strong></td>
-<td align="left">会在电脑里多出一张<strong>虚拟网卡</strong>，分给你一个内网 IP</td>
-<td align="left">就是一个<strong>命令行程序</strong>或终端窗口</td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="4-实际使用中，它们俩是怎么配合的？"><a href="#4-实际使用中，它们俩是怎么配合的？" class="headerlink" title="4. 实际使用中，它们俩是怎么配合的？"></a>4. 实际使用中，它们俩是怎么配合的？</h2><p>在日常科研和开发中，连接远程服务器的标准流程其实就是两步：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">【第 1 步：先用 VPN 筑路】</span><br><span class="line">打开 ZeroTier (VPN) 连上实验室网络</span><br><span class="line">  └── 你的电脑拿到了内网 IP，能 ping 通 10.7.10.88 了！</span><br><span class="line"></span><br><span class="line">               │</span><br><span class="line">               ▼</span><br><span class="line"></span><br><span class="line">【第 2 步：再用 SSH 行车】</span><br><span class="line">打开终端或 VS Code，输入：ssh student@10.7.10.88</span><br><span class="line">  └── 成功进入服务器！可以开始敲代码、训练模型了！</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="5-常见疑问解答"><a href="#5-常见疑问解答" class="headerlink" title="5. 常见疑问解答"></a>5. 常见疑问解答</h2><ul>
-<li><p><strong>问：我不开 VPN，能直接连 SSH 吗？</strong>  </p>
-<ul>
-<li><strong>答</strong>：如果机房服务器有“公网 IP”（也就是全世界任何人都能访问的 IP），可以不用 VPN 直接连 SSH。但高校实验室和公司的核心服务器为了安全，通常只有内网 IP，所以<strong>必须先挂 VPN 进内网，才能连上 SSH</strong>。</li>
-</ul>
-</li>
-<li><p><strong>问：我只开 VPN，能直接跑代码吗？</strong>  </p>
-<ul>
-<li><strong>答</strong>：不能。VPN 只是把两台电脑连到了同一个局域网，你还得用 SSH 登录上去才能开始敲命令跑代码。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
-<li><strong>VPN 负责“连接世界”</strong>：把异地的电脑拉到同一个内网里；</li>
-<li><strong>SSH 负责“操控机器”</strong>：让你安全地登录远程机器敲命令。</li>
-</ul>
-<p>把 VPN 和 SSH 结合起来，你就能在家里、在宿舍舒舒服服地远程操控实验室的高性能服务器了！</p>
 
       
 
