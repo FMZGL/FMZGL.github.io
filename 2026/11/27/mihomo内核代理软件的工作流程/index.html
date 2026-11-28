@@ -6,17 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>mihomo内核代理软件的工作流程 | Tengfei Zhang - HomePage</title>
+  <title>VPS与mihomo内核的代理软件原理对比分析 | Tengfei Zhang - HomePage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="一句话总览你的电脑并没有“通知各个应用去使用代理”，它现在采用 TUN 模式：把整个系统的默认路由改到一张虚拟网卡上，所有流量先交给 mihomo 判断“直连”还是“绕去美国节点”。 123456789应用 (Chrome &#x2F; git)   │  以为自己在正常联网   ▼虚拟网卡 Mihomo (198.18.0.1)   ← 默认路由 0.0.0.0&#x2F;0 指到这里   │   ▼mihomo">
+  <meta name="description" content="1.先介绍一下国内正常访问 百度 数据包的具体流向下面按 www.baidu.com 讲（baidui 应是笔误），场景是直连、没有走代理，正好和前面聊的代理链路对照。 一、先介绍一下国内正常访问 百度 数据包的具体流向1. URL 解析与 DNS 查询浏览器先拆开 URL：协议 https、主机 www.baidu.com、路径 &#x2F;、默认端口 443。因为你在地址栏只输入了域名，它会自动补成 h">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mihomo内核代理软件的工作流程">
+<meta property="og:title" content="VPS与mihomo内核的代理软件原理对比分析">
 <meta property="og:url" content="http://example.com/2026/11/27/mihomo%E5%86%85%E6%A0%B8%E4%BB%A3%E7%90%86%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="Tengfei Zhang - HomePage">
-<meta property="og:description" content="一句话总览你的电脑并没有“通知各个应用去使用代理”，它现在采用 TUN 模式：把整个系统的默认路由改到一张虚拟网卡上，所有流量先交给 mihomo 判断“直连”还是“绕去美国节点”。 123456789应用 (Chrome &#x2F; git)   │  以为自己在正常联网   ▼虚拟网卡 Mihomo (198.18.0.1)   ← 默认路由 0.0.0.0&#x2F;0 指到这里   │   ▼mihomo">
+<meta property="og:description" content="1.先介绍一下国内正常访问 百度 数据包的具体流向下面按 www.baidu.com 讲（baidui 应是笔误），场景是直连、没有走代理，正好和前面聊的代理链路对照。 一、先介绍一下国内正常访问 百度 数据包的具体流向1. URL 解析与 DNS 查询浏览器先拆开 URL：协议 https、主机 www.baidu.com、路径 &#x2F;、默认端口 443。因为你在地址栏只输入了域名，它会自动补成 h">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-11-27T09:22:39.000Z">
-<meta property="article:modified_time" content="2026-11-27T09:26:14.430Z">
+<meta property="article:modified_time" content="2026-11-28T09:33:01.779Z">
 <meta property="article:tag" content="北邮网安">
 <meta name="twitter:card" content="summary">
   
@@ -94,7 +94,7 @@ var _hmt = _hmt || [];
         
   
     <h1 class="article-title" itemprop="name">
-      mihomo内核代理软件的工作流程
+      VPS与mihomo内核的代理软件原理对比分析
     </h1>
   
 
@@ -107,7 +107,115 @@ var _hmt = _hmt || [];
     
     <div class="article-entry " itemprop="articleBody" >
       
-        <h3 id="一句话总览"><a href="#一句话总览" class="headerlink" title="一句话总览"></a>一句话总览</h3><p>你的电脑并没有“通知各个应用去使用代理”，它现在采用 <strong>TUN 模式</strong>：把整个系统的默认路由改到一张虚拟网卡上，所有流量先交给 mihomo 判断“直连”还是“绕去美国节点”。</p>
+        <h2 id="1-先介绍一下国内正常访问-百度-数据包的具体流向"><a href="#1-先介绍一下国内正常访问-百度-数据包的具体流向" class="headerlink" title="1.先介绍一下国内正常访问 百度 数据包的具体流向"></a>1.先介绍一下国内正常访问 百度 数据包的具体流向</h2><p>下面按 <code>www.baidu.com</code> 讲（<code>baidui</code> 应是笔误），场景是<strong>直连、没有走代理</strong>，正好和前面聊的代理链路对照。</p>
+<h2 id="一、先介绍一下国内正常访问-百度-数据包的具体流向"><a href="#一、先介绍一下国内正常访问-百度-数据包的具体流向" class="headerlink" title="一、先介绍一下国内正常访问 百度 数据包的具体流向"></a>一、先介绍一下国内正常访问 百度 数据包的具体流向</h2><h3 id="1-URL-解析与-DNS-查询"><a href="#1-URL-解析与-DNS-查询" class="headerlink" title="1. URL 解析与 DNS 查询"></a>1. URL 解析与 DNS 查询</h3><p>浏览器先拆开 URL：协议 <code>https</code>、主机 <code>www.baidu.com</code>、路径 <code>/</code>、默认端口 <code>443</code>。因为你在地址栏只输入了域名，它会自动补成 <code>https://</code>。</p>
+<p>然后开始查 IP，<strong>按顺序逐级查询，命中即止</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>位置</th>
+<th>协议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>浏览器 DNS 缓存</td>
+<td>内存</td>
+</tr>
+<tr>
+<td>2</td>
+<td>操作系统 DNS 缓存</td>
+<td>内存</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>hosts</code> 文件</td>
+<td>本地文件</td>
+</tr>
+<tr>
+<td>4</td>
+<td>本地 DNS 服务器（运营商或路由器）</td>
+<td><strong>UDP 53</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>根服务器 → <code>.com</code> TLD → 百度权威 NS</td>
+<td><strong>UDP 53</strong></td>
+</tr>
+</tbody></table>
+<p>第 5 步是递归查询：本地 DNS 替你去问根服务器，再问 <code>.com</code> 的服务器，最后问百度的权威服务器，拿到 A 记录（比如 <code>110.242.68.66</code>，示例值）。</p>
+<p>现在很多浏览器走 <strong>DoH</strong>（DNS over HTTPS，TCP 443），把查询包在 HTTPS 里，防止被劫持和污染。</p>
+<h3 id="2-链路层准备：ARP-与-NAT"><a href="#2-链路层准备：ARP-与-NAT" class="headerlink" title="2. 链路层准备：ARP 与 NAT"></a>2. 链路层准备：ARP 与 NAT</h3><p>拿到 IP 后，电脑发现目标不在同一网段，于是要发给网关。但发以太网帧需要<strong>网关的 MAC 地址</strong>，于是发 <strong>ARP 请求</strong>（广播“谁是 192.168.1.1”），网关回 <strong>ARP 应答</strong>。</p>
+<p>同时你的电脑早就通过 <strong>DHCP</strong> 拿到了 <code>192.168.1.100</code> 这个内网地址和网关、DNS 配置。</p>
+<h3 id="3-TCP-三次握手（传输层）"><a href="#3-TCP-三次握手（传输层）" class="headerlink" title="3. TCP 三次握手（传输层）"></a>3. TCP 三次握手（传输层）</h3><p>浏览器向 <code>110.242.68.66:443</code> 发起连接，源端口是随机的高位端口（如 <code>51234</code>）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">客户端 → 服务器：SYN      seq=x</span><br><span class="line">服务器 → 客户端：SYN+ACK  seq=y, ack=x+1</span><br><span class="line">客户端 → 服务器：ACK      ack=y+1</span><br></pre></td></tr></table></figure>
+
+<p>包出门时，家宽路由器做 <strong>NAT</strong>：把源 IP 从 <code>192.168.1.100</code> 改成你的公网 IP，源端口换成一个映射端口，并记下映射表。回程包再按表改回来。</p>
+<h3 id="4-TLS-握手（TLS-1-3，1-RTT）"><a href="#4-TLS-握手（TLS-1-3，1-RTT）" class="headerlink" title="4. TLS 握手（TLS 1.3，1-RTT）"></a>4. TLS 握手（TLS 1.3，1-RTT）</h3><p>TCP 通后，浏览器发 <strong>ClientHello</strong>：里面带 <strong>SNI &#x3D; <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></strong>、支持的密码套件、<code>key_share</code>（密钥交换参数）。</p>
+<p>服务器回 <strong>ServerHello</strong> 和证书链，紧接着是加密的 <code>Finished</code>。浏览器用内置根 CA 验证证书链（域名是否匹配、是否过期、是否被吊销），通过后派生会话密钥。</p>
+<p>TLS 1.3 只需 <strong>1 个 RTT</strong> 就完成握手（1.2 要 2 个）。</p>
+<h3 id="5-HTTP-请求与响应（应用层）"><a href="#5-HTTP-请求与响应（应用层）" class="headerlink" title="5. HTTP 请求与响应（应用层）"></a>5. HTTP 请求与响应（应用层）</h3><p>握手完成后，浏览器发请求。百度现在主要用 <strong>HTTP&#x2F;2</strong>（部分支持 <strong>HTTP&#x2F;3 &#x2F; QUIC</strong>，走 UDP 443）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/2</span><br><span class="line">:authority: www.baidu.com</span><br><span class="line">user-agent: Mozilla/5.0 ...</span><br><span class="line">accept: text/html,...</span><br><span class="line">cookie: BAIDUID=...</span><br></pre></td></tr></table></figure>
+
+<p>服务器（前面通常还有 <strong>CDN 节点</strong>、负载均衡、反向代理）返回：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTTP/2 200</span><br><span class="line">content-type: text/html; charset=utf-8</span><br><span class="line">content-encoding: br</span><br></pre></td></tr></table></figure>
+
+<p>然后是 HTML 正文。</p>
+<h3 id="6-渲染与连接关闭"><a href="#6-渲染与连接关闭" class="headerlink" title="6. 渲染与连接关闭"></a>6. 渲染与连接关闭</h3><p>浏览器解析 HTML，遇到 <code>&lt;link&gt;</code>、<code>&lt;script&gt;</code>、<code>&lt;img&gt;</code> 时继续发请求。这些资源可能在 <code>static.baidu.com</code> 等<strong>其他域名</strong>下，于是又要走一遍 DNS + TCP + TLS。</p>
+<p>HTTP&#x2F;2 下，同一域名的多个资源<strong>复用一条连接</strong>（多路复用），不用反复握手。</p>
+<p>页面加载完连接不会立刻断，HTTP&#x2F;2 保持长连接；空闲超时后浏览器发 <strong>FIN</strong>，服务器回 <strong>ACK + FIN</strong>，客户端再 <strong>ACK</strong>，这就是<strong>四次挥手</strong>。主动关闭方进入 <code>TIME_WAIT</code>，等 2MSL 才释放端口。</p>
+<h3 id="7-全流程协议总表"><a href="#7-全流程协议总表" class="headerlink" title="7. 全流程协议总表"></a>7. 全流程协议总表</h3><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>协议</th>
+<th>端口&#x2F;封装</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>拿 IP</td>
+<td>DNS（UDP 53）&#x2F; DoH（TCP 443）</td>
+<td>53 &#x2F; 443</td>
+</tr>
+<tr>
+<td>找网关 MAC</td>
+<td>ARP</td>
+<td>以太网广播</td>
+</tr>
+<tr>
+<td>拿内网地址</td>
+<td>DHCP</td>
+<td>UDP 67&#x2F;68</td>
+</tr>
+<tr>
+<td>建连接</td>
+<td>TCP</td>
+<td>443</td>
+</tr>
+<tr>
+<td>加密</td>
+<td>TLS 1.3</td>
+<td>443</td>
+</tr>
+<tr>
+<td>请求响应</td>
+<td>HTTP&#x2F;2 或 HTTP&#x2F;3</td>
+<td>443（QUIC 走 UDP）</td>
+</tr>
+<tr>
+<td>寻址转发</td>
+<td>IP + NAT</td>
+<td>—</td>
+</tr>
+<tr>
+<td>物理传输</td>
+<td>Wi-Fi 802.11 &#x2F; Ethernet</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<h3 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h3><p><strong>一次访问要经过四层接力：DNS 把域名换成 IP（UDP 53）；ARP 找到网关 MAC；TCP 三次握手建立可靠通道（443）；TLS 1.3 完成加密；最后才是 HTTP&#x2F;2 收发内容。</strong> 你在浏览器里看到的“秒开”，背后是十几个协议在几十毫秒内依次完成。</p>
+<h2 id="二、mihomo内核的代理工具的工作原理（fake-ip劫持dns）"><a href="#二、mihomo内核的代理工具的工作原理（fake-ip劫持dns）" class="headerlink" title="二、mihomo内核的代理工具的工作原理（fake-ip劫持dns）"></a>二、mihomo内核的代理工具的工作原理（fake-ip劫持dns）</h2><p>你的电脑并没有“通知各个应用去使用代理”，它现在采用 <strong>TUN 模式</strong>：把整个系统的默认路由改到一张虚拟网卡上，所有流量先交给 mihomo 判断“直连”还是“绕去美国节点”。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">应用 (Chrome / git)</span><br><span class="line">   │  以为自己在正常联网</span><br><span class="line">   ▼</span><br><span class="line">虚拟网卡 Mihomo (198.18.0.1)   ← 默认路由 0.0.0.0/0 指到这里</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">mihomo 内核：还原域名 → 匹配规则</span><br><span class="line">   ├── DIRECT → 物理网卡 → 目标网站（你的真实 IP 暴露）</span><br><span class="line">   └── Proxy  → TCP 443 到美国节点 → 节点替你连（只暴露节点 IP）</span><br></pre></td></tr></table></figure>
 
 <p>先确认一点：你的 Verge 是 <code>enable_system_proxy: false</code> + <code>enable_tun_mode: true</code>，所以<strong>系统代理没开</strong>，全靠 TUN 拦截。<code>ProxyEnable=0</code>，应用完全不知道自己被代理了。</p>
@@ -229,6 +337,86 @@ var _hmt = _hmt || [];
 <li>返回真实的公网 IP，说明是<strong>直接向该 DNS 服务器查询</strong>的</li>
 </ul>
 <p><strong>总结：<code>nslookup</code> 第一段的 <code>Address:</code> 就是实际查询的 DNS，出现 <code>198.18.x</code> 就证明 DNS 走了 mihomo。</strong></p>
+<h2 id="三、租了一台VPS，是如何依靠它上网的"><a href="#三、租了一台VPS，是如何依靠它上网的" class="headerlink" title="三、租了一台VPS，是如何依靠它上网的"></a>三、租了一台VPS，是如何依靠它上网的</h2><h3 id="一句话原理"><a href="#一句话原理" class="headerlink" title="一句话原理"></a>一句话原理</h3><p>你电脑上的流量先加密送到 VPS，再由 VPS 用自己的 IP 去访问 Google，最后把结果加密送回来。<strong>Google 看到的是 VPS 的 IP，而不是你家宽带的 IP。</strong></p>
+<h3 id="1-完整链路"><a href="#1-完整链路" class="headerlink" title="1. 完整链路"></a>1. 完整链路</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">浏览器 → 本机客户端 → [加密隧道] → VPS 服务端 → Google</span><br><span class="line">        127.0.0.1:7890               （出口 IP 在这里）</span><br></pre></td></tr></table></figure>
+
+<p>在这条链路里，所有环节都起作用：</p>
+<ul>
+<li><strong>本机客户端</strong>负责拦截你的流量并加密。</li>
+<li><strong>VPS 服务端</strong>负责解密流量、代你访问网络，并把结果回传。</li>
+<li><strong>GFW</strong>只能看到“你连了某个境外 IP 的 443 端口”，看不到你在访问什么。</li>
+</ul>
+<h3 id="2-需要三样东西"><a href="#2-需要三样东西" class="headerlink" title="2. 需要三样东西"></a>2. 需要三样东西</h3><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>作用</th>
+<th>常见选择</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VPS</td>
+<td>提供 IP 和算力</td>
+<td>搬瓦工、Vultr、RackNerd、DMIT</td>
+</tr>
+<tr>
+<td>服务端程序</td>
+<td>在 VPS 上接收加密流量</td>
+<td>Xray、sing-box、Hysteria2</td>
+</tr>
+<tr>
+<td>本地客户端</td>
+<td>拦截流量并加密</td>
+<td>Clash Verge、v2rayN、sing-box</td>
+</tr>
+</tbody></table>
+<p><strong>协议选哪种最关键</strong>，现在主流是 <code>VLESS + Reality</code>（抗封锁最强，不需要自己的域名和证书）、<code>Hysteria2</code>（基于 UDP，弱网快）、<code>Shadowsocks</code>（最简单，但特征明显、容易被识别）。</p>
+<h3 id="3-实际操作步骤"><a href="#3-实际操作步骤" class="headerlink" title="3. 实际操作步骤"></a>3. 实际操作步骤</h3><ol>
+<li><strong>买 VPS</strong>：优先看<strong>线路</strong>而不是配置。日本、新加坡、香港的 CN2 GIA 或 9929 线路延迟低；美国便宜，但延迟 150ms 以上。</li>
+<li><strong>SSH 登录</strong>：<code>ssh root@你的IP</code>。</li>
+<li><strong>装服务端</strong>：官方一键脚本或 <code>3x-ui</code> 面板（图形化，适合新手）。</li>
+<li><strong>配置</strong>：端口设 443，生成 UUID，Reality 选一个真实网站作为伪装目标（如 <code>www.microsoft.com</code>）。</li>
+<li><strong>放行端口</strong>：云厂商<strong>安全组</strong>和系统防火墙（ufw&#x2F;firewalld）都要放行，这一步最容易漏。</li>
+<li><strong>本地导入</strong>：客户端粘贴 <code>vless://...</code> 链接或订阅地址。</li>
+<li><strong>验证</strong>：打开 <code>ip.sb</code> 或 <code>ipinfo.io</code>，如果显示的是 VPS 的 IP，就说明已经生效。</li>
+</ol>
+<h3 id="4-为什么这套方案能绕过-GFW"><a href="#4-为什么这套方案能绕过-GFW" class="headerlink" title="4. 为什么这套方案能绕过 GFW"></a>4. 为什么这套方案能绕过 GFW</h3><p>GFW 并不是因为看不懂加密流量才拦截不了，关键在于以下三点：</p>
+<ul>
+<li><strong>内容加密</strong>：只能看到密文。</li>
+<li><strong>伪装成正常网站</strong>：Reality 借用真实网站的 TLS 证书链，从外部看和访问微软官网没有区别。</li>
+<li><strong>不依赖固定特征</strong>：没有可匹配的明文协议头。</li>
+</ul>
+<p>它真正能用来拦截的手段只有 <strong>IP 黑名单</strong>、<strong>SNI 明文匹配</strong>（TLS 1.3 加密后失效）和<strong>流量行为统计</strong>（长时间大流量连接）。所以你要防的是 IP 被封，而不是“加密不够强”。</p>
+<h3 id="5-常见问题"><a href="#5-常见问题" class="headerlink" title="5. 常见问题"></a>5. 常见问题</h3><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>连不上，但 ping 通</td>
+<td>端口没放行（安全组最容易漏）</td>
+</tr>
+<tr>
+<td>ping 不通</td>
+<td>VPS 的 IP 已被墙，需要更换 IP</td>
+</tr>
+<tr>
+<td>浏览器能上，软件不能上</td>
+<td>只开了系统代理，没有开 TUN 模式</td>
+</tr>
+<tr>
+<td>能连但打不开 Google</td>
+<td>DNS 泄漏或服务器时间不同步（<code>timedatectl</code> 检查）</td>
+</tr>
+<tr>
+<td>用几天就断</td>
+<td>IP 进入黑名单，换 IP 或换协议</td>
+</tr>
+</tbody></table>
+<h3 id="6-一句话总结"><a href="#6-一句话总结" class="headerlink" title="6. 一句话总结"></a>6. 一句话总结</h3><p><strong>VPS 只提供“一台能上外网的机器”，真正干活的是你在它上面安装的代理服务端程序；你花钱买的是 IP 和线路，技术部分要自己搭。</strong> 如果不想折腾，直接买静态 IP 订阅就行，原理完全一样，只是服务端别人替你维护。</p>
+<p>如果你要装，我可以按你的 VPS 系统（Ubuntu&#x2F;Debian）给一份可以直接粘贴执行的配置。</p>
 
       
 
@@ -313,11 +501,11 @@ var _hmt = _hmt || [];
   
 <nav id="article-nav">
   
-    <a href="/2027/07/26/%E5%A4%A7%E4%B9%89%E8%A7%89%E8%BF%B7%E9%B9%BF/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2026/11/28/MCP%E5%8D%8F%E8%AE%AE%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E5%92%8C%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          大义觉迷鹿
+          MCP协议技术解析和开发指南
         
       </div>
     </a>

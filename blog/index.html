@@ -200,6 +200,160 @@ var _hmt = _hmt || [];
 
 
   
+    <article id="post-MCP协议技术解析和开发指南" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2026/11/28/MCP%E5%8D%8F%E8%AE%AE%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E5%92%8C%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/">MCP协议技术解析和开发指南</a>
+    </h1>
+  
+
+        
+        <a href="/2026/11/28/MCP%E5%8D%8F%E8%AE%AE%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E5%92%8C%E5%BC%80%E5%8F%91%E6%8C%87%E5%8D%97/" class="archive-article-date">
+  	<time datetime="2026-11-28T05:34:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-11-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
+      
+        <h1 id="Model-Context-Protocol-MCP-技术解析与开发指南"><a href="#Model-Context-Protocol-MCP-技术解析与开发指南" class="headerlink" title="Model Context Protocol (MCP) 技术解析与开发指南"></a>Model Context Protocol (MCP) 技术解析与开发指南</h1><p><strong>Model Context Protocol (MCP，模型上下文协议)</strong> 是由 Anthropic 于 2024 年底开源推出的一套标准化开放协议。它旨在为大型语言模型（LLM）与外部数据源、工具及服务之间建立统一、安全、双向的通信桥梁。</p>
+<p>在业界，MCP 常被形象地比喻为 <strong>“AI 时代的 USB-C 接口”</strong>——只要遵循同一套规范，任何 AI 应用（Host&#x2F;Client）都可以即插即用地连接任何外部工具或数据源（Server），彻底摆脱过去“每个模型 + 每个工具都要单独写一套胶水代码”的碎片化困境。</p>
+<hr>
+<h2 id="1-为什么需要-MCP？（核心痛点）"><a href="#1-为什么需要-MCP？（核心痛点）" class="headerlink" title="1. 为什么需要 MCP？（核心痛点）"></a>1. 为什么需要 MCP？（核心痛点）</h2><p>在 MCP 出现之前，将 LLM 接入外部系统（如本地文件系统、PostgreSQL 数据库、GitHub、Notion 或自定义业务 API）面临典型的 <strong>$M \times N$ 集成难题</strong>：</p>
+<ul>
+<li><strong>传统模式（$M \times N$）：</strong> 如果有 $M$ 个 AI 应用（如 Claude、Cursor、自研 Agent）和 $N$ 个外部数据源，开发者需要维护 $M \times N$ 套定制化的 Function Calling 适配层、鉴权逻辑与上下文注入代码。</li>
+<li><strong>MCP 模式（$M + N$）：</strong> 工具提供方只需编写 1 个标准的 <code>MCP Server</code>，AI 应用只需实现 1 套 <code>MCP Client</code> 协议栈，即可实现全生态互通。</li>
+</ul>
+<hr>
+<h2 id="2-MCP-核心架构"><a href="#2-MCP-核心架构" class="headerlink" title="2. MCP 核心架构"></a>2. MCP 核心架构</h2><p>MCP 采用经典的 <strong>客户端-服务器（Client-Server）</strong> 架构，底层基于 <strong>JSON-RPC 2.0</strong> 消息格式进行通信。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">+-------------------------------------------------------+</span><br><span class="line">|                   MCP Host (宿主应用)                   |</span><br><span class="line">|        (如 Claude Desktop / Cursor / OpenAI Codex)     |</span><br><span class="line">|                                                       |</span><br><span class="line">|   +---------------+   +---------------+               |</span><br><span class="line">|   |  MCP Client   |   |  MCP Client   |   ...         |</span><br><span class="line">|   +-------+-------+   +-------+-------+               |</span><br><span class="line">+-----------|-------------------|-----------------------+</span><br><span class="line">            | (JSON-RPC 2.0)    | (JSON-RPC 2.0)</span><br><span class="line">            v                   v</span><br><span class="line">+-------------------+   +-------------------+</span><br><span class="line">|    MCP Server A   |   |    MCP Server B   |</span><br><span class="line">|  (本地文件 / Git)  |   | (数据库 / Notion) |</span><br><span class="line">+-------------------+   +-------------------+</span><br></pre></td></tr></table></figure>
+
+<h3 id="三大核心角色"><a href="#三大核心角色" class="headerlink" title="三大核心角色"></a>三大核心角色</h3><ol>
+<li><strong>MCP Host（宿主程序）：</strong> 直接面向用户的 AI 应用程序，负责管理 LLM 对话生命周期、权限审批与多个 Client 实例（例如 Claude Code、IDE 插件、自研 Agent 框架）。</li>
+<li><strong>MCP Client（协议客户端）：</strong> 运行在 Host 内部，与对应的 MCP Server 保持 <strong>1:1 的有状态连接</strong>，负责能力协商、请求转发与响应解析。</li>
+<li><strong>MCP Server（协议服务端）：</strong> 轻量级独立进程或远程服务，封装具体的外部系统（如本地命令行、Docker 环境、REST API、知识库），向 Client 暴露标准化的上下文与操作能力。</li>
+</ol>
+<hr>
+<h2 id="3-MCP-的三大核心原语（Primitives）"><a href="#3-MCP-的三大核心原语（Primitives）" class="headerlink" title="3. MCP 的三大核心原语（Primitives）"></a>3. MCP 的三大核心原语（Primitives）</h2><p>MCP Server 通过协议向大模型暴露三类标准能力，分别对应不同的控制权归属：</p>
+<table>
+<thead>
+<tr>
+<th align="left">原语类型</th>
+<th align="left">控制方</th>
+<th align="left">核心作用</th>
+<th align="left">典型示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Resources（资源）</strong></td>
+<td align="left"><strong>应用控制</strong> (App-controlled)</td>
+<td align="left">提供只读的结构化&#x2F;非结构化上下文数据，类似 REST 中的 <code>GET</code></td>
+<td align="left">本地文件内容、数据库 Schema、系统日志、API 响应快照</td>
+</tr>
+<tr>
+<td align="left"><strong>Tools（工具）</strong></td>
+<td align="left"><strong>模型控制</strong> (Model-controlled)</td>
+<td align="left">允许 LLM 自主决策调用的可执行函数，具有副作用或计算逻辑</td>
+<td align="left">执行 SQL 查询、创建 GitHub Issue、运行 Shell 脚本</td>
+</tr>
+<tr>
+<td align="left"><strong>Prompts（提示词模板）</strong></td>
+<td align="left"><strong>用户控制</strong> (User-controlled)</td>
+<td align="left">预定义的高质量交互工作流或指令模板，通常表现为快捷斜杠命令</td>
+<td align="left"><code>/code-review</code>、<code>/generate-unit-test</code>、固定格式的报告模板</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>补充特性（Sampling 采样）：</strong> MCP 还支持反向请求——Server 可以请求 Client 调用宿主环境的 LLM 进行推理（例如 Server 需要摘要一段超长日志后再返回结果），实现双向智能协作。</p>
+</blockquote>
+<hr>
+<h2 id="4-传输层机制（Transport-Layer）"><a href="#4-传输层机制（Transport-Layer）" class="headerlink" title="4. 传输层机制（Transport Layer）"></a>4. 传输层机制（Transport Layer）</h2><p>MCP 将协议逻辑与传输方式解耦，目前主要支持两种传输机制：</p>
+<ol>
+<li><strong>stdio（标准输入&#x2F;输出）：</strong><ul>
+<li><strong>适用场景：</strong> 本地进程间通信（IPC）。Host 直接以子进程方式启动 MCP Server（如 <code>npx</code> 或 <code>uvx</code> 运行本地脚本），通过 <code>stdin</code> 和 <code>stdout</code> 读写 JSON-RPC 消息。</li>
+<li><strong>优势：</strong> 零网络开销、天然隔离、无需配置端口与 SSL 证书，是目前本地开发工具最常用的方式。</li>
+</ul>
+</li>
+<li><strong>Streamable HTTP（流式 HTTP，演进自早期 SSE）：</strong><ul>
+<li><strong>适用场景：</strong> 远程部署的云端 MCP Server 或多租户微服务。</li>
+<li><strong>优势：</strong> 支持标准 HTTP POST 请求与 Server-Sent Events (SSE) 流式推送，便于接入 OAuth 2.1 鉴权、负载均衡与分布式容器部署。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="5-最小配置与工作流示例"><a href="#5-最小配置与工作流示例" class="headerlink" title="5. 最小配置与工作流示例"></a>5. 最小配置与工作流示例</h2><p>以在支持 MCP 的客户端中接入一个<strong>文件系统 MCP Server</strong> 为例，配置文件通常如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;mcpServers&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;filesystem&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;command&quot;</span><span class="punctuation">:</span> <span class="string">&quot;npx&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="string">&quot;-y&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;@modelcontextprotocol/server-filesystem&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="string">&quot;/workspace/projects&quot;</span></span><br><span class="line">      <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;NODE_ENV&quot;</span><span class="punctuation">:</span> <span class="string">&quot;production&quot;</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="一次完整的调用时序"><a href="#一次完整的调用时序" class="headerlink" title="一次完整的调用时序"></a>一次完整的调用时序</h3><ol>
+<li><strong>初始化（Initialize）：</strong> Host 启动 <code>filesystem</code> Server，双方交换协议版本号与支持的能力列表（Capabilities）。</li>
+<li><strong>能力发现（Discovery）：</strong> Client 发送 <code>tools/list</code> 请求，Server 返回可用工具清单（如 <code>read_file</code>、<code>write_file</code>、<code>search_files</code>）及其 JSON Schema 参数定义。</li>
+<li><strong>模型推理与决策：</strong> 用户提问 <em>“帮我检查项目中所有的 Docker 配置文件”</em>，Host 将可用 Tools 注入 LLM 上下文，模型决定调用 <code>search_files(pattern=&quot;*docker*&quot;)</code>。</li>
+<li><strong>执行与回填：</strong> Client 发送 <code>tools/call</code> 给 Server -&gt; Server 在安全沙箱目录内检索并返回结果 -&gt; Host 将结果拼接到对话上下文中 -&gt; LLM 生成最终分析回答。</li>
+</ol>
+<hr>
+<h2 id="6-MCP-与传统-Function-Calling-的区别"><a href="#6-MCP-与传统-Function-Calling-的区别" class="headerlink" title="6. MCP 与传统 Function Calling 的区别"></a>6. MCP 与传统 Function Calling 的区别</h2><ul>
+<li><strong>Function Calling 是模型层面的推理机制：</strong> 它定义了“模型如何输出结构化 JSON 来表达调用意图”，但不管函数在哪里运行、如何鉴权、如何管理状态。</li>
+<li><strong>MCP 是系统层面的通信协议：</strong> 它在 Function Calling 之上构建了完整的工程基础设施——包括工具的动态发现（Dynamic Discovery）、长连接状态维护、跨进程&#x2F;跨网络传输、安全权限边界以及资源&#x2F;提示词的统一管理。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+        
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">大模型</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+        <p class="article-more-link">
+          <a
+            class="article-more-a js-article-toggle"
+            href="javascript:void(0)"
+            data-expand-text="展开全文 >>"
+            data-collapse-text="收起全文 <<"
+          >展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-mihomo内核代理软件的工作流程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -207,7 +361,7 @@ var _hmt = _hmt || [];
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2026/11/27/mihomo%E5%86%85%E6%A0%B8%E4%BB%A3%E7%90%86%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/">mihomo内核代理软件的工作流程</a>
+      <a class="article-title" href="/2026/11/27/mihomo%E5%86%85%E6%A0%B8%E4%BB%A3%E7%90%86%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B/">VPS与mihomo内核的代理软件原理对比分析</a>
     </h1>
   
 
@@ -220,7 +374,115 @@ var _hmt = _hmt || [];
     
     <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
       
-        <h3 id="一句话总览"><a href="#一句话总览" class="headerlink" title="一句话总览"></a>一句话总览</h3><p>你的电脑并没有“通知各个应用去使用代理”，它现在采用 <strong>TUN 模式</strong>：把整个系统的默认路由改到一张虚拟网卡上，所有流量先交给 mihomo 判断“直连”还是“绕去美国节点”。</p>
+        <h2 id="1-先介绍一下国内正常访问-百度-数据包的具体流向"><a href="#1-先介绍一下国内正常访问-百度-数据包的具体流向" class="headerlink" title="1.先介绍一下国内正常访问 百度 数据包的具体流向"></a>1.先介绍一下国内正常访问 百度 数据包的具体流向</h2><p>下面按 <code>www.baidu.com</code> 讲（<code>baidui</code> 应是笔误），场景是<strong>直连、没有走代理</strong>，正好和前面聊的代理链路对照。</p>
+<h2 id="一、先介绍一下国内正常访问-百度-数据包的具体流向"><a href="#一、先介绍一下国内正常访问-百度-数据包的具体流向" class="headerlink" title="一、先介绍一下国内正常访问 百度 数据包的具体流向"></a>一、先介绍一下国内正常访问 百度 数据包的具体流向</h2><h3 id="1-URL-解析与-DNS-查询"><a href="#1-URL-解析与-DNS-查询" class="headerlink" title="1. URL 解析与 DNS 查询"></a>1. URL 解析与 DNS 查询</h3><p>浏览器先拆开 URL：协议 <code>https</code>、主机 <code>www.baidu.com</code>、路径 <code>/</code>、默认端口 <code>443</code>。因为你在地址栏只输入了域名，它会自动补成 <code>https://</code>。</p>
+<p>然后开始查 IP，<strong>按顺序逐级查询，命中即止</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>顺序</th>
+<th>位置</th>
+<th>协议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1</td>
+<td>浏览器 DNS 缓存</td>
+<td>内存</td>
+</tr>
+<tr>
+<td>2</td>
+<td>操作系统 DNS 缓存</td>
+<td>内存</td>
+</tr>
+<tr>
+<td>3</td>
+<td><code>hosts</code> 文件</td>
+<td>本地文件</td>
+</tr>
+<tr>
+<td>4</td>
+<td>本地 DNS 服务器（运营商或路由器）</td>
+<td><strong>UDP 53</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>根服务器 → <code>.com</code> TLD → 百度权威 NS</td>
+<td><strong>UDP 53</strong></td>
+</tr>
+</tbody></table>
+<p>第 5 步是递归查询：本地 DNS 替你去问根服务器，再问 <code>.com</code> 的服务器，最后问百度的权威服务器，拿到 A 记录（比如 <code>110.242.68.66</code>，示例值）。</p>
+<p>现在很多浏览器走 <strong>DoH</strong>（DNS over HTTPS，TCP 443），把查询包在 HTTPS 里，防止被劫持和污染。</p>
+<h3 id="2-链路层准备：ARP-与-NAT"><a href="#2-链路层准备：ARP-与-NAT" class="headerlink" title="2. 链路层准备：ARP 与 NAT"></a>2. 链路层准备：ARP 与 NAT</h3><p>拿到 IP 后，电脑发现目标不在同一网段，于是要发给网关。但发以太网帧需要<strong>网关的 MAC 地址</strong>，于是发 <strong>ARP 请求</strong>（广播“谁是 192.168.1.1”），网关回 <strong>ARP 应答</strong>。</p>
+<p>同时你的电脑早就通过 <strong>DHCP</strong> 拿到了 <code>192.168.1.100</code> 这个内网地址和网关、DNS 配置。</p>
+<h3 id="3-TCP-三次握手（传输层）"><a href="#3-TCP-三次握手（传输层）" class="headerlink" title="3. TCP 三次握手（传输层）"></a>3. TCP 三次握手（传输层）</h3><p>浏览器向 <code>110.242.68.66:443</code> 发起连接，源端口是随机的高位端口（如 <code>51234</code>）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">客户端 → 服务器：SYN      seq=x</span><br><span class="line">服务器 → 客户端：SYN+ACK  seq=y, ack=x+1</span><br><span class="line">客户端 → 服务器：ACK      ack=y+1</span><br></pre></td></tr></table></figure>
+
+<p>包出门时，家宽路由器做 <strong>NAT</strong>：把源 IP 从 <code>192.168.1.100</code> 改成你的公网 IP，源端口换成一个映射端口，并记下映射表。回程包再按表改回来。</p>
+<h3 id="4-TLS-握手（TLS-1-3，1-RTT）"><a href="#4-TLS-握手（TLS-1-3，1-RTT）" class="headerlink" title="4. TLS 握手（TLS 1.3，1-RTT）"></a>4. TLS 握手（TLS 1.3，1-RTT）</h3><p>TCP 通后，浏览器发 <strong>ClientHello</strong>：里面带 <strong>SNI &#x3D; <a target="_blank" rel="noopener" href="http://www.baidu.com/">www.baidu.com</a></strong>、支持的密码套件、<code>key_share</code>（密钥交换参数）。</p>
+<p>服务器回 <strong>ServerHello</strong> 和证书链，紧接着是加密的 <code>Finished</code>。浏览器用内置根 CA 验证证书链（域名是否匹配、是否过期、是否被吊销），通过后派生会话密钥。</p>
+<p>TLS 1.3 只需 <strong>1 个 RTT</strong> 就完成握手（1.2 要 2 个）。</p>
+<h3 id="5-HTTP-请求与响应（应用层）"><a href="#5-HTTP-请求与响应（应用层）" class="headerlink" title="5. HTTP 请求与响应（应用层）"></a>5. HTTP 请求与响应（应用层）</h3><p>握手完成后，浏览器发请求。百度现在主要用 <strong>HTTP&#x2F;2</strong>（部分支持 <strong>HTTP&#x2F;3 &#x2F; QUIC</strong>，走 UDP 443）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET / HTTP/2</span><br><span class="line">:authority: www.baidu.com</span><br><span class="line">user-agent: Mozilla/5.0 ...</span><br><span class="line">accept: text/html,...</span><br><span class="line">cookie: BAIDUID=...</span><br></pre></td></tr></table></figure>
+
+<p>服务器（前面通常还有 <strong>CDN 节点</strong>、负载均衡、反向代理）返回：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">HTTP/2 200</span><br><span class="line">content-type: text/html; charset=utf-8</span><br><span class="line">content-encoding: br</span><br></pre></td></tr></table></figure>
+
+<p>然后是 HTML 正文。</p>
+<h3 id="6-渲染与连接关闭"><a href="#6-渲染与连接关闭" class="headerlink" title="6. 渲染与连接关闭"></a>6. 渲染与连接关闭</h3><p>浏览器解析 HTML，遇到 <code>&lt;link&gt;</code>、<code>&lt;script&gt;</code>、<code>&lt;img&gt;</code> 时继续发请求。这些资源可能在 <code>static.baidu.com</code> 等<strong>其他域名</strong>下，于是又要走一遍 DNS + TCP + TLS。</p>
+<p>HTTP&#x2F;2 下，同一域名的多个资源<strong>复用一条连接</strong>（多路复用），不用反复握手。</p>
+<p>页面加载完连接不会立刻断，HTTP&#x2F;2 保持长连接；空闲超时后浏览器发 <strong>FIN</strong>，服务器回 <strong>ACK + FIN</strong>，客户端再 <strong>ACK</strong>，这就是<strong>四次挥手</strong>。主动关闭方进入 <code>TIME_WAIT</code>，等 2MSL 才释放端口。</p>
+<h3 id="7-全流程协议总表"><a href="#7-全流程协议总表" class="headerlink" title="7. 全流程协议总表"></a>7. 全流程协议总表</h3><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>协议</th>
+<th>端口&#x2F;封装</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>拿 IP</td>
+<td>DNS（UDP 53）&#x2F; DoH（TCP 443）</td>
+<td>53 &#x2F; 443</td>
+</tr>
+<tr>
+<td>找网关 MAC</td>
+<td>ARP</td>
+<td>以太网广播</td>
+</tr>
+<tr>
+<td>拿内网地址</td>
+<td>DHCP</td>
+<td>UDP 67&#x2F;68</td>
+</tr>
+<tr>
+<td>建连接</td>
+<td>TCP</td>
+<td>443</td>
+</tr>
+<tr>
+<td>加密</td>
+<td>TLS 1.3</td>
+<td>443</td>
+</tr>
+<tr>
+<td>请求响应</td>
+<td>HTTP&#x2F;2 或 HTTP&#x2F;3</td>
+<td>443（QUIC 走 UDP）</td>
+</tr>
+<tr>
+<td>寻址转发</td>
+<td>IP + NAT</td>
+<td>—</td>
+</tr>
+<tr>
+<td>物理传输</td>
+<td>Wi-Fi 802.11 &#x2F; Ethernet</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<h3 id="一句话总结"><a href="#一句话总结" class="headerlink" title="一句话总结"></a>一句话总结</h3><p><strong>一次访问要经过四层接力：DNS 把域名换成 IP（UDP 53）；ARP 找到网关 MAC；TCP 三次握手建立可靠通道（443）；TLS 1.3 完成加密；最后才是 HTTP&#x2F;2 收发内容。</strong> 你在浏览器里看到的“秒开”，背后是十几个协议在几十毫秒内依次完成。</p>
+<h2 id="二、mihomo内核的代理工具的工作原理（fake-ip劫持dns）"><a href="#二、mihomo内核的代理工具的工作原理（fake-ip劫持dns）" class="headerlink" title="二、mihomo内核的代理工具的工作原理（fake-ip劫持dns）"></a>二、mihomo内核的代理工具的工作原理（fake-ip劫持dns）</h2><p>你的电脑并没有“通知各个应用去使用代理”，它现在采用 <strong>TUN 模式</strong>：把整个系统的默认路由改到一张虚拟网卡上，所有流量先交给 mihomo 判断“直连”还是“绕去美国节点”。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">应用 (Chrome / git)</span><br><span class="line">   │  以为自己在正常联网</span><br><span class="line">   ▼</span><br><span class="line">虚拟网卡 Mihomo (198.18.0.1)   ← 默认路由 0.0.0.0/0 指到这里</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">mihomo 内核：还原域名 → 匹配规则</span><br><span class="line">   ├── DIRECT → 物理网卡 → 目标网站（你的真实 IP 暴露）</span><br><span class="line">   └── Proxy  → TCP 443 到美国节点 → 节点替你连（只暴露节点 IP）</span><br></pre></td></tr></table></figure>
 
 <p>先确认一点：你的 Verge 是 <code>enable_system_proxy: false</code> + <code>enable_tun_mode: true</code>，所以<strong>系统代理没开</strong>，全靠 TUN 拦截。<code>ProxyEnable=0</code>，应用完全不知道自己被代理了。</p>
@@ -342,6 +604,86 @@ var _hmt = _hmt || [];
 <li>返回真实的公网 IP，说明是<strong>直接向该 DNS 服务器查询</strong>的</li>
 </ul>
 <p><strong>总结：<code>nslookup</code> 第一段的 <code>Address:</code> 就是实际查询的 DNS，出现 <code>198.18.x</code> 就证明 DNS 走了 mihomo。</strong></p>
+<h2 id="三、租了一台VPS，是如何依靠它上网的"><a href="#三、租了一台VPS，是如何依靠它上网的" class="headerlink" title="三、租了一台VPS，是如何依靠它上网的"></a>三、租了一台VPS，是如何依靠它上网的</h2><h3 id="一句话原理"><a href="#一句话原理" class="headerlink" title="一句话原理"></a>一句话原理</h3><p>你电脑上的流量先加密送到 VPS，再由 VPS 用自己的 IP 去访问 Google，最后把结果加密送回来。<strong>Google 看到的是 VPS 的 IP，而不是你家宽带的 IP。</strong></p>
+<h3 id="1-完整链路"><a href="#1-完整链路" class="headerlink" title="1. 完整链路"></a>1. 完整链路</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">浏览器 → 本机客户端 → [加密隧道] → VPS 服务端 → Google</span><br><span class="line">        127.0.0.1:7890               （出口 IP 在这里）</span><br></pre></td></tr></table></figure>
+
+<p>在这条链路里，所有环节都起作用：</p>
+<ul>
+<li><strong>本机客户端</strong>负责拦截你的流量并加密。</li>
+<li><strong>VPS 服务端</strong>负责解密流量、代你访问网络，并把结果回传。</li>
+<li><strong>GFW</strong>只能看到“你连了某个境外 IP 的 443 端口”，看不到你在访问什么。</li>
+</ul>
+<h3 id="2-需要三样东西"><a href="#2-需要三样东西" class="headerlink" title="2. 需要三样东西"></a>2. 需要三样东西</h3><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>作用</th>
+<th>常见选择</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>VPS</td>
+<td>提供 IP 和算力</td>
+<td>搬瓦工、Vultr、RackNerd、DMIT</td>
+</tr>
+<tr>
+<td>服务端程序</td>
+<td>在 VPS 上接收加密流量</td>
+<td>Xray、sing-box、Hysteria2</td>
+</tr>
+<tr>
+<td>本地客户端</td>
+<td>拦截流量并加密</td>
+<td>Clash Verge、v2rayN、sing-box</td>
+</tr>
+</tbody></table>
+<p><strong>协议选哪种最关键</strong>，现在主流是 <code>VLESS + Reality</code>（抗封锁最强，不需要自己的域名和证书）、<code>Hysteria2</code>（基于 UDP，弱网快）、<code>Shadowsocks</code>（最简单，但特征明显、容易被识别）。</p>
+<h3 id="3-实际操作步骤"><a href="#3-实际操作步骤" class="headerlink" title="3. 实际操作步骤"></a>3. 实际操作步骤</h3><ol>
+<li><strong>买 VPS</strong>：优先看<strong>线路</strong>而不是配置。日本、新加坡、香港的 CN2 GIA 或 9929 线路延迟低；美国便宜，但延迟 150ms 以上。</li>
+<li><strong>SSH 登录</strong>：<code>ssh root@你的IP</code>。</li>
+<li><strong>装服务端</strong>：官方一键脚本或 <code>3x-ui</code> 面板（图形化，适合新手）。</li>
+<li><strong>配置</strong>：端口设 443，生成 UUID，Reality 选一个真实网站作为伪装目标（如 <code>www.microsoft.com</code>）。</li>
+<li><strong>放行端口</strong>：云厂商<strong>安全组</strong>和系统防火墙（ufw&#x2F;firewalld）都要放行，这一步最容易漏。</li>
+<li><strong>本地导入</strong>：客户端粘贴 <code>vless://...</code> 链接或订阅地址。</li>
+<li><strong>验证</strong>：打开 <code>ip.sb</code> 或 <code>ipinfo.io</code>，如果显示的是 VPS 的 IP，就说明已经生效。</li>
+</ol>
+<h3 id="4-为什么这套方案能绕过-GFW"><a href="#4-为什么这套方案能绕过-GFW" class="headerlink" title="4. 为什么这套方案能绕过 GFW"></a>4. 为什么这套方案能绕过 GFW</h3><p>GFW 并不是因为看不懂加密流量才拦截不了，关键在于以下三点：</p>
+<ul>
+<li><strong>内容加密</strong>：只能看到密文。</li>
+<li><strong>伪装成正常网站</strong>：Reality 借用真实网站的 TLS 证书链，从外部看和访问微软官网没有区别。</li>
+<li><strong>不依赖固定特征</strong>：没有可匹配的明文协议头。</li>
+</ul>
+<p>它真正能用来拦截的手段只有 <strong>IP 黑名单</strong>、<strong>SNI 明文匹配</strong>（TLS 1.3 加密后失效）和<strong>流量行为统计</strong>（长时间大流量连接）。所以你要防的是 IP 被封，而不是“加密不够强”。</p>
+<h3 id="5-常见问题"><a href="#5-常见问题" class="headerlink" title="5. 常见问题"></a>5. 常见问题</h3><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>连不上，但 ping 通</td>
+<td>端口没放行（安全组最容易漏）</td>
+</tr>
+<tr>
+<td>ping 不通</td>
+<td>VPS 的 IP 已被墙，需要更换 IP</td>
+</tr>
+<tr>
+<td>浏览器能上，软件不能上</td>
+<td>只开了系统代理，没有开 TUN 模式</td>
+</tr>
+<tr>
+<td>能连但打不开 Google</td>
+<td>DNS 泄漏或服务器时间不同步（<code>timedatectl</code> 检查）</td>
+</tr>
+<tr>
+<td>用几天就断</td>
+<td>IP 进入黑名单，换 IP 或换协议</td>
+</tr>
+</tbody></table>
+<h3 id="6-一句话总结"><a href="#6-一句话总结" class="headerlink" title="6. 一句话总结"></a>6. 一句话总结</h3><p><strong>VPS 只提供“一台能上外网的机器”，真正干活的是你在它上面安装的代理服务端程序；你花钱买的是 IP 和线路，技术部分要自己搭。</strong> 如果不想折腾，直接买静态 IP 订阅就行，原理完全一样，只是服务端别人替你维护。</p>
+<p>如果你要装，我可以按你的 VPS 系统（Ubuntu&#x2F;Debian）给一份可以直接粘贴执行的配置。</p>
 
       
 
@@ -2020,223 +2362,6 @@ var _hmt = _hmt || [];
 <li><strong>CISP-PTE &#x2F; CISP-PTS</strong>：中国信息安全测评中心颁发的注册渗透测试工程师认证，国内政企招投标认可度高。</li>
 <li>**CEH (Certified Ethical Hacker)**：偏向理论与流程规范的道德黑客认证。</li>
 </ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-        
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">北邮网安</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-        <p class="article-more-link">
-          <a
-            class="article-more-a js-article-toggle"
-            href="javascript:void(0)"
-            data-expand-text="展开全文 >>"
-            data-collapse-text="收起全文 <<"
-          >展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-区块链" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2026/09/08/%E5%8C%BA%E5%9D%97%E9%93%BE/">区块链</a>
-    </h1>
-  
-
-        
-        <a href="/2026/09/08/%E5%8C%BA%E5%9D%97%E9%93%BE/" class="archive-article-date">
-  	<time datetime="2026-09-08T07:06:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2026-09-08</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry article-entry-collapsible" itemprop="articleBody" hidden aria-hidden="true">
-      
-        <h1 id="⛓️-区块链技术全景解析：从入门到核心机制指南"><a href="#⛓️-区块链技术全景解析：从入门到核心机制指南" class="headerlink" title="⛓️ 区块链技术全景解析：从入门到核心机制指南"></a>⛓️ 区块链技术全景解析：从入门到核心机制指南</h1><hr>
-<h2 id="📖-一、-什么是区块链？"><a href="#📖-一、-什么是区块链？" class="headerlink" title="📖 一、 什么是区块链？"></a>📖 一、 什么是区块链？</h2><p>如果用一句话概括：<strong>区块链就是一个“全网所有人共同记账、谁也无法偷偷篡改的共享分布式电子账本”。</strong></p>
-<h3 id="1-经典生活比喻：宿舍-4-人“大声公”记账法"><a href="#1-经典生活比喻：宿舍-4-人“大声公”记账法" class="headerlink" title="1. 经典生活比喻：宿舍 4 人“大声公”记账法"></a>1. 经典生活比喻：宿舍 4 人“大声公”记账法</h3><ul>
-<li><strong>传统中心化记账（如银行&#x2F;支付宝）</strong>：<ul>
-<li>全宿舍借钱消费，只有舍长一个人手里拿着账本。万一舍长偷偷修改数字，或者账本被水泡坏了，就成了烂账。</li>
-</ul>
-</li>
-<li><strong>区块链去中心化记账</strong>：<ul>
-<li>宿舍 4 个人（张三、李四、王五、赵六），每人手里都发一本<strong>一模一样的账本</strong>；</li>
-<li>张三借给李四 100 元，张三在宿舍大喊一声：“<em>我张三刚才借给李四 100 元！</em>”；</li>
-<li>其余三人核对张三确实有这笔钱后，<strong>四个人同时在各自的账本上写下这笔交易</strong>；</li>
-<li>任何人想偷偷涂改自己的账本都没用，因为只要拿出来对账，<strong>“少数服从多数”</strong>，被篡改的记录立刻被全网否决。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="🧱-二、-为什么叫“区块-链”？（底层数据结构）"><a href="#🧱-二、-为什么叫“区块-链”？（底层数据结构）" class="headerlink" title="🧱 二、 为什么叫“区块 + 链”？（底层数据结构）"></a>🧱 二、 为什么叫“区块 + 链”？（底层数据结构）</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────┐         ┌─────────────────────────┐         ┌─────────────────────────┐</span><br><span class="line">│       区块 N - 1        │         │         区块 N          │         │       区块 N + 1        │</span><br><span class="line">├─────────────────────────┤         ├─────────────────────────┤         ├─────────────────────────┤</span><br><span class="line">│ 当前区块哈希: 0000a1... │ ◄───────┤ 上一区块哈希: 0000a1... │ ◄───────┤ 上一区块哈希: 0000b2... │</span><br><span class="line">│ 随机数 (Nonce)          │         │ 当前区块哈希: 0000b2... │         │ 当前区块哈希: 0000c3... │</span><br><span class="line">│ 时间戳: 12:00           │         │ 随机数 (Nonce)          │         │ 随机数 (Nonce)          │</span><br><span class="line">├─────────────────────────┤         ├─────────────────────────┤         ├─────────────────────────┤</span><br><span class="line">│ 本块交易记录清单 (Data) │         │ 本块交易记录清单 (Data) │         │ 本块交易记录清单 (Data) │</span><br><span class="line">│ - A 转给 B 5 个币       │         │ - C 转给 D 2 个币       │         │ - E 转给 F 10 个币      │</span><br><span class="line">│ - ...                   │         │ - ...                   │         │ - ...                   │</span><br><span class="line">└─────────────────────────┘         └─────────────────────────┘         └─────────────────────────┘</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><strong>区块（Block）</strong>：相当于账本上的<strong>“某一页纸”</strong>。里面打包了过去几分钟内发生的所有交易、时间戳和随机数。</li>
-<li><strong>链（Chain）</strong>：每一页纸在写满封存时，都会计算出一个密码学<strong>哈希值（Hash）</strong>，并把<strong>前一页的哈希值也写在这一页的开头</strong>。</li>
-<li><strong>不可篡改的铁锁</strong>：<ul>
-<li>如果有人试图篡改历史区块（比如修改第 2 个区块里的金额），第 2 个区块的哈希值就会突变；</li>
-<li>导致第 3 个、第 4 个……后面所有连接的区块哈希全部断裂失效；</li>
-<li>想要篡改一笔交易，必须在一瞬间重新计算后面所有区块的密码，并在全网超过 51% 的节点上同步修改，这在现实物理世界中<strong>几乎不可能做到</strong>。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h3 id="🌟-区块链的四大核心特征"><a href="#🌟-区块链的四大核心特征" class="headerlink" title="🌟 区块链的四大核心特征"></a>🌟 区块链的四大核心特征</h3><ol>
-<li><strong>去中心化</strong>：没有一个绝对的“总管理员”或中心服务器，即使关掉其中一半的电脑，剩下的电脑依然能保证账本安全运行；</li>
-<li><strong>不可篡改</strong>：数据一旦记录成功，任何人都无法删除或偷偷修改；</li>
-<li><strong>全程留痕、可追溯</strong>：从诞生第一天起的所有交易记录，顺着链条都能查得一清二楚；</li>
-<li><strong>无需信任第三方中介</strong>：陌生人之间转账交易，不再需要信任中介公司（如支付宝或跨国银行），通过底层数学算法自动履约（智能合约）。</li>
-</ol>
-<h2 id="🛠️-三、-支撑区块链的四大核心技术支柱"><a href="#🛠️-三、-支撑区块链的四大核心技术支柱" class="headerlink" title="🛠️ 三、 支撑区块链的四大核心技术支柱"></a>🛠️ 三、 支撑区块链的四大核心技术支柱</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">                    ┌─────────────────────────┐</span><br><span class="line">                    │    区块链底层四大支柱   │</span><br><span class="line">                    └────────────┬────────────┘</span><br><span class="line">                                 │</span><br><span class="line">     ┌──────────────────┬────────┴─────────┬──────────────────┐</span><br><span class="line">     ▼                  ▼                  ▼                  ▼</span><br><span class="line">┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐</span><br><span class="line">│ 1. 密码学基础 │ │ 2. P2P网络架构│ │ 3. 共识机制  │ │ 4. 智能合约  │</span><br><span class="line">│ 哈希与非对称 │ │ 去中心点对点 │ │ 全网协同决策 │ │ 代码即法律   │</span><br><span class="line">└──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘</span><br></pre></td></tr></table></figure>
-
-<h3 id="1-密码学（哈希函数与非对称加密）"><a href="#1-密码学（哈希函数与非对称加密）" class="headerlink" title="1. 密码学（哈希函数与非对称加密）"></a>1. 密码学（哈希函数与非对称加密）</h3><ul>
-<li><strong>单向哈希函数（如 SHA-256）</strong>：任何数据输入都会得到一个固定长度的“数字指纹”。只要改动一个标点符号，指纹就会翻天覆地变化（雪崩效应），且无法通过指纹逆向推算原始数据。</li>
-<li><strong>公钥与私钥</strong>：<ul>
-<li><strong>公钥（地址）</strong>：就像你的银行卡号，谁都可以知道，用来接收资产；</li>
-<li><strong>私钥（密码）</strong>：你的最高权限印章，用来对转账进行“数字签名”，绝不能泄露。</li>
-</ul>
-</li>
-</ul>
-<h3 id="2-P2P-分布式网络（Peer-to-Peer）"><a href="#2-P2P-分布式网络（Peer-to-Peer）" class="headerlink" title="2. P2P 分布式网络（Peer-to-Peer）"></a>2. P2P 分布式网络（Peer-to-Peer）</h3><ul>
-<li>没有任何中央服务器。全网每一台电脑（节点）地位平等，信息通过“小道消息传播（Gossip 协议）”迅速扩散至全球。</li>
-</ul>
-<h3 id="3-共识机制（Consensus）——-全网怎么统一记账？"><a href="#3-共识机制（Consensus）——-全网怎么统一记账？" class="headerlink" title="3. 共识机制（Consensus）—— 全网怎么统一记账？"></a>3. 共识机制（Consensus）—— 全网怎么统一记账？</h3><p>没有领导拍板，成千上万台独立的电脑如何达成一致？</p>
-<ul>
-<li>**工作量证明 (PoW - Proof of Work)**：<ul>
-<li>比特币采用。“按算力拼手速”，谁先算出一道极其复杂的数学谜题，谁获得本次记账权（即所谓的<strong>挖矿</strong>）。安全度极高，但耗费电能。</li>
-</ul>
-</li>
-<li>**权益证明 (PoS - Proof of Stake)**：<ul>
-<li>以太坊等现代公链采用。“按资产质押抽签”，谁存进系统的虚拟币多、时间长，被抽中记账的概率就越大。极其环保省电。</li>
-</ul>
-</li>
-</ul>
-<h3 id="4-智能合约（Smart-Contract）——-区块链-2-0-的灵魂"><a href="#4-智能合约（Smart-Contract）——-区块链-2-0-的灵魂" class="headerlink" title="4. 智能合约（Smart Contract）—— 区块链 2.0 的灵魂"></a>4. 智能合约（Smart Contract）—— 区块链 2.0 的灵魂</h3><ul>
-<li>由以太坊创始人 Vitalik Buterin 推广：<strong>把代码写进区块链里</strong>。</li>
-<li>当满足预设条件时（例如：“货运 GPS 显示货物已到达港口”），程序自动执行转账打款，<strong>无需任何法官或第三方机构介入仲裁，代码即法律（Code is Law）</strong>。</li>
-</ul>
-<hr>
-<h2 id="📈-四、-区块链的技术演进历程"><a href="#📈-四、-区块链的技术演进历程" class="headerlink" title="📈 四、 区块链的技术演进历程"></a>📈 四、 区块链的技术演进历程</h2><table>
-<thead>
-<tr>
-<th align="left">阶段</th>
-<th align="left">代表项目</th>
-<th align="left">核心突破</th>
-<th align="left">形象比喻</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>区块链 1.0</strong></td>
-<td align="left"><strong>比特币 (Bitcoin, 2008)</strong></td>
-<td align="left">实现了去中心化的<strong>数字现金点对点转账</strong></td>
-<td align="left">一本全球共享的<strong>“计算器&#x2F;分布式现金本”</strong></td>
-</tr>
-<tr>
-<td align="left"><strong>区块链 2.0</strong></td>
-<td align="left"><strong>以太坊 (Ethereum, 2014)</strong></td>
-<td align="left">引入<strong>图灵完备的智能合约</strong>与 EVM 虚拟机</td>
-<td align="left">一台全球去中心化的<strong>“超级可编程计算机”</strong></td>
-</tr>
-<tr>
-<td align="left"><strong>区块链 3.0</strong></td>
-<td align="left"><strong>跨链、Layer 2、联盟链</strong></td>
-<td align="left">解决性能瓶颈，赋能实体工业、政务与跨链互联</td>
-<td align="left">承载万物互联的<strong>“下一代可信互联网基础设施”</strong></td>
-</tr>
-</tbody></table>
-<hr>
-<h2 id="⚖️-五、-区块链-vs-比特币的关系"><a href="#⚖️-五、-区块链-vs-比特币的关系" class="headerlink" title="⚖️ 五、 区块链 vs 比特币的关系"></a>⚖️ 五、 区块链 vs 比特币的关系</h2><ul>
-<li><strong>区块链是地基技术</strong>，<strong>比特币是上面的第一座建筑物</strong>。</li>
-<li>比特币离不开区块链，但区块链绝不仅限于比特币。</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│                       区块链技术 (生态大伞)                 │</span><br><span class="line">├──────────────────────────────┬──────────────────────────────┤</span><br><span class="line">│      公有链 (虚拟资产类)     │     联盟链 / 私有链 (产业落地)│</span><br><span class="line">│  - 比特币 (数字黄金)         │  - 司法存证 / 电子公证书     │</span><br><span class="line">│  - 以太坊 (DeFi / 智能合约)  │  - 供应链金融 / 溯源系统     │</span><br><span class="line">│  - 跨国结算网络              │  - 电子政务 / 医疗病历互通   │</span><br><span class="line">└──────────────────────────────┴──────────────────────────────┘</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="💰-六、-什么是“挖矿”与代币经济学？"><a href="#💰-六、-什么是“挖矿”与代币经济学？" class="headerlink" title="💰 六、 什么是“挖矿”与代币经济学？"></a>💰 六、 什么是“挖矿”与代币经济学？</h2><ul>
-<li><strong>为什么挖矿能赚钱？</strong><ul>
-<li>矿工扮演着<strong>“无中心银行系统中的出纳员兼安保特工”</strong>；</li>
-<li>系统会给记账成功的矿工两大收入：<strong>系统凭空发的新币（区块奖励）</strong> + <strong>转账用户排队进块交的手续费（小费）</strong>；</li>
-<li>矿工在国际合规交易所把挖出的币兑换成法币变现。</li>
-</ul>
-</li>
-<li><strong>网络安全中的恶意挖矿（Cryptojacking）</strong>：<ul>
-<li>正规矿工自己买显卡掏巨额电费；</li>
-<li>黑客利用高危漏洞将挖矿脚本植入企业服务器，<strong>0 成本榨取他人算力和电量，纯赚 100% 暴利</strong>。</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="🚀-七、-区块链在现实生活中的典型应用"><a href="#🚀-七、-区块链在现实生活中的典型应用" class="headerlink" title="🚀 七、 区块链在现实生活中的典型应用"></a>🚀 七、 区块链在现实生活中的典型应用</h2><ol>
-<li><strong>商品防伪与全程溯源</strong>：<ul>
-<li>一盒高档有机奶粉从牧场采集、工厂灌装、海关质检到冷链运输，每个环节的时间戳和化验数据全部实时上链，中间任何经销商都无法篡改产地与保质期。</li>
-</ul>
-</li>
-<li><strong>司法电子存证与版权保护</strong>：<ul>
-<li>原创作者的文章发布瞬间，系统生成数字哈希写入区块链；在侵权维权官司中，法院可直接调取链上哈希作为未篡改的法律铁证。</li>
-</ul>
-</li>
-<li><strong>跨国金融秒级清算</strong>：<ul>
-<li>传统 SWIFT 跨国电汇需中转多家银行，耗时 3~5 天且手续费高昂；使用基于区块链的稳定币或清算网络可做到<strong>数秒内到账且费用仅需数美分</strong>。</li>
-</ul>
-</li>
-<li><strong>数字身份（DID, Decentralized Identity）</strong>：<ul>
-<li>用户掌握自己的身份主权，无需再为每个网站注册账号并提交身份证照片，使用统一的去中心化身份安全授权登录。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h2 id="⚠️-八、-区块链的“不可能三角（Trilemma）”"><a href="#⚠️-八、-区块链的“不可能三角（Trilemma）”" class="headerlink" title="⚠️ 八、 区块链的“不可能三角（Trilemma）”"></a>⚠️ 八、 区块链的“不可能三角（Trilemma）”</h2><p>任何区块链系统在设计时，都很难同时做到以下三点，只能在其中做权衡取舍：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">                    安全 (Security)</span><br><span class="line">                         ▲</span><br><span class="line">                        / \</span><br><span class="line">                       /   \</span><br><span class="line">                      /     \</span><br><span class="line">                     /       \</span><br><span class="line">去中心化 (Decentralization) ◄───► 可扩展性 (Scalability)</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><strong>去中心化</strong>：节点越多越分布式，容灾抗审查越强；</li>
-<li><strong>安全性</strong>：抵御 51% 恶意算力攻击的难度；</li>
-<li><strong>可扩展性（性能 &#x2F; TPS）</strong>：每秒能处理的交易笔数（如比特币每秒只能处理约 7 笔，而支付宝双十一峰值几十万笔）。</li>
-</ol>
-<p><em>目前的 Layer 2（二层网络分卷技术）和分片技术（Sharding）正是为了打破这个不可能三角而诞生的最新前沿方向。</em></p>
 
       
 
